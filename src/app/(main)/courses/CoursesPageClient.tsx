@@ -104,7 +104,7 @@ export default function CoursesPage() {
       {/* Hero Header */}
       <section 
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1200&q=80')" }}
-        className="relative bg-cover bg-center text-white py-20 md:py-28 text-center overflow-hidden"
+        className="relative bg-cover bg-center text-white py-12 md:py-20 text-center overflow-hidden"
       >
         <div className="absolute inset-0 bg-black/45 dark:bg-black/70" />
         <div className="max-w-7xl mx-auto px-4 relative z-10 space-y-4">
@@ -181,7 +181,7 @@ export default function CoursesPage() {
       </section>
 
       {/* Main Course Details Section */}
-      <section className="py-20 bg-white dark:bg-[#090d16]">
+      <section className="py-12 md:py-20 bg-white dark:bg-[#090d16]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* 1. Complete Telugu Content Creation Course DETAILS */}

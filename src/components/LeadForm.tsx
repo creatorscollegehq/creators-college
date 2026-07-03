@@ -104,7 +104,7 @@ export default function LeadForm({ defaultCourse = "Content Creation Course", is
             )}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-full transition hover-lift shadow-md text-sm cursor-pointer"
+            className="w-full inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-full shadow-md text-sm cursor-pointer transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:shadow-green-600/20 active:scale-[0.98]"
           >
             <MessageSquare size={18} />
             Confirm &amp; Send on WhatsApp
@@ -112,7 +112,7 @@ export default function LeadForm({ defaultCourse = "Content Creation Course", is
 
           <a
             href="/checkout"
-            className="w-full inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white font-semibold py-3 px-6 rounded-full transition hover-lift shadow-md text-sm text-center"
+            className="w-full inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white font-semibold py-3 px-6 rounded-full shadow-md text-sm text-center transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:shadow-brand-orange/20 active:scale-[0.98]"
           >
             Go to Checkout &amp; Pay via UPI
           </a>
@@ -276,7 +276,7 @@ export default function LeadForm({ defaultCourse = "Content Creation Course", is
       <button
         type="submit"
         disabled={isSubmitting}
-        className={`w-full inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3.5 px-6 rounded-lg transition duration-200 hover-lift shadow-lg hover:shadow-brand-orange/20 cursor-pointer text-sm tracking-wide ${
+        className={`w-full inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3.5 px-6 rounded-lg shadow-lg hover:shadow-brand-orange/20 cursor-pointer text-sm tracking-wide transition-all duration-300 hover:scale-[1.03] hover:shadow-xl active:scale-[0.98] ${
           isSubmitting ? "opacity-75 cursor-not-allowed" : ""
         }`}
       >

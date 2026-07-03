@@ -181,118 +181,168 @@ export default function HomePage() {
 
   return (
     <div className="w-full flex flex-col bg-white dark:bg-[#090d16]">
-      {/* 1. Hero Section */}
+      {/* 1. Hero Section matching mockup split format */}
       <section 
-        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1600&q=80')" }}
-        className="relative bg-cover bg-center text-white pt-24 pb-20 md:py-32 overflow-hidden"
+        style={{ backgroundImage: "url('/hero_collage_wide.jpg')" }}
+        className="relative bg-cover bg-center md:bg-[center_right_10%] text-white pt-16 pb-16 md:py-28 overflow-hidden border-b border-brand-blue-dark dark:border-white/5 bg-[#050c21]"
       >
-        {/* Overlay and Glow Effects */}
-        <div className="absolute inset-0 bg-black/60 dark:bg-black/85" />
-        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-orange/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-10 right-10 w-80 h-80 bg-brand-blue/30 rounded-full blur-3xl pointer-events-none" />
+        {/* Overlay and Glow Effects - Split panel background: solid dark blue on left half, fading smoothly in the center, transparent on the right */}
+        <div className="absolute inset-0 bg-[#050c21]/80 md:hidden z-0" />
+        <div className="hidden md:block absolute top-0 bottom-0 left-0 w-[45%] bg-[#050c21] z-0" />
+        <div className="hidden md:block absolute top-0 bottom-0 left-[45%] w-48 bg-gradient-to-r from-[#050c21] to-transparent z-0" />
+        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-orange/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-10 right-10 w-80 h-80 bg-brand-blue/20 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
-            {/* Hero Content */}
-            <div className="lg:col-span-7 space-y-6 text-left">
-              <div className="inline-flex items-center gap-2 bg-white/10 px-4 py-1.5 rounded-full border border-white/20 text-xs font-semibold tracking-wider text-brand-orange uppercase animate-pulse">
-                <Sparkles size={14} />
-                🎓 Learn Content Creation &amp; Video Editing in Telugu
+            {/* Left Content Column */}
+            <div className="lg:col-span-7 relative z-10 text-left space-y-6">
+              
+              <div className="inline-flex items-center gap-2 border border-white/20 bg-white/5 px-4 py-1.5 rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-wider text-gray-300">
+                ⭐ LEARN CONTENT CREATION &amp; VIDEO EDITING IN TELUGU
               </div>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-none">
-                India's Practical Content Creation <br />
-                <span className="text-brand-orange">Academy for Future Creators</span>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+                Master Content Creation, <br />
+                <span className="text-brand-orange">Video Editing &amp; AI Skills</span>
               </h1>
-              <p className="text-sm sm:text-base text-white/80 leading-relaxed max-w-2xl">
-                Master Content Creation, CapCut Video Editing (Mobile &amp; PC), Instagram Reels, YouTube Videos, Facebook Content, Scripting, Mobile Video Shooting, Social Media Page Management, and Account Growth through practical, step-by-step training in Telugu.
+              <p className="text-lg sm:text-xl font-bold text-white leading-snug">
+                Build Your Brand. Earn Online.
               </p>
-
-              <p className="text-xs sm:text-sm text-white/70 italic">
-                Whether you're a student, job seeker, business owner, freelancer, or an aspiring content creator, Creators College gives you the skills to create professional content, build your personal brand, and earn through social media.
+              <p className="text-xs sm:text-sm text-white/85 leading-relaxed font-normal max-w-xl">
+                Practical training in Content Creation, CapCut Editing, AI Tools, Social Media Growth &amp; Freelancing to help you <span className="text-brand-orange font-bold">learn, create and earn</span> from anywhere in the world.
               </p>
               
               <div className="flex flex-wrap gap-4 pt-2">
                 <Link
                   href="/checkout"
-                  className="bg-brand-orange hover:bg-brand-orange-dark text-white font-bold px-8 py-3.5 rounded-full transition duration-300 hover-lift shadow-lg hover:shadow-brand-orange/30 flex items-center gap-2"
+                  className="bg-brand-orange hover:bg-brand-orange-dark text-white font-bold px-8 py-3.5 rounded-full shadow-lg hover:shadow-brand-orange/30 flex items-center gap-2 transition-all duration-300 hover:scale-[1.05] active:scale-[0.98]"
                 >
                   Enroll Now
                   <ArrowRight size={18} />
                 </Link>
                 <Link
                   href="/lp/free-demo"
-                  className="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-semibold px-6 py-3.5 rounded-full transition duration-200 flex items-center gap-2"
+                  className="bg-white/10 hover:bg-white/20 text-white border border-white/25 font-semibold px-6 py-3.5 rounded-full flex items-center gap-2 transition-all duration-300 hover:scale-[1.05] active:scale-[0.98]"
                 >
                   <Video size={18} />
-                  Book a Free Demo Class
+                  Watch Free Demo Class
                 </Link>
               </div>
 
-              {/* Trust Badge */}
-              <div className="pt-6 flex items-center gap-3 border-t border-white/10 max-w-md">
-                <div className="flex -space-x-2">
-                  <span className="w-8 h-8 rounded-full bg-brand-orange border-2 border-brand-blue flex items-center justify-center font-bold text-xs">A</span>
-                  <span className="w-8 h-8 rounded-full bg-indigo-500 border-2 border-brand-blue flex items-center justify-center font-bold text-xs">V</span>
-                  <span className="w-8 h-8 rounded-full bg-emerald-500 border-2 border-brand-blue flex items-center justify-center font-bold text-xs">K</span>
+              {/* Metric Stats Cards Row - Styled White Background */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-white/15">
+                {/* Card 1 */}
+                <div className="bg-white/95 text-[#0a1931] border border-gray-100 rounded-xl p-3 flex flex-col justify-between space-y-1 hover:border-brand-orange/30 transition shadow-md">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-brand-orange text-xs sm:text-sm">👁️</span>
+                    <span className="text-xs sm:text-sm font-black text-[#0a1931]">500M+</span>
+                  </div>
+                  <div className="text-[9px] text-gray-500 font-bold leading-tight">Content Views Overall</div>
                 </div>
-                <div className="text-xs text-white/70">
-                  Joined by <strong className="text-white font-semibold">1,200+ students</strong> and business owners across Andhra &amp; Telangana.
+                {/* Card 2 */}
+                <div className="bg-white/95 text-[#0a1931] border border-gray-100 rounded-xl p-3 flex flex-col justify-between space-y-1 hover:border-brand-orange/30 transition shadow-md">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-brand-orange text-xs sm:text-sm">💼</span>
+                    <span className="text-xs sm:text-sm font-black text-[#0a1931]">1000+</span>
+                  </div>
+                  <div className="text-[9px] text-gray-500 font-bold leading-tight">Businesses Worked With</div>
                 </div>
+                {/* Card 3 */}
+                <div className="bg-white/95 text-[#0a1931] border border-gray-100 rounded-xl p-3 flex flex-col justify-between space-y-1 hover:border-brand-orange/30 transition shadow-md">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-brand-orange text-xs sm:text-sm">👥</span>
+                    <span className="text-xs sm:text-sm font-black text-[#0a1931]">Thousands</span>
+                  </div>
+                  <div className="text-[9px] text-gray-500 font-bold leading-tight">Creators Trained</div>
+                </div>
+                {/* Card 4 */}
+                <div className="bg-white/95 text-[#0a1931] border border-[#f3f4f6] rounded-xl p-3 flex flex-col justify-between space-y-1 hover:border-brand-orange/30 transition shadow-md">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-brand-orange text-xs sm:text-sm">🏅</span>
+                    <span className="text-xs sm:text-sm font-black text-[#0a1931]">5+ Years</span>
+                  </div>
+                  <div className="text-[9px] text-gray-500 font-bold leading-tight">In Content Excellence</div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Right Column Spacer - holds space for background features collage on desktop */}
+            <div className="hidden lg:block lg:col-span-5 pointer-events-none" />
+
+          </div>
+        </div>
+      </section>
+
+      {/* 6-Feature Bar below Hero */}
+      <section className="bg-brand-gray/30 dark:bg-[#090d16] py-6 relative z-20 -mt-8 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto bg-white dark:bg-brand-gray border border-gray-100 dark:border-white/5 rounded-2xl md:rounded-full p-4 md:p-5 shadow-xl">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 items-center text-left text-brand-charcoal dark:text-white font-bold divide-y lg:divide-y-0 lg:divide-x divide-gray-100 dark:divide-white/5">
+            
+            {/* Item 1 */}
+            <div className="flex items-center gap-3 pl-2">
+              <div className="w-10 h-10 rounded-full bg-brand-orange/10 text-brand-orange flex items-center justify-center shrink-0">
+                🎥
+              </div>
+              <div>
+                <h4 className="text-[11px] sm:text-xs text-brand-blue dark:text-white leading-tight font-black">Learn in Telugu</h4>
+                <p className="text-[9px] text-gray-400 font-semibold leading-tight">Step-by-step</p>
               </div>
             </div>
 
-            {/* Hero Interactive Workspace Mockup */}
-            <div className="lg:col-span-5 relative w-full flex justify-center">
-              <div className="relative w-full max-w-md bg-brand-charcoal/90 rounded-2xl border border-white/10 shadow-2xl p-4 space-y-4 hover:border-brand-orange/40 transition duration-300">
-                {/* Window buttons */}
-                <div className="flex gap-1.5 border-b border-white/5 pb-3">
-                  <div className="w-3 h-3 rounded-full bg-red-500" />
-                  <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                  <div className="w-3 h-3 rounded-full bg-green-500" />
-                  <span className="text-[10px] text-gray-500 ml-2 font-mono">creator_workspace.prproj</span>
-                </div>
+            {/* Item 2 */}
+            <div className="flex items-center gap-3 pt-4 lg:pt-0 lg:pl-4">
+              <div className="w-10 h-10 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">
+                💻
+              </div>
+              <div>
+                <h4 className="text-[11px] sm:text-xs text-brand-blue dark:text-white leading-tight font-black">Live Classes</h4>
+                <p className="text-[9px] text-gray-400 font-semibold leading-tight">Interactive</p>
+              </div>
+            </div>
 
-                {/* Main Video Frame Mock */}
-                <div className="aspect-video bg-black rounded-lg overflow-hidden relative flex items-center justify-center group border border-white/5 cursor-pointer">
-                  <img
-                    src="https://images.unsplash.com/photo-1626379616459-b2ce1d9decbc?auto=format&fit=crop&w=800&q=80"
-                    alt="Content Creator Workspace"
-                    className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 transition duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent flex items-end p-4 z-10">
-                    <div className="space-y-1 text-left">
-                      <span className="text-[10px] font-extrabold uppercase bg-brand-orange text-white px-2 py-0.5 rounded-full">Telugu Content Creation</span>
-                      <h4 className="text-sm font-bold text-white">How to Edit High-Retention Reels</h4>
-                    </div>
-                  </div>
-                  <div className="w-12 h-12 rounded-full bg-brand-orange/95 flex items-center justify-center text-white shadow-lg cursor-pointer group-hover:scale-110 transition duration-200 z-20">
-                    <Play size={20} fill="currentColor" className="ml-1" />
-                  </div>
-                </div>
+            {/* Item 3 */}
+            <div className="flex items-center gap-3 pt-4 lg:pt-0 lg:pl-4">
+              <div className="w-10 h-10 rounded-full bg-purple-500/10 text-purple-500 flex items-center justify-center shrink-0">
+                📂
+              </div>
+              <div>
+                <h4 className="text-[11px] sm:text-xs text-brand-blue dark:text-white leading-tight font-black">Recordings</h4>
+                <p className="text-[9px] text-gray-400 font-semibold leading-tight">Lifetime Access</p>
+              </div>
+            </div>
 
-                {/* Timeline mock */}
-                <div className="space-y-2 pt-2 text-left">
-                  <div className="flex justify-between text-[10px] text-gray-400 font-mono">
-                    <span>00:00:15:02</span>
-                    <span>00:01:30:00</span>
-                  </div>
-                  <div className="h-6 w-full bg-white/5 rounded relative flex items-center overflow-hidden border border-white/5">
-                    <div className="absolute left-0 w-1/3 h-full bg-brand-blue/60 border-r border-white/10" />
-                    <div className="absolute left-1/3 w-1/4 h-full bg-brand-orange/60 border-r border-white/10" />
-                    <div className="absolute left-[58%] w-1/6 h-full bg-emerald-600/60 border-r border-white/10" />
-                    <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-red-500 shadow-md" />
-                  </div>
-                </div>
+            {/* Item 4 */}
+            <div className="flex items-center gap-3 pt-4 lg:pt-0 lg:pl-4">
+              <div className="w-10 h-10 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0">
+                💼
+              </div>
+              <div>
+                <h4 className="text-[11px] sm:text-xs text-brand-blue dark:text-white leading-tight font-black">Real Projects</h4>
+                <p className="text-[9px] text-gray-400 font-semibold leading-tight">Build Portfolio</p>
+              </div>
+            </div>
 
-                {/* Editor labels */}
-                <div className="flex justify-between items-center text-xs pt-1">
-                  <span className="text-gray-400 flex items-center gap-1">
-                    <Award size={14} className="text-brand-orange" />
-                    Practical Curriculum
-                  </span>
-                  <span className="text-brand-orange font-bold">Join Batch &amp; Go Live &rarr;</span>
-                </div>
+            {/* Item 5 */}
+            <div className="flex items-center gap-3 pt-4 lg:pt-0 lg:pl-4">
+              <div className="w-10 h-10 rounded-full bg-yellow-500/10 text-yellow-600 flex items-center justify-center shrink-0">
+                📈
+              </div>
+              <div>
+                <h4 className="text-[11px] sm:text-xs text-brand-blue dark:text-white leading-tight font-black">Career &amp; Freelancer</h4>
+                <p className="text-[9px] text-gray-400 font-semibold leading-tight">Expert Guidance</p>
+              </div>
+            </div>
+
+            {/* Item 6 */}
+            <div className="flex items-center gap-3 pt-4 lg:pt-0 lg:pl-4">
+              <div className="w-10 h-10 rounded-full bg-teal-500/10 text-teal-500 flex items-center justify-center shrink-0">
+                👥
+              </div>
+              <div>
+                <h4 className="text-[11px] sm:text-xs text-brand-blue dark:text-white leading-tight font-black">Community</h4>
+                <p className="text-[9px] text-gray-400 font-semibold leading-tight">Support</p>
               </div>
             </div>
 
@@ -300,8 +350,464 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Choose Your Learning Mode Section */}
+      <section className="py-12 md:py-20 bg-white dark:bg-[#090d16] border-b border-gray-100 dark:border-white/5 text-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          
+          <div className="text-center max-w-3xl mx-auto space-y-4">
+            <div className="inline-block border border-brand-orange/30 bg-brand-orange/5 text-brand-orange px-4 py-1.5 rounded-full text-xs font-bold tracking-wider uppercase">
+              🎓 Choose Your Learning Mode
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-brand-blue dark:text-white tracking-tight">
+              Learn Your Way. <span className="text-brand-orange">Grow Your Future.</span>
+            </h2>
+            <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 leading-relaxed font-normal max-w-3xl mx-auto">
+              At Creators College, we offer 3 flexible learning modes designed to fit your lifestyle, schedule, and goals. Learn live, learn in person, or learn at your own pace &mdash; <strong className="text-brand-blue dark:text-white">the choice is yours!</strong>
+            </p>
+          </div>
+
+          {/* Three Columns Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
+            
+            {/* Card 1: Online Classes */}
+            <div className="bg-white dark:bg-brand-gray border border-gray-100 dark:border-white/5 p-6 rounded-3xl shadow-xl flex flex-col justify-between space-y-6 hover:shadow-2xl transition duration-300">
+              <div className="space-y-4">
+                {/* Header */}
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-extrabold text-brand-blue dark:text-white text-lg flex items-center gap-2">
+                      1. Online Classes
+                      <span className="bg-blue-500 text-white text-[9px] font-black px-2 py-0.5 rounded-full tracking-wider uppercase animate-pulse">LIVE</span>
+                    </h3>
+                    <p className="text-xs text-gray-400">Learn Live from Anywhere</p>
+                  </div>
+                </div>
+                {/* Image */}
+                <div className="rounded-2xl overflow-hidden aspect-video relative border border-gray-100 dark:border-white/5">
+                  <img
+                    src="https://images.unsplash.com/photo-1610484826917-0f101a7bf7f4?auto=format&fit=crop&w=500&q=80"
+                    alt="Online Classes"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                {/* Checklist */}
+                <ul className="space-y-2.5 text-xs text-gray-500 dark:text-gray-400 font-semibold">
+                  {[
+                    "Live Interactive Sessions",
+                    "Ask Questions in Real-Time",
+                    "Practical Assignments",
+                    "Weekend & Weekday Batches",
+                    "Lifetime Community"
+                  ].map((item, idx) => (
+                    <li key={idx} className="flex items-center gap-2.5">
+                      <span className="w-5 h-5 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">✓</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <button
+                onClick={() => {
+                  setSelectedHomeCourse("creation");
+                  setActiveModule(0);
+                  document.getElementById("courses-section")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-2xl text-center text-xs tracking-wider transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-md hover:shadow-blue-500/20 cursor-pointer"
+              >
+                Explore Online Courses &rarr;
+              </button>
+            </div>
+
+            {/* Card 2: Offline Classroom */}
+            <div className="bg-white dark:bg-brand-gray border border-gray-100 dark:border-white/5 p-6 rounded-3xl shadow-xl flex flex-col justify-between space-y-6 hover:shadow-2xl transition duration-300">
+              <div className="space-y-4">
+                {/* Header */}
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center shrink-0">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-extrabold text-brand-blue dark:text-white text-lg">2. Offline Classroom</h3>
+                    <p className="text-xs text-gray-400">Learn Face-to-Face in Hyderabad</p>
+                  </div>
+                </div>
+                {/* Image */}
+                <div className="rounded-2xl overflow-hidden aspect-video relative border border-gray-100 dark:border-white/5">
+                  <img
+                    src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=500&q=80"
+                    alt="Offline Classroom"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                {/* Checklist */}
+                <ul className="space-y-2.5 text-xs text-gray-500 dark:text-gray-400 font-semibold">
+                  {[
+                    "Classroom Training",
+                    "Hands-on Practical Sessions",
+                    "Direct Mentor Support",
+                    "Networking with Students",
+                    "Real Project Experience"
+                  ].map((item, idx) => (
+                    <li key={idx} className="flex items-center gap-2.5">
+                      <span className="w-5 h-5 rounded-full bg-brand-orange/10 text-brand-orange flex items-center justify-center shrink-0">✓</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <button
+                onClick={() => {
+                  document.getElementById("contact-section")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3 px-6 rounded-2xl text-center text-xs tracking-wider transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-md hover:shadow-brand-orange/20 cursor-pointer"
+              >
+                Explore Offline Courses &rarr;
+              </button>
+            </div>
+
+            {/* Card 3: Recorded Sessions */}
+            <div className="bg-white dark:bg-brand-gray border border-gray-100 dark:border-white/5 p-6 rounded-3xl shadow-xl flex flex-col justify-between space-y-6 hover:shadow-2xl transition duration-300">
+              <div className="space-y-4">
+                {/* Header */}
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-500 flex items-center justify-center shrink-0">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-extrabold text-brand-blue dark:text-white text-lg">3. Recorded Sessions</h3>
+                    <p className="text-xs text-gray-400">Learn at Your Own Pace</p>
+                  </div>
+                </div>
+                {/* Image */}
+                <div className="rounded-2xl overflow-hidden aspect-video relative border border-gray-100 dark:border-white/5">
+                  <img
+                    src="https://images.unsplash.com/photo-1527689368864-3a821dbccc34?auto=format&fit=crop&w=500&q=80"
+                    alt="Recorded Sessions"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                {/* Checklist */}
+                <ul className="space-y-2.5 text-xs text-gray-500 dark:text-gray-400 font-semibold">
+                  {[
+                    "Lifetime Access",
+                    "Watch Anytime",
+                    "Pause & Rewatch",
+                    "Mobile & Laptop Friendly",
+                    "Perfect for Busy Professionals"
+                  ].map((item, idx) => (
+                    <li key={idx} className="flex items-center gap-2.5">
+                      <span className="w-5 h-5 rounded-full bg-purple-500/10 text-purple-500 flex items-center justify-center shrink-0">✓</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <button
+                onClick={() => {
+                  setSelectedHomeCourse("capcut");
+                  setActiveModule(0);
+                  document.getElementById("courses-section")?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-2xl text-center text-xs tracking-wider transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] shadow-md hover:shadow-purple-500/20 cursor-pointer"
+              >
+                Explore Recorded Courses &rarr;
+              </button>
+            </div>
+
+          </div>
+
+          {/* Sub-Header Divider */}
+          <div className="pt-8 text-center space-y-2">
+            <div className="flex items-center justify-center gap-3">
+              <div className="h-[1px] bg-gray-200 dark:bg-white/10 w-16" />
+              <span className="text-xs font-black uppercase tracking-wider text-brand-blue dark:text-white flex items-center gap-1.5">
+                🎓 Courses Available in Each Mode
+              </span>
+              <div className="h-[1px] bg-gray-200 dark:bg-white/10 w-16" />
+            </div>
+            <p className="text-xs sm:text-sm text-gray-400">Choose any course and learn in the mode that suits you best.</p>
+          </div>
+
+          {/* Five Horizontal Course Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 text-left">
+            
+            {/* Card 1: Content Creation */}
+            <div className="bg-white dark:bg-brand-gray border border-gray-100 dark:border-white/5 p-5 rounded-2xl shadow flex flex-col justify-between space-y-4 hover:shadow-lg transition">
+              <div className="space-y-2">
+                <div className="flex justify-between items-start">
+                  <div className="w-10 h-10 rounded-lg bg-blue-500/10 text-blue-500 flex items-center justify-center shrink-0">
+                    🎬
+                  </div>
+                  <span className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full">✓ Available</span>
+                </div>
+                <h4 className="font-extrabold text-brand-blue dark:text-white text-xs sm:text-sm leading-tight pt-1">
+                  1. Complete Content Creation
+                </h4>
+                <p className="text-[11px] text-gray-400 leading-relaxed font-normal">
+                  Master content planning, scripting, video shooting, editing, branding, social media growth &amp; monetization.
+                </p>
+              </div>
+              <Link
+                href="/courses"
+                className="w-full border border-gray-200 dark:border-white/10 hover:border-brand-orange hover:text-brand-orange text-brand-charcoal dark:text-white font-bold py-2 px-4 rounded-xl text-center text-[10px] tracking-wider transition-all duration-300 hover:scale-[1.02]"
+              >
+                View Course &rarr;
+              </Link>
+            </div>
+
+            {/* Card 2: CapCut Editing */}
+            <div className="bg-white dark:bg-brand-gray border border-gray-100 dark:border-white/5 p-5 rounded-2xl shadow flex flex-col justify-between space-y-4 hover:shadow-lg transition">
+              <div className="space-y-2">
+                <div className="flex justify-between items-start">
+                  <div className="w-10 h-10 rounded-lg bg-brand-orange/10 text-brand-orange flex items-center justify-center shrink-0">
+                    ✂️
+                  </div>
+                  <span className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full">✓ Available</span>
+                </div>
+                <h4 className="font-extrabold text-brand-blue dark:text-white text-xs sm:text-sm leading-tight pt-1">
+                  2. Complete CapCut Editing
+                </h4>
+                <p className="text-[11px] text-gray-400 leading-relaxed font-normal">
+                  Learn CapCut from beginner to advanced for both Mobile &amp; PC and create stunning videos.
+                </p>
+              </div>
+              <Link
+                href="/courses"
+                className="w-full border border-gray-200 dark:border-white/10 hover:border-brand-orange hover:text-brand-orange text-brand-charcoal dark:text-white font-bold py-2 px-4 rounded-xl text-center text-[10px] tracking-wider transition-all duration-300 hover:scale-[1.02]"
+              >
+                View Course &rarr;
+              </Link>
+            </div>
+
+            {/* Card 3: Adobe Premiere Pro */}
+            <div className="bg-white dark:bg-brand-gray border border-gray-100 dark:border-white/5 p-5 rounded-2xl shadow flex flex-col justify-between space-y-4 hover:shadow-lg transition">
+              <div className="space-y-2">
+                <div className="flex justify-between items-start">
+                  <div className="w-10 h-10 rounded-lg bg-indigo-500/10 text-indigo-500 flex items-center justify-center font-bold text-xs shrink-0">
+                    Pr
+                  </div>
+                  <span className="bg-brand-orange/10 text-brand-orange text-[9px] font-bold px-2 py-0.5 rounded-full">🚀 Soon</span>
+                </div>
+                <h4 className="font-extrabold text-brand-blue dark:text-white text-xs sm:text-sm leading-tight pt-1">
+                  3. Adobe Premiere Pro
+                </h4>
+                <p className="text-[11px] text-gray-400 leading-relaxed font-normal">
+                  Professional video editing for YouTube, films &amp; commercials.
+                </p>
+              </div>
+              <a
+                href="https://wa.me/918143937367?text=Hi%20Creators%20College,%20I'd%20like%20to%20be%20notified%20when%20the%20Adobe%20Premiere%20Pro%20course%20launches!"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full border border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white font-bold py-2 px-4 rounded-xl text-center text-[10px] tracking-wider transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-1 cursor-pointer"
+              >
+                Notify Me 🔔
+              </a>
+            </div>
+
+            {/* Card 4: After Effects */}
+            <div className="bg-white dark:bg-brand-gray border border-gray-100 dark:border-white/5 p-5 rounded-2xl shadow flex flex-col justify-between space-y-4 hover:shadow-lg transition">
+              <div className="space-y-2">
+                <div className="flex justify-between items-start">
+                  <div className="w-10 h-10 rounded-lg bg-purple-500/10 text-purple-500 flex items-center justify-center font-bold text-xs shrink-0">
+                    Ae
+                  </div>
+                  <span className="bg-brand-orange/10 text-brand-orange text-[9px] font-bold px-2 py-0.5 rounded-full">🚀 Soon</span>
+                </div>
+                <h4 className="font-extrabold text-brand-blue dark:text-white text-xs sm:text-sm leading-tight pt-1">
+                  4. After Effects
+                </h4>
+                <p className="text-[11px] text-gray-400 leading-relaxed font-normal">
+                  Learn motion graphics, animation &amp; visual effects for professional content creation.
+                </p>
+              </div>
+              <a
+                href="https://wa.me/918143937367?text=Hi%20Creators%20College,%20I'd%20like%20to%20be%20notified%20when%20the%20Adobe%20After%20Effects%20course%20launches!"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full border border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white font-bold py-2 px-4 rounded-xl text-center text-[10px] tracking-wider transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-1 cursor-pointer"
+              >
+                Notify Me 🔔
+              </a>
+            </div>
+
+            {/* Card 5: DaVinci Resolve */}
+            <div className="bg-white dark:bg-brand-gray border border-gray-100 dark:border-white/5 p-5 rounded-2xl shadow flex flex-col justify-between space-y-4 hover:shadow-lg transition">
+              <div className="space-y-2">
+                <div className="flex justify-between items-start">
+                  <div className="w-10 h-10 rounded-lg bg-teal-500/10 text-teal-500 flex items-center justify-center font-bold text-[10px] shrink-0">
+                    Dr
+                  </div>
+                  <span className="bg-brand-orange/10 text-brand-orange text-[9px] font-bold px-2 py-0.5 rounded-full">🚀 Soon</span>
+                </div>
+                <h4 className="font-extrabold text-brand-blue dark:text-white text-xs sm:text-sm leading-tight pt-1">
+                  5. DaVinci Resolve
+                </h4>
+                <p className="text-[11px] text-gray-400 leading-relaxed font-normal">
+                  Master professional editing, color grading &amp; audio post production.
+                </p>
+              </div>
+              <a
+                href="https://wa.me/918143937367?text=Hi%20Creators%20College,%20I'd%20like%20to%20be%20notified%20when%20the%20DaVinci%20Resolve%20course%20launches!"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full border border-brand-orange text-brand-orange hover:bg-brand-orange hover:text-white font-bold py-2 px-4 rounded-xl text-center text-[10px] tracking-wider transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-1 cursor-pointer"
+              >
+                Notify Me 🔔
+              </a>
+            </div>
+
+          </div>
+
+          {/* Bottom Value bar features */}
+          <div className="bg-brand-blue dark:bg-brand-gray border border-brand-blue-dark text-white p-6 rounded-3xl shadow-lg mt-8">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-xs font-bold divide-y md:divide-y-0 md:divide-x divide-white/10">
+              <div className="pt-3 md:pt-0 flex flex-col justify-center items-center space-y-1">
+                <span className="text-brand-orange text-lg">👨‍🏫</span>
+                <span className="text-[11px] tracking-wide text-white/95">Expert Trainers</span>
+                <span className="text-[10px] text-white/60 font-normal">Industry Professionals</span>
+              </div>
+              <div className="pt-3 md:pt-0 flex flex-col justify-center items-center space-y-1">
+                <span className="text-brand-orange text-lg">📁</span>
+                <span className="text-[11px] tracking-wide text-white/95">Practical Projects</span>
+                <span className="text-[10px] text-white/60 font-normal">Real World Experience</span>
+              </div>
+              <div className="pt-3 md:pt-0 flex flex-col justify-center items-center space-y-1">
+                <span className="text-brand-orange text-lg">🎓</span>
+                <span className="text-[11px] tracking-wide text-white/95">Certificate</span>
+                <span className="text-[10px] text-white/60 font-normal">Upon Completion</span>
+              </div>
+              <div className="pt-3 md:pt-0 flex flex-col justify-center items-center space-y-1">
+                <span className="text-brand-orange text-lg">💬</span>
+                <span className="text-[11px] tracking-wide text-white/95">Lifetime Support</span>
+                <span className="text-[10px] text-white/60 font-normal">We're Always With You</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* SECTION 1.5: Our Pillars / Our Core Values mockup matching */}
+      <section className="py-12 md:py-20 bg-white dark:bg-[#090d16] border-b border-gray-100 dark:border-white/5 text-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          
+          {/* Header */}
+          <div className="text-center space-y-3">
+            <div className="flex items-center justify-center gap-3">
+              <div className="h-[2px] bg-brand-orange w-8 rounded" />
+              <span className="text-xs font-black uppercase tracking-widest text-brand-orange">
+                OUR PILLARS
+              </span>
+              <div className="h-[2px] bg-brand-orange w-8 rounded" />
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-brand-blue dark:text-white tracking-tight">
+              Our Core Values
+            </h2>
+            <div className="flex justify-center gap-1.5 pt-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-orange" />
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-blue" />
+            </div>
+          </div>
+
+          {/* 3 Columns Core Values Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            
+            {/* Value Card 1: Practical Learning */}
+            <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-3xl p-8 shadow-md flex flex-col items-center justify-between space-y-6 hover:shadow-lg transition duration-300 relative overflow-hidden group">
+              <div className="w-20 h-20 rounded-full border-2 border-dashed border-brand-blue dark:border-white/20 flex items-center justify-center text-brand-blue dark:text-white bg-blue-50/50 dark:bg-white/5 shrink-0 group-hover:scale-105 transition">
+                <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div className="space-y-3 text-center">
+                <h3 className="text-lg font-black text-brand-blue dark:text-white">Practical Learning</h3>
+                <div className="h-[2px] bg-brand-blue w-8 mx-auto rounded" />
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
+                  Everything we teach is centered around hands-on projects, assignments, and real-life client tasks.
+                </p>
+              </div>
+              <div className="w-full h-2 bg-brand-blue absolute bottom-0 left-0" />
+            </div>
+
+            {/* Value Card 2: Creativity */}
+            <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-3xl p-8 shadow-md flex flex-col items-center justify-between space-y-6 hover:shadow-lg transition duration-300 relative overflow-hidden group">
+              <div className="w-20 h-20 rounded-full border-2 border-dashed border-brand-orange flex items-center justify-center text-brand-orange bg-orange-50/50 dark:bg-white/5 shrink-0 group-hover:scale-105 transition">
+                <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+              </div>
+              <div className="space-y-3 text-center">
+                <h3 className="text-lg font-black text-brand-orange">Creativity</h3>
+                <div className="h-[2px] bg-brand-orange w-8 mx-auto rounded" />
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
+                  Helping you find your unique creative voice and building video arcs that stand out in crowded feeds.
+                </p>
+              </div>
+              <div className="w-full h-2 bg-brand-orange absolute bottom-0 left-0" />
+            </div>
+
+            {/* Value Card 3: Step-by-Step Teaching */}
+            <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-3xl p-8 shadow-md flex flex-col items-center justify-between space-y-6 hover:shadow-lg transition duration-300 relative overflow-hidden group">
+              <div className="w-20 h-20 rounded-full border-2 border-dashed border-brand-blue dark:border-white/20 flex items-center justify-center text-brand-blue dark:text-white bg-blue-50/50 dark:bg-white/5 shrink-0 group-hover:scale-105 transition">
+                <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
+                </svg>
+              </div>
+              <div className="space-y-3 text-center">
+                <h3 className="text-lg font-black text-brand-blue dark:text-white">Step-by-Step Teaching</h3>
+                <div className="h-[2px] bg-brand-blue w-8 mx-auto rounded" />
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
+                  Courses taught in clear, basic Telugu, from starting your channels up to advanced platform algorithms.
+                </p>
+              </div>
+              <div className="w-full h-2 bg-brand-blue absolute bottom-0 left-0" />
+            </div>
+
+          </div>
+
+          {/* CTA Banner: Learn Today. Lead Tomorrow */}
+          <div className="bg-[#0a1931] relative overflow-hidden text-white rounded-3xl p-6 sm:p-8 max-w-4xl mx-auto shadow-2xl mt-12 text-left flex flex-col md:flex-row justify-between items-center gap-6 border border-white/10">
+            <div className="absolute inset-0 bg-brand-orange/5 blur-3xl pointer-events-none" />
+            
+            <div className="flex items-center gap-4 relative z-10">
+              <div className="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center shrink-0 text-3xl">
+                🎓
+              </div>
+              <div className="space-y-1">
+                <h3 className="text-2xl sm:text-3xl font-black leading-tight">
+                  Learn Today. <span className="text-brand-orange">Lead Tomorrow.</span>
+                </h3>
+                <p className="text-xs text-gray-300">Unlock your potential in content creation and video editing.</p>
+              </div>
+            </div>
+
+            <button 
+              onClick={() => {
+                document.getElementById("courses-section")?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="bg-brand-orange hover:bg-brand-orange-dark text-white font-black py-4 px-8 rounded-full text-xs tracking-wider uppercase shadow-lg transition duration-300 hover:scale-[1.05] relative z-10 shrink-0 cursor-pointer"
+            >
+              Explore Active Courses &rarr;
+            </button>
+          </div>
+
+        </div>
+      </section>
+
       {/* 2. Why Creators College */}
-      <section className="py-20 bg-brand-gray/30 dark:bg-white/5 border-y border-gray-100 dark:border-white/5 text-left">
+      <section className="py-12 md:py-20 bg-brand-gray/30 dark:bg-white/5 border-y border-gray-100 dark:border-white/5 text-left">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
@@ -402,7 +908,7 @@ export default function HomePage() {
       </section>
 
       {/* 3. Featured Courses */}
-      <section className="py-20 bg-white dark:bg-[#090d16]">
+      <section id="courses-section" className="py-12 md:py-20 bg-white dark:bg-[#090d16]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           
           <div className="text-center max-w-2xl mx-auto space-y-2">
@@ -549,7 +1055,7 @@ export default function HomePage() {
       </section>
 
       {/* 4. Student Learning Journey */}
-      <section className="py-20 bg-brand-gray/30 dark:bg-white/5 border-y border-gray-100 dark:border-white/5">
+      <section className="py-12 md:py-20 bg-brand-gray/30 dark:bg-white/5 border-y border-gray-100 dark:border-white/5">
         <div className="max-w-4xl mx-auto px-4">
           
           <div className="text-center mb-16 space-y-3">
@@ -607,7 +1113,7 @@ export default function HomePage() {
       </section>
 
       {/* 5. Statistics (Creators College in Numbers) */}
-      <section className="py-20 bg-white dark:bg-[#090d16] text-left">
+      <section className="py-12 md:py-20 bg-white dark:bg-[#090d16] text-left">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -669,7 +1175,7 @@ export default function HomePage() {
       </section>
 
       {/* Video Gallery Section */}
-      <section className="py-20 bg-brand-gray/30 dark:bg-white/5 border-y border-gray-100 dark:border-white/5">
+      <section className="py-12 md:py-20 bg-brand-gray/30 dark:bg-white/5 border-y border-gray-100 dark:border-white/5">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
             <span className="text-xs font-bold uppercase tracking-widest text-brand-orange">🎥 Creator Showcases</span>
@@ -681,7 +1187,7 @@ export default function HomePage() {
       </section>
 
       {/* 7. Categorized FAQ Section */}
-      <section className="py-20 bg-white dark:bg-[#090d16] text-left">
+      <section className="py-12 md:py-20 bg-white dark:bg-[#090d16] text-left">
         <div className="max-w-5xl mx-auto px-4">
           
           <div className="text-center mb-16 space-y-3">
@@ -732,7 +1238,7 @@ export default function HomePage() {
       </section>
 
       {/* 8. Contact CTA Section */}
-      <section className="py-20 bg-brand-blue text-white relative overflow-hidden text-left border-t border-brand-blue-dark">
+      <section id="contact-section" className="py-12 md:py-20 bg-brand-blue text-white relative overflow-hidden text-left border-t border-brand-blue-dark">
         <div className="absolute top-0 right-0 w-96 h-96 bg-brand-orange/20 rounded-full blur-3xl pointer-events-none" />
         
         <div className="max-w-6xl mx-auto px-4 relative z-10">

@@ -53,13 +53,13 @@ export default function Header() {
   const announcementStripe = (
     <div className="w-full bg-brand-orange text-white py-2 px-4 text-center text-xs font-bold tracking-wide relative z-50 flex items-center justify-center gap-x-2 shadow-sm">
       <span className="hidden sm:inline">
-        🔥 Special Offer: Get a FREE Creator Toolkit (Worth ₹4,999) + Lifetime Discord Access!
+        🔥 Launch Offer: ₹30,000 Course for Just ₹5,000 | Save ₹25,000 | Limited-Time Enrollment &rarr;
       </span>
       <span className="sm:hidden">
-        🔥 Claim FREE ₹4,999 Creator Toolkit Now!
+        🔥 Launch Offer: ₹30,000 Course for Just ₹5,000! &rarr;
       </span>
       <Link href="/checkout" className="underline hover:text-brand-charcoal transition inline-flex items-center gap-0.5 font-black uppercase whitespace-nowrap">
-        Enroll &rarr;
+        Enroll
       </Link>
     </div>
   );
@@ -87,7 +87,7 @@ export default function Header() {
               </button>
               <button
                 onClick={() => setIsWhatsAppGateOpen(true)}
-                className="inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wide transition duration-300 hover-lift shadow-md cursor-pointer"
+                className="inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wide shadow-md cursor-pointer transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:shadow-brand-orange/20 active:scale-[0.97]"
               >
                 Chat with Coordinator
                 <ArrowRight size={14} />
@@ -149,7 +149,7 @@ export default function Header() {
               </button>
               <Link
                 href="/checkout"
-                className="bg-brand-orange hover:bg-brand-orange-dark text-white px-6 py-2.5 rounded-full text-sm font-bold tracking-wide transition duration-300 hover-lift shadow-lg hover:shadow-brand-orange/20"
+                className="bg-brand-orange hover:bg-brand-orange-dark text-white px-6 py-2.5 rounded-full text-sm font-bold tracking-wide shadow-lg hover:shadow-brand-orange/20 transition-all duration-300 hover:scale-[1.03] active:scale-[0.97]"
               >
                 Enroll Now
               </Link>
@@ -203,7 +203,7 @@ export default function Header() {
                 <Link
                   href="/checkout"
                   onClick={() => setIsOpen(false)}
-                  className="block w-full bg-brand-orange hover:bg-brand-orange-dark text-white py-3 rounded-full text-base font-bold transition duration-300 shadow-md"
+                  className="block w-full bg-brand-orange hover:bg-brand-orange-dark text-white py-3 rounded-full text-base font-bold shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
                 >
                   Enroll Now
                 </Link>
