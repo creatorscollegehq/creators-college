@@ -41,8 +41,6 @@ export default function Header() {
     { label: "Home", href: "/" },
     { label: "About Us", href: "/about" },
     { label: "Courses", href: "/courses" },
-    { label: "Corporate Training", href: "/corporate-training" },
-    { label: "Success Stories", href: "/success-stories" },
     { label: "Blog", href: "/blog" },
     { label: "Contact Us", href: "/contact" },
   ];
@@ -51,7 +49,7 @@ export default function Header() {
   const logoSrc = "/logo/2 Horizontal Logo.png";
 
   const announcementStripe = (
-    <div className="w-full bg-brand-orange text-white py-2 px-4 text-center text-xs font-bold tracking-wide relative z-50 flex items-center justify-center gap-x-2 shadow-sm">
+    <div className="w-full bg-brand-orange text-white py-1.5 px-4 text-center text-[11px] sm:text-xs font-bold tracking-wide relative z-50 flex items-center justify-center gap-x-2 shadow-sm">
       <span className="hidden sm:inline">
         🔥 Launch Offer: ₹30,000 Course for Just ₹5,000 | Save ₹25,000 | Limited-Time Enrollment &rarr;
       </span>
@@ -68,13 +66,13 @@ export default function Header() {
     return (
       <div className="w-full sticky top-0 z-50">
         {announcementStripe}
-        <header className="w-full bg-brand-blue py-4 border-b border-brand-blue-dark dark:bg-brand-gray dark:border-white/5">
+        <header className="w-full bg-brand-blue py-3 border-b border-brand-blue-dark dark:bg-brand-gray dark:border-white/5">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
             <Link href="/" className="flex items-center">
               <img 
                 src="/logo/2 Horizontal Logo.png" 
                 alt="Creators College Logo" 
-                className="h-12 sm:h-16 w-auto object-contain transition-all dark-logo-stroke"
+                className="h-11 sm:h-14 w-auto object-contain transition-all dark-logo-stroke"
               />
             </Link>
             <div className="flex items-center gap-4">
@@ -106,14 +104,14 @@ export default function Header() {
       {/* Header wrapper switches bg colors seamlessly: White in Light mode, Navy black in Dark mode */}
       <header className="w-full bg-white/95 dark:bg-[#090d16]/95 backdrop-blur-md border-b border-gray-200/60 dark:border-white/5 shadow-md transition-colors duration-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
+          <div className="flex items-center justify-between h-18">
             {/* Logo */}
             <div className="flex-shrink-0 py-2">
               <Link href="/" className="flex items-center">
                 <img
                   src={logoSrc}
                   alt="Creators College Logo"
-                  className="h-14 sm:h-18 w-auto object-contain transition-all dark-logo-stroke"
+                  className="h-12 sm:h-15 w-auto object-contain transition-all dark-logo-stroke"
                 />
               </Link>
             </div>
@@ -149,7 +147,7 @@ export default function Header() {
               </button>
               <Link
                 href="/checkout"
-                className="bg-brand-orange hover:bg-brand-orange-dark text-white px-6 py-2.5 rounded-full text-sm font-bold tracking-wide shadow-lg hover:shadow-brand-orange/20 transition-all duration-300 hover:scale-[1.03] active:scale-[0.97]"
+                className="bg-brand-orange hover:bg-brand-orange-dark text-white px-6 py-2.5 rounded-full text-sm font-bold tracking-wide shadow-lg hover:shadow-brand-orange/20 transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] animate-enroll"
               >
                 Enroll Now
               </Link>
@@ -203,7 +201,7 @@ export default function Header() {
                 <Link
                   href="/checkout"
                   onClick={() => setIsOpen(false)}
-                  className="block w-full bg-brand-orange hover:bg-brand-orange-dark text-white py-3 rounded-full text-base font-bold shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                  className="block w-full bg-brand-orange hover:bg-brand-orange-dark text-white py-3 rounded-full text-base font-bold shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] animate-enroll justify-center"
                 >
                   Enroll Now
                 </Link>

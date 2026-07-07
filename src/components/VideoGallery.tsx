@@ -61,12 +61,12 @@ export default function VideoGallery() {
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-3">
-          <span className="text-xs font-bold uppercase tracking-widest text-brand-orange">Video Resources</span>
+          <span className="text-xs font-bold uppercase tracking-widest text-brand-orange">Creative Showcase</span>
           <h2 className="text-3xl font-extrabold text-brand-blue dark:text-white tracking-tight">
-            Learn From Our Library
+            This is Our Work We Have Done
           </h2>
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Browse our curated video guides, student reels, and live class session snippets.
+            Browse our actual assignments, client video edits, and campus workshop snippets.
           </p>
         </div>
 

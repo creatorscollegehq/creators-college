@@ -57,6 +57,20 @@ const Youtube = ({ size = 20 }: { size?: number }) => (
 
 export default function ContactPage() {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
+  const [activeBox, setActiveBox] = useState<number | null>(null);
+
+  const whyContactBoxes = [
+    { icon: "🎓", title: "Course Selection Guidance", desc: "Our team helps you match your goals with the best course syllabus (Content Creation vs. Editing)." },
+    { icon: "💼", title: "Career Advice", desc: "Get expert counseling on how to transition into a full-time creator or high-paying freelance editor." },
+    { icon: "🕒", title: "Batch Timings", desc: "Learn about our morning, evening, and weekend batches for online and offline classes." },
+    { icon: "📄", title: "Course Curriculum", desc: "Get details of our step-by-step practical modules covering research, scripting, shoots, and post-production." },
+    { icon: "🎥", title: "Demo Classes", desc: "Book a free online session or visit our Hyderabad campus to attend a live class." },
+    { icon: "💳", title: "Fee Details", desc: "Get exact pricing information, ongoing discounts, and special launch offers." },
+    { icon: "🏢", title: "Corporate Training", desc: "Customized content creation bootcamps and workshops for businesses and agencies." },
+    { icon: "🏫", title: "Workshops", desc: "Enquire about our upcoming weekend bootcamps and guest sessions on specialized creator tools." },
+    { icon: "🗺️", title: "Learning Roadmap", desc: "Get a customized step-by-step pathway from complete beginner to landing your first paid clients." },
+    { icon: "🛡️", title: "Enrollment Support", desc: "Step-by-step guidance on registration, payment methods, and batch allocation." }
+  ];
 
   // Form states
   const [name, setName] = useState("");
@@ -470,68 +484,36 @@ export default function ContactPage() {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-5 lg:grid-cols-10 gap-4">
-            
-            {/* Pill 1 */}
-            <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 p-4 rounded-2xl flex flex-col items-center justify-center space-y-2 shadow-sm hover:shadow transition">
-              <span className="text-2xl">🎓</span>
-              <h5 className="text-[10px] font-black text-brand-blue dark:text-white leading-tight">Course Selection Guidance</h5>
-            </div>
-
-            {/* Pill 2 */}
-            <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 p-4 rounded-2xl flex flex-col items-center justify-center space-y-2 shadow-sm hover:shadow transition">
-              <span className="text-2xl">💼</span>
-              <h5 className="text-[10px] font-black text-brand-blue dark:text-white leading-tight">Career Advice</h5>
-            </div>
-
-            {/* Pill 3 */}
-            <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 p-4 rounded-2xl flex flex-col items-center justify-center space-y-2 shadow-sm hover:shadow transition">
-              <span className="text-2xl">🕒</span>
-              <h5 className="text-[10px] font-black text-brand-blue dark:text-white leading-tight">Batch Timings</h5>
-            </div>
-
-            {/* Pill 4 */}
-            <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 p-4 rounded-2xl flex flex-col items-center justify-center space-y-2 shadow-sm hover:shadow transition">
-              <span className="text-2xl">📄</span>
-              <h5 className="text-[10px] font-black text-brand-blue dark:text-white leading-tight">Course Curriculum</h5>
-            </div>
-
-            {/* Pill 5 */}
-            <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 p-4 rounded-2xl flex flex-col items-center justify-center space-y-2 shadow-sm hover:shadow transition">
-              <span className="text-2xl">🎥</span>
-              <h5 className="text-[10px] font-black text-brand-blue dark:text-white leading-tight">Demo Classes</h5>
-            </div>
-
-            {/* Pill 6 */}
-            <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 p-4 rounded-2xl flex flex-col items-center justify-center space-y-2 shadow-sm hover:shadow transition">
-              <span className="text-2xl">💳</span>
-              <h5 className="text-[10px] font-black text-brand-blue dark:text-white leading-tight">Fee Details</h5>
-            </div>
-
-            {/* Pill 7 */}
-            <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 p-4 rounded-2xl flex flex-col items-center justify-center space-y-2 shadow-sm hover:shadow transition">
-              <span className="text-2xl">🏢</span>
-              <h5 className="text-[10px] font-black text-brand-blue dark:text-white leading-tight">Corporate Training</h5>
-            </div>
-
-            {/* Pill 8 */}
-            <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 p-4 rounded-2xl flex flex-col items-center justify-center space-y-2 shadow-sm hover:shadow transition">
-              <span className="text-2xl">🏫</span>
-              <h5 className="text-[10px] font-black text-brand-blue dark:text-white leading-tight">Workshops</h5>
-            </div>
-
-            {/* Pill 9 */}
-            <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 p-4 rounded-2xl flex flex-col items-center justify-center space-y-2 shadow-sm hover:shadow transition">
-              <span className="text-2xl">🗺️</span>
-              <h5 className="text-[10px] font-black text-brand-blue dark:text-white leading-tight">Learning Roadmap</h5>
-            </div>
-
-            {/* Pill 10 */}
-            <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 p-4 rounded-2xl flex flex-col items-center justify-center space-y-2 shadow-sm hover:shadow transition">
-              <span className="text-2xl">🛡️</span>
-              <h5 className="text-[10px] font-black text-brand-blue dark:text-white leading-tight">Enrollment Support</h5>
-            </div>
-
+            {whyContactBoxes.map((box, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => setActiveBox(activeBox === idx ? null : idx)}
+                className={`border p-4 rounded-2xl flex flex-col items-center justify-center space-y-2 shadow-sm hover:shadow transition duration-200 cursor-pointer w-full text-center ${
+                  activeBox === idx
+                    ? "bg-brand-orange text-white border-brand-orange scale-105"
+                    : "bg-white dark:bg-[#131b2e] border-gray-100 dark:border-white/5 hover:border-brand-orange/30"
+                }`}
+              >
+                <span className="text-2xl">{box.icon}</span>
+                <h5 className={`text-[10px] font-black leading-tight ${activeBox === idx ? "text-white" : "text-brand-blue dark:text-white"}`}>
+                  {box.title}
+                </h5>
+              </button>
+            ))}
           </div>
+
+          {activeBox !== null && (
+            <div className="bg-brand-blue/5 dark:bg-white/5 border border-brand-orange/20 rounded-2xl p-6 text-left max-w-2xl mx-auto animate-fadeIn mt-6 space-y-2">
+              <h4 className="font-black text-sm text-brand-orange uppercase tracking-wider flex items-center gap-2">
+                <span>{whyContactBoxes[activeBox].icon}</span>
+                <span>{whyContactBoxes[activeBox].title}</span>
+              </h4>
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-medium leading-relaxed">
+                {whyContactBoxes[activeBox].desc}
+              </p>
+            </div>
+          )}
         </div>
       </section>
 
@@ -741,7 +723,7 @@ export default function ContactPage() {
               </div>
 
               <div className="flex flex-wrap gap-3">
-                <Link href="/checkout" className="bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3 px-6 rounded-full text-xs shadow-lg transition">
+                <Link href="/checkout" className="bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3 px-6 rounded-full text-xs shadow-lg transition animate-enroll">
                   Enroll Now
                 </Link>
                 <a href="https://wa.me/918143937367" target="_blank" rel="noopener noreferrer" className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-5 rounded-full text-xs shadow transition">

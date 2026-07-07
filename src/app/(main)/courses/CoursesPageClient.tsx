@@ -334,7 +334,7 @@ export default function CoursesPage() {
                   <div className="space-y-3 pt-2">
                     <Link
                       href="/checkout"
-                      className="w-full inline-flex items-center justify-center bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3.5 rounded-xl text-sm transition shadow-lg"
+                      className="w-full inline-flex items-center justify-center bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3.5 rounded-xl text-sm transition shadow-lg animate-enroll"
                     >
                       Enroll Now
                     </Link>
@@ -516,7 +516,7 @@ export default function CoursesPage() {
                   <div className="space-y-3 pt-2">
                     <Link
                       href="/checkout"
-                      className="w-full inline-flex items-center justify-center bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3.5 rounded-xl text-sm transition shadow-lg"
+                      className="w-full inline-flex items-center justify-center bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3.5 rounded-xl text-sm transition shadow-lg animate-enroll"
                     >
                       Enroll Now
                     </Link>

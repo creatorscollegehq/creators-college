@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Video, Sparkles, Award, Play, BookOpen, Layers, Users, HelpCircle, CheckCircle, Check, Phone, Mail } from "lucide-react";
 import LeadForm from "@/components/LeadForm";
 import BrandsMarquee from "@/components/BrandsMarquee";
@@ -112,6 +113,45 @@ export default function HomePage() {
     "Create High-Quality Content with camera confidence"
   ];
 
+  const heroFeatures = [
+    {
+      title: "Live Online",
+      subtitle: "Classes (Interactive)",
+      icon: Video,
+      color: "blue" as const,
+      onClick: () => {
+        setSelectedHomeCourse("creation");
+        document.getElementById("courses-section")?.scrollIntoView({ behavior: "smooth" });
+      }
+    },
+    {
+      title: "Offline Classroom",
+      subtitle: "in Hyderabad",
+      icon: Users,
+      color: "orange" as const,
+      onClick: () => {
+        document.getElementById("contact-section")?.scrollIntoView({ behavior: "smooth" });
+      }
+    },
+    {
+      title: "Practical Projects",
+      subtitle: "& Real Experience",
+      icon: Layers,
+      color: "purple" as const,
+      onClick: () => {
+        setSelectedHomeCourse("creation");
+        document.getElementById("courses-section")?.scrollIntoView({ behavior: "smooth" });
+      }
+    },
+    {
+      title: "Lifetime Support",
+      subtitle: "& Community",
+      icon: Sparkles,
+      color: "emerald" as const,
+      href: "https://wa.me/918143937367"
+    }
+  ];
+
   // FAQ Categorized lists
   const faqCategories = {
     eligibility: {
@@ -182,15 +222,36 @@ export default function HomePage() {
   return (
     <div className="w-full flex flex-col bg-white dark:bg-[#090d16]">
       {/* 1. Hero Section matching mockup split format */}
-      <section 
-        style={{ backgroundImage: "url('/hero_collage_wide.jpg')" }}
-        className="relative bg-cover bg-center md:bg-[center_right_10%] text-white pt-16 pb-16 md:py-28 overflow-hidden border-b border-brand-blue-dark dark:border-white/5 bg-[#050c21]"
-      >
-        {/* Overlay and Glow Effects - Split panel background: solid dark blue on left half, fading smoothly in the center, transparent on the right */}
-        <div className="absolute inset-0 bg-[#050c21]/80 md:hidden z-0" />
-        <div className="hidden md:block absolute top-0 bottom-0 left-0 w-[45%] bg-[#050c21] z-0" />
-        <div className="hidden md:block absolute top-0 bottom-0 left-[45%] w-48 bg-gradient-to-r from-[#050c21] to-transparent z-0" />
-        <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-orange/10 rounded-full blur-3xl pointer-events-none" />
+      <section className="relative text-white pt-6 pb-16 md:pt-8 md:pb-24 overflow-hidden border-b border-brand-blue-dark dark:border-white/5 bg-[#050c21]">
+        {/* Next.js Optimized Background Image (Floating Card layout on desktop for high-resolution sharpness, locked to right edge to prevent border spacing) */}
+        <div className="absolute top-0 bottom-8 right-0 w-full lg:w-[52%] z-0 select-none pointer-events-none rounded-bl-3xl overflow-hidden hidden lg:block">
+          <Image
+            src="/cecil.jpg"
+            alt="Cecil Srungarapati"
+            fill
+            priority
+            quality={100}
+            className="object-cover object-[center_right_10%] scale-[1.25] -translate-y-[8%]"
+          />
+          {/* Gradient transitions to blend the image seamlessly */}
+          <div className="absolute inset-y-0 left-0 w-64 bg-gradient-to-r from-[#050c21] via-[#050c21]/75 to-transparent z-10" />
+        </div>
+
+        {/* Mobile/Tablet full width background container */}
+        <div className="absolute inset-0 z-0 select-none pointer-events-none lg:hidden">
+          <Image
+            src="/cecil.jpg"
+            alt="Cecil Srungarapati"
+            fill
+            priority
+            quality={100}
+            className="object-cover object-[center_right_10%] scale-[1.2] -translate-y-[6%]"
+          />
+          <div className="absolute inset-0 bg-[#050c21]/80" />
+        </div>
+
+        {/* Overlay and Glow Effects */}
+        <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-orange/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-10 right-10 w-80 h-80 bg-brand-blue/20 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -199,24 +260,24 @@ export default function HomePage() {
             {/* Left Content Column */}
             <div className="lg:col-span-7 relative z-10 text-left space-y-6">
               
-              <div className="inline-flex items-center gap-2 border border-white/20 bg-white/5 px-4 py-1.5 rounded-lg text-[10px] sm:text-xs font-bold uppercase tracking-wider text-gray-300">
+              <div className="inline-flex items-center gap-2 border border-white/20 bg-white/5 px-4 py-1.5 rounded-lg text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-300">
                 ⭐ LEARN CONTENT CREATION &amp; VIDEO EDITING IN TELUGU
               </div>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
                 Master Content Creation, <br />
                 <span className="text-brand-orange">Video Editing &amp; AI Skills</span>
               </h1>
-              <p className="text-lg sm:text-xl font-bold text-white leading-snug">
+              <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-white leading-snug">
                 Build Your Brand. Earn Online.
               </p>
-              <p className="text-xs sm:text-sm text-white/85 leading-relaxed font-normal max-w-xl">
+              <p className="text-sm sm:text-base text-white/85 leading-relaxed font-normal max-w-2xl">
                 Practical training in Content Creation, CapCut Editing, AI Tools, Social Media Growth &amp; Freelancing to help you <span className="text-brand-orange font-bold">learn, create and earn</span> from anywhere in the world.
               </p>
               
               <div className="flex flex-wrap gap-4 pt-2">
                 <Link
                   href="/checkout"
-                  className="bg-brand-orange hover:bg-brand-orange-dark text-white font-bold px-8 py-3.5 rounded-full shadow-lg hover:shadow-brand-orange/30 flex items-center gap-2 transition-all duration-300 hover:scale-[1.05] active:scale-[0.98]"
+                  className="bg-brand-orange hover:bg-brand-orange-dark text-white font-bold px-8 py-3.5 rounded-full shadow-lg hover:shadow-brand-orange/30 flex items-center gap-2 transition-all duration-300 hover:scale-[1.05] active:scale-[0.98] animate-enroll"
                 >
                   Enroll Now
                   <ArrowRight size={18} />
@@ -230,46 +291,141 @@ export default function HomePage() {
                 </Link>
               </div>
 
-              {/* Metric Stats Cards Row - Styled White Background */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 border-t border-white/15">
+              {/* Mobile/Tablet 4 Feature Cards */}
+              <div className="lg:hidden grid grid-cols-2 gap-3 py-2">
+                {heroFeatures.map((feat, idx) => {
+                  const CardTag = feat.href ? "a" : "button";
+                  const linkProps = feat.href ? { href: feat.href, target: "_blank", rel: "noopener noreferrer" } : { onClick: feat.onClick };
+                  
+                  const colorClasses = {
+                    blue: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
+                    orange: "bg-orange-500/10 text-brand-orange",
+                    purple: "bg-purple-500/10 text-purple-600 dark:text-purple-400",
+                    emerald: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                  }[feat.color];
+
+                  return (
+                    <CardTag
+                      key={idx}
+                      {...linkProps}
+                      className="bg-white/95 dark:bg-[#131b2e]/95 border border-gray-100 dark:border-white/5 p-3 rounded-xl flex items-center gap-3 shadow-md hover:scale-[1.02] transition text-left relative cursor-pointer group"
+                    >
+                      <div className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${colorClasses}`}>
+                        <feat.icon size={16} />
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-black text-brand-orange leading-tight">{feat.title}</h4>
+                        <p className="text-[10.5px] text-brand-blue dark:text-white font-extrabold leading-tight">{feat.subtitle}</p>
+                      </div>
+                    </CardTag>
+                  );
+                })}
+              </div>
+
+              {/* Metric Stats Cards Row - 2x2 Grid White Theme */}
+              <div className="grid grid-cols-2 gap-3 pt-6 border-t border-white/15 max-w-md">
                 {/* Card 1 */}
-                <div className="bg-white/95 text-[#0a1931] border border-gray-100 rounded-xl p-3 flex flex-col justify-between space-y-1 hover:border-brand-orange/30 transition shadow-md">
+                <Link
+                  href="/success-stories"
+                  className="bg-white/95 text-[#0a1931] border border-gray-100 rounded-xl p-3 flex flex-col justify-between space-y-1 hover:border-brand-orange hover:scale-[1.03] transition shadow-md cursor-pointer block"
+                >
                   <div className="flex items-center gap-1.5">
-                    <span className="text-brand-orange text-xs sm:text-sm">👁️</span>
-                    <span className="text-xs sm:text-sm font-black text-[#0a1931]">500M+</span>
+                    <span className="text-brand-orange text-sm">👁️</span>
+                    <span className="text-sm sm:text-base font-black text-[#0a1931]">500M+</span>
                   </div>
-                  <div className="text-[9px] text-gray-500 font-bold leading-tight">Content Views Overall</div>
-                </div>
+                  <div className="text-[11px] sm:text-xs text-gray-500 font-bold leading-tight">Content Views Overall</div>
+                </Link>
                 {/* Card 2 */}
-                <div className="bg-white/95 text-[#0a1931] border border-gray-100 rounded-xl p-3 flex flex-col justify-between space-y-1 hover:border-brand-orange/30 transition shadow-md">
+                <Link
+                  href="/corporate-training"
+                  className="bg-white/95 text-[#0a1931] border border-gray-100 rounded-xl p-3 flex flex-col justify-between space-y-1 hover:border-brand-orange hover:scale-[1.03] transition shadow-md cursor-pointer block"
+                >
                   <div className="flex items-center gap-1.5">
-                    <span className="text-brand-orange text-xs sm:text-sm">💼</span>
-                    <span className="text-xs sm:text-sm font-black text-[#0a1931]">1000+</span>
+                    <span className="text-brand-orange text-sm">💼</span>
+                    <span className="text-sm sm:text-base font-black text-[#0a1931]">1000+</span>
                   </div>
-                  <div className="text-[9px] text-gray-500 font-bold leading-tight">Businesses Worked With</div>
-                </div>
+                  <div className="text-[11px] sm:text-xs text-gray-500 font-bold leading-tight">Businesses Worked With</div>
+                </Link>
                 {/* Card 3 */}
-                <div className="bg-white/95 text-[#0a1931] border border-gray-100 rounded-xl p-3 flex flex-col justify-between space-y-1 hover:border-brand-orange/30 transition shadow-md">
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById("courses-section")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="bg-white/95 text-left text-[#0a1931] border border-gray-100 rounded-xl p-3 flex flex-col justify-between space-y-1 hover:border-brand-orange hover:scale-[1.03] transition shadow-md cursor-pointer block w-full font-bold"
+                >
                   <div className="flex items-center gap-1.5">
-                    <span className="text-brand-orange text-xs sm:text-sm">👥</span>
-                    <span className="text-xs sm:text-sm font-black text-[#0a1931]">Thousands</span>
+                    <span className="text-brand-orange text-sm">👥</span>
+                    <span className="text-sm sm:text-base font-black text-[#0a1931]">Thousands</span>
                   </div>
-                  <div className="text-[9px] text-gray-500 font-bold leading-tight">Creators Trained</div>
-                </div>
+                  <div className="text-[11px] sm:text-xs text-gray-500 font-bold leading-tight">Creators Trained</div>
+                </button>
                 {/* Card 4 */}
-                <div className="bg-white/95 text-[#0a1931] border border-[#f3f4f6] rounded-xl p-3 flex flex-col justify-between space-y-1 hover:border-brand-orange/30 transition shadow-md">
+                <Link
+                  href="/about"
+                  className="bg-white/95 text-[#0a1931] border border-gray-100 rounded-xl p-3 flex flex-col justify-between space-y-1 hover:border-brand-orange hover:scale-[1.03] transition shadow-md cursor-pointer block"
+                >
                   <div className="flex items-center gap-1.5">
-                    <span className="text-brand-orange text-xs sm:text-sm">🏅</span>
-                    <span className="text-xs sm:text-sm font-black text-[#0a1931]">5+ Years</span>
+                    <span className="text-brand-orange text-sm">🏅</span>
+                    <span className="text-sm sm:text-base font-black text-[#0a1931]">5+ Years</span>
                   </div>
-                  <div className="text-[9px] text-gray-500 font-bold leading-tight">In Content Excellence</div>
-                </div>
+                  <div className="text-[11px] sm:text-xs text-gray-500 font-bold leading-tight">In Content Excellence</div>
+                </Link>
+              </div>
+
+              {/* Cecil intro card for mobile/tablet */}
+              <div className="lg:hidden bg-black/65 backdrop-blur-sm border border-white/10 p-4 rounded-xl space-y-1.5 text-left mt-6">
+                <span className="text-[10px] font-black bg-brand-orange text-white px-2.5 py-1 rounded uppercase tracking-widest w-fit inline-block">CEO &amp; Founder</span>
+                <h4 className="text-sm font-bold text-white">Cecil Srungarapati</h4>
+                <p className="text-xs text-gray-300 leading-normal font-normal">
+                  Founder of Creators College. Content Creator &amp; Digital Strategist with 5+ years experience generating 500M+ views across social platforms.
+                </p>
               </div>
 
             </div>
 
-            {/* Right Column Spacer - holds space for background features collage on desktop */}
-            <div className="hidden lg:block lg:col-span-5 pointer-events-none" />
+            {/* Right Column - Holds the 4 interactive features on Desktop (Aligned Higher Up in Corner) */}
+            <div className="hidden lg:flex lg:col-span-5 flex-col space-y-3 relative z-10 self-start items-end pt-2 lg:-mt-8 pr-4">
+              {heroFeatures.map((feat, idx) => {
+                const CardTag = feat.href ? "a" : "button";
+                const linkProps = feat.href ? { href: feat.href, target: "_blank", rel: "noopener noreferrer" } : { onClick: feat.onClick };
+                
+                const colorClasses = {
+                  blue: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
+                  orange: "bg-orange-500/10 text-brand-orange",
+                  purple: "bg-purple-500/10 text-purple-600 dark:text-purple-400",
+                  emerald: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
+                }[feat.color];
+
+                return (
+                  <CardTag
+                    key={idx}
+                    {...linkProps}
+                    className="bg-white/95 dark:bg-[#131b2e]/95 border border-gray-100 dark:border-white/5 p-2 px-3.5 rounded-xl flex items-center gap-3 shadow-md hover:shadow-lg hover:scale-[1.03] transition duration-200 text-left relative cursor-pointer group w-[235px]"
+                  >
+                    <div className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 group-hover:scale-105 transition ${colorClasses}`}>
+                      <feat.icon size={18} />
+                    </div>
+                    <div className="space-y-0.5">
+                      <h4 className="text-xs font-black text-brand-orange leading-tight">{feat.title}</h4>
+                      <p className="text-[10.5px] text-brand-blue dark:text-white font-extrabold leading-tight">{feat.subtitle}</p>
+                    </div>
+                  </CardTag>
+                );
+              })}
+            </div>
+
+            {/* Cecil signature premium glass box overlay (Aligned over desk workspace area) */}
+            <div className="hidden lg:block absolute bottom-6 left-[48%] z-30 bg-black/60 backdrop-blur-md border border-white/15 px-4 py-2.5 rounded-xl shadow-xl select-none pointer-events-auto">
+              <span className="text-[#f97316] text-xl font-bold block leading-none italic" style={{ fontFamily: "'Brush Script MT', 'Great Vibes', 'Parisienne', cursive" }}>
+                Cecil Srungarapati
+              </span>
+              <span className="text-[8.5px] text-gray-300 font-extrabold tracking-widest uppercase block mt-1">
+                Founder &amp; CEO, Creators College
+              </span>
+            </div>
 
           </div>
         </div>
@@ -286,8 +442,8 @@ export default function HomePage() {
                 🎥
               </div>
               <div>
-                <h4 className="text-[11px] sm:text-xs text-brand-blue dark:text-white leading-tight font-black">Learn in Telugu</h4>
-                <p className="text-[9px] text-gray-400 font-semibold leading-tight">Step-by-step</p>
+                <h4 className="text-xs sm:text-sm text-brand-blue dark:text-white leading-tight font-black">Learn in Telugu</h4>
+                <p className="text-[10.5px] sm:text-xs text-gray-400 font-semibold leading-tight">Step-by-step</p>
               </div>
             </div>
 
@@ -297,8 +453,8 @@ export default function HomePage() {
                 💻
               </div>
               <div>
-                <h4 className="text-[11px] sm:text-xs text-brand-blue dark:text-white leading-tight font-black">Live Classes</h4>
-                <p className="text-[9px] text-gray-400 font-semibold leading-tight">Interactive</p>
+                <h4 className="text-xs sm:text-sm text-brand-blue dark:text-white leading-tight font-black">Live Classes</h4>
+                <p className="text-[10.5px] sm:text-xs text-gray-400 font-semibold leading-tight">Interactive</p>
               </div>
             </div>
 
@@ -308,8 +464,8 @@ export default function HomePage() {
                 📂
               </div>
               <div>
-                <h4 className="text-[11px] sm:text-xs text-brand-blue dark:text-white leading-tight font-black">Recordings</h4>
-                <p className="text-[9px] text-gray-400 font-semibold leading-tight">Lifetime Access</p>
+                <h4 className="text-xs sm:text-sm text-brand-blue dark:text-white leading-tight font-black">Recordings</h4>
+                <p className="text-[10.5px] sm:text-xs text-gray-400 font-semibold leading-tight">Lifetime Access</p>
               </div>
             </div>
 
@@ -319,8 +475,8 @@ export default function HomePage() {
                 💼
               </div>
               <div>
-                <h4 className="text-[11px] sm:text-xs text-brand-blue dark:text-white leading-tight font-black">Real Projects</h4>
-                <p className="text-[9px] text-gray-400 font-semibold leading-tight">Build Portfolio</p>
+                <h4 className="text-xs sm:text-sm text-brand-blue dark:text-white leading-tight font-black">Real Projects</h4>
+                <p className="text-[10.5px] sm:text-xs text-gray-400 font-semibold leading-tight">Build Portfolio</p>
               </div>
             </div>
 
@@ -330,8 +486,8 @@ export default function HomePage() {
                 📈
               </div>
               <div>
-                <h4 className="text-[11px] sm:text-xs text-brand-blue dark:text-white leading-tight font-black">Career &amp; Freelancer</h4>
-                <p className="text-[9px] text-gray-400 font-semibold leading-tight">Expert Guidance</p>
+                <h4 className="text-xs sm:text-sm text-brand-blue dark:text-white leading-tight font-black">Career &amp; Freelancer</h4>
+                <p className="text-[10.5px] sm:text-xs text-gray-400 font-semibold leading-tight">Expert Guidance</p>
               </div>
             </div>
 
@@ -341,8 +497,8 @@ export default function HomePage() {
                 👥
               </div>
               <div>
-                <h4 className="text-[11px] sm:text-xs text-brand-blue dark:text-white leading-tight font-black">Community</h4>
-                <p className="text-[9px] text-gray-400 font-semibold leading-tight">Support</p>
+                <h4 className="text-xs sm:text-sm text-brand-blue dark:text-white leading-tight font-black">Community</h4>
+                <p className="text-[10.5px] sm:text-xs text-gray-400 font-semibold leading-tight">Support</p>
               </div>
             </div>
 
@@ -725,16 +881,17 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             
             {/* Value Card 1: Practical Learning */}
-            <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-3xl p-8 shadow-md flex flex-col items-center justify-between space-y-6 hover:shadow-lg transition duration-300 relative overflow-hidden group">
-              <div className="w-20 h-20 rounded-full border-2 border-dashed border-brand-blue dark:border-white/20 flex items-center justify-center text-brand-blue dark:text-white bg-blue-50/50 dark:bg-white/5 shrink-0 group-hover:scale-105 transition">
-                <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
+            <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-3xl p-6 shadow-md flex flex-col justify-between space-y-6 hover:shadow-lg transition duration-300 relative overflow-hidden group">
+              <div className="w-full h-36 rounded-2xl overflow-hidden shadow-sm shrink-0">
+                <img 
+                  src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=400&q=80" 
+                  alt="Practical Learning" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                />
               </div>
-              <div className="space-y-3 text-center">
-                <h3 className="text-lg font-black text-brand-blue dark:text-white">Practical Learning</h3>
-                <div className="h-[2px] bg-brand-blue w-8 mx-auto rounded" />
-                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
+              <div className="space-y-2 text-left">
+                <h3 className="text-base font-black text-brand-blue dark:text-white">Practical Learning</h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
                   Everything we teach is centered around hands-on projects, assignments, and real-life client tasks.
                 </p>
               </div>
@@ -742,16 +899,17 @@ export default function HomePage() {
             </div>
 
             {/* Value Card 2: Creativity */}
-            <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-3xl p-8 shadow-md flex flex-col items-center justify-between space-y-6 hover:shadow-lg transition duration-300 relative overflow-hidden group">
-              <div className="w-20 h-20 rounded-full border-2 border-dashed border-brand-orange flex items-center justify-center text-brand-orange bg-orange-50/50 dark:bg-white/5 shrink-0 group-hover:scale-105 transition">
-                <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
+            <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-3xl p-6 shadow-md flex flex-col justify-between space-y-6 hover:shadow-lg transition duration-300 relative overflow-hidden group">
+              <div className="w-full h-36 rounded-2xl overflow-hidden shadow-sm shrink-0">
+                <img 
+                  src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=400&q=80" 
+                  alt="Creativity" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                />
               </div>
-              <div className="space-y-3 text-center">
-                <h3 className="text-lg font-black text-brand-orange">Creativity</h3>
-                <div className="h-[2px] bg-brand-orange w-8 mx-auto rounded" />
-                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
+              <div className="space-y-2 text-left">
+                <h3 className="text-base font-black text-brand-orange">Creativity</h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
                   Helping you find your unique creative voice and building video arcs that stand out in crowded feeds.
                 </p>
               </div>
@@ -759,16 +917,17 @@ export default function HomePage() {
             </div>
 
             {/* Value Card 3: Step-by-Step Teaching */}
-            <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-3xl p-8 shadow-md flex flex-col items-center justify-between space-y-6 hover:shadow-lg transition duration-300 relative overflow-hidden group">
-              <div className="w-20 h-20 rounded-full border-2 border-dashed border-brand-blue dark:border-white/20 flex items-center justify-center text-brand-blue dark:text-white bg-blue-50/50 dark:bg-white/5 shrink-0 group-hover:scale-105 transition">
-                <svg className="w-10 h-10" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9" />
-                </svg>
+            <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-3xl p-6 shadow-md flex flex-col justify-between space-y-6 hover:shadow-lg transition duration-300 relative overflow-hidden group">
+              <div className="w-full h-36 rounded-2xl overflow-hidden shadow-sm shrink-0">
+                <img 
+                  src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=400&q=80" 
+                  alt="Step-by-Step Teaching" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                />
               </div>
-              <div className="space-y-3 text-center">
-                <h3 className="text-lg font-black text-brand-blue dark:text-white">Step-by-Step Teaching</h3>
-                <div className="h-[2px] bg-brand-blue w-8 mx-auto rounded" />
-                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
+              <div className="space-y-2 text-left">
+                <h3 className="text-base font-black text-brand-blue dark:text-white">Step-by-Step Teaching</h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
                   Courses taught in clear, basic Telugu, from starting your channels up to advanced platform algorithms.
                 </p>
               </div>
@@ -984,7 +1143,7 @@ export default function HomePage() {
                 </Link>
                 <Link
                   href="/checkout"
-                  className="inline-flex items-center justify-center bg-brand-orange hover:bg-brand-orange-dark text-white font-bold px-6 py-3 rounded-full text-sm transition shadow-lg"
+                  className="inline-flex items-center justify-center bg-brand-orange hover:bg-brand-orange-dark text-white font-bold px-6 py-3 rounded-full text-sm transition shadow-lg animate-enroll"
                 >
                   Enroll Now
                 </Link>
@@ -1056,7 +1215,7 @@ export default function HomePage() {
 
       {/* 4. Student Learning Journey */}
       <section className="py-12 md:py-20 bg-brand-gray/30 dark:bg-white/5 border-y border-gray-100 dark:border-white/5">
-        <div className="max-w-4xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center mb-16 space-y-3">
             <h3 className="text-xs font-bold uppercase tracking-widest text-brand-orange">
@@ -1070,24 +1229,59 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="relative border-l-2 border-brand-blue/20 ml-4 md:ml-32 space-y-12 text-left">
-            {journeySteps.map((step, idx) => (
-              <div key={idx} className="relative pl-8">
-                <div className="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full bg-brand-blue border-4 border-white dark:border-[#090d16] flex items-center justify-center text-white text-xs font-bold shadow-md">
-                  {idx + 1}
-                </div>
-                <div className="space-y-1">
-                  <span className="text-[10px] font-bold uppercase tracking-widest text-brand-orange">{step.step}</span>
-                  <h3 className="text-lg font-bold text-brand-blue dark:text-white flex items-center gap-2">
-                    <span className="text-xl shrink-0">{step.icon}</span>
-                    {step.title}
-                  </h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
-                    {step.desc}
-                  </p>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-start mt-8">
+            
+            {/* Left High-Impact Image Card Column */}
+            <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-24 h-fit text-left">
+              <div className="rounded-3xl overflow-hidden shadow-xl aspect-video sm:aspect-square border border-gray-200/50 dark:border-white/5 relative group">
+                <img
+                  src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80"
+                  alt="Student Achievement & Creators Work"
+                  className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent flex items-end p-6">
+                  <div className="text-white space-y-1">
+                    <span className="text-[10px] font-black bg-brand-orange text-white px-2 py-0.5 rounded uppercase tracking-widest">The Path to Success</span>
+                    <h4 className="text-base font-black">Embrace the Grind, Reap the Rewards</h4>
+                    <p className="text-[11px] text-white/80 font-medium leading-tight">Every viral video starts with structured research, scripting practice, and camera confidence.</p>
+                  </div>
                 </div>
               </div>
-            ))}
+              
+              {/* Success callout card */}
+              <div className="bg-white dark:bg-[#131b2e] border border-gray-200/50 dark:border-white/5 p-6 rounded-3xl shadow-md space-y-3">
+                <h4 className="font-black text-sm text-brand-blue dark:text-white flex items-center gap-2">
+                  <span>🏆</span> Reach Your Summit
+                </h4>
+                <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
+                  No shortcut leads to 100K+ subscribers or paid commercial editing gigs. Follow our tested roadmap, complete the tasks, and achieve creative independence.
+                </p>
+              </div>
+            </div>
+
+            {/* Right Roadmap Timeline Column */}
+            <div className="lg:col-span-7">
+              <div className="relative border-l-2 border-brand-blue/20 ml-4 space-y-12 text-left">
+                {journeySteps.map((step, idx) => (
+                  <div key={idx} className="relative pl-8">
+                    <div className="absolute -left-[17px] top-1.5 w-8 h-8 rounded-full bg-brand-blue border-4 border-white dark:border-[#090d16] flex items-center justify-center text-white text-xs font-bold shadow-md">
+                      {idx + 1}
+                    </div>
+                    <div className="space-y-1">
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-brand-orange">{step.step}</span>
+                      <h3 className="text-lg font-bold text-brand-blue dark:text-white flex items-center gap-2">
+                        <span className="text-xl shrink-0">{step.icon}</span>
+                        {step.title}
+                      </h3>
+                      <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
+                        {step.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
           </div>
 
           {/* Learning outcomes checklist */}
