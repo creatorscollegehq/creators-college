@@ -16,7 +16,7 @@ export default function WhatsAppGateModal({ isOpen, onClose, whatsappUrl }: What
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !phone.trim()) {
       setError("Please fill in all details.");
@@ -27,13 +27,31 @@ export default function WhatsAppGateModal({ isOpen, onClose, whatsappUrl }: What
       return;
     }
 
+    // Send lead to Google Sheets API
+    try {
+      await fetch("/api/lead", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          phone,
+          source: `WhatsApp Gate - ${window.location.pathname}`,
+          type: "whatsapp",
+        }),
+      });
+    } catch (err) {
+      console.error("Failed to post lead to Google Sheet:", err);
+    }
+
     // Save lead details to localStorage
     const savedLeads = JSON.parse(localStorage.getItem("whatsapp_leads") || "[]");
     savedLeads.push({
       name,
       phone,
       time: new Date().toLocaleString(),
-      url: window.location.href,
+      url: typeof window !== "undefined" ? window.location.href : "",
     });
     localStorage.setItem("whatsapp_leads", JSON.stringify(savedLeads));
 

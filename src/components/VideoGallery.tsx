@@ -43,14 +43,17 @@ export default function VideoGallery() {
 
   const embedUrl = useMemo(() => {
     if (!activeVideo) return "";
-    if (activeVideo.type === "youtube" && activeVideo.embedId) {
-      return `https://www.youtube.com/embed/${activeVideo.embedId}?autoplay=1`;
-    } else if (activeVideo.type === "short") {
-      const shortId = getYouTubeShortId(activeVideo.url);
+    const shortId = getYouTubeShortId(activeVideo.url);
+    
+    if (shortId) {
       return `https://www.youtube.com/embed/${shortId}?autoplay=1`;
+    } else if (activeVideo.embedId) {
+      return `https://www.youtube.com/embed/${activeVideo.embedId}?autoplay=1`;
     } else if (activeVideo.type === "instagram" || activeVideo.type === "news") {
       const reelId = getInstagramReelId(activeVideo.url);
-      return `https://www.instagram.com/reel/${reelId}/embed/`;
+      if (reelId) {
+        return `https://www.instagram.com/reel/${reelId}/embed/`;
+      }
     }
     return "";
   }, [activeVideo]);
@@ -108,13 +111,11 @@ export default function VideoGallery() {
             {filteredVideos.map((video) => {
               // Determine thumbnail
               let thumbSrc = "";
-              if (video.type === "youtube" && video.embedId) {
+              const shortId = getYouTubeShortId(video.url);
+              if (shortId) {
+                thumbSrc = `https://img.youtube.com/vi/${shortId}/mqdefault.jpg`;
+              } else if (video.embedId) {
                 thumbSrc = `https://img.youtube.com/vi/${video.embedId}/mqdefault.jpg`;
-              } else if (video.type === "short") {
-                const shortId = getYouTubeShortId(video.url);
-                if (shortId) {
-                  thumbSrc = `https://img.youtube.com/vi/${shortId}/mqdefault.jpg`;
-                }
               }
 
               return (

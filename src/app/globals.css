@@ -32,6 +32,10 @@
   --color-brand-gray: var(--brand-gray);
   
   --font-sans: var(--font-sans);
+
+  /* Global scales for default small text classes */
+  --font-size-xs: 0.8rem;
+  --font-size-sm: 0.9rem;
 }
 
 body {
@@ -209,6 +213,32 @@ html {
 .animate-enroll:hover {
   animation-play-state: paused;
   transform: scale(1.08) !important;
+}
+
+/* Global scale overrides for custom arbitrary small text classes on the whole website */
+[class*="text-[8px]"], [class*="text-\[8px\]"] {
+  font-size: 0.7rem !important;
+}
+[class*="text-[8.5px]"], [class*="text-\[8.5px\]"] {
+  font-size: 0.725rem !important;
+}
+[class*="text-[9px]"], [class*="text-\[9px\]"] {
+  font-size: 0.75rem !important;
+}
+[class*="text-[9.5px]"], [class*="text-\[9.5px\]"] {
+  font-size: 0.775rem !important;
+}
+[class*="text-[10px]"], [class*="text-\[10px\]"] {
+  font-size: 0.8rem !important;
+}
+[class*="text-[10.5px]"], [class*="text-\[10.5px\]"] {
+  font-size: 0.825rem !important;
+}
+[class*="text-[11px]"], [class*="text-\[11px\]"] {
+  font-size: 0.85rem !important;
+}
+[class*="text-[12px]"], [class*="text-\[12px\]"] {
+  font-size: 0.9rem !important;
 }
 
 

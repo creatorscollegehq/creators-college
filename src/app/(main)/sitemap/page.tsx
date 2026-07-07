@@ -30,7 +30,7 @@ export default function Sitemap() {
               <li><Link href="/courses" className="hover:text-brand-orange">Courses Catalog</Link></li>
               <li><Link href="/corporate-training" className="hover:text-brand-orange">Corporate &amp; College Training</Link></li>
               <li><Link href="/success-stories" className="hover:text-brand-orange">Success Stories (Coming Soon)</Link></li>
-              <li><Link href="/blog" className="hover:text-brand-orange">Creator Resources Blog (Coming Soon)</Link></li>
+              <li><Link href="/blog" className="hover:text-brand-orange">Creator Insights Blog</Link></li>
               <li><Link href="/contact" className="hover:text-brand-orange">Contact Us</Link></li>
             </ul>
           </div>

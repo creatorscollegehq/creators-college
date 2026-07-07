@@ -1,155 +1,115 @@
-"use client";
-
 import React from "react";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
-import { ArrowLeft, Calendar, User, Clock, ArrowRight } from "lucide-react";
+import { ArrowLeft, Calendar, User, Clock, ArrowRight, BookOpen } from "lucide-react";
+import { PortableText } from "@portabletext/react";
+import { Metadata } from "next";
+import { client } from "@/sanity/lib/client";
+import { urlFor } from "@/sanity/lib/image";
 import LeadForm from "@/components/LeadForm";
 
-interface PostContent {
-  title: string;
-  category: string;
-  date: string;
-  author: string;
-  readTime: string;
-  html: React.ReactNode;
+interface PageProps {
+  params: Promise<{ slug: string }>;
 }
 
-export default function BlogPostDetail() {
-  const params = useParams();
-  const router = useRouter();
-  const slug = params?.slug as string;
+export const revalidate = 60; // Dynamic ISR revalidation
 
-  const postsData: Record<string, PostContent> = {
-    "3-second-hook-formula": {
-      title: "The 3-Second Hook Formula to Double Your Views",
-      category: "Content Creation Tips",
-      date: "2026-06-25",
-      author: "Creators College Team",
-      readTime: "4 min read",
-      html: (
-        <div className="space-y-6 text-gray-600 text-sm leading-relaxed text-left">
-          <p>
-            In the fast-paced world of short-form content (YouTube Shorts, Instagram Reels, TikTok), average view duration is the single most critical ranking factor. If users swipe away within the first few seconds, the platform algorithm stops distributing your video.
-          </p>
-          <h3 className="text-lg font-bold text-brand-blue">Why Hooks Matter</h3>
-          <p>
-            A hook is the visual, auditory, or textual cue at the beginning of a video designed to grab a viewer's attention. Without a compelling hook, even the most high-value video edit will go unnoticed.
-          </p>
-          <h3 className="text-lg font-bold text-brand-blue">The Core Hook Framework</h3>
-          <ul className="list-disc pl-5 space-y-2">
-            <li><strong>The Question Hook:</strong> Start with an intriguing question like <em>"Why do 90% of editors make this mistake?"</em> to spark curiosity.</li>
-            <li><strong>The Visual Pattern Interrupt:</strong> Drop sudden high-contrast movement, a custom graphic banner, or close-up cropping in the first 0.5 seconds.</li>
-            <li><strong>The Negativity Hook:</strong> Highlight a risk or problem: <em>"Stop editing your reels like this..."</em></li>
-          </ul>
-          <p>
-            By implementing these frameworks, our students at Creators College have seen audience retention averages increase from 30% to over 70%, triggering the algorithm to recommend their videos to wider pools of viewers.
-          </p>
-        </div>
-      )
-    },
-    "capcut-editing-hacks": {
-      title: "5 CapCut Mobile Editing Hacks for Snappy Reels",
-      category: "Video Editing Tips",
-      date: "2026-06-18",
-      author: "Editing Specialist",
-      readTime: "3 min read",
-      html: (
-        <div className="space-y-6 text-gray-600 text-sm leading-relaxed text-left">
-          <p>
-            CapCut has revolutionized mobile video post-production. It allows creators to edit professional, commercial-grade videos on the go. Here are 5 quick tips to optimize your pacing.
-          </p>
-          <h3 className="text-lg font-bold text-brand-blue">1. Master Cut Pacing</h3>
-          <p>
-            Trim all filler words ("um," "uh," silent breathing gaps). Keep your sentences tight and overlapping using J-cuts (audio starts before the visual clip cuts).
-          </p>
-          <h3 className="text-lg font-bold text-brand-blue">2. Kinetic Auto-Captions</h3>
-          <p>
-            Reels with text overlays gain 40% higher retention. Use CapCut's auto-caption engine, style them in bold yellow-white fonts, and position them in the screen center to maximize readability.
-          </p>
-          <h3 className="text-lg font-bold text-brand-blue">3. Subtle Sound Design (SFX)</h3>
-          <p>
-            Incorporate whooshes for transitions, typing sounds for text, and camera shutters for slide popups. Keep SFX levels at -12dB so they don't overpower your primary voice track.
-          </p>
-        </div>
-      )
-    },
-    "essential-ai-tools-2026": {
-      title: "Top AI Tools for Content Creators in 2026",
-      category: "AI Tools",
-      date: "2026-06-10",
-      author: "Tech Advisor",
-      readTime: "5 min read",
-      html: (
-        <div className="space-y-6 text-gray-600 text-sm leading-relaxed text-left">
-          <p>
-            AI tools are no longer optional for creators—they are key workflow accelerators. Here are the core applications our team recommends to boost efficiency.
-          </p>
-          <h3 className="text-lg font-bold text-brand-blue">Script Writing & Outlining</h3>
-          <p>
-            Use advanced models to brainstorm high-retention outlines. Prompt them specifically with your target audience profile to refine hooks and call-to-actions.
-          </p>
-          <h3 className="text-lg font-bold text-brand-blue">Automated Typography & Assets</h3>
-          <p>
-            Leverage AI tools for sound mixing, background noise removal, and rendering clickable graphics. This allows editors to focus on pacing and visual flow.
-          </p>
-        </div>
-      )
-    },
-    "youtube-shorts-algorithm-guide": {
-      title: "Demystifying the 2026 YouTube Shorts Algorithm",
-      category: "Social Media Growth",
-      date: "2026-06-01",
-      author: "Growth Strategy Group",
-      readTime: "6 min read",
-      html: (
-        <div className="space-y-6 text-gray-600 text-sm leading-relaxed text-left">
-          <p>
-            YouTube Shorts is a powerful engine for organic reach. Understanding how YouTube measures engagement will save you hours of guesswork.
-          </p>
-          <h3 className="text-lg font-bold text-brand-blue">The Swipe-Away Ratio</h3>
-          <p>
-            YouTube tracks the percentage of users who choose to watch your short versus those who swipe away immediately. A healthy account maintains a watch ratio of 65% or higher.
-          </p>
-          <h3 className="text-lg font-bold text-brand-blue">Re-watch and Loop Metrics</h3>
-          <p>
-            Ensure your video loops seamlessly. If the viewer watches your clip 1.5 times, YouTube classifies your content as highly engaging and distributes it to wider feeds.
-          </p>
-        </div>
-      )
-    },
-    "how-sandeep-scaled-youtube": {
-      title: "Success Story: How Sandeep Scaled to 100K Subscribers",
-      category: "Creator Success Stories",
-      date: "2026-05-15",
-      author: "Creators College Team",
-      readTime: "5 min read",
-      html: (
-        <div className="space-y-6 text-gray-600 text-sm leading-relaxed text-left">
-          <p>
-            Sandeep was a student at our Hyderabad batch who wanted to share tech tutorials. This case study details how he grew from zero to 100,000 subscribers.
-          </p>
-          <h3 className="text-lg font-bold text-brand-blue">The Challenge</h3>
-          <p>
-            Highly competitive tech space. Sandeep struggled to get views beyond his immediate family and friends.
-          </p>
-          <h3 className="text-lg font-bold text-brand-blue">The Strategy</h3>
-          <p>
-            We co-designed his topic map. Instead of generic reviews, we pivoted his channel to localized software configurations and budget setups in Telugu.
-          </p>
-        </div>
-      )
-    }
+// Fetch post data by slug helper
+async function getPostData(slug: string) {
+  return await client.fetch<any>(
+    `*[_type == "post" && slug.current == $slug][0] {
+      title,
+      "slug": slug.current,
+      "category": category->title,
+      "date": publishedAt,
+      author,
+      readTime,
+      mainImage,
+      body,
+      excerpt,
+      metaTitle,
+      metaDescription
+    }`,
+    { slug }
+  );
+}
+
+// Generate dynamic meta SEO tags
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPostData(slug);
+
+  if (!post) {
+    return {
+      title: "Post Not Found | Creators College Blogs",
+    };
+  }
+
+  return {
+    title: post.metaTitle || `${post.title} | Creators College`,
+    description:
+      post.metaDescription ||
+      post.excerpt ||
+      "Read dynamic creator tutorials, video editing tips, and digital brand scaling blueprints.",
   };
+}
 
-  const post = postsData[slug];
+// PortableText custom render components
+const portableTextComponents = {
+  types: {
+    image: ({ value }: any) => (
+      <div className="relative my-6 rounded-2xl overflow-hidden border border-gray-100 dark:border-white/5 shadow-md">
+        <img
+          src={urlFor(value).width(800).url()}
+          alt="Blog content graphic"
+          className="w-full h-auto object-cover"
+        />
+      </div>
+    ),
+  },
+  block: {
+    h3: ({ children }: any) => (
+      <h3 className="text-lg sm:text-xl font-black text-brand-blue dark:text-white pt-6 pb-2 text-left tracking-tight">
+        {children}
+      </h3>
+    ),
+    h4: ({ children }: any) => (
+      <h4 className="text-base sm:text-lg font-extrabold text-brand-blue dark:text-white pt-4 pb-1 text-left tracking-tight">
+        {children}
+      </h4>
+    ),
+    normal: ({ children }: any) => (
+      <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed text-left py-1 font-normal">
+        {children}
+      </p>
+    ),
+  },
+  list: {
+    bullet: ({ children }: any) => (
+      <ul className="list-disc pl-6 py-2 space-y-2 text-left text-sm sm:text-base text-gray-600 dark:text-gray-300">
+        {children}
+      </ul>
+    ),
+    number: ({ children }: any) => (
+      <ol className="list-decimal pl-6 py-2 space-y-2 text-left text-sm sm:text-base text-gray-600 dark:text-gray-300">
+        {children}
+      </ol>
+    ),
+  },
+};
+
+export default async function BlogPostDetail({ params }: PageProps) {
+  const { slug } = await params;
+  const post = await getPostData(slug);
 
   if (!post) {
     return (
-      <div className="min-h-[50vh] flex flex-col items-center justify-center p-8 space-y-4">
-        <h2 className="text-2xl font-bold text-brand-blue">Article Not Found</h2>
+      <div className="min-h-[50vh] flex flex-col items-center justify-center p-8 space-y-4 bg-white dark:bg-[#090d16]">
+        <h2 className="text-2xl font-bold text-brand-blue dark:text-white">Article Not Found</h2>
         <p className="text-sm text-gray-500">The blog post you are looking for does not exist.</p>
-        <Link href="/blog" className="bg-brand-blue text-white px-5 py-2.5 rounded-full text-xs font-bold transition hover-lift">
+        <Link
+          href="/blog"
+          className="bg-brand-blue text-white px-5 py-2.5 rounded-full text-xs font-bold transition hover:scale-102"
+        >
           Back to Blog Hub
         </Link>
       </div>
@@ -157,18 +117,18 @@ export default function BlogPostDetail() {
   }
 
   return (
-    <div className="w-full bg-white">
+    <div className="w-full bg-white dark:bg-[#090d16] transition-colors duration-200">
       {/* Article Header */}
-      <section className="bg-brand-blue text-white py-16 md:py-20 relative overflow-hidden">
+      <section className="bg-brand-blue dark:bg-brand-gray text-white py-16 md:py-20 relative overflow-hidden">
         <div className="max-w-4xl mx-auto px-4 relative z-10 text-left space-y-4">
-          <button 
-            onClick={() => router.push("/blog")}
+          <Link
+            href="/blog"
             className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-orange hover:text-white transition"
           >
             <ArrowLeft size={14} />
             Back to Blog
-          </button>
-          
+          </Link>
+
           <span className="block text-xs uppercase tracking-widest text-brand-orange font-bold">
             {post.category}
           </span>
@@ -193,36 +153,49 @@ export default function BlogPostDetail() {
         </div>
       </section>
 
+      {/* Main Image Banner (if available) */}
+      {post.mainImage && (
+        <div className="max-w-4xl mx-auto px-4 -mt-8 relative z-20">
+          <div className="aspect-video w-full rounded-2xl overflow-hidden shadow-lg border border-white/10">
+            <img
+              src={urlFor(post.mainImage).width(1200).height(675).url()}
+              alt={post.title}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      )}
+
       {/* Article Content Layout */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             
-            {/* Post text */}
-            <div className="lg:col-span-8 space-y-8 prose prose-blue max-w-none">
-              {post.html}
+            {/* Rich Text Content */}
+            <div className="lg:col-span-8 space-y-6 prose prose-blue dark:prose-invert max-w-none">
+              <PortableText value={post.body} components={portableTextComponents} />
             </div>
 
-            {/* Sidebar CTA */}
+            {/* Sidebar CTA widgets */}
             <div className="lg:col-span-4 space-y-6 sticky top-24">
               
-              <div className="bg-brand-gray/30 p-6 rounded-2xl border border-gray-100 space-y-4 text-left">
-                <h4 className="font-extrabold text-sm text-brand-blue uppercase tracking-wider">
+              <div className="bg-brand-gray/30 dark:bg-white/5 p-6 rounded-2xl border border-gray-100 dark:border-white/5 space-y-4 text-left">
+                <h4 className="font-extrabold text-sm text-brand-blue dark:text-white uppercase tracking-wider">
                   Learn directly from experts
                 </h4>
-                <p className="text-xs text-gray-500 leading-relaxed">
+                <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
                   Enjoyed this article? Get hands-on mentorship, review worksheets, and direct critiques by enrolling in our next student batch.
                 </p>
                 <Link
                   href="/courses"
-                  className="w-full inline-flex items-center justify-center gap-1 bg-brand-blue hover:bg-brand-blue-dark text-white font-bold py-2.5 rounded-lg text-xs transition hover-lift shadow-md"
+                  className="w-full inline-flex items-center justify-center gap-1 bg-brand-blue hover:bg-brand-blue-dark dark:bg-brand-orange dark:hover:bg-brand-orange-dark text-white font-bold py-2.5 rounded-lg text-xs transition hover:scale-[1.02] shadow-md"
                 >
                   View Course Details
                   <ArrowRight size={14} />
                 </Link>
               </div>
 
-              {/* Intake Form */}
+              {/* Dynamic registration Lead Form */}
               <LeadForm defaultCourse="Complete Telugu Content Creation Course" />
 
             </div>

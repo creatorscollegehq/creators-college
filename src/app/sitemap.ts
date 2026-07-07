@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
+import { client } from '@/sanity/lib/client';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.creatorscollege.in';
 
   const staticRoutes = [
@@ -24,13 +25,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/lp/free-demo',
   ];
 
-  const blogSlugs = [
-    '3-second-hook-formula',
-    'capcut-editing-hacks',
-    'essential-ai-tools-2026',
-    'youtube-shorts-algorithm-guide',
-    'how-sandeep-scaled-youtube',
-  ];
+  // Fetch dynamic blog post URLs from Sanity CMS
+  let blogSlugs: { slug: string; date: string }[] = [];
+  try {
+    const posts = await client.fetch<any[]>(
+      `*[_type == "post"] { "slug": slug.current, "date": publishedAt }`
+    );
+    blogSlugs = posts.map((p) => ({
+      slug: p.slug,
+      date: p.date || new Date().toISOString(),
+    }));
+  } catch (error) {
+    console.error("Failed to fetch sitemap slugs from Sanity:", error);
+    // Fallback static slugs in case of API/network block during build
+    blogSlugs = [
+      { slug: '3-second-hook-formula', date: '2026-06-25' },
+      { slug: 'capcut-editing-hacks', date: '2026-06-18' },
+      { slug: 'essential-ai-tools-2026', date: '2026-06-10' },
+      { slug: 'youtube-shorts-algorithm-guide', date: '2026-06-01' },
+      { slug: 'how-sandeep-scaled-youtube', date: '2026-05-15' },
+    ];
+  }
 
   const staticEntries = staticRoutes.map((route) => ({
     url: `${baseUrl}${route}`,
@@ -39,9 +54,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route === '' ? 1.0 : route.startsWith('/lp/') ? 0.8 : 0.6,
   }));
 
-  const blogEntries = blogSlugs.map((slug) => ({
-    url: `${baseUrl}/blog/${slug}`,
-    lastModified: new Date(),
+  const blogEntries = blogSlugs.map((item) => ({
+    url: `${baseUrl}/blog/${item.slug}`,
+    lastModified: new Date(item.date),
     changeFrequency: 'monthly' as const,
     priority: 0.5,
   }));

@@ -1231,19 +1231,26 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-start mt-8">
             
-            {/* Left High-Impact Image Card Column */}
+            {/* Left High-Impact Student Success Image Card Column */}
             <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-24 h-fit text-left">
               <div className="rounded-3xl overflow-hidden shadow-xl aspect-video sm:aspect-square border border-gray-200/50 dark:border-white/5 relative group">
                 <img
-                  src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80"
-                  alt="Student Achievement & Creators Work"
+                  src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=800&q=80"
+                  alt="Creators Team Success and Achievements"
                   className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-transparent flex items-end p-6">
-                  <div className="text-white space-y-1">
-                    <span className="text-[10px] font-black bg-brand-orange text-white px-2 py-0.5 rounded uppercase tracking-widest">The Path to Success</span>
-                    <h4 className="text-base font-black">Embrace the Grind, Reap the Rewards</h4>
-                    <p className="text-[11px] text-white/80 font-medium leading-tight">Every viral video starts with structured research, scripting practice, and camera confidence.</p>
+                {/* Premium dark gradient overlay with dynamic milestones */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#050c21]/95 via-black/35 to-transparent flex flex-col justify-end p-6">
+                  <div className="text-white space-y-2 text-left">
+                    <span className="text-[10px] font-black bg-brand-orange text-white px-2.5 py-1 rounded uppercase tracking-widest w-fit inline-block">
+                      Milestone Achieved
+                    </span>
+                    <h4 className="text-base sm:text-lg font-black tracking-tight leading-tight">
+                      Empowering 1,000+ Creators Annually
+                    </h4>
+                    <p className="text-[11px] sm:text-xs text-white/80 font-medium leading-relaxed">
+                      From zero subscribers to full-time career independence. Our roadmap takes students through scripting, shooting, viral edits, and brand deal pitching.
+                    </p>
                   </div>
                 </div>
               </div>

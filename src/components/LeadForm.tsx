@@ -73,8 +73,26 @@ export default function LeadForm({ defaultCourse = "Content Creation Course", is
 
     setIsSubmitting(true);
 
-    // Simulate API submission
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    // Send lead to Google Sheets API
+    try {
+      await fetch("/api/lead", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          course: formData.course,
+          message: formData.message,
+          source: `Intake Form - ${formData.course}`,
+          type: "enrollment",
+        }),
+      });
+    } catch (err) {
+      console.error("Failed to post lead to Google Sheet:", err);
+    }
 
     setIsSubmitting(false);
     setIsSuccess(true);
