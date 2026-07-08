@@ -14,13 +14,14 @@ export default function FloatingContact() {
 
   // One-time automatic popup trigger after 5 seconds of page interaction/load
   useEffect(() => {
-    const hasPopupBeenShown = sessionStorage.getItem("scroll_popup_shown");
-    if (hasPopupBeenShown) return;
+    if (typeof window !== "undefined" && (window as any).scroll_popup_shown) return;
 
     const timer = setTimeout(() => {
       setFormSource(`Automatic Scroll Popup - ${window.location.pathname}`);
       setIsInstantFormOpen(true);
-      sessionStorage.setItem("scroll_popup_shown", "true");
+      if (typeof window !== "undefined") {
+        (window as any).scroll_popup_shown = true;
+      }
     }, 5000);
 
     return () => clearTimeout(timer);
