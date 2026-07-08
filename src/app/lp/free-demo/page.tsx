@@ -1,6 +1,18 @@
 import React from "react";
 import LeadForm from "@/components/LeadForm";
 import { Check, Sparkles, Video } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Free Creator & Video Editing Demo Class in Telugu | Creators College",
+  description: "Register for our free 1-hour creator masterclass in Telugu. Learn social media algorithms, write high-retention video scripts, and watch a live Reels editing tutorial.",
+  keywords: [
+    "Free Video Editing Class Telugu",
+    "Telugu creator demo class",
+    "Creators College free masterclass",
+    "YouTube scripting class Telugu"
+  ]
+};
 
 export default function FreeDemoLandingPage() {
   const highlights = [

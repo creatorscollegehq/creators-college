@@ -1,6 +1,19 @@
 import React from "react";
 import LeadForm from "@/components/LeadForm";
 import { Check, Sparkles } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "CapCut Video Editing Course in Telugu | Creators College",
+  description: "Master professional mobile and PC video editing with CapCut in Telugu. Learn keyframes, speed ramping, kinetic subtitles, sound effects, and Reels editing from experts.",
+  keywords: [
+    "CapCut Telugu Course",
+    "CapCut editing course Telugu",
+    "Mobile video editing course Telugu",
+    "Reels editing course Telugu",
+    "Creators College"
+  ]
+};
 
 export default function CapCutLandingPage() {
   const highlights = [

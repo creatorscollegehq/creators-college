@@ -1,6 +1,18 @@
 import React from "react";
 import LeadForm from "@/components/LeadForm";
 import { Check, Building } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Corporate Video & Content Creation Training for Teams | Creators College",
+  description: "Scale your organization's organic footprint. Train your marketing, sales, and branding teams to write, shoot, and edit professional videos.",
+  keywords: [
+    "Corporate Content Creator Training",
+    "Employee Video Editing Workshop",
+    "B2B Group Coaching Video",
+    "Marketing Team Video Bootcamp"
+  ]
+};
 
 export default function CorporateLandingPage() {
   const highlights = [

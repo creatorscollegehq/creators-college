@@ -1,6 +1,19 @@
 import React from "react";
 import LeadForm from "@/components/LeadForm";
 import { Check, Sparkles } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Complete Telugu Content Creation Course | Creators College",
+  description: "Learn scripting, lighting, mobile camera setup, video editing, and social media growth in Telugu. Turn your video creator skills into a career.",
+  keywords: [
+    "Telugu Content Creation Course",
+    "YouTube course Telugu",
+    "Instagram growth Telugu",
+    "Learn content creation Telugu",
+    "Creators College Course"
+  ]
+};
 
 export default function ContentCreationLandingPage() {
   const highlights = [

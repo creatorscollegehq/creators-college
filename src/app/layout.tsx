@@ -88,6 +88,52 @@ export default function RootLayout({
             `,
           }}
         />
+        {/* Organization Schema (JSON-LD) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "EducationalOrganization",
+              "name": "Creators College",
+              "url": "https://www.creatorscollege.in/",
+              "logo": "https://www.creatorscollege.in/logo/logo.png",
+              "description": "Learn professional video editing, content scripting, shooting, and social media growth in Telugu from experts.",
+              "founder": {
+                "@type": "Person",
+                "name": "Cecil Srungarapati"
+              },
+              "sameAs": [
+                "https://www.youtube.com/@creatorscollege",
+                "https://www.instagram.com/creatorscollege"
+              ]
+            })
+          }}
+        />
+        {/* LocalBusiness Schema (JSON-LD) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              "name": "Creators College Hyderabad",
+              "image": "https://www.creatorscollege.in/hero_collage_wide.jpg",
+              "telephone": "+91-8143937367",
+              "email": "support@creatorscollege.in",
+              "priceRange": "INR",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Hyderabad Campus",
+                "addressLocality": "Hyderabad",
+                "addressRegion": "TS",
+                "postalCode": "500001",
+                "addressCountry": "IN"
+              },
+              "url": "https://www.creatorscollege.in/"
+            })
+          }}
+        />
       </head>
       <body className="bg-white text-brand-charcoal min-h-screen flex flex-col font-sans antialiased">
         <noscript>

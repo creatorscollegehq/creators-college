@@ -547,7 +547,7 @@ export default function HomePage() {
                 <div className="rounded-2xl overflow-hidden aspect-video relative border border-gray-100 dark:border-white/5">
                   <img
                     src="https://images.unsplash.com/photo-1610484826917-0f101a7bf7f4?auto=format&fit=crop&w=500&q=80"
-                    alt="Online Classes"
+                    alt="Creators College Live Online Video Editing and Content Creation Classes in Telugu"
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -598,7 +598,7 @@ export default function HomePage() {
                 <div className="rounded-2xl overflow-hidden aspect-video relative border border-gray-100 dark:border-white/5">
                   <img
                     src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=500&q=80"
-                    alt="Offline Classroom"
+                    alt="Creators College Offline Classroom Video Editing Academy in Hyderabad"
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -648,7 +648,7 @@ export default function HomePage() {
                 <div className="rounded-2xl overflow-hidden aspect-video relative border border-gray-100 dark:border-white/5">
                   <img
                     src="https://images.unsplash.com/photo-1527689368864-3a821dbccc34?auto=format&fit=crop&w=500&q=80"
-                    alt="Recorded Sessions"
+                    alt="Creators College Recorded Video Editing Course Lectures for Lifetime Self-Paced Learning"
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -885,7 +885,7 @@ export default function HomePage() {
               <div className="w-full h-36 rounded-2xl overflow-hidden shadow-sm shrink-0">
                 <img 
                   src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=400&q=80" 
-                  alt="Practical Learning" 
+                  alt="Practical Hands-on Video Editing Assignments at Creators College" 
                   className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                 />
               </div>
@@ -903,7 +903,7 @@ export default function HomePage() {
               <div className="w-full h-36 rounded-2xl overflow-hidden shadow-sm shrink-0">
                 <img 
                   src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=400&q=80" 
-                  alt="Creativity" 
+                  alt="Creative Content Creation and YouTube Channel Growth Strategy" 
                   className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                 />
               </div>
@@ -921,7 +921,7 @@ export default function HomePage() {
               <div className="w-full h-36 rounded-2xl overflow-hidden shadow-sm shrink-0">
                 <img 
                   src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=400&q=80" 
-                  alt="Step-by-Step Teaching" 
+                  alt="Step-by-Step Video Editing Tutorials in Telugu for Beginners" 
                   className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                 />
               </div>

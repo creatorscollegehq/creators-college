@@ -31,5 +31,61 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  return <CoursesPageClient />;
+  const courseSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Course",
+        "name": "Complete Telugu Content Creation Course",
+        "description": "Master content research, scripting, voiceover, shooting, CapCut and Premiere Pro editing, and page growth in Telugu.",
+        "provider": {
+          "@type": "EducationalOrganization",
+          "name": "Creators College",
+          "sameAs": "https://www.creatorscollege.in/"
+        },
+        "hasCourseInstance": {
+          "@type": "CourseInstance",
+          "courseMode": "mixed",
+          "duration": "P30D",
+          "courseWorkload": "PT2H"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "5999.00",
+          "priceCurrency": "INR"
+        }
+      },
+      {
+        "@type": "Course",
+        "name": "CapCut Video Editing Course",
+        "description": "Master professional CapCut keyframes, speed ramping, transitions, and audio synching in Telugu.",
+        "provider": {
+          "@type": "EducationalOrganization",
+          "name": "Creators College",
+          "sameAs": "https://www.creatorscollege.in/"
+        },
+        "hasCourseInstance": {
+          "@type": "CourseInstance",
+          "courseMode": "mixed",
+          "duration": "P20D",
+          "courseWorkload": "PT1.5H"
+        },
+        "offers": {
+          "@type": "Offer",
+          "price": "1999.00",
+          "priceCurrency": "INR"
+        }
+      }
+    ]
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(courseSchema) }}
+      />
+      <CoursesPageClient />
+    </>
+  );
 }

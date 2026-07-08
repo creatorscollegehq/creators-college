@@ -1,6 +1,18 @@
 import React from "react";
 import LeadForm from "@/components/LeadForm";
 import { Check, GraduationCap } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "College Content Creation Workshops & Elective Bootcamps | Creators College",
+  description: "Bring practical content creation, smartphone shooting, and video editing bootcamps to your college campus. Prepare students for freelancing and the creator economy.",
+  keywords: [
+    "College Content Creation Workshop",
+    "University Video Editing Bootcamp",
+    "Campus Creator Electives",
+    "Student Digital Media Training"
+  ]
+};
 
 export default function CollegeWorkshopsLandingPage() {
   const highlights = [

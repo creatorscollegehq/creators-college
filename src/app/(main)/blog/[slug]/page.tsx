@@ -150,8 +150,34 @@ export default async function BlogPostDetail({ params }: PageProps) {
     );
   }
 
+  const postSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "image": post.mainImage ? urlFor(post.mainImage).width(1200).url() : "https://www.creatorscollege.in/hero_collage_wide.jpg",
+    "datePublished": post.date || new Date().toISOString(),
+    "author": {
+      "@type": "Person",
+      "name": post.author || "Creators College Team",
+      "jobTitle": post.authorRole || "Team Member"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Creators College",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.creatorscollege.in/logo/logo.png"
+      }
+    },
+    "description": post.excerpt || post.metaDescription || "Read video editing, scripting, and digital creation insights on the Creators College Blog."
+  };
+
   return (
     <div className="w-full bg-white dark:bg-[#090d16] transition-colors duration-200">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(postSchema) }}
+      />
       {/* Article Header */}
       <section className="bg-brand-blue dark:bg-brand-gray text-white pt-6 pb-16 md:pt-8 md:pb-20 relative overflow-hidden">
         {/* Decorative background visual accent */}
