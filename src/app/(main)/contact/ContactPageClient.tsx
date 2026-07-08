@@ -91,7 +91,27 @@ export default function ContactPage() {
     if (!name || !phone || !city) return;
 
     setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+
+    // Send lead to Google Sheets API
+    try {
+      await fetch("/api/lead", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          phone,
+          email: email || "N/A",
+          course: course || "General Enquiry",
+          message: `City: ${city} | Profession: ${profession || "N/A"} | Mode: ${mode} | Category: ${category} | Message: ${message || "N/A"}`,
+          source: `Contact Page Form`,
+          type: "enrollment",
+        }),
+      });
+    } catch (err) {
+      console.error("Failed to post contact lead to Google Sheets:", err);
+    }
 
     // Save lead details
     const savedContacts = JSON.parse(localStorage.getItem("contact_leads") || "[]");

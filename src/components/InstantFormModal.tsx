@@ -6,9 +6,10 @@ import { X, Send, CheckCircle2, PhoneCall } from "lucide-react";
 interface InstantFormModalProps {
   isOpen: boolean;
   onClose: () => void;
+  source?: string;
 }
 
-export default function InstantFormModal({ isOpen, onClose }: InstantFormModalProps) {
+export default function InstantFormModal({ isOpen, onClose, source }: InstantFormModalProps) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [course, setCourse] = useState("Complete Telugu Content Creation Course");
@@ -44,7 +45,7 @@ export default function InstantFormModal({ isOpen, onClose }: InstantFormModalPr
           name,
           phone,
           course,
-          source: `Instant Callback Floating Widget - ${window.location.pathname}`,
+          source: source || `Instant Callback Floating Widget - ${window.location.pathname}`,
           type: "instant", // Routes to "⚡ Instant Callback Leads" in Google Sheets
         }),
       });

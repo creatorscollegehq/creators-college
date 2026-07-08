@@ -53,9 +53,31 @@ export default function CheckoutPage() {
     }
   };
 
-  const handleGenerateOrder = (e: React.FormEvent) => {
+  const handleGenerateOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
+
+    // Send lead to Google Sheets API
+    try {
+      await fetch("/api/lead", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email || "N/A",
+          course: activeCourse.name,
+          message: `Generated checkout order for ₹${activeCourse.price}. User needs to pay and send screenshot.`,
+          source: `Checkout Page Form`,
+          type: "enrollment",
+        }),
+      });
+    } catch (err) {
+      console.error("Failed to post checkout lead to Google Sheets:", err);
+    }
+
     setOrderGenerated(true);
   };
 

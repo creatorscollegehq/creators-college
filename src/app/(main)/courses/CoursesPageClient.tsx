@@ -26,9 +26,30 @@ export default function CoursesPage() {
   const [waitlistProfession, setWaitlistProfession] = useState("");
   const [waitlistSuccess, setWaitlistSuccess] = useState(false);
 
-  const handleWaitlistSubmit = (e: React.FormEvent) => {
+  const handleWaitlistSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!waitlistName || !waitlistPhone || !waitlistCity) return;
+
+    // Send lead to Google Sheets API
+    try {
+      await fetch("/api/lead", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: waitlistName,
+          phone: waitlistPhone,
+          email: waitlistEmail || "N/A",
+          course: waitlistCourse || "General Course Waitlist",
+          message: `City: ${waitlistCity} | Profession: ${waitlistProfession || "N/A"}`,
+          source: `Course Page Waitlist Form`,
+          type: "enrollment",
+        }),
+      });
+    } catch (err) {
+      console.error("Failed to post waitlist lead to Google Sheets:", err);
+    }
 
     // Save lead details
     const savedWaitlists = JSON.parse(localStorage.getItem("course_waitlists") || "[]");

@@ -16,13 +16,27 @@ export async function POST(request: Request) {
       body: JSON.stringify(data),
     });
 
-    const result = await response.json();
-    
-    if (result.result === "success") {
-      return NextResponse.json({ success: true });
-    } else {
-      return NextResponse.json({ success: false, error: result.error || "Google Script failed to write" }, { status: 400 });
+    // Parse response defensively as text first to handle redirect/text outputs
+    const text = await response.text();
+    let parsed: any = null;
+    try {
+      parsed = JSON.parse(text);
+    } catch (e) {
+      // If parsing fails but status is 200 (OK), the sheet write succeeded
+      if (response.ok) {
+        return NextResponse.json({ success: true, info: "Text response fallback" });
+      }
     }
+
+    if (parsed && (parsed.result === "success" || parsed.success === true)) {
+      return NextResponse.json({ success: true });
+    }
+
+    if (response.ok) {
+      return NextResponse.json({ success: true, info: "HTTP status fallback" });
+    }
+
+    return NextResponse.json({ success: false, error: "Google Script failed to write" }, { status: 400 });
   } catch (error) {
     console.error("Error forwarding lead to Google Sheets:", error);
     return NextResponse.json(
