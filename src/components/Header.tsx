@@ -10,7 +10,32 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
   const [isWhatsAppGateOpen, setIsWhatsAppGateOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const pathname = usePathname();
+
+  // Track window scroll progress for top indicator bar
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalScroll > 0) {
+        const progress = (window.scrollY / totalScroll) * 100;
+        setScrollProgress(progress);
+      } else {
+        setScrollProgress(0);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Smooth scroll to top when clicking the logo on the Home Page
+  const handleLogoClick = (e: React.MouseEvent) => {
+    if (pathname === "/") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   // Load and apply theme preference
   useEffect(() => {
@@ -49,7 +74,7 @@ export default function Header() {
   const logoSrc = "/logo/2 Horizontal Logo.png";
 
   const announcementStripe = (
-    <div className="w-full bg-brand-orange text-white py-0.5 px-3 text-center text-[9px] sm:text-[11px] font-bold tracking-wide relative z-50 flex items-center justify-center gap-x-2 shadow-sm">
+    <div className="w-full bg-brand-orange text-white py-[2px] px-2 sm:py-0.5 sm:px-3 text-center text-[8.5px] sm:text-[11px] leading-[1.2] sm:leading-normal font-bold tracking-wide relative z-50 flex items-center justify-center gap-x-2 shadow-sm">
       <span className="hidden sm:inline">
         🔥 Launch Offer: ₹30,000 Course for Just ₹5,000 | Save ₹25,000 | Limited-Time Enrollment &rarr;
       </span>
@@ -66,13 +91,13 @@ export default function Header() {
     return (
       <div className="w-full sticky top-0 z-50">
         {announcementStripe}
-        <header className="w-full bg-brand-blue py-2.5 sm:py-3 border-b border-brand-blue-dark dark:bg-brand-gray dark:border-white/5">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <Link href="/" className="flex items-center">
+        <header className="w-full bg-brand-blue py-3 sm:py-3 border-b border-brand-blue-dark dark:bg-brand-gray dark:border-white/5 relative">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-12 sm:h-14">
+            <Link href="/" onClick={handleLogoClick} className="flex items-center">
               <img 
                 src="/logo/2 Horizontal Logo.png" 
                 alt="Creators College Logo" 
-                className="h-9 sm:h-11 md:h-14 w-auto object-contain transition-all dark-logo-stroke"
+                className="h-11 sm:h-11 md:h-14 w-auto object-contain transition-all dark-logo-stroke"
               />
             </Link>
             <div className="flex items-center gap-4">
@@ -93,6 +118,13 @@ export default function Header() {
             </div>
           </div>
         </header>
+        {/* Scroll Progress Indicator Bar */}
+        <div className="w-full h-[3px] bg-brand-orange/20 absolute bottom-0 left-0 z-50">
+          <div 
+            className="h-full bg-brand-orange transition-all duration-75 origin-left"
+            style={{ width: `${scrollProgress}%` }}
+          />
+        </div>
       </div>
     );
   }
@@ -102,16 +134,16 @@ export default function Header() {
       {announcementStripe}
       
       {/* Header wrapper switches bg colors seamlessly: White in Light mode, Navy black in Dark mode */}
-      <header className="w-full bg-white/95 dark:bg-[#090d16]/95 backdrop-blur-md border-b border-gray-200/60 dark:border-white/5 shadow-md transition-colors duration-200">
+      <header className="w-full bg-white/95 dark:bg-[#090d16]/95 backdrop-blur-md border-b border-gray-200/60 dark:border-white/5 shadow-md transition-colors duration-200 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 sm:h-18">
+          <div className="flex items-center justify-between h-18 sm:h-18">
             {/* Logo */}
             <div className="flex-shrink-0 py-2">
-              <Link href="/" className="flex items-center">
+              <Link href="/" onClick={handleLogoClick} className="flex items-center">
                 <img
                   src={logoSrc}
                   alt="Creators College Logo"
-                  className="h-10 sm:h-12 md:h-15 w-auto object-contain transition-all dark-logo-stroke"
+                  className="h-12 sm:h-12 md:h-15 w-auto object-contain transition-all dark-logo-stroke"
                 />
               </Link>
             </div>
@@ -210,6 +242,14 @@ export default function Header() {
           </div>
         )}
       </header>
+
+      {/* Scroll Progress Indicator Bar */}
+      <div className="w-full h-[3px] bg-brand-orange/20 absolute bottom-0 left-0 z-50">
+        <div 
+          className="h-full bg-brand-orange transition-all duration-75 origin-left"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
 
       <WhatsAppGateModal
         isOpen={isWhatsAppGateOpen}
