@@ -125,7 +125,7 @@ function PopupModal({ isOpen, onClose, seats }: { isOpen: boolean; onClose: () =
           <div className="inline-flex items-center gap-1.5 bg-red-500/20 border border-red-400/30 text-red-300 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider mb-3">
             <AlertTriangle size={10} /> Only {seats} Seats Left
           </div>
-          <h3 className="text-xl font-black leading-tight">Get FREE Demo Class<br /><span className="text-brand-orange">Details on WhatsApp Now</span></h3>
+          <h3 className="text-xl font-black leading-tight">Start Your Creator Journey<br /><span className="text-brand-orange">Apply Before Seats Fill Up</span></h3>
           <p className="text-white/60 text-xs mt-1">Counselor will call within 30 minutes</p>
         </div>
         <div className="p-5 sm:p-6">
@@ -210,8 +210,8 @@ export default function AdsLandingPageClient() {
                 <div className="bg-brand-orange px-5 py-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="text-white/75 text-[10px] font-bold uppercase tracking-widest">⚡ Zero Cost · Free Demo</div>
-                      <div className="text-white font-black text-lg leading-tight mt-0.5">Book Your Seat Now</div>
+                      <div className="text-white/75 text-[10px] font-bold uppercase tracking-widest">⚡ Start Your Creator Journey</div>
+                      <div className="text-white font-black text-lg leading-tight mt-0.5">Get Free Career Guidance</div>
                     </div>
                     <div className="bg-white/20 rounded-xl px-3 py-1.5 text-center">
                       <div className="text-white font-black text-lg leading-none">{seats}</div>
