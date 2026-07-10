@@ -70,10 +70,11 @@ export default function LpNav({ onEnroll }: LpNavProps) {
 
           {/* Desktop nav links */}
           <div className="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-600">
-            <Link href="/about" className="hover:text-brand-orange transition">About</Link>
+            <Link href="/" className="hover:text-brand-orange transition">Home</Link>
+            <Link href="/about" className="hover:text-brand-orange transition">About Us</Link>
             <Link href="/courses" className="hover:text-brand-orange transition">Courses</Link>
-            <Link href="/corporate-training" className="hover:text-brand-orange transition">Corporate</Link>
-            <Link href="/contact" className="hover:text-brand-orange transition">Contact</Link>
+            <Link href="/blog" className="hover:text-brand-orange transition">Blog</Link>
+            <Link href="/contact" className="hover:text-brand-orange transition">Contact Us</Link>
           </div>
 
           {/* Right side */}

@@ -75,16 +75,16 @@ function EnrollForm({ source = "Ads LP", onSuccess, compact }: { source?: string
   return (
     <form onSubmit={submit} className="space-y-3">
       <div>
-        <input id={`${source}-name`} type="text" placeholder="Your Full Name" value={name}
+        <input id={`${source}-name`} type="text" placeholder="Your Full Name (e.g. Rahul Sharma)" value={name}
           onChange={e => { setName(e.target.value); if (errors.name) setErrors(p => ({ ...p, name: "" })); }}
-          className={`w-full px-4 ${compact ? "py-3" : "py-4"} rounded-xl border-2 text-sm bg-white focus:outline-none focus:border-brand-blue/50 transition ${errors.name ? "border-red-400 bg-red-50" : "border-gray-200"}`}
+          className={`w-full px-4 ${compact ? "py-3" : "py-4"} rounded-xl border-2 text-sm bg-white text-brand-charcoal placeholder:text-gray-400 focus:outline-none focus:border-brand-blue/50 transition ${errors.name ? "border-red-400 bg-red-50" : "border-gray-200"}`}
         />
         {errors.name && <p className="text-red-500 text-[10px] mt-1">{errors.name}</p>}
       </div>
       <div>
-        <input id={`${source}-phone`} type="tel" placeholder="WhatsApp Number (10 digits)" value={phone}
+        <input id={`${source}-phone`} type="tel" placeholder="Contact No. (e.g. 9876543210)" value={phone}
           onChange={e => { setPhone(e.target.value); if (errors.phone) setErrors(p => ({ ...p, phone: "" })); }}
-          className={`w-full px-4 ${compact ? "py-3" : "py-4"} rounded-xl border-2 text-sm bg-white focus:outline-none focus:border-brand-blue/50 transition ${errors.phone ? "border-red-400 bg-red-50" : "border-gray-200"}`}
+          className={`w-full px-4 ${compact ? "py-3" : "py-4"} rounded-xl border-2 text-sm bg-white text-brand-charcoal placeholder:text-gray-400 focus:outline-none focus:border-brand-blue/50 transition ${errors.phone ? "border-red-400 bg-red-50" : "border-gray-200"}`}
         />
         {errors.phone && <p className="text-red-500 text-[10px] mt-1">{errors.phone}</p>}
       </div>
