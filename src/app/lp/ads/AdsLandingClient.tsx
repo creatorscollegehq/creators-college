@@ -281,6 +281,32 @@ export default function AdsLandingPageClient() {
         </div>
       </section>
 
+      {/* ── Video Section ── */}
+      <section className="py-12 px-4 max-w-4xl mx-auto text-center space-y-6">
+        <div className="space-y-2">
+          <div className="text-[11px] font-bold uppercase tracking-widest text-brand-orange">
+            🎬 Watch First
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white">
+            Watch This Before You Join Creators College
+          </h2>
+          <p className="text-sm text-gray-500 max-w-xl mx-auto">
+            See how our training works, what you&apos;ll learn, and why hundreds of students are choosing Creators College.
+          </p>
+        </div>
+
+        {/* Video Card */}
+        <div className="relative aspect-video w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl border-4 border-gray-100 dark:border-white/10 bg-black">
+          <iframe
+            className="absolute inset-0 w-full h-full"
+            src="https://www.youtube.com/embed/SLI_l0HNw4g"
+            title="Watch Before You Join Creators College"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+      </section>
+
       {/* ── Loss Aversion ── */}
       <section className="py-8 px-4 bg-red-50 border-y border-red-100">
         <div className="max-w-3xl mx-auto text-center space-y-2">
