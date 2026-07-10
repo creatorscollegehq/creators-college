@@ -57,6 +57,40 @@ export default function CheckoutPage() {
     e.preventDefault();
     if (!validate()) return;
 
+    const eventId = `checkout_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+    // Fire client-side Meta Pixel InitiateCheckout event
+    if (typeof window !== "undefined" && (window as any).fbq) {
+      (window as any).fbq('track', 'InitiateCheckout', {
+        content_name: activeCourse.name,
+        value: Number(activeCourse.price),
+        currency: 'INR'
+      }, {
+        eventID: eventId
+      });
+    }
+
+    // Call server-side Meta Conversions API (CAPI) Proxy
+    try {
+      fetch("/api/meta-capi", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          eventId: eventId,
+          url: window.location.href,
+          source: `Checkout Page Form`,
+          eventName: "InitiateCheckout"
+        }),
+      }).catch(err => console.error("Meta CAPI trigger error (silent):", err));
+    } catch (err) {
+      // Silent catch
+    }
+
     // Send lead to Google Sheets API
     try {
       await fetch("/api/lead", {

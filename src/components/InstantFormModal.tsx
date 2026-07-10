@@ -35,6 +35,39 @@ export default function InstantFormModal({ isOpen, onClose, source }: InstantFor
 
     setIsSubmitting(true);
 
+    const eventId = `instant_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+    // Fire client-side Meta Pixel conversion event
+    if (typeof window !== "undefined" && (window as any).fbq) {
+      (window as any).fbq('track', 'Lead', {
+        content_name: course,
+        status: 'Inquiry Submitted',
+        value: 0.00,
+        currency: 'INR'
+      }, {
+        eventID: eventId
+      });
+    }
+
+    // Call server-side Meta Conversions API (CAPI) Proxy
+    try {
+      fetch("/api/meta-capi", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          phone: phone,
+          eventId: eventId,
+          url: window.location.href,
+          source: source || `Instant Callback Floating Widget - ${window.location.pathname}`,
+        }),
+      }).catch(err => console.error("Meta CAPI trigger error (silent):", err));
+    } catch (err) {
+      // Silent catch
+    }
+
     try {
       const res = await fetch("/api/lead", {
         method: "POST",
