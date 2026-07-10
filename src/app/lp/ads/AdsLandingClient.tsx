@@ -92,7 +92,7 @@ function EnrollForm({ source = "Ads LP", onSuccess, compact }: { source?: string
         className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white font-black py-4 rounded-xl text-base transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-orange/30 active:scale-[0.98] disabled:opacity-70 animate-enroll">
         {loading
           ? <span className="flex items-center gap-2"><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Booking...</span>
-          : <><Flame size={16} /> Get FREE Demo Class — ₹0 Cost</>
+          : <><Flame size={16} /> Get Free Career Guidance</>
         }
       </button>
       <div className="flex items-center justify-center gap-2 text-[10px] text-gray-400">
@@ -273,7 +273,7 @@ export default function AdsLandingPageClient() {
               {/* Mobile CTA */}
               <button onClick={scrollToForm}
                 className="w-full lg:hidden bg-brand-orange hover:bg-brand-orange-dark text-white font-black py-4 rounded-xl text-base flex items-center justify-center gap-2 shadow-lg active:scale-[0.98] transition animate-enroll">
-                <Flame size={16} /> Book FREE Demo Class Now <ChevronRight size={15} />
+                <Flame size={16} /> Start Your Creator Journey <ChevronRight size={15} />
               </button>
             </div>
 
@@ -430,7 +430,7 @@ export default function AdsLandingPageClient() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center pt-1">
             <button onClick={scrollToForm} id="final-enroll-btn"
               className="inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white font-black px-8 py-4 rounded-xl text-sm transition shadow-xl shadow-brand-orange/30 active:scale-95 w-full sm:w-auto animate-enroll">
-              <Flame size={15} /> Book FREE Demo — {seats} Seats Left
+              <Flame size={15} /> Apply Before Seats Fill Up
             </button>
             <a href="https://wa.me/918143937367?text=Hi!%20Saw%20your%20ad.%20Tell%20me%20about%20the%20Content%20Creation%20Course."
               target="_blank" rel="noopener noreferrer" id="final-wa-btn"
