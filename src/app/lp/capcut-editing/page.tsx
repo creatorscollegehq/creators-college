@@ -1,4 +1,5 @@
 import React from "react";
+import Header from "@/components/Header";
 import LeadForm from "@/components/LeadForm";
 import { Check, Sparkles } from "lucide-react";
 import { Metadata } from "next";
@@ -25,7 +26,9 @@ export default function CapCutLandingPage() {
   ];
 
   return (
-    <div className="w-full bg-brand-gray/30 py-12 md:py-20 flex-grow flex items-center">
+    <>
+      <Header />
+      <div className="w-full bg-brand-gray/30 py-12 md:py-20 flex-grow flex items-center">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           
@@ -67,5 +70,6 @@ export default function CapCutLandingPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
