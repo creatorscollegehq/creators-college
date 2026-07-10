@@ -194,9 +194,17 @@ export default function Footer() {
 
         {/* Footer Bottom */}
         <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
-          <p className="text-gray-500 text-xs">
-            © {new Date().getFullYear()} Creators College. All rights reserved. Founded in 2026.
-          </p>
+          <div className="flex flex-col gap-1 items-center sm:items-start">
+            <p className="text-gray-500 text-xs">
+              © {new Date().getFullYear()} Creators College. All rights reserved. Founded in 2026.
+            </p>
+            <p className="text-gray-600 text-[10px]">
+              Designed & Developed by{" "}
+              <a href="https://www.creatorscollege.in" className="hover:text-brand-orange text-gray-500 hover:underline transition">
+                Creators College Team
+              </a>
+            </p>
+          </div>
           <div className="flex flex-wrap gap-x-6 gap-y-2 justify-center sm:justify-end text-xs text-gray-500">
             <Link href="/privacy-policy" className="hover:text-gray-300 transition duration-150">Privacy Policy</Link>
             <Link href="/terms-conditions" className="hover:text-gray-300 transition duration-150">Terms &amp; Conditions</Link>
