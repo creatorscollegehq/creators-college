@@ -89,7 +89,7 @@ function EnrollForm({ source = "Ads LP", onSuccess, compact }: { source?: string
         {errors.phone && <p className="text-red-500 text-[10px] mt-1">{errors.phone}</p>}
       </div>
       <button id={`${source}-submit`} type="submit" disabled={loading}
-        className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white font-black py-4 rounded-xl text-base transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-orange/30 active:scale-[0.98] disabled:opacity-70">
+        className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white font-black py-4 rounded-xl text-base transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-orange/30 active:scale-[0.98] disabled:opacity-70 animate-enroll">
         {loading
           ? <span className="flex items-center gap-2"><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Booking...</span>
           : <><Flame size={16} /> Get FREE Demo Class — ₹0 Cost</>
@@ -272,7 +272,7 @@ export default function AdsLandingPageClient() {
 
               {/* Mobile CTA */}
               <button onClick={scrollToForm}
-                className="w-full lg:hidden bg-brand-orange hover:bg-brand-orange-dark text-white font-black py-4 rounded-xl text-base flex items-center justify-center gap-2 shadow-lg active:scale-[0.98] transition">
+                className="w-full lg:hidden bg-brand-orange hover:bg-brand-orange-dark text-white font-black py-4 rounded-xl text-base flex items-center justify-center gap-2 shadow-lg active:scale-[0.98] transition animate-enroll">
                 <Flame size={16} /> Book FREE Demo Class Now <ChevronRight size={15} />
               </button>
             </div>
@@ -361,7 +361,7 @@ export default function AdsLandingPageClient() {
           </div>
           <div className="mt-6 text-center">
             <button onClick={scrollToForm}
-              className="inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white font-black px-7 py-4 rounded-xl text-sm transition shadow-xl shadow-brand-orange/25 active:scale-95">
+              className="inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white font-black px-7 py-4 rounded-xl text-sm transition shadow-xl shadow-brand-orange/25 active:scale-95 animate-enroll">
               I Want Results Like These <ChevronRight size={15} />
             </button>
             <p className="text-xs text-gray-400 mt-2">Free demo · No payment · 30-min callback</p>
@@ -403,7 +403,7 @@ export default function AdsLandingPageClient() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center pt-1">
             <button onClick={scrollToForm} id="final-enroll-btn"
-              className="inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white font-black px-8 py-4 rounded-xl text-sm transition shadow-xl shadow-brand-orange/30 active:scale-95 w-full sm:w-auto">
+              className="inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white font-black px-8 py-4 rounded-xl text-sm transition shadow-xl shadow-brand-orange/30 active:scale-95 w-full sm:w-auto animate-enroll">
               <Flame size={15} /> Book FREE Demo — {seats} Seats Left
             </button>
             <a href="https://wa.me/918143937367?text=Hi!%20Saw%20your%20ad.%20Tell%20me%20about%20the%20Content%20Creation%20Course."
