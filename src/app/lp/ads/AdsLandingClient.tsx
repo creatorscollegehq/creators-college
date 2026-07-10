@@ -344,17 +344,17 @@ export default function AdsLandingPageClient() {
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {[
-              { name: "Rahul K.", role: "YouTube Creator", income: "₹1.2L/month", time: "6 months", emoji: "👨‍💼" },
-              { name: "Priya M.", role: "Instagram Creator", income: "50K followers", time: "4 months", emoji: "👩‍💻" },
-              { name: "Sai T.", role: "Freelance Editor", income: "₹60K/month", time: "5 months", emoji: "👨‍🎨" },
-              { name: "Divya R.", role: "Brand Collab", income: "3 deals/month", time: "3 months", emoji: "👩‍🎤" },
+              { name: "Rahul K.", role: "YouTube Creator", outcome: "Monetized Channel", time: "6 months", emoji: "👨‍💼" },
+              { name: "Priya M.", role: "Instagram Creator", outcome: "Brand Partnerships", time: "4 months", emoji: "👩‍💻" },
+              { name: "Sai T.", role: "Freelance Editor", outcome: "Freelance Client Base", time: "5 months", emoji: "👨‍🎨" },
+              { name: "Divya R.", role: "Brand Collab", outcome: "Consistent Brand Deals", time: "3 months", emoji: "👩‍🎤" },
             ].map((r, i) => (
               <div key={i} className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow">
                 <div className="text-2xl mb-2">{r.emoji}</div>
                 <div className="font-black text-brand-blue text-sm">{r.name}</div>
                 <div className="text-[10px] text-gray-400 mb-1">{r.role}</div>
                 <div className="flex mb-1.5">{[...Array(5)].map((_, i) => <Star key={i} size={9} className="fill-brand-orange text-brand-orange" />)}</div>
-                <div className="text-brand-orange font-black text-sm">{r.income}</div>
+                <div className="text-brand-orange font-black text-sm">{r.outcome}</div>
                 <div className="text-[10px] text-gray-400">in {r.time}</div>
               </div>
             ))}
