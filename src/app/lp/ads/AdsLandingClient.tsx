@@ -153,7 +153,7 @@ export default function AdsLandingPageClient() {
         setPopup(true); popupShown.current = true;
         try { sessionStorage.setItem("ads_popup_shown", "1"); } catch {}
       }
-    }, 30000);
+    }, 5000);
     return () => clearTimeout(t);
   }, []);
 
@@ -210,8 +210,8 @@ export default function AdsLandingPageClient() {
                 <div className="bg-brand-orange px-5 py-4">
                   <div className="flex items-center justify-between">
                     <div>
-                      <div className="text-white/75 text-[10px] font-bold uppercase tracking-widest">⚡ Start Your Creator Journey</div>
-                      <div className="text-white font-black text-lg leading-tight mt-0.5">Get Free Career Guidance</div>
+                      <div className="text-white/75 text-[10px] font-bold uppercase tracking-widest">⚡ Talk to an Admission Expert</div>
+                      <div className="text-white font-black text-lg leading-tight mt-0.5">Secure Your Seat Now</div>
                     </div>
                     <div className="bg-white/20 rounded-xl px-3 py-1.5 text-center">
                       <div className="text-white font-black text-lg leading-none">{seats}</div>
