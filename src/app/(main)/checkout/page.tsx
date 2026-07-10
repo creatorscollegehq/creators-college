@@ -81,8 +81,8 @@ export default function CheckoutPage() {
     setOrderGenerated(true);
   };
 
-  // Click-to-pay deep link for UPI apps on mobile
-  const upiDeepLink = `upi://pay?pa=cecilkumar99830-1@oksbi&pn=Creators%20College&am=${activeCourse.price}.00&cu=INR&tn=${encodeURIComponent(activeCourse.name)}%20Enrollment`;
+  // Click-to-pay deep link for UPI apps on mobile (optimized parameters for Google Pay, PhonePe, Paytm compatibility)
+  const upiDeepLink = `upi://pay?pa=cecilkumar99830-1@oksbi&pn=CreatorsCollege&am=${activeCourse.price}&cu=INR&tn=CCEnroll`;
 
   // WhatsApp text for sending payment screenshot
   const whatsappMsg = `Hi Creators College, I have completed the payment of ₹${activeCourse.price} for the ${activeCourse.name}. Here are my details:\nName: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email || "N/A"}\nPlease activate my enrollment.`;
