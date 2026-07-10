@@ -184,11 +184,27 @@ export default function AdsLandingPageClient() {
       <section className="bg-gradient-to-br from-[#040e24] via-brand-blue to-[#0b1f4d] text-white px-4 pt-8 pb-10 sm:pt-12 sm:pb-14">
         <div className="max-w-6xl mx-auto">
 
-          {/* Mobile: Form FIRST, then pitch below */}
-          <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 lg:gap-12 lg:items-center">
+          <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 lg:gap-12 lg:items-start">
 
-            {/* ── FORM (top on mobile, right on desktop) ── */}
-            <div ref={formRef} className="order-1 lg:order-2 lg:col-span-5 w-full">
+            {/* ── PITCH HEADING (Top on mobile, left column on desktop) ── */}
+            <div className="order-1 lg:col-span-7 space-y-5 text-center lg:text-left">
+              {/* Badge */}
+              <div className="inline-flex items-center gap-2 bg-brand-orange/20 border border-brand-orange/40 text-brand-orange px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider">
+                <Flame size={11} /> New Batch · Telugu Medium · {seats} Seats Left
+              </div>
+
+              <h1 className="text-3xl sm:text-4xl lg:text-[3rem] font-black tracking-tight leading-[1.08]">
+                Earn ₹50K–₹2 Lakhs/Month<br />
+                <span className="text-brand-orange">From Your Phone — 8 Weeks</span>
+              </h1>
+
+              <p className="text-white/70 text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0">
+                Trusted by <strong className="text-white">2,000+ businesses</strong>. Master content creation, video editing &amp; social media growth — 100% in Telugu.
+              </p>
+            </div>
+
+            {/* ── FORM (Second on mobile, right column on desktop) ── */}
+            <div ref={formRef} className="order-2 lg:col-span-5 w-full lg:row-span-2">
               <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
                 {/* Form header */}
                 <div className="bg-brand-orange px-5 py-4">
@@ -218,22 +234,8 @@ export default function AdsLandingPageClient() {
               </div>
             </div>
 
-            {/* ── PITCH (below form on mobile, left on desktop) ── */}
-            <div className="order-2 lg:order-1 lg:col-span-7 space-y-5">
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2 bg-brand-orange/20 border border-brand-orange/40 text-brand-orange px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider">
-                <Flame size={11} /> New Batch · Telugu Medium · {seats} Seats Left
-              </div>
-
-              <h1 className="text-3xl sm:text-4xl lg:text-[3rem] font-black tracking-tight leading-[1.08]">
-                Earn ₹50K–₹2 Lakhs/Month<br />
-                <span className="text-brand-orange">From Your Phone — 8 Weeks</span>
-              </h1>
-
-              <p className="text-white/70 text-sm sm:text-base leading-relaxed">
-                Trusted by <strong className="text-white">2,000+ businesses</strong>. Master content creation, video editing &amp; social media growth — 100% in Telugu.
-              </p>
-
+            {/* ── SUPPORTING DETAILS: CHECKLIST & STATS (Third on mobile, below heading on desktop) ── */}
+            <div className="order-3 lg:col-span-7 space-y-5">
               {/* Is this you? */}
               <div className="bg-white/8 border border-white/10 rounded-2xl p-4 space-y-2">
                 <div className="text-xs font-bold text-brand-orange uppercase tracking-wider flex items-center gap-1.5">

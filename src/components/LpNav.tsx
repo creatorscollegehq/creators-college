@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { ChevronRight, Phone } from "lucide-react";
+import Link from "next/navigation"; // Wait, Next.js link is from "next/link"
+import NextLink from "next/link";
+import { ChevronRight, Phone, Menu, X } from "lucide-react";
 
 function CountdownTimer() {
   const [time, setTime] = useState({ h: 11, m: 47, s: 59 });
@@ -40,11 +41,21 @@ interface LpNavProps {
 
 export default function LpNav({ onEnroll }: LpNavProps) {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", fn);
     return () => window.removeEventListener("scroll", fn);
   }, []);
+
+  const navLinks = [
+    { label: "Home", href: "/" },
+    { label: "About Us", href: "/about" },
+    { label: "Courses", href: "/courses" },
+    { label: "Blog", href: "/blog" },
+    { label: "Contact Us", href: "/contact" },
+  ];
 
   return (
     <>
@@ -60,24 +71,24 @@ export default function LpNav({ onEnroll }: LpNavProps) {
         <div className="max-w-6xl mx-auto px-4 h-14 sm:h-16 flex items-center justify-between gap-3">
 
           {/* Logo */}
-          <Link href="/" className="shrink-0">
+          <NextLink href="/" className="shrink-0">
             <img
               src="/logo/2 Horizontal Logo.png"
               alt="Creators College Logo"
               className="h-9 sm:h-12 w-auto object-contain dark-logo-stroke"
             />
-          </Link>
+          </NextLink>
 
           {/* Desktop nav links */}
           <div className="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-600">
-            <Link href="/" className="hover:text-brand-orange transition">Home</Link>
-            <Link href="/about" className="hover:text-brand-orange transition">About Us</Link>
-            <Link href="/courses" className="hover:text-brand-orange transition">Courses</Link>
-            <Link href="/blog" className="hover:text-brand-orange transition">Blog</Link>
-            <Link href="/contact" className="hover:text-brand-orange transition">Contact Us</Link>
+            {navLinks.map((link) => (
+              <NextLink key={link.href} href={link.href} className="hover:text-brand-orange transition">
+                {link.label}
+              </NextLink>
+            ))}
           </div>
 
-          {/* Right side */}
+          {/* Right side controls */}
           <div className="flex items-center gap-2">
             <a
               href="tel:+918143937367"
@@ -92,9 +103,43 @@ export default function LpNav({ onEnroll }: LpNavProps) {
             >
               Enroll Now <ChevronRight size={13} />
             </button>
+
+            {/* Mobile Hamburger menu button */}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              type="button"
+              className="inline-flex md:hidden items-center justify-center p-2 rounded-md text-brand-charcoal hover:text-brand-orange focus:outline-none transition duration-200"
+              aria-expanded={menuOpen}
+            >
+              {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
 
         </div>
+
+        {/* Mobile Menu Drawer */}
+        {menuOpen && (
+          <div className="md:hidden bg-white border-t border-gray-100 shadow-xl py-3 px-4 space-y-1 animate-fadeIn">
+            {navLinks.map((link) => (
+              <NextLink
+                key={link.href}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                className="block py-2.5 px-3 rounded-xl text-sm font-bold text-brand-charcoal hover:bg-gray-50 hover:text-brand-orange transition"
+              >
+                {link.label}
+              </NextLink>
+            ))}
+            <div className="pt-2 border-t border-gray-100 flex flex-col gap-2">
+              <a
+                href="tel:+918143937367"
+                className="flex items-center justify-center gap-1.5 text-brand-blue font-bold text-xs border border-brand-blue/20 py-3 rounded-xl hover:bg-brand-blue/5 transition"
+              >
+                <Phone size={12} /> Call Us: +91 81439 37367
+              </a>
+            </div>
+          </div>
+        )}
       </nav>
     </>
   );
