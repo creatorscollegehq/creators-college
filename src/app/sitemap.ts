@@ -23,6 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/lp/content-creation',
     '/lp/corporate',
     '/lp/free-demo',
+    // Note: /lp/ads is excluded from sitemap as it is a paid ads page (noindex)
   ];
 
   // Fetch dynamic blog post URLs from Sanity CMS
