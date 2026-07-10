@@ -58,7 +58,7 @@ export default function ContentCreationLandingPage() {
             </div>
 
             <div className="border-t border-gray-200/60 pt-6 text-xs text-gray-400">
-              Founded in 2026 • 1,200+ trained students • Scan & Pay via UPI available.
+              Founded in 2026 • Verified Institute • Scan & Pay via UPI available.
             </div>
           </div>
 
