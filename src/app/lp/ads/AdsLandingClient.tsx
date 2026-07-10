@@ -190,12 +190,12 @@ export default function AdsLandingPageClient() {
             <div className="order-1 lg:col-span-7 space-y-5 text-center lg:text-left">
               {/* Badge */}
               <div className="inline-flex items-center gap-2 bg-brand-orange/20 border border-brand-orange/40 text-brand-orange px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider">
-                <Flame size={11} /> New Batch · Telugu Medium · {seats} Seats Left
+                <Flame size={11} /> New Batch · Learn in Telugu · {seats} Seats Left
               </div>
 
               <h1 className="text-3xl sm:text-4xl lg:text-[3rem] font-black tracking-tight leading-[1.08]">
                 Earn ₹50K–₹2 Lakhs/Month<br />
-                <span className="text-brand-orange">From Your Phone — 8 Weeks</span>
+                <span className="text-brand-orange">From Your Phone — 20 Days</span>
               </h1>
 
               <p className="text-white/70 text-sm sm:text-base leading-relaxed max-w-xl mx-auto lg:mx-0">
@@ -299,15 +299,15 @@ export default function AdsLandingPageClient() {
       <section className="py-12 sm:py-14 px-4 bg-gray-50">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-8 space-y-1">
-            <div className="text-[11px] font-bold uppercase tracking-widest text-brand-orange">8-Week Program</div>
+            <div className="text-[11px] font-bold uppercase tracking-widest text-brand-orange">20-Day Program</div>
             <h2 className="text-2xl sm:text-3xl font-black text-brand-blue">From Zero to Earning — Step by Step</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
-              { w: "Week 1–2", t: "Mobile Camera & Setup", d: "No DSLR. Shoot professional videos with your phone. Lighting, audio, zero-cost home studio.", icon: "📱" },
-              { w: "Week 3–4", t: "Scripting & Hook Formulas", d: "3-second hooks, viral frameworks, topic research, and scripts that get real views and retention.", icon: "✍️" },
-              { w: "Week 5–6", t: "Video Editing (CapCut + PC)", d: "Mobile & PC editing, reels format, transitions, sound design, subtitles — everything.", icon: "🎬" },
-              { w: "Week 7–8", t: "Growth & Income Streams", d: "YouTube SEO, Instagram algorithm, brand deals, UGC freelancing, multiple income channels.", icon: "💰" },
+              { w: "Day 1–5", t: "Mobile Camera & Setup", d: "No DSLR. Shoot professional videos with your phone. Lighting, audio, zero-cost home studio.", icon: "📱" },
+              { w: "Day 6–10", t: "Scripting & Hook Formulas", d: "3-second hooks, viral frameworks, topic research, and scripts that get real views and retention.", icon: "✍️" },
+              { w: "Day 11–15", t: "Video Editing (CapCut + PC)", d: "Mobile & PC editing, reels format, transitions, sound design, subtitles — everything.", icon: "🎬" },
+              { w: "Day 16–20", t: "Growth & Income Streams", d: "YouTube SEO, Instagram algorithm, brand deals, UGC freelancing, multiple income channels.", icon: "💰" },
             ].map((c, i) => (
               <div key={i} className="bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-md hover:border-brand-orange/20 transition-all">
                 <div className="flex items-center gap-2 mb-2">
