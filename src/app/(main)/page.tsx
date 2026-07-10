@@ -1473,9 +1473,9 @@ export default function HomePage() {
                   <Phone size={14} />
                   Call / WhatsApp: +91 81439 37367
                 </a>
-                <a href="mailto:info@creatorscollege.in" className="flex items-center gap-2 hover:text-brand-orange transition">
+                <a href="mailto:enquiry@creatorscollege.com" className="flex items-center gap-2 hover:text-brand-orange transition">
                   <Mail size={14} />
-                  Email: info@creatorscollege.in
+                  Email: enquiry@creatorscollege.com
                 </a>
               </div>
             </div>

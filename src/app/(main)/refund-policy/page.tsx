@@ -47,7 +47,7 @@ export default function RefundPolicy() {
 
           <h3 className="text-lg font-bold text-brand-blue dark:text-white pt-2">Contact Us</h3>
           <p>
-            Email: <a href="mailto:info@creatorscollege.in" className="text-brand-orange hover:underline">info@creatorscollege.in</a><br />
+            Email: <a href="mailto:enquiry@creatorscollege.com" className="text-brand-orange hover:underline">enquiry@creatorscollege.com</a><br />
             Phone: +91 81439 37367
           </p>
         </div>

@@ -120,7 +120,7 @@ export default function RootLayout({
               "name": "Creators College Hyderabad",
               "image": "https://www.creatorscollege.in/hero_collage_wide.jpg",
               "telephone": "+91-8143937367",
-              "email": "support@creatorscollege.in",
+              "email": "enquiry@creatorscollege.com",
               "priceRange": "INR",
               "address": {
                 "@type": "PostalAddress",

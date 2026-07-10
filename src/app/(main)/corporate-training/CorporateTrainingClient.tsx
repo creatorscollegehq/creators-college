@@ -609,7 +609,7 @@ export default function CorporateTrainingPage() {
               <div className="text-xs text-gray-400 space-y-2">
                 <div className="font-bold">📱 Direct Assistance:</div>
                 <div>📞 Call / WhatsApp: +91 81439 37367</div>
-                <div>📧 Email: info@creatorscollege.in</div>
+                <div>📧 Email: enquiry@creatorscollege.com</div>
               </div>
             </div>
 

@@ -73,7 +73,7 @@ export default function PrivacyPolicy() {
           <p>You may request to access, update, or delete your information, or stop receiving promotional communications from us.</p>
 
           <h3 className="text-lg font-bold text-brand-blue dark:text-white pt-2">Contact</h3>
-          <p>Email: <a href="mailto:info@creatorscollege.in" className="text-brand-orange hover:underline">info@creatorscollege.in</a></p>
+          <p>Email: <a href="mailto:enquiry@creatorscollege.com" className="text-brand-orange hover:underline">enquiry@creatorscollege.com</a></p>
         </div>
       </div>
     </div>

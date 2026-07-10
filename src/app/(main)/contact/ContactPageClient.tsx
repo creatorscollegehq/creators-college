@@ -288,8 +288,8 @@ export default function ContactPage() {
                   <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
                     For course inquiries, partnerships, corporate training, or support, send us an email:
                   </p>
-                  <a href="mailto:info@creatorscollege.in" className="block text-sm sm:text-base font-black text-[#0066cc] hover:underline transition">
-                    info@creatorscollege.in
+                  <a href="mailto:enquiry@creatorscollege.com" className="block text-sm sm:text-base font-black text-[#0066cc] hover:underline transition">
+                    enquiry@creatorscollege.com
                   </a>
                 </div>
 
