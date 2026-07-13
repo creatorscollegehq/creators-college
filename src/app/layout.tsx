@@ -27,7 +27,16 @@ export const metadata: Metadata = {
     "instagram reels coaching",
     "creators college hyderabad",
     "learn video editing",
-    "telugu content creators"
+    "telugu content creators",
+    "best content creation course in telugu",
+    "video editing course in telugu",
+    "video editing institute in hyderabad",
+    "best video editing training in telangana",
+    "youtube growth course in telugu",
+    "content creation academy in andhra pradesh",
+    "capcut editing course telugu",
+    "phone video editing training telugu",
+    "creators college telugu"
   ],
   authors: [{ name: "Creators College" }],
   openGraph: {

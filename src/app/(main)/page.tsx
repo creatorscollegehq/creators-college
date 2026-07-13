@@ -221,6 +221,51 @@ export default function HomePage() {
 
   return (
     <div className="w-full flex flex-col bg-white dark:bg-[#090d16]">
+      {/* Schema.org Structured Data for SEO / AEO / GEO / LLMs */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "EducationalOrganization",
+            "name": "Creators College",
+            "url": "https://www.creatorscollege.in",
+            "logo": "https://www.creatorscollege.in/logo/5%20Favicon.png",
+            "description": "Premium Content Creation, Video Editing & AI Academy in Telugu. Learn CapCut editing, smartphone shoot setup, scriptwriting, and social media growth in Hyderabad.",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Hyderabad",
+              "addressRegion": "Telangana",
+              "addressCountry": "IN"
+            },
+            "founder": {
+              "@type": "Person",
+              "name": "Cecil Srungarapati",
+              "jobTitle": "Founder & CEO"
+            },
+            "sameAs": [
+              "https://www.instagram.com/creatorscollege.in"
+            ],
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Content Creation Training Programs",
+              "itemListElement": [
+                {
+                  "@type": "Course",
+                  "name": "Complete Telugu Content Creation & Video Editing Course",
+                  "description": "Hands-on 20-day course covering mobile & PC video editing, content planning, storytelling, and monetization in Telugu.",
+                  "provider": {
+                    "@type": "EducationalOrganization",
+                    "name": "Creators College",
+                    "sameAs": "https://www.creatorscollege.in"
+                  }
+                }
+              ]
+            }
+          })
+        }}
+      />
+
       {/* 1. Hero Section matching mockup split format */}
       <section className="relative text-white pt-6 pb-12 overflow-hidden border-b border-brand-blue-dark dark:border-white/5 bg-gradient-to-br from-[#0f4cbe] to-[#082870]">
 

@@ -1,6 +1,8 @@
 import { MetadataRoute } from 'next';
 import { client } from '@/sanity/lib/client';
 
+export const revalidate = 3600; // Revalidate sitemap cache every hour dynamically
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.creatorscollege.in';
 
@@ -18,12 +20,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/sitemap',
     '/success-stories',
     '/terms-conditions',
+    '/lp/ads',
     '/lp/capcut-editing',
     '/lp/college-workshops',
     '/lp/content-creation',
     '/lp/corporate',
     '/lp/free-demo',
-    // Note: /lp/ads is excluded from sitemap as it is a paid ads page (noindex)
   ];
 
   // Fetch dynamic blog post URLs from Sanity CMS
