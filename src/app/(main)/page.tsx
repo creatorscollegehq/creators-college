@@ -222,7 +222,7 @@ export default function HomePage() {
   return (
     <div className="w-full flex flex-col bg-white dark:bg-[#090d16]">
       {/* 1. Hero Section matching mockup split format */}
-      <section className="relative text-white pt-6 pb-12 overflow-hidden border-b border-brand-blue-dark dark:border-white/5 bg-[#020617]">
+      <section className="relative text-white pt-6 pb-12 overflow-hidden border-b border-brand-blue-dark dark:border-white/5 bg-gradient-to-br from-[#0f4cbe] to-[#082870]">
 
         {/* Overlay and Glow Effects */}
         <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-brand-orange/10 blur-[100px] pointer-events-none" />
@@ -244,7 +244,7 @@ export default function HomePage() {
                   className="object-cover object-[center_top] scale-100"
                 />
                 {/* Gradient blend to the bottom/right */}
-                <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#020617]/80 to-transparent z-10" />
+                <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#082870]/80 to-transparent z-10" />
                 {/* Name card overlay */}
                 <div className="absolute bottom-4 left-4 z-20 bg-black/60 backdrop-blur-md border border-white/15 px-4 py-2 rounded-xl shadow-xl select-none">
                   <h4 className="text-sm font-bold text-white leading-none">Cecil Srungarapati</h4>
@@ -386,14 +386,14 @@ export default function HomePage() {
                 </Link>
                 {/* Card 2 */}
                 <Link
-                  href="/corporate-training"
+                  href="/about"
                   className="bg-white/95 text-[#0a1931] border border-gray-100 rounded-xl p-3 flex flex-col justify-between space-y-1 hover:border-brand-orange hover:scale-[1.03] transition shadow-md cursor-pointer block"
                 >
                   <div className="flex items-center gap-1.5">
-                    <span className="text-brand-orange text-sm">💼</span>
-                    <span className="text-sm sm:text-base font-black text-[#0a1931]">1000+</span>
+                    <span className="text-brand-orange text-sm">📜</span>
+                    <span className="text-sm sm:text-base font-black text-[#0a1931]">Get Certified</span>
                   </div>
-                  <div className="text-[11px] sm:text-xs text-gray-500 font-bold leading-tight">Businesses Worked With</div>
+                  <div className="text-[11px] sm:text-xs text-gray-500 font-bold leading-tight">ISO Approved Certificate</div>
                 </Link>
                 {/* Card 3 */}
                 <button
