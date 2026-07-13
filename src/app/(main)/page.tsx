@@ -312,8 +312,8 @@ export default function HomePage() {
                 ⭐ LEARN CONTENT CREATION &amp; VIDEO EDITING IN TELUGU
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-tight">
-                Master Content Creation, <br />
-                <span className="text-brand-orange">Video Editing &amp; AI Skills</span>
+                Master Content Creation <br />
+                <span className="text-brand-orange">in Telugu</span>
               </h1>
               <p className="text-xl sm:text-2xl font-bold text-white leading-snug">
                 Build Your Brand. Earn Online.
