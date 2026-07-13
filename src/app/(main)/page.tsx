@@ -222,42 +222,90 @@ export default function HomePage() {
   return (
     <div className="w-full flex flex-col bg-white dark:bg-[#090d16]">
       {/* 1. Hero Section matching mockup split format */}
-      <section className="relative text-white pt-6 pb-16 md:pt-8 md:pb-24 overflow-hidden border-b border-brand-blue-dark dark:border-white/5 bg-[#050c21]">
-        {/* Next.js Optimized Background Image (Floating Card layout on desktop for high-resolution sharpness, locked to right edge to prevent border spacing) */}
-        <div className="absolute top-0 bottom-8 right-0 w-full lg:w-[52%] z-0 select-none pointer-events-none rounded-bl-3xl overflow-hidden hidden lg:block">
-          <Image
-            src="/cecil.jpg"
-            alt="Cecil Srungarapati"
-            fill
-            priority
-            quality={100}
-            className="object-cover object-[center_right_10%] scale-[1.25] -translate-y-[8%]"
-          />
-          {/* Gradient transitions to blend the image seamlessly */}
-          <div className="absolute inset-y-0 left-0 w-64 bg-gradient-to-r from-[#050c21] via-[#050c21]/75 to-transparent z-10" />
-        </div>
-
-        {/* Mobile/Tablet full width background container */}
-        <div className="absolute inset-0 z-0 select-none pointer-events-none lg:hidden">
-          <Image
-            src="/cecil.jpg"
-            alt="Cecil Srungarapati"
-            fill
-            priority
-            quality={100}
-            className="object-cover object-[center_right_10%] scale-[1.2] -translate-y-[6%]"
-          />
-          <div className="absolute inset-0 bg-[#050c21]/80" />
-        </div>
+      <section className="relative text-white pt-6 pb-12 overflow-hidden border-b border-brand-blue-dark dark:border-white/5 bg-gradient-to-br from-[#040e24] via-brand-blue to-[#0b1f4d]">
 
         {/* Overlay and Glow Effects */}
-        <div className="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-orange/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-10 right-10 w-80 h-80 bg-brand-blue/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-brand-orange/10 blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-brand-blue/20 blur-[100px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
             
-            {/* Left Content Column */}
+            {/* Column 1 - Left Column (Holds Cecil photo card & 4 features below it on desktop) */}
+            <div className="hidden lg:flex lg:col-span-5 flex-col items-center z-10">
+              {/* Cecil Photo Card */}
+              <div className="relative w-full h-[360px] rounded-3xl overflow-hidden border border-white/10 bg-[#050c21] shadow-2xl">
+                <Image
+                  src="/cecil.jpg"
+                  alt="Cecil Srungarapati"
+                  fill
+                  priority
+                  quality={100}
+                  className="object-cover object-[center_top] scale-100"
+                />
+                {/* Gradient blend to the bottom/right */}
+                <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#0a1931]/80 to-transparent z-10" />
+                {/* Name card overlay */}
+                <div className="absolute bottom-4 left-4 z-20 bg-black/60 backdrop-blur-md border border-white/15 px-4 py-2 rounded-xl shadow-xl select-none">
+                  <h4 className="text-sm font-bold text-white leading-none">Cecil Srungarapati</h4>
+                  <p className="text-[8.5px] text-gray-300 font-extrabold tracking-widest uppercase block mt-1 leading-none">
+                    Founder &amp; CEO, Creators College
+                  </p>
+                </div>
+              </div>
+
+              {/* 4 Interactive Feature Buttons (2x2 Grid below photo) - White Theme & Larger */}
+              <div className="grid grid-cols-2 gap-4 mt-5 w-full">
+                {heroFeatures.map((feat, idx) => {
+                  const CardTag = feat.href ? "a" : "button";
+                  const linkProps = feat.href ? { href: feat.href, target: "_blank", rel: "noopener noreferrer" } : { onClick: feat.onClick };
+                  
+                  const colorClasses = {
+                    blue: "bg-blue-50 text-blue-600 border border-blue-100",
+                    orange: "bg-orange-50 text-brand-orange border border-orange-100",
+                    purple: "bg-purple-50 text-purple-600 border border-purple-100",
+                    emerald: "bg-emerald-50 text-emerald-600 border border-emerald-100"
+                  }[feat.color];
+
+                  return (
+                    <CardTag
+                      key={idx}
+                      {...linkProps}
+                      className="bg-white/95 border border-gray-100 p-3.5 rounded-2xl flex items-center gap-3.5 shadow-md hover:shadow-lg hover:scale-[1.03] transition duration-200 text-left relative cursor-pointer group"
+                    >
+                      <div className="absolute top-2.5 right-2.5 w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${colorClasses}`}>
+                        <feat.icon size={18} />
+                      </div>
+                      <div className="space-y-0.5">
+                        <h4 className="text-[10px] font-black text-brand-orange leading-tight">{feat.title}</h4>
+                        <p className="text-[10.5px] text-brand-blue font-black leading-tight">{feat.subtitle}</p>
+                      </div>
+                    </CardTag>
+                  );
+                })}
+              </div>
+
+              {/* Top-Rated Academy trust badge overlay under buttons */}
+              <div className="mt-5 bg-white/5 border border-white/10 rounded-2xl p-4 w-full flex items-center gap-3.5 shadow-xl select-none">
+                <div className="text-2xl shrink-0">⭐</div>
+                <div className="text-left">
+                  <h5 className="text-[11px] font-black text-brand-orange uppercase tracking-wider leading-none">Top-Rated Academy</h5>
+                  <p className="text-[10.5px] text-gray-300 font-bold leading-snug mt-1">4.9/5 Rating (Over 1,200+ Student Reviews &amp; Success Stories)</p>
+                </div>
+              </div>
+
+              {/* Accredited Academy certification badge below it */}
+              <div className="mt-3 bg-white/5 border border-white/10 rounded-2xl p-4 w-full flex items-center gap-3.5 shadow-xl select-none">
+                <div className="text-2xl shrink-0">🏆</div>
+                <div className="text-left">
+                  <h5 className="text-[11px] font-black text-white uppercase tracking-wider leading-none">Accredited Academy</h5>
+                  <p className="text-[10.5px] text-gray-400 font-semibold leading-snug mt-1">ISO 9001:2015 Certified Training Center for Digital Excellence</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Column 2 - Content Column (Middle & Right on Desktop - Spans rest of grid) */}
             <div className="lg:col-span-7 relative z-10 text-left space-y-6">
               
               <div className="inline-flex items-center gap-2 border border-white/20 bg-white/5 px-4 py-1.5 rounded-lg text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-300">
@@ -267,10 +315,10 @@ export default function HomePage() {
                 Master Content Creation, <br />
                 <span className="text-brand-orange">Video Editing &amp; AI Skills</span>
               </h1>
-              <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-white leading-snug">
+              <p className="text-xl sm:text-2xl font-bold text-white leading-snug">
                 Build Your Brand. Earn Online.
               </p>
-              <p className="text-sm sm:text-base text-white/85 leading-relaxed font-normal max-w-2xl">
+              <p className="text-sm sm:text-base text-white/85 leading-relaxed font-normal">
                 Practical training in Content Creation, CapCut Editing, AI Tools, Social Media Growth &amp; Freelancing to help you <span className="text-brand-orange font-bold">learn, create and earn</span> from anywhere in the world.
               </p>
               
@@ -324,7 +372,7 @@ export default function HomePage() {
               </div>
 
               {/* Metric Stats Cards Row - 2x2 Grid White Theme */}
-              <div className="grid grid-cols-2 gap-3 pt-6 border-t border-white/15 max-w-md">
+              <div className="grid grid-cols-2 gap-3 pt-6 border-t border-white/15">
                 {/* Card 1 */}
                 <Link
                   href="/success-stories"
@@ -375,56 +423,24 @@ export default function HomePage() {
               </div>
 
               {/* Cecil intro card for mobile/tablet */}
-              <div className="lg:hidden bg-black/65 backdrop-blur-sm border border-white/10 p-4 rounded-xl space-y-1.5 text-left mt-6">
-                <span className="text-[10px] font-black bg-brand-orange text-white px-2.5 py-1 rounded uppercase tracking-widest w-fit inline-block">CEO &amp; Founder</span>
-                <h4 className="text-sm font-bold text-white">Cecil Srungarapati</h4>
-                <p className="text-xs text-gray-300 leading-normal font-normal">
-                  Founder of Creators College. Content Creator &amp; Digital Strategist with 5+ years experience generating 500M+ views across social platforms.
-                </p>
+              <div className="lg:hidden bg-black/65 backdrop-blur-sm border border-white/10 p-4 rounded-xl flex items-center gap-4 text-left mt-6">
+                <div className="relative w-16 h-16 rounded-full overflow-hidden shrink-0 border border-white/20">
+                  <Image
+                    src="/cecil.jpg"
+                    alt="Cecil Srungarapati"
+                    fill
+                    className="object-cover object-top"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <span className="text-[9px] font-black bg-brand-orange text-white px-2 py-0.5 rounded uppercase tracking-widest w-fit inline-block leading-none">CEO &amp; Founder</span>
+                  <h4 className="text-sm font-bold text-white leading-none mt-1">Cecil Srungarapati</h4>
+                  <p className="text-xs text-gray-300 leading-normal font-normal mt-1">
+                    Founder of Creators College. Content Creator &amp; Digital Strategist with 5+ years experience.
+                  </p>
+                </div>
               </div>
 
-            </div>
-
-            {/* Right Column - Holds the 4 interactive features on Desktop (Aligned Higher Up in Corner) */}
-            <div className="hidden lg:flex lg:col-span-5 flex-col space-y-3 relative z-10 self-start items-end pt-2 lg:-mt-8 pr-4">
-              {heroFeatures.map((feat, idx) => {
-                const CardTag = feat.href ? "a" : "button";
-                const linkProps = feat.href ? { href: feat.href, target: "_blank", rel: "noopener noreferrer" } : { onClick: feat.onClick };
-                
-                const colorClasses = {
-                  blue: "bg-blue-500/10 text-blue-600 dark:text-blue-400",
-                  orange: "bg-orange-500/10 text-brand-orange",
-                  purple: "bg-purple-500/10 text-purple-600 dark:text-purple-400",
-                  emerald: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
-                }[feat.color];
-
-                return (
-                  <CardTag
-                    key={idx}
-                    {...linkProps}
-                    className="bg-white/95 dark:bg-[#131b2e]/95 border border-gray-100 dark:border-white/5 p-2 px-3.5 rounded-xl flex items-center gap-3 shadow-md hover:shadow-lg hover:scale-[1.03] transition duration-200 text-left relative cursor-pointer group w-[235px]"
-                  >
-                    <div className="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 group-hover:scale-105 transition ${colorClasses}`}>
-                      <feat.icon size={18} />
-                    </div>
-                    <div className="space-y-0.5">
-                      <h4 className="text-xs font-black text-brand-orange leading-tight">{feat.title}</h4>
-                      <p className="text-[10.5px] text-brand-blue dark:text-white font-extrabold leading-tight">{feat.subtitle}</p>
-                    </div>
-                  </CardTag>
-                );
-              })}
-            </div>
-
-            {/* Cecil signature premium glass box overlay (Aligned over desk workspace area) */}
-            <div className="hidden lg:block absolute bottom-6 left-[48%] z-30 bg-black/60 backdrop-blur-md border border-white/15 px-4 py-2.5 rounded-xl shadow-xl select-none pointer-events-auto">
-              <span className="text-[#f97316] text-xl font-bold block leading-none italic" style={{ fontFamily: "'Brush Script MT', 'Great Vibes', 'Parisienne', cursive" }}>
-                Cecil Srungarapati
-              </span>
-              <span className="text-[8.5px] text-gray-300 font-extrabold tracking-widest uppercase block mt-1">
-                Founder &amp; CEO, Creators College
-              </span>
             </div>
 
           </div>
