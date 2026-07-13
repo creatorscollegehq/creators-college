@@ -222,7 +222,7 @@ export default function HomePage() {
   return (
     <div className="w-full flex flex-col bg-white dark:bg-[#090d16]">
       {/* 1. Hero Section matching mockup split format */}
-      <section className="relative text-white pt-6 pb-12 overflow-hidden border-b border-brand-blue-dark dark:border-white/5 bg-gradient-to-br from-[#040e24] via-brand-blue to-[#0b1f4d]">
+      <section className="relative text-white pt-6 pb-12 overflow-hidden border-b border-brand-blue-dark dark:border-white/5 bg-[#020617]">
 
         {/* Overlay and Glow Effects */}
         <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-brand-orange/10 blur-[100px] pointer-events-none" />
@@ -244,7 +244,7 @@ export default function HomePage() {
                   className="object-cover object-[center_top] scale-100"
                 />
                 {/* Gradient blend to the bottom/right */}
-                <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#0a1931]/80 to-transparent z-10" />
+                <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#020617]/80 to-transparent z-10" />
                 {/* Name card overlay */}
                 <div className="absolute bottom-4 left-4 z-20 bg-black/60 backdrop-blur-md border border-white/15 px-4 py-2 rounded-xl shadow-xl select-none">
                   <h4 className="text-sm font-bold text-white leading-none">Cecil Srungarapati</h4>
@@ -286,12 +286,12 @@ export default function HomePage() {
                 })}
               </div>
 
-              {/* Top-Rated Academy trust badge overlay under buttons */}
+              {/* Worked with Businesses trust badge overlay under buttons */}
               <div className="mt-5 bg-white/5 border border-white/10 rounded-2xl p-4 w-full flex items-center gap-3.5 shadow-xl select-none">
-                <div className="text-2xl shrink-0">⭐</div>
+                <div className="text-2xl shrink-0">🤝</div>
                 <div className="text-left">
-                  <h5 className="text-[11px] font-black text-brand-orange uppercase tracking-wider leading-none">Top-Rated Academy</h5>
-                  <p className="text-[10.5px] text-gray-300 font-bold leading-snug mt-1">4.9/5 Rating (Over 1,200+ Student Reviews &amp; Success Stories)</p>
+                  <h5 className="text-[11px] font-black text-brand-orange uppercase tracking-wider leading-none">Worked with 2,000+ Businesses</h5>
+                  <p className="text-[10.5px] text-gray-300 font-bold leading-snug mt-1">Helping brands, businesses &amp; creators scale their digital presence</p>
                 </div>
               </div>
 
