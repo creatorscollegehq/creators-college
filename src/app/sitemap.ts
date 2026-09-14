@@ -9,6 +9,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes = [
     '',
     '/about',
+    '/cecil-srungarapati',
     '/blog',
     '/checkout',
     '/contact',
@@ -54,7 +55,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
-    priority: route === '' ? 1.0 : route.startsWith('/lp/') ? 0.8 : 0.6,
+    priority: route === '' ? 1.0 : route === '/cecil-srungarapati' ? 0.9 : route.startsWith('/lp/') ? 0.8 : 0.6,
   }));
 
   const blogEntries = blogSlugs.map((item) => ({

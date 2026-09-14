@@ -82,30 +82,32 @@ export default function AboutPage() {
               </div>
 
               {/* Signature block */}
-              <div className="pt-4 border-t border-gray-100 dark:border-white/5 space-y-1">
-                <p className="font-serif italic text-2xl font-semibold text-brand-orange tracking-wide" style={{ fontFamily: "Georgia, serif" }}>
-                  Cecil Srungarapati
-                </p>
-                <p className="text-xs text-gray-400 font-bold uppercase tracking-wider">
-                  Founder, Creators College
-                </p>
+              <div className="pt-4 border-t border-gray-100 dark:border-white/5">
+                <Link href="/cecil-srungarapati" className="group inline-block space-y-1">
+                  <p className="font-serif italic text-2xl font-semibold text-brand-orange group-hover:text-brand-orange-dark tracking-wide transition" style={{ fontFamily: "Georgia, serif" }}>
+                    Cecil Srungarapati
+                  </p>
+                  <p className="text-xs text-gray-400 group-hover:text-brand-blue font-bold uppercase tracking-wider flex items-center gap-1 transition">
+                    Founder, Creators College &rarr;
+                  </p>
+                </Link>
               </div>
             </div>
 
             {/* Middle Cecil Profile Photo */}
-            <div className="lg:col-span-4 relative flex justify-center w-full aspect-square sm:aspect-[4/3] lg:aspect-[0.9] bg-brand-gray/30 rounded-3xl overflow-hidden shadow-xl border border-gray-100 dark:border-white/5">
+            <Link href="/cecil-srungarapati" className="lg:col-span-4 relative flex justify-center w-full aspect-square sm:aspect-[4/3] lg:aspect-[0.9] bg-brand-gray/30 rounded-3xl overflow-hidden shadow-xl border border-gray-100 dark:border-white/5 group">
               <img
                 src="/cecil.jpg"
                 alt="Cecil Srungarapati - Founder of Creators College"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
                 <div className="text-white space-y-1">
                   <span className="text-[9px] font-black bg-brand-orange text-white px-2 py-0.5 rounded uppercase tracking-widest">CEO and Founder</span>
-                  <p className="text-xs font-bold text-gray-200">Cecil Srungarapati at Creators College Academy</p>
+                  <p className="text-xs font-bold text-gray-200 group-hover:text-white flex items-center gap-1">Cecil Srungarapati at Creators College Academy &rarr;</p>
                 </div>
               </div>
-            </div>
+            </Link>
 
             {/* Right Mission, Vision, Values Column Card */}
             <div className="lg:col-span-4 bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-3xl p-6 shadow-md space-y-6">

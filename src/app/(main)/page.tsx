@@ -291,12 +291,17 @@ export default function HomePage() {
                 {/* Gradient blend to the bottom/right */}
                 <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#082870]/80 to-transparent z-10" />
                 {/* Name card overlay */}
-                <div className="absolute bottom-4 left-4 z-20 bg-black/60 backdrop-blur-md border border-white/15 px-4 py-2 rounded-xl shadow-xl select-none">
-                  <h4 className="text-sm font-bold text-white leading-none">Cecil Srungarapati</h4>
+                <Link
+                  href="/cecil-srungarapati"
+                  className="absolute bottom-4 left-4 z-20 bg-black/60 backdrop-blur-md border border-white/15 px-4 py-2 rounded-xl shadow-xl select-none hover:bg-black/80 hover:border-brand-orange/40 transition group"
+                >
+                  <h4 className="text-sm font-bold text-white leading-none group-hover:text-brand-orange transition">
+                    Cecil Srungarapati
+                  </h4>
                   <p className="text-[8.5px] text-gray-300 font-extrabold tracking-widest uppercase block mt-1 leading-none">
-                    Founder &amp; CEO, Creators College
+                    Founder &amp; CEO, Creators College &rarr;
                   </p>
-                </div>
+                </Link>
               </div>
 
               {/* 4 Interactive Feature Buttons (2x2 Grid below photo) - White Theme & Larger */}
@@ -468,7 +473,10 @@ export default function HomePage() {
               </div>
 
               {/* Cecil intro card for mobile/tablet */}
-              <div className="lg:hidden bg-black/65 backdrop-blur-sm border border-white/10 p-4 rounded-xl flex items-center gap-4 text-left mt-6">
+              <Link
+                href="/cecil-srungarapati"
+                className="lg:hidden bg-black/65 backdrop-blur-sm border border-white/10 hover:border-brand-orange/40 p-4 rounded-xl flex items-center gap-4 text-left mt-6 transition group"
+              >
                 <div className="relative w-16 h-16 rounded-full overflow-hidden shrink-0 border border-white/20">
                   <Image
                     src="/cecil.jpg"
@@ -479,12 +487,14 @@ export default function HomePage() {
                 </div>
                 <div className="space-y-1">
                   <span className="text-[9px] font-black bg-brand-orange text-white px-2 py-0.5 rounded uppercase tracking-widest w-fit inline-block leading-none">CEO &amp; Founder</span>
-                  <h4 className="text-sm font-bold text-white leading-none mt-1">Cecil Srungarapati</h4>
+                  <h4 className="text-sm font-bold text-white leading-none mt-1 group-hover:text-brand-orange transition flex items-center gap-1">
+                    Cecil Srungarapati &rarr;
+                  </h4>
                   <p className="text-xs text-gray-300 leading-normal font-normal mt-1">
                     Founder of Creators College. Content Creator &amp; Digital Strategist with 5+ years experience.
                   </p>
                 </div>
-              </div>
+              </Link>
 
             </div>
 

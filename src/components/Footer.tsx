@@ -97,6 +97,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/cecil-srungarapati" className="text-gray-400 hover:text-brand-orange text-sm transition duration-150">
+                  Cecil Srungarapati (Founder &amp; CEO)
+                </Link>
+              </li>
+              <li>
                 <Link href="/courses" className="text-gray-400 hover:text-brand-orange text-sm transition duration-150">
                   Our Courses
                 </Link>

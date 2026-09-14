@@ -203,10 +203,21 @@ export default async function BlogPostDetail({ params }: PageProps) {
             <div className="flex items-center gap-2">
               <User size={16} className="text-brand-orange" />
               <span>
-                Written by <strong>{post.author}</strong>
-                {post.authorRole && (
-                  <span className="text-white/60 font-semibold"> ({post.authorRole})</span>
+                Written by{" "}
+                {post.author === "Cecil Srungarapati" || !post.author || post.author.includes("Cecil") ? (
+                  <Link
+                    href="/cecil-srungarapati"
+                    className="font-bold underline decoration-brand-orange/60 hover:text-brand-orange transition duration-150"
+                  >
+                    {post.author || "Cecil Srungarapati"}
+                  </Link>
+                ) : (
+                  <strong>{post.author}</strong>
                 )}
+                <span className="text-white/60 font-semibold">
+                  {" "}
+                  ({post.authorRole || "Founder & CEO, Creators College"})
+                </span>
               </span>
             </div>
             <div className="flex items-center gap-2">
@@ -242,6 +253,37 @@ export default async function BlogPostDetail({ params }: PageProps) {
             {/* Rich Text Content */}
             <div className="lg:col-span-8 space-y-6 prose prose-blue dark:prose-invert max-w-none">
               <PortableText value={post.body} components={portableTextComponents} />
+
+              {/* Author Attribution Box linking to Cecil Srungarapati */}
+              <div className="not-prose mt-12 p-6 rounded-2xl bg-brand-gray/50 dark:bg-white/[0.03] border border-gray-200/80 dark:border-white/10 flex flex-col sm:flex-row items-start sm:items-center gap-5 shadow-sm text-left">
+                <Link href="/cecil-srungarapati" className="shrink-0 group">
+                  <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-brand-orange group-hover:scale-105 transition shadow-md">
+                    <img
+                      src="/cecil.jpg"
+                      alt="Cecil Srungarapati - Founder & CEO of Creators College"
+                      className="w-full h-full object-cover object-top"
+                    />
+                  </div>
+                </Link>
+                <div className="space-y-1">
+                  <div className="text-[10px] font-extrabold uppercase tracking-wider text-brand-orange">
+                    Written By
+                  </div>
+                  <Link
+                    href="/cecil-srungarapati"
+                    className="text-lg font-bold text-brand-blue dark:text-white hover:text-brand-orange transition inline-flex items-center gap-1.5"
+                  >
+                    <span>{post.author || "Cecil Srungarapati"}</span>
+                    <ArrowRight size={14} className="text-brand-orange" />
+                  </Link>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">
+                    Founder &amp; CEO, Creators College • Founder, Telugu Tea Talks • CEO, Perfect Prime News
+                  </p>
+                  <p className="text-xs text-gray-600 dark:text-gray-300 font-normal pt-1">
+                    Entrepreneur, educator, and content strategist helping creators and professionals build profitable digital brands in Telugu.
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Sidebar CTA widgets */}
