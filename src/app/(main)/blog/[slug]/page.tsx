@@ -13,6 +13,17 @@ interface PageProps {
 
 export const revalidate = 60; // Dynamic ISR revalidation
 
+// Canonical Cecil Person identity — must match
+// src/app/(main)/cecil-srungarapati/page.tsx Person @id exactly.
+const CECIL_PERSON_ID = "https://www.creatorscollege.in/cecil-srungarapati#person";
+const CECIL_PROFILE_URL = "https://www.creatorscollege.in/cecil-srungarapati";
+const CECIL_IMAGE = "https://www.creatorscollege.in/cecil.jpg";
+const CECIL_SAME_AS = [
+  "https://www.instagram.com/cecil_srungarapati/",
+  "https://www.facebook.com/profile.php?id=100003936120952",
+  "https://www.linkedin.com/in/cecilsrungarapati/",
+];
+
 // Fetch post data by slug helper
 async function getPostData(slug: string) {
   return await client.fetch<any>(
@@ -23,6 +34,7 @@ async function getPostData(slug: string) {
       "date": publishedAt,
       author,
       authorRole,
+      authorProfileUrl,
       readTime,
       mainImage,
       body,
@@ -150,23 +162,57 @@ export default async function BlogPostDetail({ params }: PageProps) {
     );
   }
 
+  // Author resolution: default every Cecil article (including legacy posts
+  // without authorProfileUrl) to the canonical Cecil Person. A custom
+  // authorProfileUrl supports guest authors without breaking the link.
+  const authorName: string = post.author || "Cecil Srungarapati";
+  const isCecilAuthor =
+    authorName.includes("Cecil") ||
+    !post.authorProfileUrl ||
+    post.authorProfileUrl === CECIL_PROFILE_URL;
+  const authorProfileUrl: string = isCecilAuthor
+    ? CECIL_PROFILE_URL
+    : post.authorProfileUrl;
+  const authorSchema = isCecilAuthor
+    ? {
+        "@type": "Person",
+        "@id": CECIL_PERSON_ID,
+        "name": "Cecil Srungarapati",
+        "url": CECIL_PROFILE_URL,
+        "image": CECIL_IMAGE,
+        "jobTitle": post.authorRole || "Founder & CEO, Creators College",
+        "sameAs": CECIL_SAME_AS,
+        "worksFor": [
+          {
+            "@type": "EducationalOrganization",
+            "@id": "https://www.creatorscollege.in#organization",
+            "name": "Creators College",
+            "url": "https://www.creatorscollege.in"
+          },
+          { "@type": "Organization", "name": "Telugu Tea Talks" },
+          { "@type": "NewsMediaOrganization", "name": "Perfect Prime News" }
+        ]
+      }
+    : {
+        "@type": "Person",
+        "name": authorName,
+        "jobTitle": post.authorRole || "Team Member",
+        "url": authorProfileUrl
+      };
+
   const postSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": post.title,
     "image": post.mainImage ? urlFor(post.mainImage).width(1200).url() : "https://www.creatorscollege.in/hero_collage_wide.jpg",
     "datePublished": post.date || new Date().toISOString(),
-    "author": {
-      "@type": "Person",
-      "name": post.author || "Creators College Team",
-      "jobTitle": post.authorRole || "Team Member"
-    },
+    "author": authorSchema,
     "publisher": {
       "@type": "Organization",
       "name": "Creators College",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://www.creatorscollege.in/logo/logo.png"
+        "url": "https://www.creatorscollege.in/logo/2%20Horizontal%20Logo.png"
       }
     },
     "description": post.excerpt || post.metaDescription || "Read video editing, scripting, and digital creation insights on the Creators College Blog."
@@ -176,7 +222,7 @@ export default async function BlogPostDetail({ params }: PageProps) {
     <div className="w-full bg-white dark:bg-[#090d16] transition-colors duration-200">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(postSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(postSchema).replace(/</g, "\\u003c") }}
       />
       {/* Article Header */}
       <section className="bg-brand-blue dark:bg-brand-gray text-white pt-6 pb-16 md:pt-8 md:pb-20 relative overflow-hidden">
@@ -204,15 +250,22 @@ export default async function BlogPostDetail({ params }: PageProps) {
               <User size={16} className="text-brand-orange" />
               <span>
                 Written by{" "}
-                {post.author === "Cecil Srungarapati" || !post.author || post.author.includes("Cecil") ? (
+                {isCecilAuthor ? (
                   <Link
                     href="/cecil-srungarapati"
                     className="font-bold underline decoration-brand-orange/60 hover:text-brand-orange transition duration-150"
                   >
-                    {post.author || "Cecil Srungarapati"}
+                    {authorName}
                   </Link>
                 ) : (
-                  <strong>{post.author}</strong>
+                  <a
+                    href={authorProfileUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-bold underline decoration-brand-orange/60 hover:text-brand-orange transition duration-150"
+                  >
+                    {authorName}
+                  </a>
                 )}
                 <span className="text-white/60 font-semibold">
                   {" "}
@@ -254,34 +307,51 @@ export default async function BlogPostDetail({ params }: PageProps) {
             <div className="lg:col-span-8 space-y-6 prose prose-blue dark:prose-invert max-w-none">
               <PortableText value={post.body} components={portableTextComponents} />
 
-              {/* Author Attribution Box linking to Cecil Srungarapati */}
+              {/* Author Attribution Box — links to the Author Profile URL (defaults to Cecil Srungarapati) */}
               <div className="not-prose mt-12 p-6 rounded-2xl bg-brand-gray/50 dark:bg-white/[0.03] border border-gray-200/80 dark:border-white/10 flex flex-col sm:flex-row items-start sm:items-center gap-5 shadow-sm text-left">
-                <Link href="/cecil-srungarapati" className="shrink-0 group">
-                  <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-brand-orange group-hover:scale-105 transition shadow-md">
-                    <img
-                      src="/cecil.jpg"
-                      alt="Cecil Srungarapati - Founder & CEO of Creators College"
-                      className="w-full h-full object-cover object-top"
-                    />
-                  </div>
-                </Link>
+                {isCecilAuthor ? (
+                  <Link href="/cecil-srungarapati" className="shrink-0 group">
+                    <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-brand-orange group-hover:scale-105 transition shadow-md">
+                      <img
+                        src="/cecil.jpg"
+                        alt="Cecil Srungarapati - Founder & CEO of Creators College"
+                        className="w-full h-full object-cover object-top"
+                      />
+                    </div>
+                  </Link>
+                ) : null}
                 <div className="space-y-1">
                   <div className="text-[10px] font-extrabold uppercase tracking-wider text-brand-orange">
                     Written By
                   </div>
-                  <Link
-                    href="/cecil-srungarapati"
-                    className="text-lg font-bold text-brand-blue dark:text-white hover:text-brand-orange transition inline-flex items-center gap-1.5"
-                  >
-                    <span>{post.author || "Cecil Srungarapati"}</span>
-                    <ArrowRight size={14} className="text-brand-orange" />
-                  </Link>
+                  {isCecilAuthor ? (
+                    <Link
+                      href="/cecil-srungarapati"
+                      className="text-lg font-bold text-brand-blue dark:text-white hover:text-brand-orange transition inline-flex items-center gap-1.5"
+                    >
+                      <span>{authorName}</span>
+                      <ArrowRight size={14} className="text-brand-orange" />
+                    </Link>
+                  ) : (
+                    <a
+                      href={authorProfileUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-lg font-bold text-brand-blue dark:text-white hover:text-brand-orange transition inline-flex items-center gap-1.5"
+                    >
+                      <span>{authorName}</span>
+                      <ArrowRight size={14} className="text-brand-orange" />
+                    </a>
+                  )}
                   <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">
-                    Founder &amp; CEO, Creators College • Founder, Telugu Tea Talks • CEO, Perfect Prime News
+                    {post.authorRole || "Founder & CEO, Creators College"}
+                    {isCecilAuthor ? " • Founder, Telugu Tea Talks • CEO, Perfect Prime News" : ""}
                   </p>
-                  <p className="text-xs text-gray-600 dark:text-gray-300 font-normal pt-1">
-                    Entrepreneur, educator, and content strategist helping creators and professionals build profitable digital brands in Telugu.
-                  </p>
+                  {isCecilAuthor ? (
+                    <p className="text-xs text-gray-600 dark:text-gray-300 font-normal pt-1">
+                      Entrepreneur, educator, and content strategist helping creators and professionals build profitable digital brands in Telugu.
+                    </p>
+                  ) : null}
                 </div>
               </div>
             </div>

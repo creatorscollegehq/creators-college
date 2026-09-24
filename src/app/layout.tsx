@@ -125,26 +125,26 @@ export default function RootLayout({
             alt=""
           />
         </noscript>
-        {/* Organization Schema (JSON-LD) */}
+        {/* Organization Schema (JSON-LD) — founder references the canonical Cecil Person @id to avoid a duplicate Person entity */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "EducationalOrganization",
+              "@id": "https://www.creatorscollege.in#organization",
               "name": "Creators College",
               "url": "https://www.creatorscollege.in/",
-              "logo": "https://www.creatorscollege.in/logo/logo.png",
+              "logo": "https://www.creatorscollege.in/logo/2%20Horizontal%20Logo.png",
               "description": "Learn professional video editing, content scripting, shooting, and social media growth in Telugu from experts.",
               "founder": {
-                "@type": "Person",
-                "name": "Cecil Srungarapati"
+                "@id": "https://www.creatorscollege.in/cecil-srungarapati#person"
               },
               "sameAs": [
                 "https://www.youtube.com/@creatorscollege",
                 "https://www.instagram.com/creatorscollege"
               ]
-            })
+            }).replace(/</g, "\\u003c")
           }}
         />
         {/* LocalBusiness Schema (JSON-LD) */}
@@ -168,7 +168,7 @@ export default function RootLayout({
                 "addressCountry": "IN"
               },
               "url": "https://www.creatorscollege.in/"
-            })
+            }).replace(/</g, "\\u003c")
           }}
         />
       </head>

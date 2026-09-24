@@ -228,6 +228,7 @@ export default function HomePage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "EducationalOrganization",
+            "@id": "https://www.creatorscollege.in#organization",
             "name": "Creators College",
             "url": "https://www.creatorscollege.in",
             "logo": "https://www.creatorscollege.in/logo/5%20Favicon.png",
@@ -239,9 +240,7 @@ export default function HomePage() {
               "addressCountry": "IN"
             },
             "founder": {
-              "@type": "Person",
-              "name": "Cecil Srungarapati",
-              "jobTitle": "Founder & CEO"
+              "@id": "https://www.creatorscollege.in/cecil-srungarapati#person"
             },
             "sameAs": [
               "https://www.instagram.com/creatorscollege.in"
@@ -262,7 +261,7 @@ export default function HomePage() {
                 }
               ]
             }
-          })
+          }).replace(/</g, "\\u003c")
         }}
       />
 

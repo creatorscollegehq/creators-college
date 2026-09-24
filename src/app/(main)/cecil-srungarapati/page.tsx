@@ -120,6 +120,8 @@ const LinkedInIcon = ({ size = 20 }: { size?: number }) => (
 );
 
 export default function CecilSrungarapatiPage() {
+  // Canonical Cecil Person identity — this @id is referenced by
+  // the site-wide Organization schemas and every BlogPosting author.
   const structuredData = {
     "@context": "https://schema.org",
     "@graph": [
@@ -155,7 +157,7 @@ export default function CecilSrungarapatiPage() {
         "@type": "Person",
         "@id": "https://www.creatorscollege.in/cecil-srungarapati#person",
         "name": "Cecil Srungarapati",
-        "jobTitle": "Founder & CEO",
+        "jobTitle": "Founder & CEO, Creators College",
         "description":
           "Cecil Srungarapati is an entrepreneur, educator, and content strategist based in Hyderabad, India. Founder & CEO of Creators College, founder of Telugu Tea Talks, and CEO of Perfect Prime News.",
         "image": "https://www.creatorscollege.in/cecil.jpg",
@@ -163,6 +165,7 @@ export default function CecilSrungarapatiPage() {
         "worksFor": [
           {
             "@type": "EducationalOrganization",
+            "@id": "https://www.creatorscollege.in#organization",
             "name": "Creators College",
             "url": "https://www.creatorscollege.in"
           },
@@ -182,8 +185,7 @@ export default function CecilSrungarapatiPage() {
         "sameAs": [
           "https://www.instagram.com/cecil_srungarapati/",
           "https://www.facebook.com/profile.php?id=100003936120952",
-          "https://www.linkedin.com/in/cecilsrungarapati/",
-          "https://www.creatorscollege.in/"
+          "https://www.linkedin.com/in/cecilsrungarapati/"
         ]
       }
     ]
@@ -285,10 +287,10 @@ export default function CecilSrungarapatiPage() {
 
   return (
     <div className="w-full bg-white dark:bg-[#090d16] text-brand-charcoal dark:text-gray-100 min-h-screen">
-      {/* Structured Schema.org data for Google, Bing, LLMs, and AEO */}
+      {/* Structured Schema.org data for Google, Bing, LLMs, and AEO — single canonical Person graph, no duplicates */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }}
       />
 
       {/* Hero Section */}
