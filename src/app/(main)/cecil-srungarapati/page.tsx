@@ -50,10 +50,10 @@ export const metadata: Metadata = {
     type: "profile",
     images: [
       {
-        url: "https://www.creatorscollege.in/cecil.jpg",
-        width: 800,
-        height: 1000,
-        alt: "Cecil Srungarapati - Founder & CEO of Creators College",
+        url: "https://www.creatorscollege.in/cecil-srungarapati-founder-creators-college.jpeg",
+        width: 1600,
+        height: 1067,
+        alt: "Cecil Srungarapati, Founder and CEO of Creators College",
       },
     ],
   },
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     title: "Cecil Srungarapati | Founder & CEO of Creators College",
     description:
       "Cecil Srungarapati is the Founder & CEO of Creators College, founder of Telugu Tea Talks, and CEO of Perfect Prime News.",
-    images: ["https://www.creatorscollege.in/cecil.jpg"],
+    images: ["https://www.creatorscollege.in/cecil-srungarapati-founder-creators-college.jpeg"],
   },
 };
 
@@ -160,7 +160,7 @@ export default function CecilSrungarapatiPage() {
         "jobTitle": "Founder & CEO, Creators College",
         "description":
           "Cecil Srungarapati is an entrepreneur, educator, and content strategist based in Hyderabad, India. Founder & CEO of Creators College, founder of Telugu Tea Talks, and CEO of Perfect Prime News.",
-        "image": "https://www.creatorscollege.in/cecil.jpg",
+        "image": "https://www.creatorscollege.in/cecil-srungarapati-founder-creators-college.jpeg",
         "url": "https://www.creatorscollege.in/cecil-srungarapati",
         "worksFor": [
           {
@@ -386,13 +386,14 @@ export default function CecilSrungarapatiPage() {
             </div>
 
             {/* Right Photo Column */}
-            <div className="lg:col-span-5 flex justify-center">
+            <div className="lg:col-span-5 flex flex-col items-center justify-center">
               <div className="relative w-full max-w-md aspect-[4/5] rounded-3xl overflow-hidden border-2 border-white/20 bg-[#050c21] shadow-2xl group">
                 <Image
-                  src="/cecil.jpg"
-                  alt="Cecil Srungarapati - Founder & CEO of Creators College"
+                  src="/cecil-srungarapati-founder-creators-college.jpeg"
+                  alt="Cecil Srungarapati, Founder and CEO of Creators College"
                   fill
                   priority
+                  sizes="(max-width: 1024px) 100vw, 448px"
                   className="object-cover object-top transition duration-500 group-hover:scale-[1.02]"
                 />
                 
@@ -420,6 +421,9 @@ export default function CecilSrungarapatiPage() {
                   </p>
                 </div>
               </div>
+              <figcaption className="mt-3 text-xs sm:text-sm text-white/70 font-medium text-center">
+                Cecil Srungarapati — Founder &amp; CEO of Creators College
+              </figcaption>
             </div>
 
           </div>
