@@ -3,57 +3,12 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Mail, Phone, MapPin, ExternalLink, ShieldCheck, CheckCircle, MessageSquare, X } from "lucide-react";
-
-const Instagram = ({ size = 20 }: { size?: number }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-  </svg>
-);
-
-const Facebook = ({ size = 20 }: { size?: number }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-  </svg>
-);
-
-const Youtube = ({ size = 20 }: { size?: number }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17z" />
-    <polygon points="10 15 15 12 10 9" fill="currentColor" />
-  </svg>
-);
+import {
+  InstagramIcon as Instagram,
+  FacebookIcon as Facebook,
+  YoutubeIcon as Youtube,
+  TelegramIcon as Telegram,
+} from "@/components/SocialIcons";
 
 export default function ContactPage() {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
@@ -344,19 +299,17 @@ export default function ContactPage() {
                     Stay updated with our latest courses, tutorials, success stories, and creator tips.
                   </p>
                   <div className="flex gap-3">
-                    <a href="https://www.instagram.com/creatorscollege_/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#f09433] hover:opacity-90 text-white flex items-center justify-center transition shadow-sm">
-                      <Instagram size={18} />
+                    <a href="https://www.instagram.com/creatorscollege_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="w-10 h-10 rounded-full bg-white border border-gray-200 dark:border-white/10 hover:scale-105 flex items-center justify-center transition shadow-sm">
+                      <Instagram size={22} />
                     </a>
-                    <a href="https://www.facebook.com/profile.php?id=61591290489327" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#3b5998] hover:opacity-90 text-white flex items-center justify-center transition shadow-sm">
-                      <Facebook size={18} />
+                    <a href="https://www.facebook.com/profile.php?id=61591290489327" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="w-10 h-10 rounded-full bg-white border border-gray-200 dark:border-white/10 hover:scale-105 flex items-center justify-center transition shadow-sm">
+                      <Facebook size={22} />
                     </a>
-                    <a href="https://www.youtube.com/@creatorscollegeofficial" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#ff0000] hover:opacity-90 text-white flex items-center justify-center transition shadow-sm">
-                      <Youtube size={18} />
+                    <a href="https://www.youtube.com/@creatorscollegeofficial" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="w-10 h-10 rounded-full bg-white border border-gray-200 dark:border-white/10 hover:scale-105 flex items-center justify-center transition shadow-sm">
+                      <Youtube size={22} />
                     </a>
-                    <a href="https://t.me/creatorscollege" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#0088cc] hover:opacity-90 text-white flex items-center justify-center transition shadow-sm">
-                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                        <path d="m22 2-11 11M22 2l-7 20-4-9-9-4Z" />
-                      </svg>
+                    <a href="https://t.me/creatorscollege" target="_blank" rel="noopener noreferrer" aria-label="Telegram" className="w-10 h-10 rounded-full bg-white border border-gray-200 dark:border-white/10 hover:scale-105 flex items-center justify-center transition shadow-sm">
+                      <Telegram size={22} />
                     </a>
                   </div>
                 </div>

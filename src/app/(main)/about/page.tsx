@@ -162,6 +162,66 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* SECTION 1.5: Meet Our Leadership — Lavanya Ganji summary */}
+      <section className="py-12 md:py-16 bg-brand-gray/30 dark:bg-white/5 border-b border-gray-100 dark:border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Link
+            href="/lavanya-ganji"
+            className="group grid grid-cols-1 md:grid-cols-12 gap-8 items-center bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-3xl p-6 sm:p-8 shadow-md hover:shadow-xl hover:border-brand-orange/30 transition duration-300"
+          >
+            {/* Photo */}
+            <div className="md:col-span-4 relative w-full aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden shadow-lg">
+              <img
+                src="/lavanya-ganji-founder-telugu-twenty.jpeg"
+                alt="Lavanya Ganji - Founder & CEO of Telugu Twenty"
+                className="w-full h-full object-cover object-top group-hover:scale-105 transition duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-5">
+                <span className="text-[9px] font-black bg-brand-orange text-white px-2 py-0.5 rounded uppercase tracking-widest">
+                  Managing Partner
+                </span>
+              </div>
+            </div>
+
+            {/* Summary */}
+            <div className="md:col-span-8 space-y-4 text-left">
+              <span className="inline-block bg-brand-orange/10 border border-brand-orange/20 text-brand-orange text-xs font-black tracking-widest uppercase px-3 py-1 rounded-full">
+                Meet Our Leadership
+              </span>
+              <div className="space-y-1">
+                <h2 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white tracking-tight group-hover:text-brand-orange transition">
+                  Lavanya Ganji
+                </h2>
+                <p className="text-xs sm:text-sm font-black text-brand-orange uppercase tracking-wider">
+                  Founder &amp; CEO, Telugu Twenty
+                </p>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs sm:text-sm text-brand-charcoal dark:text-white font-bold">
+                <div className="flex items-center gap-2.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-orange shrink-0" />
+                  Managing Partner, Creators College
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-orange shrink-0" />
+                  MD, Perfect Prime Media &amp; Telugu Tea Talks
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-orange shrink-0" />
+                  2,000+ Businesses Served
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-orange shrink-0" />
+                  B.Tech EEE, Ex-ExcelR &amp; Genpact
+                </div>
+              </div>
+              <span className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-orange uppercase tracking-wider group-hover:gap-3 transition-all">
+                View Full Profile <ArrowRight size={14} />
+              </span>
+            </div>
+          </Link>
+        </div>
+      </section>
+
       {/* SECTION 2: Metrics Bar */}
       <section className="py-8 bg-[#0a1931] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
