@@ -4,8 +4,8 @@ import { ArrowLeft, MapPin, Compass, ShieldCheck, Mail } from "lucide-react";
 
 export default function Sitemap() {
   return (
-    <div className="w-full bg-white dark:bg-[#090d16] py-16 md:py-24 text-left">
-      <div className="max-w-3xl mx-auto px-4 space-y-8">
+    <div className="w-full bg-white dark:bg-[#090d16] py-5 md:py-7 text-left">
+      <div className="max-w-3xl mx-auto px-4 space-y-4">
         <Link 
           href="/"
           className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-orange hover:text-brand-blue transition"
@@ -17,7 +17,7 @@ export default function Sitemap() {
         <h1 className="text-3xl font-bold text-brand-blue dark:text-white tracking-tight">Sitemap</h1>
         <p className="text-xs text-gray-400">Creators College Page Directory</p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-sm">
           {/* Main Pages */}
           <div className="space-y-3 bg-brand-gray/30 dark:bg-white/5 p-6 rounded-2xl border border-gray-100 dark:border-white/5">
             <h3 className="font-semibold text-base text-brand-blue dark:text-white flex items-center gap-2">

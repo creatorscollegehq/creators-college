@@ -18,9 +18,9 @@ export default function Footer() {
   if (isLandingPage) return null;
 
   return (
-    <footer className="bg-[#111827] dark:bg-[#090d16] text-white border-t border-white/10 pt-16 pb-8 mt-auto">
+    <footer className="bg-[#111827] dark:bg-[#090d16] text-white border-t border-white/10 pt-10 pb-6 mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-4">
           {/* Brand Info */}
           <div className="space-y-4">
             <img
@@ -40,7 +40,7 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-white font-semibold text-base mb-6 tracking-wide relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-8 after:h-0.5 after:bg-brand-orange">
+            <h3 className="text-white font-semibold text-base mb-4 tracking-wide relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-8 after:h-0.5 after:bg-brand-orange">
               Explore
             </h3>
             <ul className="space-y-3">
@@ -84,7 +84,7 @@ export default function Footer() {
 
           {/* Contact Details */}
           <div>
-            <h3 className="text-white font-semibold text-base mb-6 tracking-wide relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-8 after:h-0.5 after:bg-brand-orange">
+            <h3 className="text-white font-semibold text-base mb-4 tracking-wide relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-8 after:h-0.5 after:bg-brand-orange">
               Get in Touch
             </h3>
             <ul className="space-y-4">
@@ -111,10 +111,10 @@ export default function Footer() {
 
           {/* Social Channels & Payment */}
           <div>
-            <h3 className="text-white font-semibold text-base mb-6 tracking-wide relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-8 after:h-0.5 after:bg-brand-orange">
+            <h3 className="text-white font-semibold text-base mb-4 tracking-wide relative after:content-[''] after:absolute after:-bottom-2 after:left-0 after:w-8 after:h-0.5 after:bg-brand-orange">
               Connect With Us
             </h3>
-            <div className="flex gap-4 mb-6">
+            <div className="flex gap-4 mb-4">
               <a
                 href="https://www.instagram.com/creatorscollege_/"
                 target="_blank"
@@ -156,7 +156,7 @@ export default function Footer() {
         </div>
 
         {/* Footer Bottom */}
-        <div className="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+        <div className="border-t border-white/10 pt-5 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
           <div className="flex flex-col gap-1 items-center sm:items-start">
             <p className="text-gray-500 text-xs">
               © {new Date().getFullYear()} Creators College. All rights reserved. Founded in 2026.

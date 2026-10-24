@@ -52,7 +52,7 @@ export default function BlogHubClient({ posts, categories }: BlogHubClientProps)
           backgroundImage:
             "url('https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=1200&q=80')",
         }}
-        className="relative bg-cover bg-center text-white py-20 md:py-28 text-center overflow-hidden"
+        className="relative bg-cover bg-center text-white py-5 md:py-8 text-center overflow-hidden"
       >
         <div className="absolute inset-0 bg-black/45 dark:bg-black/70" />
         <div className="max-w-7xl mx-auto px-4 relative z-10 space-y-4">
@@ -70,8 +70,8 @@ export default function BlogHubClient({ posts, categories }: BlogHubClientProps)
       </section>
 
       {/* Main Blog Hub */}
-      <section className="py-20 bg-white dark:bg-[#090d16]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <section className="py-5 md:py-7 bg-white dark:bg-[#090d16]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
           
           {/* Header of Section + Search */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-left">
@@ -91,7 +91,7 @@ export default function BlogHubClient({ posts, categories }: BlogHubClientProps)
                 placeholder="Search articles..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 rounded-xl border border-gray-200 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-brand-blue/20 bg-white dark:bg-white/5 text-brand-charcoal dark:text-white text-xs"
+                className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-brand-blue/20 bg-white dark:bg-white/5 text-brand-charcoal dark:text-white text-sm"
               />
             </div>
           </div>
@@ -118,7 +118,7 @@ export default function BlogHubClient({ posts, categories }: BlogHubClientProps)
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`p-5 rounded-2xl border text-left flex flex-col justify-between h-32 transition-all duration-300 cursor-pointer hover:scale-[1.02] ${
+                  className={`p-4 rounded-2xl border text-left flex flex-col justify-between h-32 transition-all duration-300 cursor-pointer hover:scale-[1.02] ${
                     isSelected
                       ? "bg-gradient-to-br from-[#0c152b] to-[#12234f] text-white border-brand-orange shadow-lg shadow-brand-orange/10"
                       : "bg-brand-gray/30 dark:bg-white/5 text-brand-charcoal dark:text-white border-gray-100 dark:border-white/5 hover:border-gray-250 dark:hover:border-white/10"
@@ -126,7 +126,7 @@ export default function BlogHubClient({ posts, categories }: BlogHubClientProps)
                 >
                   <span className="text-2xl">{emoji}</span>
                   <div>
-                    <h4 className="font-semibold text-xs sm:text-sm tracking-tight line-clamp-1">
+                    <h4 className="font-semibold text-xs sm:text-sm tracking-tight line-clamp-2">
                       {cat}
                     </h4>
                     <p className={`text-[10px] font-bold mt-1 ${isSelected ? "text-brand-orange" : "text-gray-400"}`}>
@@ -151,7 +151,7 @@ export default function BlogHubClient({ posts, categories }: BlogHubClientProps)
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center p-8 bg-gradient-to-tr from-brand-blue to-brand-orange">
+                  <div className="w-full h-full flex items-center justify-center p-5 bg-gradient-to-tr from-brand-blue to-brand-orange">
                     <BookOpen size={48} className="text-white/40" />
                   </div>
                 )}
@@ -161,8 +161,8 @@ export default function BlogHubClient({ posts, categories }: BlogHubClientProps)
               </div>
 
               {/* Description Details */}
-              <div className="lg:col-span-6 p-8 flex flex-col justify-between space-y-6 text-left">
-                <div className="space-y-3">
+              <div className="lg:col-span-6 p-6 flex flex-col justify-between space-y-4 text-left">
+                <div className="space-y-2.5">
                   <span className="text-[10px] uppercase tracking-widest text-brand-orange font-bold">
                     {featuredPost.category}
                   </span>
@@ -194,12 +194,12 @@ export default function BlogHubClient({ posts, categories }: BlogHubClientProps)
 
           {/* Articles Grid */}
           <div>
-            <h3 className="text-xl font-semibold text-brand-blue dark:text-white mb-8 tracking-tight">
+            <h3 className="text-xl font-semibold text-brand-blue dark:text-white mb-5 tracking-tight">
               {searchTerm || selectedCategory !== "All" ? "Search Results" : "Latest Articles"}
             </h3>
 
             {filteredPosts.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {(searchTerm || selectedCategory !== "All" ? filteredPosts : normalPosts).map((post) => (
                   <div
                     key={post.slug}
@@ -248,7 +248,7 @@ export default function BlogHubClient({ posts, categories }: BlogHubClientProps)
                 ))}
               </div>
             ) : (
-              <div className="text-center py-16 space-y-2">
+              <div className="text-center py-5 md:py-7 space-y-2">
                 <p className="text-gray-500 font-medium">No articles matched your criteria.</p>
                 <p className="text-xs text-gray-400">Try adjusting your filters or search keywords.</p>
               </div>

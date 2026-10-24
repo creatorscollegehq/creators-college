@@ -19,8 +19,8 @@ const points = [
 
 export default function RefundPolicy() {
   return (
-    <div className="w-full bg-white dark:bg-[#090d16] py-16 md:py-24 text-left">
-      <div className="max-w-3xl mx-auto px-4 space-y-8">
+    <div className="w-full bg-white dark:bg-[#090d16] py-5 md:py-7 text-left">
+      <div className="max-w-3xl mx-auto px-4 space-y-4">
         <Link
           href="/"
           className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-orange hover:text-brand-blue transition"

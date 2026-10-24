@@ -70,7 +70,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 const portableTextComponents = {
   types: {
     image: ({ value }: any) => (
-      <div className="relative my-8 rounded-2xl overflow-hidden border border-gray-100 dark:border-white/5 shadow-lg max-w-3xl mx-auto">
+      <div className="relative my-5 rounded-2xl overflow-hidden border border-gray-100 dark:border-white/5 shadow-lg max-w-3xl mx-auto">
         <img
           src={urlFor(value).width(1200).url()}
           alt={value.alt || "Creators College Blog Content Image"}
@@ -86,7 +86,7 @@ const portableTextComponents = {
   },
   block: {
     h1: ({ children }: any) => (
-      <h1 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white pt-8 pb-3 text-left tracking-tight border-b border-gray-100 dark:border-white/5 mb-4">
+      <h1 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white pt-5 pb-3 text-left tracking-tight border-b border-gray-100 dark:border-white/5 mb-4">
         {children}
       </h1>
     ),
@@ -149,7 +149,7 @@ export default async function BlogPostDetail({ params }: PageProps) {
 
   if (!post) {
     return (
-      <div className="min-h-[50vh] flex flex-col items-center justify-center p-8 space-y-4 bg-white dark:bg-[#090d16]">
+      <div className="min-h-[50vh] flex flex-col items-center justify-center p-5 space-y-4 bg-white dark:bg-[#090d16]">
         <h2 className="text-2xl font-bold text-brand-blue dark:text-white">Article Not Found</h2>
         <p className="text-sm text-gray-500">The blog post you are looking for does not exist.</p>
         <Link
@@ -225,11 +225,11 @@ export default async function BlogPostDetail({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(postSchema).replace(/</g, "\\u003c") }}
       />
       {/* Article Header */}
-      <section className="bg-brand-blue dark:bg-brand-gray text-white pt-6 pb-16 md:pt-8 md:pb-20 relative overflow-hidden">
+      <section className="bg-brand-blue dark:bg-brand-gray text-white pt-5 pb-7 md:pt-6 md:pb-9 relative overflow-hidden">
         {/* Decorative background visual accent */}
         <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-brand-orange/10 to-transparent rounded-full filter blur-3xl pointer-events-none" />
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-left space-y-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-left space-y-4">
           <Link
             href="/blog"
             className="inline-flex items-center gap-2 text-sm font-bold text-brand-orange hover:text-white transition"
@@ -287,7 +287,7 @@ export default async function BlogPostDetail({ params }: PageProps) {
 
       {/* Main Image Banner (if available) */}
       {post.mainImage && (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20">
           <div className="aspect-video sm:aspect-[21/9] w-full rounded-3xl overflow-hidden shadow-2xl border border-white/10 bg-brand-charcoal">
             <img
               src={urlFor(post.mainImage).width(1600).height(685).url()}
@@ -299,16 +299,16 @@ export default async function BlogPostDetail({ params }: PageProps) {
       )}
 
       {/* Article Content Layout */}
-      <section className="py-16">
+      <section className="py-5 md:py-7">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             
             {/* Rich Text Content */}
-            <div className="lg:col-span-8 space-y-6 prose prose-blue dark:prose-invert max-w-none">
+            <div className="lg:col-span-8 space-y-4 prose prose-blue dark:prose-invert max-w-none">
               <PortableText value={post.body} components={portableTextComponents} />
 
               {/* Author Attribution Box — links to the Author Profile URL (defaults to Cecil Srungarapati) */}
-              <div className="not-prose mt-12 p-6 rounded-2xl bg-brand-gray/50 dark:bg-white/[0.03] border border-gray-200/80 dark:border-white/10 flex flex-col sm:flex-row items-start sm:items-center gap-5 shadow-sm text-left">
+              <div className="not-prose mt-4 p-6 rounded-2xl bg-brand-gray/50 dark:bg-white/[0.03] border border-gray-200/80 dark:border-white/10 flex flex-col sm:flex-row items-start sm:items-center gap-5 shadow-sm text-left">
                 {isCecilAuthor ? (
                   <Link href="/cecil-srungarapati" className="shrink-0 group">
                     <div className="relative w-16 h-16 rounded-full overflow-hidden border-2 border-brand-orange group-hover:scale-105 transition shadow-md">
@@ -357,7 +357,7 @@ export default async function BlogPostDetail({ params }: PageProps) {
             </div>
 
             {/* Sidebar CTA widgets */}
-            <div className="lg:col-span-4 space-y-6 sticky top-24">
+            <div className="lg:col-span-4 space-y-4 sticky top-24">
               
               <div className="bg-gradient-to-br from-[#0c152b] to-[#12234f] text-white p-6 rounded-2xl border border-brand-orange/30 space-y-4 text-left shadow-lg relative overflow-hidden">
                 {/* Decorative badge */}

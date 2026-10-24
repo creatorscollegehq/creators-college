@@ -59,8 +59,8 @@ export default function VideoGallery() {
   }, [activeVideo]);
 
   return (
-    <div className="w-full py-16 bg-white dark:bg-[#090d16] border-t border-gray-100 dark:border-white/5">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+    <div className="w-full py-5 md:py-7 bg-white dark:bg-[#090d16] border-t border-gray-100 dark:border-white/5">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
         
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-3">
@@ -175,7 +175,7 @@ export default function VideoGallery() {
             })}
           </div>
         ) : (
-          <div className="text-center py-16 space-y-2 bg-brand-gray/20 dark:bg-white/5 rounded-2xl border border-dashed border-gray-200 dark:border-white/10">
+          <div className="text-center py-5 md:py-7 space-y-2 bg-brand-gray/20 dark:bg-white/5 rounded-2xl border border-dashed border-gray-200 dark:border-white/10">
             <Video className="text-gray-400 mx-auto" size={32} />
             <h4 className="font-bold text-gray-500">No Videos Found</h4>
             <p className="text-xs text-gray-400">Try adjusting your filters or search keywords.</p>

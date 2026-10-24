@@ -3,7 +3,7 @@ import { testimonials } from "@/data/testimonials";
 
 export default function Testimonials() {
   return (
-    <section id="testimonials" className="bg-white dark:bg-[#090d16] py-20 md:py-28">
+    <section id="testimonials" className="bg-white dark:bg-[#090d16] py-5 md:py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto text-center space-y-4 mb-14">
           <span className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-brand-orange">
@@ -34,7 +34,7 @@ export default function Testimonials() {
                 </blockquote>
               </div>
 
-              <figcaption className="mt-6 pt-5 border-t border-gray-100 dark:border-white/10">
+              <figcaption className="mt-4 pt-5 border-t border-gray-100 dark:border-white/10">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-blue to-brand-orange text-white flex items-center justify-center text-xs font-semibold shrink-0">
                     {t.name
@@ -59,7 +59,7 @@ export default function Testimonials() {
           ))}
         </div>
 
-        <p className="mt-8 text-center text-[11px] text-gray-400 dark:text-gray-600">
+        <p className="mt-5 text-center text-[11px] text-gray-400 dark:text-gray-600">
           Results vary by individual effort, consistency, and practice.
         </p>
       </div>

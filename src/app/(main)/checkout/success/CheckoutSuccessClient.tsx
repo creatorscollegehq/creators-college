@@ -66,10 +66,10 @@ export default function CheckoutSuccessClient() {
   }, [orderId, whatsappUrl]);
 
   return (
-    <div className="flex-grow bg-brand-gray/30 dark:bg-brand-gray/10 py-14 md:py-20">
+    <div className="flex-grow bg-brand-gray/30 dark:bg-brand-gray/10 py-5 md:py-7">
       <div className="max-w-2xl mx-auto px-4">
         <div className="rounded-3xl border border-gray-200/60 dark:border-white/10 bg-white dark:bg-[#0d1424] shadow-[0_30px_70px_-40px_rgba(15,23,42,0.35)] overflow-hidden">
-          <div className="bg-gradient-to-br from-[#123c9e] to-[#071c4d] px-6 py-10 text-center text-white">
+          <div className="bg-gradient-to-br from-[#123c9e] to-[#071c4d] px-6 py-5 md:py-7 text-center text-white">
             <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/10 border border-white/15">
               <CheckCircle2 size={34} className="text-green-400" />
             </span>
@@ -80,7 +80,7 @@ export default function CheckoutSuccessClient() {
             </p>
           </div>
 
-          <div className="p-6 md:p-8 space-y-6">
+          <div className="p-6 md:p-6 space-y-4">
             <div className="rounded-2xl border border-gray-100 dark:border-white/10 bg-[#f8f7f3] dark:bg-white/[0.03] p-4 space-y-2 text-sm">
               <div className="flex justify-between gap-4">
                 <span className="text-gray-500 dark:text-gray-400">Course</span>

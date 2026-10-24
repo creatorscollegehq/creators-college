@@ -484,8 +484,8 @@ export default function HomePage() {
         <div className="absolute -left-24 top-10 h-72 w-72 rounded-full bg-brand-orange/10 blur-[90px] pointer-events-none" />
         <div className="absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-[#FFC93C]/20 blur-[100px] pointer-events-none" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-12 md:pt-10 md:pb-16">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 pb-6 md:pt-7 md:pb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-5 items-center">
             <div className="lg:col-span-6 text-left">
               <div className="flex items-center gap-2">
                 <span className="inline-flex items-center rounded-lg bg-[#FFC93C] px-3 py-1 text-2xl font-bold text-[#0B1B4B] shadow-sm">
@@ -498,20 +498,20 @@ export default function HomePage() {
                 </svg>
               </div>
 
-              <h1 className="mt-4 text-[2.7rem] leading-[1.02] sm:text-6xl lg:text-[4.1rem] font-bold tracking-tight text-[#0B1B4B] dark:text-white">
+              <h1 className="mt-3 text-[2.7rem] leading-[1.02] sm:text-6xl lg:text-[4.1rem] font-bold tracking-tight text-[#0B1B4B] dark:text-white">
                 Content Creation
                 <br />
                 Course <span className="text-brand-orange">in Telugu</span>
               </h1>
 
-              <p className="mt-4 text-xl sm:text-2xl font-bold text-[#0B1B4B] dark:text-white">
+              <p className="mt-3 text-xl sm:text-2xl font-bold text-[#0B1B4B] dark:text-white">
                 From Basics to Advanced
               </p>
               <p className="mt-1.5 text-sm sm:text-base text-gray-600 dark:text-gray-300">
                 Learn everything at one place without getting confused.
               </p>
 
-              <div className="mt-6 flex flex-wrap items-stretch gap-3">
+              <div className="mt-4 flex flex-wrap items-stretch gap-3">
                 <div className="rounded-xl border border-gray-200 bg-white px-4 py-2.5 shadow-sm dark:border-white/10 dark:bg-white/5">
                   <p className="text-[10px] font-semibold text-gray-500 dark:text-gray-400">Original Price</p>
                   <p className="text-2xl font-bold text-red-500 line-through decoration-red-500 decoration-[3px] sm:text-3xl">
@@ -528,13 +528,13 @@ export default function HomePage() {
 
               <Link
                 href="/checkout"
-                className="mt-5 inline-flex w-full max-w-[430px] items-center justify-center gap-2 rounded-xl bg-brand-orange px-8 py-3.5 text-lg font-bold text-white shadow-lg shadow-brand-orange/25 transition hover:bg-brand-orange-dark hover:shadow-brand-orange/35"
+                className="mt-4 inline-flex w-full max-w-[430px] items-center justify-center gap-2 rounded-xl bg-brand-orange px-8 py-3.5 text-lg font-bold text-white shadow-lg shadow-brand-orange/25 transition hover:bg-brand-orange-dark hover:shadow-brand-orange/35"
               >
                 Buy Now
                 <ArrowRight size={20} />
               </Link>
 
-              <TrustRow className="mt-5" />
+              <TrustRow className="mt-4" />
             </div>
 
             <div className="lg:col-span-6">
@@ -578,9 +578,9 @@ export default function HomePage() {
       </section>
 
       {/* Course Introduction */}
-      <section className="bg-[#EDF4F8] dark:bg-white/[0.03] py-12 md:py-16">
+      <section className="bg-[#EDF4F8] dark:bg-white/[0.03] py-5 md:py-7">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-5 items-center">
             <VideoThumb
               src="/hero_collage_wide.jpg"
               alt="Creators College course introduction video"
@@ -594,10 +594,10 @@ export default function HomePage() {
                 Course Introduction
               </p>
               <div className="mt-2 h-1 w-16 bg-brand-orange" />
-              <h2 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.08] tracking-tight text-[#0B1B4B] dark:text-white">
+              <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-bold leading-[1.08] tracking-tight text-[#0B1B4B] dark:text-white">
                 Start Your Content Creation Journey <span className="text-brand-orange">Today</span>
               </h2>
-              <p className="mt-4 max-w-lg text-sm leading-relaxed text-gray-600 dark:text-gray-300 sm:text-base">
+              <p className="mt-3 max-w-lg text-sm leading-relaxed text-gray-600 dark:text-gray-300 sm:text-base">
                 Watch this short video to know what you&apos;ll learn, how the course works and why this is for you.
               </p>
             </div>
@@ -606,7 +606,7 @@ export default function HomePage() {
       </section>
 
       {/* Road Map */}
-      <section className="bg-[#EDF4F8] dark:bg-white/[0.03] pb-14 md:pb-20">
+      <section className="bg-[#EDF4F8] dark:bg-white/[0.03] pb-5 md:pb-7">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-3xl font-bold tracking-tight text-[#0B1B4B] dark:text-white sm:text-4xl">
@@ -617,7 +617,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6 lg:gap-5">
+          <div className="mt-5 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6 lg:gap-5">
             {roadmapSteps.map((step, index) => {
               const Icon = step.icon;
               return (
@@ -668,12 +668,12 @@ export default function HomePage() {
       </section>
 
       {/* Outcomes */}
-      <section className="bg-[#EDF4F8] dark:bg-white/[0.03] pb-14 md:pb-20">
+      <section className="bg-[#EDF4F8] dark:bg-white/[0.03] pb-5 md:pb-7">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-center text-2xl font-bold tracking-tight text-[#0B1B4B] dark:text-white sm:text-3xl lg:text-4xl">
             By the end of this course, you&apos;ll be able to
           </h2>
-          <div className="mt-7 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {outcomes.map((item) => (
               <div key={item.title} className={`rounded-2xl ${item.bg} p-5 text-center`}>
                 <div className="flex justify-center">{item.icon}</div>
@@ -686,9 +686,9 @@ export default function HomePage() {
       </section>
 
       {/* Suitable for Everyone */}
-      <section className="bg-white dark:bg-[#090d16] py-14 md:py-20">
+      <section className="bg-white dark:bg-[#090d16] py-5 md:py-7">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
+          <div className="grid grid-cols-1 items-center gap-5 lg:grid-cols-2">
             <div>
               <div className="flex items-center gap-3">
                 <Users size={34} className="shrink-0 text-brand-orange" strokeWidth={2} />
@@ -696,11 +696,11 @@ export default function HomePage() {
                   Suitable for Everyone
                 </h2>
               </div>
-              <p className="mt-4 text-base font-semibold text-[#0B1B4B] dark:text-white">
+              <p className="mt-3 text-base font-semibold text-[#0B1B4B] dark:text-white">
                 No prior experience needed.
               </p>
               <p className="text-sm text-gray-600 dark:text-gray-300">Anyone can learn content creation.</p>
-              <ul className="mt-5 space-y-2.5">
+              <ul className="mt-4 space-y-2.5">
                 {audience.map((item) => (
                   <li key={item} className="flex items-center gap-2 text-sm text-[#0B1B4B] dark:text-gray-200">
                     <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand-orange text-white">
@@ -751,9 +751,9 @@ export default function HomePage() {
       </section>
 
       {/* Goal */}
-      <section className="bg-[#FBF3E4] dark:bg-white/[0.04] py-14 md:py-20">
+      <section className="bg-[#FBF3E4] dark:bg-white/[0.04] py-5 md:py-7">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
+          <div className="grid grid-cols-1 items-center gap-5 lg:grid-cols-2">
             <div>
               <div className="flex items-center gap-3">
                 <Target size={34} className="shrink-0 text-brand-orange" strokeWidth={2} />
@@ -761,11 +761,11 @@ export default function HomePage() {
                   My Goal is to Teach...
                 </h2>
               </div>
-              <p className="mt-4 max-w-lg text-sm leading-relaxed text-gray-700 dark:text-gray-300 sm:text-base">
+              <p className="mt-3 max-w-lg text-sm leading-relaxed text-gray-700 dark:text-gray-300 sm:text-base">
                 My goal is to teach Content Creation skill to everyone whose looking to learn content creation at one
                 place without getting confused.
               </p>
-              <div className="mt-5 inline-block">
+              <div className="mt-4 inline-block">
                 <p className={`${caveat.className} -rotate-2 text-2xl text-brand-orange sm:text-3xl`}>
                   Let&apos;s create your future!
                 </p>
@@ -787,26 +787,26 @@ export default function HomePage() {
       </section>
 
       {/* Value Stack */}
-      <section className="bg-white py-14 dark:bg-[#090d16] md:py-20">
+      <section className="bg-white py-5 dark:bg-[#090d16] md:py-7">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:gap-14">
+          <div className="grid items-center gap-5 lg:grid-cols-[0.95fr_1.05fr] lg:gap-8">
             <div>
               <span className="inline-flex items-center gap-2 rounded-full bg-brand-orange/10 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-brand-orange">
                 <Sparkles size={13} />
                 What&apos;s Included
               </span>
-              <h2 className="mt-4 text-3xl font-bold tracking-tight text-[#0B1B4B] dark:text-white sm:text-4xl">
+              <h2 className="mt-3 text-3xl font-bold tracking-tight text-[#0B1B4B] dark:text-white sm:text-4xl">
                 Everything you need to <span className="text-brand-orange">start creating</span>
               </h2>
-              <p className="mt-3 max-w-lg text-sm leading-relaxed text-gray-600 dark:text-gray-300 sm:text-base">
+              <p className="mt-2.5 max-w-lg text-sm leading-relaxed text-gray-600 dark:text-gray-300 sm:text-base">
                 One complete course, six practical modules and lifetime access — without jumping between random
                 YouTube playlists.
               </p>
-              <div className="mt-5 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-[11px] font-bold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">
+              <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-[11px] font-bold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">
                 <span className="h-2 w-2 rounded-full bg-emerald-500" />
                 Admissions open for the current batch
               </div>
-              <div className="mt-6 flex flex-wrap items-end gap-x-4 gap-y-2">
+              <div className="mt-4 flex flex-wrap items-end gap-x-4 gap-y-2">
                 <span className="text-4xl font-bold text-[#0B1B4B] dark:text-white">₹5,000</span>
                 <span className="pb-1 text-lg font-semibold text-gray-400 line-through">₹30,000</span>
                 <span className="mb-1 rounded-full bg-[#FFC93C] px-2.5 py-1 text-[11px] font-bold text-[#0B1B4B]">
@@ -815,12 +815,12 @@ export default function HomePage() {
               </div>
               <Link
                 href="/checkout"
-                className="mt-5 inline-flex w-full max-w-sm items-center justify-center gap-2 rounded-xl bg-brand-orange px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-brand-orange/25 transition hover:bg-brand-orange-dark"
+                className="mt-4 inline-flex w-full max-w-sm items-center justify-center gap-2 rounded-xl bg-brand-orange px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-brand-orange/25 transition hover:bg-brand-orange-dark"
               >
                 Buy Now
                 <ArrowRight size={18} />
               </Link>
-              <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">
+              <p className="mt-2.5 text-xs text-gray-500 dark:text-gray-400">
                 Instant access details sent on WhatsApp after payment.
               </p>
             </div>
@@ -857,19 +857,19 @@ export default function HomePage() {
       </section>
 
       {/* Comparison */}
-      <section className="bg-[#EDF4F8] py-14 dark:bg-white/[0.03] md:py-20">
+      <section className="bg-[#EDF4F8] py-5 dark:bg-white/[0.03] md:py-7">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <h2 className="text-3xl font-bold tracking-tight text-[#0B1B4B] dark:text-white sm:text-4xl">
               Free YouTube vs <span className="text-brand-orange">Structured Course</span>
             </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-gray-600 dark:text-gray-300 sm:text-base">
+            <p className="mx-auto mt-2.5 max-w-2xl text-sm leading-relaxed text-gray-600 dark:text-gray-300 sm:text-base">
               Random videos can teach you tools, but not the complete workflow. Here is what changes when you learn
               with a clear roadmap.
             </p>
           </div>
 
-          <div className="mt-8 overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-lg dark:border-white/10 dark:bg-[#0d1424]">
+          <div className="mt-4 overflow-hidden rounded-3xl border border-gray-200 bg-white shadow-lg dark:border-white/10 dark:bg-[#0d1424]">
             <div className="grid grid-cols-[1.25fr_1fr_1fr] bg-[#0B1B4B] text-white">
               <div className="p-3 text-[11px] font-bold uppercase tracking-wider sm:p-4 sm:text-xs">What you need</div>
               <div className="p-3 text-center text-[11px] font-bold sm:p-4 sm:text-xs">Free YouTube</div>
@@ -897,7 +897,7 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div className="mt-6 text-center">
+          <div className="mt-4 text-center">
             <Link
               href="/checkout"
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-orange px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-orange/25 transition hover:bg-brand-orange-dark"
@@ -910,7 +910,7 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials */}
-      <section className="bg-white py-14 dark:bg-[#090d16] md:py-20">
+      <section className="bg-white py-5 dark:bg-[#090d16] md:py-7">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-end">
             <div>
@@ -926,7 +926,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 md:grid md:grid-cols-3 md:overflow-visible">
+          <div className="mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 md:grid md:grid-cols-3 md:overflow-visible">
             {testimonials.slice(0, 3).map((testimonial) => (
               <div
                 key={testimonial.name}
@@ -954,14 +954,14 @@ export default function HomePage() {
               </div>
             ))}
           </div>
-          <p className="mt-3 text-[10px] text-gray-400 dark:text-gray-500">
+          <p className="mt-2.5 text-[10px] text-gray-400 dark:text-gray-500">
             Results vary by effort and consistency.
           </p>
         </div>
       </section>
 
       {/* Urgency strip */}
-      <section className="border-y border-brand-orange/20 bg-[#FFF8ED] py-3.5 dark:border-brand-orange/20 dark:bg-brand-orange/5">
+      <section className="border-y border-brand-orange/20 bg-[#FFF8ED] py-2.5 dark:border-brand-orange/20 dark:bg-brand-orange/5">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-center gap-2 px-4 text-center sm:flex-row sm:gap-6">
           <span className="inline-flex items-center gap-2 text-xs font-bold text-[#0B1B4B] dark:text-white">
             <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
@@ -990,23 +990,23 @@ export default function HomePage() {
           }}
         />
 
-        <div className="relative mx-auto max-w-7xl px-4 py-14 sm:px-6 md:py-20 lg:px-8">
-          <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+        <div className="relative mx-auto max-w-7xl px-4 py-5 sm:px-6 md:py-9 lg:px-8">
+          <div className="grid items-center gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8">
             <div className="text-center lg:text-left">
               <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em] text-[#FFC93C]">
                 <Sparkles size={13} />
                 Start Your Journey
               </span>
 
-              <h2 className="mt-5 text-4xl font-bold leading-[1.06] tracking-tight text-white sm:text-5xl lg:text-[3.4rem]">
+              <h2 className="mt-4 text-4xl font-bold leading-[1.06] tracking-tight text-white sm:text-5xl lg:text-[3.4rem]">
                 Ready to become a <span className="text-[#FFC93C]">Content Creator?</span>
               </h2>
 
-              <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-white/70 sm:text-base lg:mx-0">
+              <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-white/70 sm:text-base lg:mx-0">
                 Learn scripting, voice-over, editing and page handling in Telugu — step by step, at your own pace.
               </p>
 
-              <div className="mt-7 flex flex-wrap items-stretch justify-center gap-3 lg:justify-start">
+              <div className="mt-4 flex flex-wrap items-stretch justify-center gap-3 lg:justify-start">
                 <div className="rounded-xl bg-white px-4 py-2.5 shadow-lg">
                   <p className="text-[10px] font-semibold text-gray-500">Original Price</p>
                   <p className="text-xl font-bold text-red-500 line-through decoration-red-500 decoration-2 sm:text-2xl">
@@ -1023,14 +1023,14 @@ export default function HomePage() {
 
               <Link
                 href="/checkout"
-                className="mt-5 inline-flex w-full max-w-md items-center justify-center gap-2 rounded-xl bg-brand-orange px-8 py-3.5 text-lg font-bold text-white shadow-xl shadow-brand-orange/25 transition hover:bg-brand-orange-dark"
+                className="mt-4 inline-flex w-full max-w-md items-center justify-center gap-2 rounded-xl bg-brand-orange px-8 py-3.5 text-lg font-bold text-white shadow-xl shadow-brand-orange/25 transition hover:bg-brand-orange-dark"
               >
                 Buy Now — ₹5,000
                 <ArrowRight size={20} />
               </Link>
 
-              <TrustRow light className="mt-5 justify-center lg:justify-start" />
-              <p className="mt-3 text-[11px] text-white/50">
+              <TrustRow light className="mt-4 justify-center lg:justify-start" />
+              <p className="mt-2.5 text-[11px] text-white/50">
                 Secure payment · Course access details sent on WhatsApp after purchase.
               </p>
             </div>
@@ -1038,7 +1038,7 @@ export default function HomePage() {
             <div className="relative mx-auto w-full max-w-md lg:ml-auto lg:mr-0">
               <div className="pointer-events-none absolute -inset-5 rounded-[2rem] bg-gradient-to-br from-brand-orange/30 via-transparent to-[#2563EB]/20 blur-2xl" />
 
-              <div className="relative rounded-[1.75rem] border border-white/10 bg-white/[0.07] p-5 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.85)] backdrop-blur-md sm:p-6 lg:-rotate-1">
+              <div className="relative rounded-[1.75rem] border border-white/10 bg-white/[0.07] p-4 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.85)] backdrop-blur-md sm:p-5 lg:-rotate-1">
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2.5">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white p-1.5">
@@ -1062,7 +1062,7 @@ export default function HomePage() {
                   </span>
                 </div>
 
-                <div className="mt-5 grid grid-cols-2 gap-2">
+                <div className="mt-4 grid grid-cols-2 gap-2">
                   {roadmapSteps.map((step) => (
                     <div key={step.title} className="flex items-center gap-1.5 rounded-lg bg-white/[0.06] px-2.5 py-2">
                       <Check size={12} strokeWidth={3} className="shrink-0 text-emerald-400" />
@@ -1084,7 +1084,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <p className={`mt-7 text-center text-2xl text-[#FFC93C] lg:absolute lg:-bottom-11 lg:left-2 lg:mt-0 lg:-rotate-6 lg:text-left ${caveat.className}`}>
+              <p className={`mt-4 text-center text-2xl text-[#FFC93C] lg:absolute lg:-bottom-11 lg:left-2 lg:mt-0 lg:-rotate-6 lg:text-left ${caveat.className}`}>
                 Learn · Create · Earn
               </p>
             </div>
@@ -1093,19 +1093,19 @@ export default function HomePage() {
       </section>
 
       {/* FAQ */}
-      <section className="bg-[#F8FAFC] py-14 dark:bg-white/[0.03] md:py-20">
+      <section className="bg-[#F8FAFC] py-5 dark:bg-white/[0.03] md:py-7">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-orange">FAQ</span>
             <h2 className="mt-2 text-3xl font-bold tracking-tight text-[#0B1B4B] dark:text-white sm:text-4xl">
               Frequently Asked Questions
             </h2>
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-gray-600 dark:text-gray-300 sm:text-base">
+            <p className="mx-auto mt-2.5 max-w-xl text-sm leading-relaxed text-gray-600 dark:text-gray-300 sm:text-base">
               Everything you need to know before enrolling.
             </p>
           </div>
 
-          <div className="mt-8 grid gap-6 lg:grid-cols-[240px_1fr] lg:gap-8">
+          <div className="mt-4 grid gap-6 lg:grid-cols-[240px_1fr] lg:gap-5">
             <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0">
               {faqCategories.map((category) => (
                 <button
@@ -1135,7 +1135,7 @@ export default function HomePage() {
                   >
                     <button
                       onClick={() => setActiveFAQ(isOpen ? null : index)}
-                      className="flex w-full items-center justify-between gap-4 px-4 py-3.5 text-left sm:px-5"
+                      className="flex w-full items-center justify-between gap-4 px-4 py-3 text-left sm:px-5"
                       aria-expanded={isOpen}
                     >
                       <span className="text-sm font-semibold text-[#0B1B4B] dark:text-white sm:text-base">
@@ -1147,7 +1147,7 @@ export default function HomePage() {
                       />
                     </button>
                     {isOpen && (
-                      <div className="border-t border-gray-100 px-4 py-3.5 dark:border-white/5 sm:px-5">
+                      <div className="border-t border-gray-100 px-4 py-3 dark:border-white/5 sm:px-5">
                         <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">{faq.a}</p>
                       </div>
                     )}
@@ -1157,7 +1157,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <p className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
+          <p className="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
             Still have questions?{" "}
             <a
               href="https://wa.me/918143937367?text=Hi%2C%20I%20have%20a%20question%20about%20the%20Telugu%20Content%20Creation%20Course"

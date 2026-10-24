@@ -114,9 +114,9 @@ export default function InstantFormModal({ isOpen, onClose, source }: InstantFor
           <X size={20} />
         </button>
 
-        <div className="p-6 text-center space-y-6">
+        <div className="p-6 text-center space-y-4">
           {isSuccess ? (
-            <div className="py-6 space-y-4 animate-scaleUp">
+            <div className="py-5 space-y-4 animate-scaleUp">
               <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-500/20 text-green-500 mb-2">
                 <CheckCircle2 size={36} />
               </div>

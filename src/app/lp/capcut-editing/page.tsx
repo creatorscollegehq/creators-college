@@ -28,12 +28,12 @@ export default function CapCutLandingPage() {
   return (
     <>
       <Header />
-      <div className="w-full bg-brand-gray/30 py-12 md:py-20 flex-grow flex items-center">
+      <div className="w-full bg-brand-gray/30 py-5 md:py-7 flex-grow flex items-center">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
           
           {/* Ad Pitch */}
-          <div className="lg:col-span-7 space-y-6 text-left">
+          <div className="lg:col-span-7 space-y-4 text-left">
             <div className="inline-flex items-center gap-2 bg-brand-orange/15 text-brand-orange px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
               <Sparkles size={12} className="stroke-[2.5]" />
               Video Editors Bootcamp

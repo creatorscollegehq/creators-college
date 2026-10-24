@@ -134,7 +134,7 @@ export default function LeadForm({ defaultCourse = "Content Creation Course", is
 
   if (isSuccess) {
     return (
-      <div className="bg-brand-blue/10 border border-brand-blue/30 p-8 rounded-2xl text-center space-y-6 max-w-lg mx-auto shadow-xl">
+      <div className="bg-brand-blue/10 border border-brand-blue/30 p-5 rounded-2xl text-center space-y-4 max-w-lg mx-auto shadow-xl">
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-brand-orange/20 text-brand-orange mb-2">
           <CheckCircle2 size={36} />
         </div>
@@ -174,7 +174,7 @@ export default function LeadForm({ defaultCourse = "Content Creation Course", is
   }
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white dark:bg-brand-gray p-6 sm:p-8 rounded-2xl border border-brand-blue/15 dark:border-white/5 shadow-xl space-y-5 text-left">
+    <form onSubmit={handleSubmit} className="bg-white dark:bg-brand-gray p-6 sm:p-6 rounded-2xl border border-brand-blue/15 dark:border-white/5 shadow-xl space-y-4 text-left">
       <div className="space-y-1">
         <h3 className="text-xl sm:text-2xl font-bold text-brand-blue dark:text-white tracking-tight">Get Started</h3>
         <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-normal">Submit the form to request syllabus info or secure your seat.</p>

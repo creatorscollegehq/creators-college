@@ -181,13 +181,13 @@ export default function AdsLandingPageClient() {
       </div>
 
       {/* ── HERO ── */}
-      <section className="bg-gradient-to-br from-[#040e24] via-brand-blue to-[#0b1f4d] text-white px-4 pt-8 pb-10 sm:pt-12 sm:pb-14">
+      <section className="bg-gradient-to-br from-[#040e24] via-brand-blue to-[#0b1f4d] text-white px-4 pt-5 pb-7 sm:pt-8 sm:pb-10">
         <div className="max-w-6xl mx-auto">
 
-          <div className="flex flex-col lg:grid lg:grid-cols-12 gap-8 lg:gap-12 lg:items-start">
+          <div className="flex flex-col lg:grid lg:grid-cols-12 gap-5 lg:gap-6 lg:items-start">
 
             {/* ── PITCH HEADING (Top on mobile, left column on desktop) ── */}
-            <div className="order-1 lg:col-span-7 space-y-5 text-center lg:text-left">
+            <div className="order-1 lg:col-span-7 space-y-4 text-center lg:text-left">
               {/* Badge */}
               <div className="inline-flex items-center gap-2 bg-brand-orange/20 border border-brand-orange/40 text-brand-orange px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider">
                 <Flame size={11} /> New Batch · Learn in Telugu · {seats} Seats Left
@@ -235,7 +235,7 @@ export default function AdsLandingPageClient() {
             </div>
 
             {/* ── SUPPORTING DETAILS: CHECKLIST & STATS (Third on mobile, below heading on desktop) ── */}
-            <div className="order-3 lg:col-span-7 space-y-5">
+            <div className="order-3 lg:col-span-7 space-y-4">
               {/* Is this you? */}
               <div className="bg-white/8 border border-white/10 rounded-2xl p-4 space-y-2">
                 <div className="text-xs font-bold text-brand-orange uppercase tracking-wider flex items-center gap-1.5">
@@ -282,7 +282,7 @@ export default function AdsLandingPageClient() {
       </section>
 
       {/* ── Video Section ── */}
-      <section className="py-12 px-4 max-w-4xl mx-auto text-center space-y-6">
+      <section className="py-5 px-4 max-w-4xl mx-auto text-center space-y-4">
         <div className="space-y-2">
           <div className="text-[11px] font-bold uppercase tracking-widest text-brand-orange">
             🎬 Watch First
@@ -308,7 +308,7 @@ export default function AdsLandingPageClient() {
       </section>
 
       {/* ── Loss Aversion ── */}
-      <section className="py-8 px-4 bg-red-50 border-y border-red-100">
+      <section className="py-5 px-4 bg-red-50 border-y border-red-100">
         <div className="max-w-3xl mx-auto text-center space-y-2">
           <div className="text-xl font-bold text-red-700">⚠️ Every Day You Wait = Money You&apos;re Losing</div>
           <p className="text-sm text-red-600/80 max-w-lg mx-auto">
@@ -322,9 +322,9 @@ export default function AdsLandingPageClient() {
       </section>
 
       {/* ── Curriculum ── */}
-      <section className="py-12 sm:py-14 px-4 bg-gray-50">
+      <section className="py-5 sm:py-8 px-4 bg-gray-50">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-8 space-y-1">
+          <div className="text-center mb-5 space-y-1">
             <div className="text-[11px] font-bold uppercase tracking-widest text-brand-orange">20-Day Program</div>
             <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue">From Zero to Earning — Step by Step</h2>
           </div>
@@ -362,9 +362,9 @@ export default function AdsLandingPageClient() {
       </section>
 
       {/* ── Results ── */}
-      <section className="py-12 sm:py-14 px-4">
+      <section className="py-5 sm:py-8 px-4">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-8 space-y-1">
+          <div className="text-center mb-5 space-y-1">
             <div className="text-[11px] font-bold uppercase tracking-widest text-brand-orange">Proof It Works</div>
             <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue">Students Exactly Like You — Now Earning</h2>
           </div>
@@ -385,7 +385,7 @@ export default function AdsLandingPageClient() {
               </div>
             ))}
           </div>
-          <div className="mt-6 text-center">
+          <div className="mt-4 text-center">
             <button onClick={scrollToForm}
               className="inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white font-bold px-7 py-4 rounded-xl text-sm transition shadow-xl shadow-brand-orange/25 active:scale-95 animate-enroll">
               I Want Results Like These <ChevronRight size={15} />
@@ -396,9 +396,9 @@ export default function AdsLandingPageClient() {
       </section>
 
       {/* ── FAQ ── */}
-      <section className="py-12 sm:py-14 px-4 bg-gray-50">
+      <section className="py-5 sm:py-8 px-4 bg-gray-50">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue text-center mb-8">Common Questions</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue text-center mb-5">Common Questions</h2>
           <div className="space-y-2.5">
             {faqs.map((f, i) => (
               <div key={i} className="bg-white border border-gray-100 rounded-2xl overflow-hidden">
@@ -417,8 +417,8 @@ export default function AdsLandingPageClient() {
       </section>
 
       {/* ── Final CTA ── */}
-      <section className="py-12 sm:py-14 px-4 bg-gradient-to-br from-brand-blue to-[#0d1e45] text-white">
-        <div className="max-w-2xl mx-auto text-center space-y-5">
+      <section className="py-5 sm:py-8 px-4 bg-gradient-to-br from-brand-blue to-[#0d1e45] text-white">
+        <div className="max-w-2xl mx-auto text-center space-y-4">
           <div className="text-3xl">🚀</div>
           <h2 className="text-2xl sm:text-3xl font-bold">
             Your Creator Career Starts<br />

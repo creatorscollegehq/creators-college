@@ -219,11 +219,11 @@ export default function CheckoutPage() {
   const whatsappUrl = `https://wa.me/918143937367?text=${encodeURIComponent(whatsappMsg)}`;
 
   return (
-    <div className="w-full bg-brand-gray/30 dark:bg-brand-gray/10 py-12 md:py-20 flex-grow">
+    <div className="w-full bg-brand-gray/30 dark:bg-brand-gray/10 py-5 md:py-7 flex-grow">
       <div className="max-w-4xl mx-auto px-4">
         
         {/* Header */}
-        <div className="text-center mb-10 space-y-2">
+        <div className="text-center mb-4 space-y-2">
           <span className="text-xs font-bold uppercase tracking-widest text-brand-orange">Secure Checkout</span>
           <h1 className="text-3xl font-bold text-brand-blue dark:text-white tracking-tight">Complete Your Enrollment</h1>
           <p className="text-sm text-gray-500 max-w-md mx-auto">
@@ -232,10 +232,10 @@ export default function CheckoutPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-start">
           
           {/* Left panel: details form & selector */}
-          <div className="md:col-span-7 space-y-6">
+          <div className="md:col-span-7 space-y-4">
             
             {/* Course Selection */}
             {!orderGenerated && (
@@ -258,8 +258,8 @@ export default function CheckoutPage() {
                         <div className="text-[11px] text-gray-400">Duration: {value.duration}</div>
                       </div>
                       <div className="text-right shrink-0">
-                        <div className="text-base font-bold text-brand-orange">₹{value.price}</div>
-                        <div className="text-xs text-gray-400 line-through">₹{value.originalPrice}</div>
+                        <div className="text-base font-bold text-brand-orange">₹{value.price.toLocaleString("en-IN")}</div>
+                        <div className="text-xs text-gray-400 line-through">₹{value.originalPrice.toLocaleString("en-IN")}</div>
                       </div>
                     </div>
                   ))}
@@ -350,26 +350,26 @@ export default function CheckoutPage() {
           </div>
 
           {/* Right panel: Order details / UPI Gateway */}
-          <div className="md:col-span-5 space-y-6">
+          <div className="md:col-span-5 space-y-4">
             
             <div className="bg-brand-blue text-white rounded-3xl p-6 shadow-xl relative overflow-hidden border border-brand-blue-dark">
               <div className="absolute top-0 right-0 w-32 h-32 bg-brand-orange/20 rounded-full blur-2xl pointer-events-none" />
               
-              <div className="relative z-10 space-y-5 text-left">
+              <div className="relative z-10 space-y-4 text-left">
                 <h3 className="font-semibold text-base border-b border-white/10 pb-3">Order Summary</h3>
                 
                 <div className="space-y-2 text-xs text-white/80">
                   <div className="flex justify-between">
                     <span>Course Subtotal</span>
-                    <span className="line-through">₹{activeCourse.originalPrice}</span>
+                    <span className="line-through">₹{activeCourse.originalPrice.toLocaleString("en-IN")}</span>
                   </div>
                   <div className="flex justify-between font-bold text-brand-orange text-sm">
                     <span>Active Discount</span>
-                    <span>-₹{activeCourse.originalPrice - activeCourse.price}</span>
+                    <span>-₹{(activeCourse.originalPrice - activeCourse.price).toLocaleString("en-IN")}</span>
                   </div>
                   <div className="flex justify-between pt-2 border-t border-white/10 text-base font-bold text-white">
                     <span>Total Amount</span>
-                    <span>₹{activeCourse.price}</span>
+                    <span>₹{activeCourse.price.toLocaleString("en-IN")}</span>
                   </div>
                 </div>
 
@@ -461,7 +461,7 @@ export default function CheckoutPage() {
                     </div>
                   </div>
                 ) : (
-                  <div className="bg-white/5 p-4 rounded-xl border border-white/10 text-center py-6">
+                  <div className="bg-white/5 p-4 rounded-xl border border-white/10 text-center py-5">
                     <span className="text-xs text-white/60">
                       Please enter your registration details to unlock the payment options.
                     </span>

@@ -4,8 +4,8 @@ import { ArrowLeft } from "lucide-react";
 
 export default function PrivacyPolicy() {
   return (
-    <div className="w-full bg-white dark:bg-[#090d16] py-16 md:py-24 text-left">
-      <div className="max-w-3xl mx-auto px-4 space-y-8">
+    <div className="w-full bg-white dark:bg-[#090d16] py-5 md:py-7 text-left">
+      <div className="max-w-3xl mx-auto px-4 space-y-4">
         <Link 
           href="/"
           className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-orange hover:text-brand-blue transition"
@@ -17,7 +17,7 @@ export default function PrivacyPolicy() {
         <h1 className="text-3xl font-bold text-brand-blue dark:text-white tracking-tight">Privacy Policy</h1>
         <p className="text-xs text-gray-400">Effective Date: July 2, 2026</p>
 
-        <div className="space-y-6 text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
+        <div className="space-y-4 text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
           <p>
             Welcome to Creators College. We respect your privacy and are committed to protecting your personal information. This Privacy Policy explains how we collect, use, and protect the information you provide while using our website and services.
           </p>

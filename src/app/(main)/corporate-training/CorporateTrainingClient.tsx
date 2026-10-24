@@ -54,14 +54,14 @@ export default function CorporateTrainingPage() {
     <div className="w-full bg-white dark:bg-[#090d16] text-left">
       
       {/* 1. Mockup Hero Header Section */}
-      <section className="relative bg-[#061129] dark:bg-brand-gray text-white py-12 md:py-24 overflow-hidden border-b border-white/5">
+      <section className="relative bg-[#061129] dark:bg-brand-gray text-white py-5 md:py-7 overflow-hidden border-b border-white/5">
         <div className="absolute inset-0 bg-gradient-to-r from-[#061129] via-[#091a3e]/80 to-transparent" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 md:gap-6 items-center">
             
             {/* Left text column */}
-            <div className="lg:col-span-7 space-y-6">
+            <div className="lg:col-span-7 space-y-4">
               <span className="inline-block bg-brand-orange/20 border border-brand-orange/40 text-brand-orange text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full">
                 B2B &amp; INSTITUTIONAL TRAINING
               </span>
@@ -129,12 +129,12 @@ export default function CorporateTrainingPage() {
       </section>
 
       {/* 2. Core Expertise & Request Training Split Block */}
-      <section className="py-12 md:py-24 bg-white dark:bg-[#090d16]">
+      <section className="py-5 md:py-7 bg-white dark:bg-[#090d16]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 md:gap-8 items-start">
             
             {/* Left Content column */}
-            <div className="lg:col-span-7 space-y-6">
+            <div className="lg:col-span-7 space-y-4">
               <span className="text-xs sm:text-sm font-bold uppercase text-brand-orange tracking-widest block">
                 EMPOWER YOUR TEAM
               </span>
@@ -198,7 +198,7 @@ export default function CorporateTrainingPage() {
             </div>
 
             {/* Right Callout Box column */}
-            <div className="lg:col-span-5 w-full bg-[#0a1931] text-white p-6 sm:p-8 rounded-3xl border border-white/5 shadow-xl space-y-6 flex flex-col justify-between">
+            <div className="lg:col-span-5 w-full bg-[#0a1931] text-white p-6 sm:p-6 rounded-3xl border border-white/5 shadow-xl space-y-4 flex flex-col justify-between">
               <div className="space-y-2">
                 <h3 className="text-xl sm:text-2xl font-bold tracking-tight">Request Training</h3>
                 <p className="text-xs text-gray-300 font-medium leading-relaxed">
@@ -249,8 +249,8 @@ export default function CorporateTrainingPage() {
       </section>
 
       {/* 3. B2B Program Categories - Customized Solutions */}
-      <section className="py-12 md:py-24 bg-brand-gray/30 dark:bg-white/5 border-y border-gray-100 dark:border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <section className="py-5 md:py-7 bg-brand-gray/30 dark:bg-white/5 border-y border-gray-100 dark:border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
           
           <div className="text-center space-y-2">
             <span className="inline-block bg-brand-orange/10 border border-brand-orange/20 text-brand-orange text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full">
@@ -413,9 +413,9 @@ export default function CorporateTrainingPage() {
       </section>
 
       {/* 4. Horizontal Curriculum Flowchart (One Practical Curriculum) */}
-      <section className="py-12 md:py-24 bg-white dark:bg-[#090d16]">
+      <section className="py-5 md:py-7 bg-white dark:bg-[#090d16]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
             
             {/* Left Column info details */}
             <div className="lg:col-span-4 space-y-4">
@@ -502,9 +502,9 @@ export default function CorporateTrainingPage() {
       {/* 5. Extra Details Already Present (Why Choose, Client Brands, FAQs, Proposal Form) */}
       
       {/* Client Brands */}
-      <section className="py-10 md:py-16 bg-brand-gray/30 dark:bg-white/5 border-t border-gray-100 dark:border-white/5 text-center">
+      <section className="py-5 md:py-7 bg-brand-gray/30 dark:bg-white/5 border-t border-gray-100 dark:border-white/5 text-center">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="max-w-3xl mx-auto mb-6">
+          <div className="max-w-3xl mx-auto mb-4">
             <span className="text-xs font-bold uppercase tracking-widest text-brand-orange">🤝 Organizations We've Worked With</span>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 max-w-2xl mx-auto">
               Our experience includes working with businesses and organizations such as:
@@ -526,12 +526,12 @@ export default function CorporateTrainingPage() {
       </section>
 
       {/* Why Choose Stats checklist */}
-      <section className="py-12 md:py-20 bg-white dark:bg-[#090d16] text-left">
+      <section className="py-5 md:py-7 bg-white dark:bg-[#090d16] text-left">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
             
             {/* Left Column Stats */}
-            <div className="lg:col-span-5 bg-brand-gray/30 dark:bg-white/5 border border-gray-100 dark:border-white/5 p-8 rounded-3xl space-y-6">
+            <div className="lg:col-span-5 bg-brand-gray/30 dark:bg-white/5 border border-gray-100 dark:border-white/5 p-5 rounded-3xl space-y-4">
               <h3 className="font-semibold text-brand-blue dark:text-white text-lg">⭐ Why Organizations Choose Creators College</h3>
               
               <div className="space-y-4 text-xs font-bold text-brand-charcoal dark:text-white">
@@ -545,7 +545,7 @@ export default function CorporateTrainingPage() {
             </div>
 
             {/* Right Column copy block */}
-            <div className="lg:col-span-7 space-y-6">
+            <div className="lg:col-span-7 space-y-4">
               <span className="text-xs font-bold uppercase tracking-widest text-brand-orange">Why Choose Creators College for Corporate Training?</span>
               <h2 className="text-3xl font-bold text-brand-blue dark:text-white tracking-tight">Practical Learning That Drives Business Growth</h2>
               <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
@@ -565,9 +565,9 @@ export default function CorporateTrainingPage() {
       </section>
 
       {/* FAQs Section */}
-      <section className="py-12 md:py-20 bg-white dark:bg-[#090d16] border-t border-gray-100 dark:border-white/5">
+      <section className="py-5 md:py-7 bg-white dark:bg-[#090d16] border-t border-gray-100 dark:border-white/5">
         <div className="max-w-3xl mx-auto px-4 text-left">
-          <div className="text-center mb-12 space-y-3">
+          <div className="text-center mb-4 space-y-3">
             <span className="text-xs font-bold uppercase tracking-widest text-brand-orange">FAQ</span>
             <h2 className="text-3xl font-bold text-brand-blue dark:text-white">Frequently Asked Questions</h2>
           </div>
@@ -594,12 +594,12 @@ export default function CorporateTrainingPage() {
       </section>
 
       {/* Form Submission Anchor */}
-      <section id="proposal-form" className="py-12 md:py-20 bg-brand-gray/30 dark:bg-white/5 border-t border-gray-100 dark:border-white/5 text-left">
+      <section id="proposal-form" className="py-5 md:py-7 bg-brand-gray/30 dark:bg-white/5 border-t border-gray-100 dark:border-white/5 text-left">
         <div className="max-w-4xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
             
             {/* Left column info */}
-            <div className="md:col-span-5 space-y-6">
+            <div className="md:col-span-5 space-y-4">
               <span className="text-xs font-bold bg-brand-orange text-white py-1 px-3 rounded-full">🚀 Ready to Upskill Your Team?</span>
               <h3 className="text-2xl font-bold text-brand-blue dark:text-white">Let's build your customized training program.</h3>
               <p className="text-xs text-gray-500 leading-relaxed font-normal">
@@ -623,7 +623,7 @@ export default function CorporateTrainingPage() {
       </section>
 
       {/* 6. Handshaking Footer CTA Banner */}
-      <section className="py-8 bg-[#0a1931] text-white relative overflow-hidden border-t border-white/10">
+      <section className="py-5 bg-[#0a1931] text-white relative overflow-hidden border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
             

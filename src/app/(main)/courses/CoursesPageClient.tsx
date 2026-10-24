@@ -125,7 +125,7 @@ export default function CoursesPage() {
       {/* Hero Header */}
       <section 
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=1200&q=80')" }}
-        className="relative bg-cover bg-center text-white py-12 md:py-20 text-center overflow-hidden"
+        className="relative bg-cover bg-center text-white py-5 md:py-7 text-center overflow-hidden"
       >
         <div className="absolute inset-0 bg-black/45 dark:bg-black/70" />
         <div className="max-w-7xl mx-auto px-4 relative z-10 space-y-4">
@@ -140,8 +140,8 @@ export default function CoursesPage() {
       </section>
 
       {/* Course Selection Tabs */}
-      <section className="py-12 bg-brand-gray/30 dark:bg-white/5 border-b border-gray-100 dark:border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
+      <section className="py-5 bg-brand-gray/30 dark:bg-white/5 border-b border-gray-100 dark:border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
           <div className="space-y-1">
             <h3 className="text-xs font-bold uppercase tracking-widest text-brand-orange">Academic Catalog</h3>
             <h2 className="text-2xl font-bold text-brand-blue dark:text-white">Select a Course to Explore</h2>
@@ -202,14 +202,14 @@ export default function CoursesPage() {
       </section>
 
       {/* Main Course Details Section */}
-      <section className="py-12 md:py-20 bg-white dark:bg-[#090d16]">
+      <section className="py-5 md:py-7 bg-white dark:bg-[#090d16]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* 1. Complete Telugu Content Creation Course DETAILS */}
           {activeCourseId === "creation" && (
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
               {/* Syllabus and Modules */}
-              <div className="lg:col-span-7 space-y-8 text-left animate-fadeIn">
+              <div className="lg:col-span-7 space-y-4 text-left animate-fadeIn">
                 <div className="space-y-4">
                   <span className="text-xs font-bold uppercase bg-green-500 text-white px-2.5 py-1 rounded-full">Current Course</span>
                   <h2 className="text-3xl font-semibold text-brand-blue dark:text-white">Complete Telugu Content Creation Course</h2>
@@ -344,8 +344,8 @@ export default function CoursesPage() {
               </div>
 
               {/* Sidebar Signup & Payments */}
-              <div className="lg:col-span-5 space-y-6 text-left">
-                <div className="bg-brand-blue p-8 rounded-3xl text-white space-y-6 shadow-xl border border-brand-blue-dark relative overflow-hidden">
+              <div className="lg:col-span-5 space-y-4 text-left">
+                <div className="bg-brand-blue p-5 rounded-3xl text-white space-y-4 shadow-xl border border-brand-blue-dark relative overflow-hidden">
                   <span className="text-[10px] font-semibold bg-brand-orange text-white py-1 px-3 rounded-full">Limited Launch Offer</span>
                   <div className="space-y-1 pt-2">
                     <div className="text-xs text-white/70 line-through">Original Value: ₹30,000</div>
@@ -383,9 +383,9 @@ export default function CoursesPage() {
 
           {/* 2. Complete Telugu CapCut Video Editing Course DETAILS */}
           {activeCourseId === "capcut" && (
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
               {/* Syllabus and Modules */}
-              <div className="lg:col-span-7 space-y-8 text-left animate-fadeIn">
+              <div className="lg:col-span-7 space-y-4 text-left animate-fadeIn">
                 <div className="space-y-4">
                   <span className="text-xs font-bold uppercase bg-green-500 text-white px-2.5 py-1 rounded-full">Current Course</span>
                   <h2 className="text-3xl font-semibold text-brand-blue dark:text-white">Complete Telugu CapCut Video Editing Course (Mobile &amp; PC)</h2>
@@ -533,8 +533,8 @@ export default function CoursesPage() {
               </div>
 
               {/* Sidebar Signup & Payments */}
-              <div className="lg:col-span-5 space-y-6 text-left">
-                <div className="bg-brand-blue p-8 rounded-3xl text-white space-y-6 shadow-xl border border-brand-blue-dark relative overflow-hidden">
+              <div className="lg:col-span-5 space-y-4 text-left">
+                <div className="bg-brand-blue p-5 rounded-3xl text-white space-y-4 shadow-xl border border-brand-blue-dark relative overflow-hidden">
                   <span className="text-[10px] font-semibold bg-brand-orange text-white py-1 px-3 rounded-full">Limited Launch Offer</span>
                   <div className="space-y-1 pt-2">
                     <div className="text-xs text-white/70 line-through">Original Value: ₹30,000</div>
@@ -572,10 +572,10 @@ export default function CoursesPage() {
 
           {/* 3. Upcoming Courses: Adobe Premiere Pro, After Effects, DaVinci Resolve */}
           {(activeCourseId === "premiere" || activeCourseId === "aftereffects" || activeCourseId === "davinci") && (
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center animate-fadeIn">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center animate-fadeIn">
               
               {/* Left Column Information */}
-              <div className="lg:col-span-7 text-left space-y-6">
+              <div className="lg:col-span-7 text-left space-y-4">
                 <span className="text-xs font-bold uppercase bg-brand-orange text-white px-2.5 py-1 rounded-full">Coming Soon</span>
                 
                 {activeCourseId === "premiere" && (
@@ -635,9 +635,9 @@ export default function CoursesPage() {
               </div>
 
               {/* Right Column Waiting List Form */}
-              <div className="lg:col-span-5 bg-white dark:bg-brand-gray p-6 sm:p-8 rounded-3xl border border-brand-blue/15 shadow-xl text-left">
+              <div className="lg:col-span-5 bg-white dark:bg-brand-gray p-6 sm:p-6 rounded-3xl border border-brand-blue/15 shadow-xl text-left">
                 {waitlistSuccess ? (
-                  <div className="text-center py-12 space-y-4">
+                  <div className="text-center py-5 space-y-4">
                     <span className="text-4xl">🎉</span>
                     <h3 className="text-xl font-bold text-brand-blue dark:text-white">Added to Waitlist!</h3>
                     <p className="text-xs text-gray-500 dark:text-gray-400">
@@ -728,8 +728,8 @@ export default function CoursesPage() {
       </section>
 
       {/* Trust factors bottom banner */}
-      <section className="py-16 bg-brand-gray/30 dark:bg-white/5 border-t border-gray-100 dark:border-white/5 text-center">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <section className="py-5 md:py-7 bg-brand-gray/30 dark:bg-white/5 border-t border-gray-100 dark:border-white/5 text-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
           <h3 className="text-xl font-semibold text-brand-blue dark:text-white">Why Learn Content Creation at Creators College?</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto text-left">
             <div className="p-4 bg-white dark:bg-[#090d16] border border-gray-100 dark:border-white/5 rounded-xl space-y-1">

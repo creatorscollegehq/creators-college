@@ -55,12 +55,12 @@ export default function AboutPage() {
     <div className="w-full bg-white dark:bg-[#090d16] text-left">
       
       {/* SECTION 1: Meet Our Founder & The Vision */}
-      <section className="py-12 md:py-20 bg-white dark:bg-[#090d16]">
+      <section className="py-5 md:py-7 bg-white dark:bg-[#090d16]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 md:gap-6 items-start">
             
             {/* Left Narrative Column */}
-            <div className="lg:col-span-4 space-y-6">
+            <div className="lg:col-span-4 space-y-4">
               <span className="inline-block bg-brand-orange/10 border border-brand-orange/20 text-brand-orange text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full">
                 👤 MEET OUR FOUNDER
               </span>
@@ -110,7 +110,7 @@ export default function AboutPage() {
             </Link>
 
             {/* Right Mission, Vision, Values Column Card */}
-            <div className="lg:col-span-4 bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-3xl p-6 shadow-md space-y-6">
+            <div className="lg:col-span-4 bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-3xl p-6 shadow-md space-y-4">
               
               {/* Mission */}
               <div className="space-y-2">
@@ -163,11 +163,11 @@ export default function AboutPage() {
       </section>
 
       {/* SECTION 1.5: Meet Our Leadership — Lavanya Ganji summary */}
-      <section className="py-12 md:py-16 bg-brand-gray/30 dark:bg-white/5 border-b border-gray-100 dark:border-white/5">
+      <section className="py-5 md:py-7 bg-brand-gray/30 dark:bg-white/5 border-b border-gray-100 dark:border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link
             href="/lavanya-ganji"
-            className="group grid grid-cols-1 md:grid-cols-12 gap-8 items-center bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-3xl p-6 sm:p-8 shadow-md hover:shadow-xl hover:border-brand-orange/30 transition duration-300"
+            className="group grid grid-cols-1 md:grid-cols-12 gap-5 items-center bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-3xl p-6 sm:p-6 shadow-md hover:shadow-xl hover:border-brand-orange/30 transition duration-300"
           >
             {/* Photo */}
             <div className="md:col-span-4 relative w-full aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden shadow-lg">
@@ -223,7 +223,7 @@ export default function AboutPage() {
       </section>
 
       {/* SECTION 2: Metrics Bar */}
-      <section className="py-8 bg-[#0a1931] text-white">
+      <section className="py-5 bg-[#0a1931] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 sm:grid-cols-5 gap-6 text-center text-xs font-bold">
             <div className="space-y-1">
@@ -251,8 +251,8 @@ export default function AboutPage() {
       </section>
 
       {/* SECTION 2.5: Preserved About Narrative Story */}
-      <section className="py-12 md:py-20 bg-white dark:bg-[#090d16] border-b border-gray-100 dark:border-white/5 text-left">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <section className="py-5 md:py-7 bg-white dark:bg-[#090d16] border-b border-gray-100 dark:border-white/5 text-left">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
           <div className="space-y-2">
             <span className="text-xs font-bold uppercase text-brand-orange tracking-widest block">
               OUR FOUNDATION STORY
@@ -262,7 +262,7 @@ export default function AboutPage() {
             </h2>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-normal leading-relaxed">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs sm:text-sm text-gray-500 dark:text-gray-400 font-normal leading-relaxed">
             <div className="space-y-4">
               <p>
                 Creators College is a practical Content Creation Academy built for anyone who wants to start creating content on social media. We believe that talent has no age, language, or background limits. If you have the passion to create, we provide the practical skills to turn your ideas into highly engaging, impactful content.
@@ -284,8 +284,8 @@ export default function AboutPage() {
       </section>
 
       {/* SECTION 3: A Track Record of Impact */}
-      <section className="py-12 md:py-20 bg-brand-gray/30 dark:bg-white/5 border-b border-gray-100 dark:border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <section className="py-5 md:py-7 bg-brand-gray/30 dark:bg-white/5 border-b border-gray-100 dark:border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
           
           <div className="text-center space-y-2">
             <span className="text-xs font-bold uppercase text-brand-orange tracking-widest block">
@@ -347,9 +347,9 @@ export default function AboutPage() {
       </section>
 
       {/* SECTION 4: Cecil Quote Banner */}
-      <section className="py-12 bg-[#0a1931] text-white relative overflow-hidden">
+      <section className="py-5 bg-[#0a1931] text-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-center">
             
             {/* Quote details */}
             <div className="lg:col-span-8 space-y-4">
@@ -374,8 +374,8 @@ export default function AboutPage() {
       </section>
 
       {/* SECTION 5: What I Do */}
-      <section className="py-12 md:py-20 bg-white dark:bg-[#090d16]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <section className="py-5 md:py-7 bg-white dark:bg-[#090d16]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
           
           <div className="text-center space-y-2">
             <span className="text-xs font-bold uppercase text-brand-orange tracking-widest block">
@@ -448,13 +448,13 @@ export default function AboutPage() {
       </section>
 
       {/* SECTION 6: Remaining Info (Learning Modes, Syllabus Tags, Curriculum Modules) */}
-      <section className="py-12 md:py-20 bg-brand-gray/30 dark:bg-white/5 border-t border-gray-100 dark:border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+      <section className="py-5 md:py-7 bg-brand-gray/30 dark:bg-white/5 border-t border-gray-100 dark:border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 md:gap-6 items-start">
             
             {/* Learning Modes & Syllabus focus */}
-            <div className="lg:col-span-6 bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 p-6 sm:p-8 rounded-3xl space-y-6">
+            <div className="lg:col-span-6 bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 p-6 sm:p-6 rounded-3xl space-y-4">
               <div className="space-y-1">
                 <h3 className="text-sm font-bold text-brand-blue dark:text-white uppercase tracking-wider">Learning Modes Offered</h3>
                 <p className="text-xs text-gray-400 font-semibold">Pick what suits your schedule best:</p>
@@ -486,7 +486,7 @@ export default function AboutPage() {
             </div>
 
             {/* Active & Upcoming programs */}
-            <div className="lg:col-span-6 space-y-6">
+            <div className="lg:col-span-6 space-y-4">
               {/* Active Courses */}
               <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 p-6 rounded-2xl text-left space-y-4">
                 <h3 className="text-base font-bold text-brand-blue dark:text-white flex items-center gap-2">
@@ -523,7 +523,7 @@ export default function AboutPage() {
           </div>
 
           {/* Curriculum Modules Grid */}
-          <div className="space-y-6 pt-8 border-t border-gray-100 dark:border-white/5">
+          <div className="space-y-4 pt-5 border-t border-gray-100 dark:border-white/5">
             <div className="text-center space-y-2">
               <span className="text-xs font-bold uppercase tracking-widest text-brand-orange font-bold">Curriculum Modules</span>
               <h2 className="text-xl sm:text-2xl font-bold text-brand-blue dark:text-white tracking-tight">
@@ -549,7 +549,7 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div className="text-center pt-8 border-t border-gray-100 dark:border-white/5 space-y-4">
+          <div className="text-center pt-5 border-t border-gray-100 dark:border-white/5 space-y-4">
             <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-brand-blue dark:text-white">Learn Today. Lead Tomorrow.</h3>
             <div>
               <Link

@@ -103,7 +103,7 @@ export default function WhatsAppGateModal({ isOpen, onClose, whatsappUrl }: What
           <X size={20} />
         </button>
 
-        <div className="p-6 text-center space-y-6">
+        <div className="p-6 text-center space-y-4">
           <img
             src="/whatsapp-logo.png"
             alt="WhatsApp Logo"

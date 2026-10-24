@@ -307,7 +307,7 @@ export default function LavanyaGanjiPage() {
       />
 
       {/* Hero Section */}
-      <section className="relative text-white pt-8 pb-16 md:pt-12 md:pb-24 overflow-hidden bg-gradient-to-br from-[#0f4cbe] via-[#0b3894] to-[#082870]">
+      <section className="relative text-white pt-5 pb-7 md:pt-7 md:pb-9 overflow-hidden bg-gradient-to-br from-[#0f4cbe] via-[#0b3894] to-[#082870]">
         {/* Glow and Decorative Accents */}
         <div className="absolute top-[-15%] left-[-10%] w-[55%] h-[55%] rounded-full bg-brand-orange/15 blur-[120px] pointer-events-none" />
         <div className="absolute bottom-[-15%] right-[-10%] w-[55%] h-[55%] rounded-full bg-blue-400/20 blur-[120px] pointer-events-none" />
@@ -315,7 +315,7 @@ export default function LavanyaGanjiPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
           {/* Breadcrumb Navigation */}
-          <nav aria-label="Breadcrumb" className="mb-6">
+          <nav aria-label="Breadcrumb" className="mb-4">
             <ol className="flex items-center gap-2 text-xs sm:text-sm text-white/70">
               <li>
                 <Link href="/" className="hover:text-white transition duration-150">
@@ -327,10 +327,10 @@ export default function LavanyaGanjiPage() {
             </ol>
           </nav>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-5 items-center">
 
             {/* Left Content Column */}
-            <div className="lg:col-span-7 space-y-6 text-left">
+            <div className="lg:col-span-7 space-y-4 text-left">
               <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 backdrop-blur-md px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider text-white">
                 <Sparkles size={14} className="text-brand-orange stroke-[2.5]" />
                 Founder &amp; CEO Profile
@@ -444,9 +444,9 @@ export default function LavanyaGanjiPage() {
       </section>
 
       {/* Professional Designations Section */}
-      <section className="py-12 md:py-16 bg-brand-gray/40 dark:bg-white/[0.02] border-b border-gray-100 dark:border-white/5">
+      <section className="py-5 md:py-7 bg-brand-gray/40 dark:bg-white/[0.02] border-b border-gray-100 dark:border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
+          <div className="text-center max-w-2xl mx-auto mb-4 space-y-2">
             <span className="text-xs uppercase font-semibold tracking-widest text-brand-orange">
               Executive Leadership
             </span>
@@ -516,9 +516,9 @@ export default function LavanyaGanjiPage() {
       </section>
 
       {/* Main Content & Sidebar Section */}
-      <section className="py-16 md:py-24">
+      <section className="py-5 md:py-7">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
             {/* Main Editorial Articles */}
             <div className="lg:col-span-8 space-y-14 text-left">
@@ -777,10 +777,10 @@ export default function LavanyaGanjiPage() {
             </div>
 
             {/* Sticky Sidebar (Focus Areas + Social Profiles + Connect CTA) */}
-            <div className="lg:col-span-4 space-y-8 sticky top-24 text-left">
+            <div className="lg:col-span-4 space-y-4 sticky top-24 text-left">
 
               {/* Professional Focus Box */}
-              <div className="bg-white dark:bg-[#131b2e] p-6 rounded-2xl border border-gray-200 dark:border-white/10 shadow-lg space-y-5">
+              <div className="bg-white dark:bg-[#131b2e] p-6 rounded-2xl border border-gray-200 dark:border-white/10 shadow-lg space-y-4">
                 <div className="space-y-1">
                   <span className="text-[10px] font-semibold uppercase tracking-wider text-brand-orange">
                     Core Competencies
@@ -809,7 +809,7 @@ export default function LavanyaGanjiPage() {
               </div>
 
               {/* Official Profiles Card */}
-              <div className="bg-white dark:bg-[#131b2e] p-6 rounded-2xl border border-gray-200 dark:border-white/10 shadow-lg space-y-5">
+              <div className="bg-white dark:bg-[#131b2e] p-6 rounded-2xl border border-gray-200 dark:border-white/10 shadow-lg space-y-4">
                 <div className="space-y-1">
                   <span className="text-[10px] font-semibold uppercase tracking-wider text-brand-orange">
                     Verified Channels
@@ -889,7 +889,7 @@ export default function LavanyaGanjiPage() {
       </section>
 
       {/* Connect Banner */}
-      <section className="py-12 bg-gray-50 dark:bg-white/[0.02] border-t border-gray-100 dark:border-white/5">
+      <section className="py-5 bg-gray-50 dark:bg-white/[0.02] border-t border-gray-100 dark:border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center sm:text-left flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="space-y-1">
             <h3 className="text-lg sm:text-xl font-bold text-brand-blue dark:text-white">

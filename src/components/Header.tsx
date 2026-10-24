@@ -66,14 +66,18 @@ export default function Header() {
   const logoSrc = "/logo/2 Horizontal Logo.png";
 
   const announcementStripe = (
-    <div className="w-full bg-brand-orange text-white py-[2px] px-2 sm:py-0.5 sm:px-3 text-center text-[8.5px] sm:text-[11px] leading-[1.2] sm:leading-normal font-bold tracking-wide relative z-50 flex items-center justify-center gap-x-2 shadow-sm">
+    <div className="w-full bg-brand-orange text-white py-1 px-2 sm:py-0.5 sm:px-3 text-center text-[8.5px] sm:text-[11px] leading-[1.2] sm:leading-normal font-bold tracking-wide relative z-50 flex items-center justify-center gap-x-2 shadow-sm">
       <span className="hidden sm:inline">
         🔥 Launch Offer: ₹30,000 Course for Just ₹5,000 | Save ₹25,000 | Limited-Time Enrollment &rarr;
       </span>
-      <span className="sm:hidden">
-        🔥 Launch Offer: ₹30,000 Course for Just ₹5,000! &rarr;
-      </span>
-      <Link href="/checkout" className="underline hover:text-brand-charcoal transition inline-flex items-center gap-0.5 font-bold uppercase whitespace-nowrap">
+      <Link
+        href="/checkout"
+        className="sm:hidden inline-flex flex-col items-center leading-tight hover:text-brand-charcoal transition"
+      >
+        <span>🔥 Launch Offer: ₹30,000 Course</span>
+        <span>at just ₹5,000 · Enroll &rarr;</span>
+      </Link>
+      <Link href="/checkout" className="hidden sm:inline-flex underline hover:text-brand-charcoal transition items-center gap-0.5 font-bold uppercase whitespace-nowrap">
         Enroll
       </Link>
     </div>

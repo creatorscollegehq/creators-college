@@ -172,7 +172,7 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-0 w-full items-center">
             
             {/* Left Content Column */}
-            <div className="md:col-span-7 py-12 md:py-20 space-y-4 text-left pr-4 relative z-20">
+            <div className="md:col-span-7 py-5 md:py-7 space-y-4 text-left pr-4 relative z-20">
               <div className="inline-block self-start text-[10px] font-bold uppercase bg-brand-orange text-white px-3 py-1 rounded-full tracking-wider">
                 Get In Touch
               </div>
@@ -193,11 +193,11 @@ export default function ContactPage() {
       </section>
 
       {/* Main Grid */}
-      <section className="py-12 md:py-20 bg-white dark:bg-[#090d16]">
+      <section className="py-5 md:py-7 bg-white dark:bg-[#090d16]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 md:gap-8 items-start">
             {/* Left Column: Info details cards in 2x2 grid + connect card */}
-            <div className="lg:col-span-6 space-y-8 text-left">
+            <div className="lg:col-span-6 space-y-4 text-left">
               <div className="space-y-4">
                 <span className="text-sm font-bold uppercase tracking-widest text-brand-orange">
                   Reach Us
@@ -214,51 +214,57 @@ export default function ContactPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 
                 {/* Address Card */}
-                <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-2xl p-6 shadow-sm space-y-4 flex flex-col justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-brand-blue/10 dark:bg-white/5 text-brand-blue dark:text-white flex items-center justify-center shrink-0">
-                      <MapPin size={24} />
+                <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-full bg-brand-blue/10 dark:bg-white/5 text-brand-blue dark:text-white flex items-center justify-center shrink-0">
+                        <MapPin size={24} />
+                      </div>
+                      <h4 className="font-bold text-base sm:text-lg text-brand-blue dark:text-white">Campus Address</h4>
                     </div>
-                    <h4 className="font-bold text-base sm:text-lg text-brand-blue dark:text-white">Campus Address</h4>
+                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-medium">
+                      Creators College, KPHB, Hyderabad, Telangana, India
+                    </p>
                   </div>
-                  <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-medium">
-                    Creators College, KPHB, Hyderabad, Telangana, India
-                  </p>
                 </div>
 
                 {/* Call Us Card */}
-                <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-2xl p-6 shadow-sm space-y-4 flex flex-col justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-brand-orange/10 text-brand-orange flex items-center justify-center shrink-0">
-                      <Phone size={24} />
+                <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-full bg-brand-orange/10 text-brand-orange flex items-center justify-center shrink-0">
+                        <Phone size={24} />
+                      </div>
+                      <h4 className="font-bold text-base sm:text-lg text-brand-blue dark:text-white">Call Us</h4>
                     </div>
-                    <h4 className="font-bold text-base sm:text-lg text-brand-blue dark:text-white">Call Us</h4>
+                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                      Have questions about our courses or training? Our team is just a call away.
+                    </p>
                   </div>
-                  <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-                    Have questions about our courses or training? Our team is just a call away.
-                  </p>
-                  <a href="tel:+918143937367" className="block text-sm sm:text-base font-bold text-brand-orange hover:underline transition">
+                  <a href="tel:+918143937367" className="block pt-4 text-sm sm:text-base font-bold text-brand-orange hover:underline transition">
                     📞 +91 81439 37367
                   </a>
                 </div>
 
                 {/* WhatsApp Us Card */}
                 <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-2xl p-6 shadow-sm space-y-4 flex flex-col justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-green-500/10 text-green-500 flex items-center justify-center shrink-0">
-                      <MessageSquare size={24} />
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-full bg-green-500/10 text-green-500 flex items-center justify-center shrink-0">
+                        <MessageSquare size={24} />
+                      </div>
+                      <h4 className="font-bold text-base sm:text-lg text-brand-blue dark:text-white">WhatsApp Us</h4>
                     </div>
-                    <h4 className="font-bold text-base sm:text-lg text-brand-blue dark:text-white">WhatsApp Us</h4>
-                  </div>
-                  <div className="space-y-2">
-                    <p className="text-xs text-gray-400 leading-relaxed">Chat with us to get instant assistance regarding:</p>
-                    <div className="grid grid-cols-2 gap-2 text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 font-bold">
-                      <div>✓ Course Details</div>
-                      <div>✓ Upcoming Batches</div>
-                      <div>✓ Fee Information</div>
-                      <div>✓ Demo Classes</div>
-                      <div>✓ Corporate Training</div>
-                      <div>✓ Workshops</div>
+                    <div className="space-y-2">
+                      <p className="text-xs text-gray-400 leading-relaxed">Chat with us to get instant assistance regarding:</p>
+                      <div className="grid grid-cols-2 gap-2 text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 font-bold">
+                        <div>✓ Course Details</div>
+                        <div>✓ Upcoming Batches</div>
+                        <div>✓ Fee Information</div>
+                        <div>✓ Demo Classes</div>
+                        <div>✓ Corporate Training</div>
+                        <div>✓ Workshops</div>
+                      </div>
                     </div>
                   </div>
                   <a href="https://wa.me/918143937367" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-[#25d366] hover:bg-green-600 text-white text-xs font-bold py-3 px-6 rounded-xl shadow transition tracking-wider uppercase">
@@ -267,17 +273,19 @@ export default function ContactPage() {
                 </div>
 
                 {/* Email Us Card */}
-                <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-2xl p-6 shadow-sm space-y-4 flex flex-col justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 rounded-full bg-brand-blue/10 dark:bg-white/5 text-brand-blue dark:text-white flex items-center justify-center shrink-0">
-                      <Mail size={24} />
+                <div className="bg-white dark:bg-[#131b2e] border border-gray-100 dark:border-white/5 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-12 h-12 rounded-full bg-brand-blue/10 dark:bg-white/5 text-brand-blue dark:text-white flex items-center justify-center shrink-0">
+                        <Mail size={24} />
+                      </div>
+                      <h4 className="font-bold text-base sm:text-lg text-brand-blue dark:text-white">Email Us</h4>
                     </div>
-                    <h4 className="font-bold text-base sm:text-lg text-brand-blue dark:text-white">Email Us</h4>
+                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                      For course inquiries, partnerships, corporate training, or support, send us an email:
+                    </p>
                   </div>
-                  <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-                    For course inquiries, partnerships, corporate training, or support, send us an email:
-                  </p>
-                  <a href="mailto:enquiry@creatorscollege.com" className="block text-sm sm:text-base font-bold text-[#0066cc] hover:underline transition">
+                  <a href="mailto:enquiry@creatorscollege.com" className="block pt-4 text-sm sm:text-base font-bold text-[#0066cc] hover:underline transition">
                     enquiry@creatorscollege.com
                   </a>
                 </div>
@@ -318,7 +326,7 @@ export default function ContactPage() {
             </div>
             <div className="lg:col-span-6 w-full">
               {isSuccess ? (
-                <div className="bg-brand-blue/10 border border-brand-blue/30 p-8 rounded-3xl text-center space-y-6 shadow-xl">
+                <div className="bg-brand-blue/10 border border-brand-blue/30 p-5 rounded-3xl text-center space-y-4 shadow-xl">
                   <span className="text-4xl inline-block">🎉</span>
                   <h3 className="text-2xl font-bold text-brand-blue dark:text-white">Enquiry Submitted!</h3>
                   <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
@@ -332,7 +340,7 @@ export default function ContactPage() {
                   </button>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="bg-white dark:bg-[#131b2e] p-6 sm:p-8 rounded-3xl border border-brand-blue/10 shadow-xl space-y-4 text-left">
+                <form onSubmit={handleSubmit} className="bg-white dark:bg-[#131b2e] p-6 sm:p-6 rounded-3xl border border-brand-blue/10 shadow-xl space-y-4 text-left">
                   <div className="flex gap-4 items-start border-b border-gray-100 dark:border-white/5 pb-4 mb-4">
                     <div className="w-12 h-12 rounded-full bg-brand-blue text-white flex items-center justify-center shrink-0 shadow-lg">
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -481,8 +489,8 @@ export default function ContactPage() {
       </section>
 
       {/* Why Contact Section (10 styled Feature Icon cards) */}
-      <section className="py-12 bg-white dark:bg-[#090d16] border-t border-gray-100 dark:border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
+      <section className="py-5 bg-white dark:bg-[#090d16] border-t border-gray-100 dark:border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
           <div className="space-y-2">
             <h3 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white tracking-tight">
               ⭐ <span className="text-brand-orange">Why</span> Contact Creators College?
@@ -511,7 +519,7 @@ export default function ContactPage() {
           </div>
 
           {activeBox !== null && (
-            <div className="bg-brand-blue/5 dark:bg-white/5 border border-brand-orange/20 rounded-2xl p-6 text-left max-w-2xl mx-auto animate-fadeIn mt-6 space-y-2">
+            <div className="bg-brand-blue/5 dark:bg-white/5 border border-brand-orange/20 rounded-2xl p-6 text-left max-w-2xl mx-auto animate-fadeIn mt-4 space-y-2">
               <h4 className="font-bold text-sm text-brand-orange uppercase tracking-wider flex items-center gap-2">
                 <span>{whyContactBoxes[activeBox].icon}</span>
                 <span>{whyContactBoxes[activeBox].title}</span>
@@ -525,13 +533,13 @@ export default function ContactPage() {
       </section>
 
       {/* Our Courses Catalog */}
-      <section className="py-12 md:py-20 bg-brand-gray/30 dark:bg-white/5 border-y border-gray-100 dark:border-white/5 text-left">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      <section className="py-5 md:py-7 bg-brand-gray/30 dark:bg-white/5 border-y border-gray-100 dark:border-white/5 text-left">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
           <h3 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white flex items-center gap-2">
             🎓 Our Courses
           </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             
             {/* Course Card 1 */}
             <div className="bg-white dark:bg-[#131b2e] rounded-2xl border border-gray-100 dark:border-white/5 shadow-md overflow-hidden flex flex-col justify-between hover:shadow-lg transition">
@@ -588,7 +596,7 @@ export default function ContactPage() {
                   Curriculums are currently in development to deliver the best project-based tools workflows in Telugu.
                 </p>
               </div>
-              <Link href="/courses" className="inline-flex items-center justify-center w-full bg-brand-orange hover:bg-brand-orange-dark text-white text-xs font-bold py-2.5 rounded-lg shadow transition mt-6">
+              <Link href="/courses" className="inline-flex items-center justify-center w-full bg-brand-orange hover:bg-brand-orange-dark text-white text-xs font-bold py-2.5 rounded-lg shadow transition mt-4">
                 Join the Waiting List &rarr;
               </Link>
             </div>
@@ -598,12 +606,12 @@ export default function ContactPage() {
       </section>
 
       {/* Corporate Training Block */}
-      <section className="py-12 md:py-20 bg-white dark:bg-[#090d16] text-left">
+      <section className="py-5 md:py-7 bg-white dark:bg-[#090d16] text-left">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
             
             {/* Left lists */}
-            <div className="lg:col-span-7 space-y-6">
+            <div className="lg:col-span-7 space-y-4">
               <div className="space-y-2">
                 <h3 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white flex items-center gap-2">
                   🏢 Corporate Training
@@ -625,7 +633,7 @@ export default function ContactPage() {
             </div>
 
             {/* Right details */}
-            <div className="lg:col-span-5 bg-white dark:bg-[#131b2e] p-6 rounded-2xl border border-gray-100 dark:border-white/5 shadow-md space-y-6">
+            <div className="lg:col-span-5 bg-white dark:bg-[#131b2e] p-6 rounded-2xl border border-gray-100 dark:border-white/5 shadow-md space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[10px] text-gray-500 dark:text-gray-400 font-semibold">
                 <div className="flex items-center gap-2">🏫 College Workshops</div>
                 <div className="flex items-center gap-2">🎒 School Programs</div>
@@ -643,8 +651,8 @@ export default function ContactPage() {
       </section>
 
       {/* FAQ section */}
-      <section className="py-12 md:py-20 bg-brand-gray/30 dark:bg-white/5 border-t border-gray-100 dark:border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left space-y-8">
+      <section className="py-5 md:py-7 bg-brand-gray/30 dark:bg-white/5 border-t border-gray-100 dark:border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left space-y-4">
           <div className="text-center space-y-2">
             <span className="text-xs font-bold uppercase tracking-widest text-brand-orange">FAQ</span>
             <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white">Contact Frequently Asked Questions</h2>
@@ -700,14 +708,14 @@ export default function ContactPage() {
       </section>
 
       {/* Bottom CTA Block */}
-      <section className="py-12 md:py-20 bg-brand-blue text-white text-left relative overflow-hidden border-t border-brand-blue-dark">
+      <section className="py-5 md:py-7 bg-brand-blue text-white text-left relative overflow-hidden border-t border-brand-blue-dark">
         <div className="absolute inset-0 bg-brand-orange/5 blur-3xl pointer-events-none" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 md:gap-6 items-center">
             
             {/* Left info */}
-            <div className="lg:col-span-7 space-y-6">
+            <div className="lg:col-span-7 space-y-4">
               <span className="text-xs font-bold uppercase tracking-widest text-brand-orange flex items-center gap-1.5">
                 🚀 Ready to Start Your Creator Journey?
               </span>
@@ -717,7 +725,7 @@ export default function ContactPage() {
             </div>
 
             {/* Right actions & metrics */}
-            <div className="lg:col-span-5 space-y-6">
+            <div className="lg:col-span-5 space-y-4">
               <div className="grid grid-cols-2 gap-4 text-[10px] text-white/70 font-bold border-b border-white/10 pb-6">
                 <div>🎥 2,000+ Business Projects</div>
                 <div>🏢 100+ Brands Worked With</div>

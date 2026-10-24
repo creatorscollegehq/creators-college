@@ -34,8 +34,14 @@
   --font-sans: var(--font-sans);
 
   /* Global scales for default small text classes */
-  --font-size-xs: 0.8125rem;
-  --font-size-sm: 0.9375rem;
+  --text-xs: 0.9375rem;
+  --text-xs--line-height: 1.45;
+  --text-sm: 1.0625rem;
+  --text-sm--line-height: 1.55;
+  --text-base: 1.0625rem;
+  --text-base--line-height: 1.6;
+  --text-lg: 1.1875rem;
+  --text-lg--line-height: 1.5;
 }
 
 body {
@@ -183,7 +189,7 @@ body {
 
 /* Base type scale */
 html {
-  font-size: 16.5px;
+  font-size: 17px;
 }
 
 /* Dynamic Enroll Button Pulse Animation with Glow */
@@ -211,28 +217,31 @@ html {
 
 /* Global scale overrides for custom arbitrary small text classes on the whole website */
 [class*="text-[8px]"], [class*="text-\[8px\]"] {
-  font-size: 0.725rem !important;
+  font-size: 0.76rem !important;
 }
 [class*="text-[8.5px]"], [class*="text-\[8.5px\]"] {
-  font-size: 0.75rem !important;
+  font-size: 0.79rem !important;
 }
 [class*="text-[9px]"], [class*="text-\[9px\]"] {
-  font-size: 0.78rem !important;
+  font-size: 0.82rem !important;
 }
 [class*="text-[9.5px]"], [class*="text-\[9.5px\]"] {
-  font-size: 0.805rem !important;
+  font-size: 0.845rem !important;
 }
 [class*="text-[10px]"], [class*="text-\[10px\]"] {
-  font-size: 0.835rem !important;
+  font-size: 0.87rem !important;
 }
 [class*="text-[10.5px]"], [class*="text-\[10.5px\]"] {
-  font-size: 0.86rem !important;
+  font-size: 0.895rem !important;
 }
 [class*="text-[11px]"], [class*="text-\[11px\]"] {
-  font-size: 0.885rem !important;
+  font-size: 0.925rem !important;
 }
 [class*="text-[12px]"], [class*="text-\[12px\]"] {
-  font-size: 0.94rem !important;
+  font-size: 0.975rem !important;
+}
+[class*="text-[13px]"], [class*="text-\[13px\]"] {
+  font-size: 0.9rem !important;
 }
 
 

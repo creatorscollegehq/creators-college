@@ -56,9 +56,9 @@ export default function BrandsMarquee() {
   }, [searchTerm, selectedCategory]);
 
   return (
-    <div className="w-full py-12 bg-white dark:bg-[#090d16] overflow-hidden relative">
+    <div className="w-full py-5 bg-white dark:bg-[#090d16] overflow-hidden relative">
       {/* Section Header */}
-      <div className="max-w-7xl mx-auto px-4 text-center mb-8">
+      <div className="max-w-7xl mx-auto px-4 text-center mb-5">
         <h3 className="text-xs font-bold uppercase tracking-widest text-brand-orange">
           Proven Industry Trust
         </h3>
@@ -71,7 +71,7 @@ export default function BrandsMarquee() {
       </div>
 
       {/* Sliding Marquee Tickers */}
-      <div className="relative w-full overflow-hidden py-6 space-y-5 bg-brand-gray/30 dark:bg-white/5 border-y border-gray-100 dark:border-white/5 mb-8">
+      <div className="relative w-full overflow-hidden py-5 space-y-4 bg-brand-gray/30 dark:bg-white/5 border-y border-gray-100 dark:border-white/5 mb-5">
         <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white dark:from-[#090d16] to-transparent z-10 pointer-events-none" />
         <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white dark:from-[#090d16] to-transparent z-10 pointer-events-none" />
         
@@ -215,7 +215,7 @@ export default function BrandsMarquee() {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-16 space-y-3">
+                <div className="text-center py-5 md:py-7 space-y-3">
                   <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 dark:bg-white/5 text-gray-400">
                     <Grid size={24} />
                   </div>

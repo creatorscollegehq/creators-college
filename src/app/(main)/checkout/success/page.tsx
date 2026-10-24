@@ -12,7 +12,7 @@ export default function CheckoutSuccessPage() {
   return (
     <Suspense
       fallback={
-        <div className="flex-grow flex items-center justify-center py-24 text-sm text-gray-500">
+        <div className="flex-grow flex items-center justify-center py-5 text-sm text-gray-500">
           Loading your order...
         </div>
       }

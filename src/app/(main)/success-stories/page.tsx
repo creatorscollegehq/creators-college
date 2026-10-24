@@ -67,7 +67,7 @@ export default function SuccessStoriesPage() {
       {/* Header */}
       <section 
         style={{ backgroundImage: "url('https://images.unsplash.com/photo-1478737270239-2f02b77fc618?auto=format&fit=crop&w=1200&q=80')" }}
-        className="relative bg-cover bg-center text-white py-20 md:py-28 text-center overflow-hidden"
+        className="relative bg-cover bg-center text-white py-5 md:py-8 text-center overflow-hidden"
       >
         <div className="absolute inset-0 bg-black/45 dark:bg-black/70" />
         <div className="max-w-7xl mx-auto px-4 relative z-10 space-y-4">
@@ -81,10 +81,10 @@ export default function SuccessStoriesPage() {
       </section>
 
       {/* Testimonials Grid */}
-      <section className="py-20 bg-white dark:bg-[#090d16]">
+      <section className="py-5 md:py-7 bg-white dark:bg-[#090d16]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+          <div className="text-center max-w-2xl mx-auto mb-5 space-y-3">
             <h3 className="text-xs font-bold uppercase tracking-widest text-brand-orange">
               Student Reviews
             </h3>
@@ -96,11 +96,11 @@ export default function SuccessStoriesPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {testimonials.map((test, i) => (
               <div
                 key={i}
-                className="bg-brand-gray/30 dark:bg-white/5 p-8 rounded-2xl border border-gray-100 dark:border-white/5 relative space-y-4 hover:shadow-lg transition duration-200"
+                className="bg-brand-gray/30 dark:bg-white/5 p-5 rounded-2xl border border-gray-100 dark:border-white/5 relative space-y-4 hover:shadow-lg transition duration-200"
               >
                 <div className="flex text-brand-orange">
                   {[...Array(test.stars)].map((_, sIdx) => (
@@ -129,10 +129,10 @@ export default function SuccessStoriesPage() {
       </section>
 
       {/* Projects Showcase */}
-      <section className="py-20 bg-brand-gray/40 border-t border-gray-200/30 dark:border-white/5">
+      <section className="py-5 md:py-7 bg-brand-gray/40 border-t border-gray-200/30 dark:border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
+          <div className="text-center max-w-2xl mx-auto mb-4 space-y-3">
             <h3 className="text-xs font-bold uppercase tracking-widest text-brand-orange">
               Practical Output
             </h3>
@@ -145,12 +145,12 @@ export default function SuccessStoriesPage() {
           </div>
 
           {/* Filter tabs */}
-          <div className="flex justify-center gap-2 mb-10">
+          <div className="mb-4 flex flex-wrap justify-center gap-2">
             {["All", "YouTube Growth", "Instagram Reels", "Freelance Editing"].map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-4 py-2 rounded-lg text-xs font-bold transition duration-200 ${
+                className={`rounded-lg px-4 py-2 text-xs font-bold transition duration-200 ${
                   activeCategory === cat
                     ? "bg-brand-blue text-white"
                     : "bg-white dark:bg-white/5 text-gray-500 dark:text-gray-400 border border-gray-200/60 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/10"
@@ -162,7 +162,7 @@ export default function SuccessStoriesPage() {
           </div>
 
           {/* Projects Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {filteredProjects.map((proj, idx) => (
               <div
                 key={idx}
