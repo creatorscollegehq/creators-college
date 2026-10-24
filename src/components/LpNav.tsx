@@ -1,39 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/navigation"; // Wait, Next.js link is from "next/link"
 import NextLink from "next/link";
 import { ChevronRight, Phone, Menu, X } from "lucide-react";
-
-function CountdownTimer() {
-  const [time, setTime] = useState({ h: 11, m: 47, s: 59 });
-  useEffect(() => {
-    let endTime: number;
-    try {
-      const stored = localStorage.getItem("cc_lp_timer_end");
-      endTime = stored ? Number(stored) : Date.now() + 12 * 60 * 60 * 1000;
-      if (!stored) localStorage.setItem("cc_lp_timer_end", String(endTime));
-    } catch { endTime = Date.now() + 12 * 60 * 60 * 1000; }
-    const tick = setInterval(() => {
-      const diff = Math.max(0, endTime - Date.now());
-      setTime({ h: Math.floor(diff / 3600000), m: Math.floor((diff % 3600000) / 60000), s: Math.floor((diff % 60000) / 1000) });
-      if (diff === 0) clearInterval(tick);
-    }, 1000);
-    return () => clearInterval(tick);
-  }, []);
-  const f = (n: number) => String(n).padStart(2, "0");
-  return (
-    <div className="flex items-center gap-1 font-mono font-bold">
-      {[f(time.h), f(time.m), f(time.s)].map((v, i) => (
-        <React.Fragment key={i}>
-          <span className="bg-white/25 text-white px-2 py-0.5 rounded text-xs sm:text-sm min-w-[26px] text-center">{v}</span>
-          {i < 2 && <span className="text-white/70 text-xs">:</span>}
-        </React.Fragment>
-      ))}
-    </div>
-  );
-}
 
 interface LpNavProps {
   onEnroll?: () => void;
@@ -59,11 +29,10 @@ export default function LpNav({ onEnroll }: LpNavProps) {
 
   return (
     <>
-      {/* Top urgency timer strip */}
+      {/* Top offer strip */}
       <div className="w-full bg-brand-orange text-white py-2 px-4 flex items-center justify-center gap-2 sm:gap-3 flex-wrap text-[11px] sm:text-xs font-bold z-50 relative">
-        <span>🔥 BATCH OFFER ENDS IN:</span>
-        <CountdownTimer />
-        <span className="hidden sm:inline">— Only <strong>5 Seats Left!</strong></span>
+        <span>🔥 Launch Offer: ₹30,000 Course at ₹5,000</span>
+        <span className="hidden sm:inline">— Limited-Time Enrolment</span>
       </div>
 
       {/* Sticky minimal nav */}

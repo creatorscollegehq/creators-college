@@ -4,32 +4,9 @@ import React, { useState, useEffect, useRef } from "react";
 import {
   Check, ChevronRight, MessageSquare, Shield,
   ChevronDown, X, Star, Flame, BadgeCheck, TrendingUp,
-  Phone, AlertTriangle, Clock, Zap
+  Phone, Clock, Zap
 } from "lucide-react";
 import LpNav from "@/components/LpNav";
-
-// ─── Live Seat Counter ──────────────────────────────────────────
-const TOTAL_SEATS = 12;
-function useSeatsLeft() {
-  const [seats, setSeats] = useState(5);
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem("cc_seats_v2");
-      if (stored) { setSeats(Number(stored)); return; }
-      localStorage.setItem("cc_seats_v2", "5");
-    } catch {}
-    const t = setInterval(() => {
-      setSeats(prev => {
-        if (prev <= 2) { clearInterval(t); return prev; }
-        const next = prev - 1;
-        try { localStorage.setItem("cc_seats_v2", String(next)); } catch {}
-        return next;
-      });
-    }, 5 * 60 * 1000);
-    return () => clearInterval(t);
-  }, []);
-  return seats;
-}
 
 // ─── Form ───────────────────────────────────────────────────────
 function EnrollForm({ source = "Ads LP", onSuccess, compact }: { source?: string; onSuccess?: () => void; compact?: boolean }) {
@@ -107,7 +84,7 @@ function EnrollForm({ source = "Ads LP", onSuccess, compact }: { source?: string
 }
 
 // ─── Popup ──────────────────────────────────────────────────────
-function PopupModal({ isOpen, onClose, seats }: { isOpen: boolean; onClose: () => void; seats: number }) {
+function PopupModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   useEffect(() => {
     if (isOpen) document.body.style.overflow = "hidden";
     else document.body.style.overflow = "";
@@ -122,10 +99,10 @@ function PopupModal({ isOpen, onClose, seats }: { isOpen: boolean; onClose: () =
           <X size={16} />
         </button>
         <div className="bg-gradient-to-r from-brand-blue to-[#0d2254] px-6 pt-7 pb-5 text-white text-center">
-          <div className="inline-flex items-center gap-1.5 bg-red-500/20 border border-red-400/30 text-red-300 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider mb-3">
-            <AlertTriangle size={10} /> Only {seats} Seats Left
+          <div className="inline-flex items-center gap-1.5 bg-brand-orange/20 border border-brand-orange/40 text-brand-orange px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider mb-3">
+            <Flame size={10} /> New Batch Enrolling
           </div>
-          <h3 className="text-xl font-bold leading-tight">Start Your Creator Journey<br /><span className="text-brand-orange">Apply Before Seats Fill Up</span></h3>
+          <h3 className="text-xl font-bold leading-tight">Start Your Creator Journey<br /><span className="text-brand-orange">Talk to an Admission Expert</span></h3>
           <p className="text-white/60 text-xs mt-1">Counselor will call within 30 minutes</p>
         </div>
         <div className="p-5 sm:p-6">
@@ -140,7 +117,6 @@ function PopupModal({ isOpen, onClose, seats }: { isOpen: boolean; onClose: () =
 export default function AdsLandingPageClient() {
   const [popup, setPopup] = useState(false);
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
-  const seats = useSeatsLeft();
   const formRef = useRef<HTMLDivElement>(null);
   const popupShown = useRef(false);
 
@@ -174,10 +150,10 @@ export default function AdsLandingPageClient() {
       {/* ── Nav (urgency strip + nav) ── */}
       <LpNav onEnroll={openPopup} />
 
-      {/* ── Red Seats Alert ── */}
+      {/* ── Batch Enrolment Strip ── */}
       <div className="w-full bg-red-600 text-white text-center py-2.5 px-4 text-xs font-bold flex items-center justify-center gap-2">
-        <AlertTriangle size={12} className="shrink-0 animate-pulse" />
-        <span>Only <strong>{seats} of {TOTAL_SEATS} seats</strong> remaining — Batch closes when full</span>
+        <Flame size={12} className="shrink-0" />
+        <span><strong>New batch enrolling now</strong> — Limited seats per batch</span>
       </div>
 
       {/* ── HERO ── */}
@@ -190,7 +166,7 @@ export default function AdsLandingPageClient() {
             <div className="order-1 lg:col-span-7 space-y-4 text-center lg:text-left">
               {/* Badge */}
               <div className="inline-flex items-center gap-2 bg-brand-orange/20 border border-brand-orange/40 text-brand-orange px-3 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider">
-                <Flame size={11} /> New Batch · Learn in Telugu · {seats} Seats Left
+                <Flame size={11} /> New Batch · Learn in Telugu · Enrolling Now
               </div>
 
               <h1 className="text-3xl sm:text-4xl lg:text-[3rem] font-bold tracking-tight leading-[1.08]">
@@ -214,18 +190,14 @@ export default function AdsLandingPageClient() {
                       <div className="text-white font-bold text-lg leading-tight mt-0.5">Secure Your Seat Now</div>
                     </div>
                     <div className="bg-white/20 rounded-xl px-3 py-1.5 text-center">
-                      <div className="text-white font-bold text-lg leading-none">{seats}</div>
-                      <div className="text-white/70 text-[9px] leading-none mt-0.5">Seats Left</div>
+                      <div className="text-white font-bold text-lg leading-none">20</div>
+                      <div className="text-white/70 text-[9px] leading-none mt-0.5">Days</div>
                     </div>
                   </div>
-                  {/* Social proof mini */}
+                  {/* Program highlight */}
                   <div className="flex items-center gap-2 mt-3">
-                    <div className="flex -space-x-1.5">
-                      {["👨‍💻", "👩‍🎤", "👨‍🎨", "👩‍💼"].map((e, i) => (
-                        <div key={i} className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-xs border border-white/30">{e}</div>
-                      ))}
-                    </div>
-                    <span className="text-white/80 text-[10px]"><strong className="text-white">28 people</strong> enrolled this week</span>
+                    <BadgeCheck size={13} className="text-white/80 shrink-0" />
+                    <span className="text-white/80 text-[10px]">Live sessions + recordings included</span>
                   </div>
                 </div>
                 <div className="p-5">
@@ -425,12 +397,12 @@ export default function AdsLandingPageClient() {
             <span className="text-brand-orange">With One Decision Today</span>
           </h2>
           <p className="text-white/70 text-sm max-w-md mx-auto">
-            <strong className="text-white">{seats} seats remain.</strong> The next batch is 3 months away. Book your free demo now — our counselor calls in 30 minutes.
+            <strong className="text-white">New batch enrolling now.</strong> Limited seats per batch. Book your free demo — our counselor calls within 30 minutes.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center pt-1">
             <button onClick={scrollToForm} id="final-enroll-btn"
               className="inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white font-bold px-8 py-4 rounded-xl text-sm transition shadow-xl shadow-brand-orange/30 active:scale-95 w-full sm:w-auto animate-enroll">
-              <Flame size={15} /> Apply Before Seats Fill Up
+              <Flame size={15} /> Book Your Free Demo
             </button>
             <a href="https://wa.me/918143937367?text=Hi!%20Saw%20your%20ad.%20Tell%20me%20about%20the%20Content%20Creation%20Course."
               target="_blank" rel="noopener noreferrer" id="final-wa-btn"
@@ -449,7 +421,7 @@ export default function AdsLandingPageClient() {
       </section>
 
       {/* ── Popup Modal ── */}
-      <PopupModal isOpen={popup} onClose={() => setPopup(false)} seats={seats} />
+      <PopupModal isOpen={popup} onClose={() => setPopup(false)} />
 
     </div>
   );
