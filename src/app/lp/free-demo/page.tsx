@@ -37,7 +37,7 @@ export default function FreeDemoLandingPage() {
               <Video size={12} className="stroke-[2.5]" />
               Free Online Masterclass
             </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-brand-blue tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-blue tracking-tight leading-tight">
               Register for the Free Creator <br />
               <span className="text-brand-orange">Demo Class in Telugu.</span>
             </h1>

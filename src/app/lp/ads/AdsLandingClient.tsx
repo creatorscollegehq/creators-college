@@ -62,7 +62,7 @@ function EnrollForm({ source = "Ads LP", onSuccess, compact }: { source?: string
   if (done) return (
     <div className="bg-green-50 border-2 border-green-200 rounded-2xl p-6 text-center space-y-3">
       <div className="text-4xl">🎉</div>
-      <div className="font-black text-green-700 text-lg">You&apos;re In!</div>
+      <div className="font-bold text-green-700 text-lg">You&apos;re In!</div>
       <p className="text-sm text-green-600">Our counselor will call <strong>{phone}</strong> within 30 mins.</p>
       <a href={`https://wa.me/918143937367?text=${encodeURIComponent(`Hi! I registered at Creators College. Name: ${name}, Phone: ${phone}`)}`}
         target="_blank" rel="noopener noreferrer"
@@ -89,7 +89,7 @@ function EnrollForm({ source = "Ads LP", onSuccess, compact }: { source?: string
         {errors.phone && <p className="text-red-500 text-[10px] mt-1">{errors.phone}</p>}
       </div>
       <button id={`${source}-submit`} type="submit" disabled={loading}
-        className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white font-black py-4 rounded-xl text-base transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-orange/30 active:scale-[0.98] disabled:opacity-70 animate-enroll">
+        className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-4 rounded-xl text-base transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-orange/30 active:scale-[0.98] disabled:opacity-70 animate-enroll">
         {loading
           ? <span className="flex items-center gap-2"><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />Booking...</span>
           : <><Flame size={16} /> Get Free Career Guidance</>
@@ -125,7 +125,7 @@ function PopupModal({ isOpen, onClose, seats }: { isOpen: boolean; onClose: () =
           <div className="inline-flex items-center gap-1.5 bg-red-500/20 border border-red-400/30 text-red-300 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider mb-3">
             <AlertTriangle size={10} /> Only {seats} Seats Left
           </div>
-          <h3 className="text-xl font-black leading-tight">Start Your Creator Journey<br /><span className="text-brand-orange">Apply Before Seats Fill Up</span></h3>
+          <h3 className="text-xl font-bold leading-tight">Start Your Creator Journey<br /><span className="text-brand-orange">Apply Before Seats Fill Up</span></h3>
           <p className="text-white/60 text-xs mt-1">Counselor will call within 30 minutes</p>
         </div>
         <div className="p-5 sm:p-6">
@@ -193,7 +193,7 @@ export default function AdsLandingPageClient() {
                 <Flame size={11} /> New Batch · Learn in Telugu · {seats} Seats Left
               </div>
 
-              <h1 className="text-3xl sm:text-4xl lg:text-[3rem] font-black tracking-tight leading-[1.08]">
+              <h1 className="text-3xl sm:text-4xl lg:text-[3rem] font-bold tracking-tight leading-[1.08]">
                 Earn ₹50K–₹2 Lakhs/Month<br />
                 <span className="text-brand-orange">From Your Phone — 20 Days</span>
               </h1>
@@ -211,10 +211,10 @@ export default function AdsLandingPageClient() {
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="text-white/75 text-[10px] font-bold uppercase tracking-widest">⚡ Talk to an Admission Expert</div>
-                      <div className="text-white font-black text-lg leading-tight mt-0.5">Secure Your Seat Now</div>
+                      <div className="text-white font-bold text-lg leading-tight mt-0.5">Secure Your Seat Now</div>
                     </div>
                     <div className="bg-white/20 rounded-xl px-3 py-1.5 text-center">
-                      <div className="text-white font-black text-lg leading-none">{seats}</div>
+                      <div className="text-white font-bold text-lg leading-none">{seats}</div>
                       <div className="text-white/70 text-[9px] leading-none mt-0.5">Seats Left</div>
                     </div>
                   </div>
@@ -264,7 +264,7 @@ export default function AdsLandingPageClient() {
                   { n: "4.9 ★", l: "Average Rating" },
                 ].map((s, i) => (
                   <div key={i} className="bg-white/10 border border-white/10 rounded-xl p-2.5 text-center">
-                    <div className="text-lg sm:text-xl font-black text-white">{s.n}</div>
+                    <div className="text-lg sm:text-xl font-bold text-white">{s.n}</div>
                     <div className="text-[9px] sm:text-[10px] text-white/50 leading-tight">{s.l}</div>
                   </div>
                 ))}
@@ -272,7 +272,7 @@ export default function AdsLandingPageClient() {
 
               {/* Mobile CTA */}
               <button onClick={scrollToForm}
-                className="w-full lg:hidden bg-brand-orange hover:bg-brand-orange-dark text-white font-black py-4 rounded-xl text-base flex items-center justify-center gap-2 shadow-lg active:scale-[0.98] transition animate-enroll">
+                className="w-full lg:hidden bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-4 rounded-xl text-base flex items-center justify-center gap-2 shadow-lg active:scale-[0.98] transition animate-enroll">
                 <Flame size={16} /> Start Your Creator Journey <ChevronRight size={15} />
               </button>
             </div>
@@ -287,7 +287,7 @@ export default function AdsLandingPageClient() {
           <div className="text-[11px] font-bold uppercase tracking-widest text-brand-orange">
             🎬 Watch First
           </div>
-          <h2 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white">
+          <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white">
             Watch This Before You Join Creators College
           </h2>
           <p className="text-sm text-gray-500 max-w-xl mx-auto">
@@ -310,12 +310,12 @@ export default function AdsLandingPageClient() {
       {/* ── Loss Aversion ── */}
       <section className="py-8 px-4 bg-red-50 border-y border-red-100">
         <div className="max-w-3xl mx-auto text-center space-y-2">
-          <div className="text-xl font-black text-red-700">⚠️ Every Day You Wait = Money You&apos;re Losing</div>
+          <div className="text-xl font-bold text-red-700">⚠️ Every Day You Wait = Money You&apos;re Losing</div>
           <p className="text-sm text-red-600/80 max-w-lg mx-auto">
             Creators in your city — with the same phone as you — are already earning ₹50,000/month. The only difference? <strong>They started.</strong> The next batch after this one is <strong>3 months away.</strong>
           </p>
           <button onClick={scrollToForm}
-            className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-black px-7 py-3.5 rounded-full text-sm transition mt-1 shadow-lg active:scale-95">
+            className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold px-7 py-3.5 rounded-full text-sm transition mt-1 shadow-lg active:scale-95">
             I Don&apos;t Want to Miss This Batch <ChevronRight size={14} />
           </button>
         </div>
@@ -326,7 +326,7 @@ export default function AdsLandingPageClient() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-8 space-y-1">
             <div className="text-[11px] font-bold uppercase tracking-widest text-brand-orange">20-Day Program</div>
-            <h2 className="text-2xl sm:text-3xl font-black text-brand-blue">From Zero to Earning — Step by Step</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue">From Zero to Earning — Step by Step</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
@@ -340,7 +340,7 @@ export default function AdsLandingPageClient() {
                   <span className="text-2xl">{c.icon}</span>
                   <span className="text-[10px] font-bold text-brand-orange uppercase tracking-wider">{c.w}</span>
                 </div>
-                <h3 className="font-black text-brand-blue text-sm mb-1">{c.t}</h3>
+                <h3 className="font-bold text-brand-blue text-sm mb-1">{c.t}</h3>
                 <p className="text-xs text-gray-500 leading-relaxed">{c.d}</p>
               </div>
             ))}
@@ -366,7 +366,7 @@ export default function AdsLandingPageClient() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-8 space-y-1">
             <div className="text-[11px] font-bold uppercase tracking-widest text-brand-orange">Proof It Works</div>
-            <h2 className="text-2xl sm:text-3xl font-black text-brand-blue">Students Exactly Like You — Now Earning</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue">Students Exactly Like You — Now Earning</h2>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {[
@@ -377,17 +377,17 @@ export default function AdsLandingPageClient() {
             ].map((r, i) => (
               <div key={i} className="bg-white border border-gray-100 rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow">
                 <div className="text-2xl mb-2">{r.emoji}</div>
-                <div className="font-black text-brand-blue text-sm">{r.name}</div>
+                <div className="font-bold text-brand-blue text-sm">{r.name}</div>
                 <div className="text-[10px] text-gray-400 mb-1">{r.role}</div>
                 <div className="flex mb-1.5">{[...Array(5)].map((_, i) => <Star key={i} size={9} className="fill-brand-orange text-brand-orange" />)}</div>
-                <div className="text-brand-orange font-black text-sm">{r.outcome}</div>
+                <div className="text-brand-orange font-bold text-sm">{r.outcome}</div>
                 <div className="text-[10px] text-gray-400">in {r.time}</div>
               </div>
             ))}
           </div>
           <div className="mt-6 text-center">
             <button onClick={scrollToForm}
-              className="inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white font-black px-7 py-4 rounded-xl text-sm transition shadow-xl shadow-brand-orange/25 active:scale-95 animate-enroll">
+              className="inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white font-bold px-7 py-4 rounded-xl text-sm transition shadow-xl shadow-brand-orange/25 active:scale-95 animate-enroll">
               I Want Results Like These <ChevronRight size={15} />
             </button>
             <p className="text-xs text-gray-400 mt-2">Free demo · No payment · 30-min callback</p>
@@ -398,7 +398,7 @@ export default function AdsLandingPageClient() {
       {/* ── FAQ ── */}
       <section className="py-12 sm:py-14 px-4 bg-gray-50">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-black text-brand-blue text-center mb-8">Common Questions</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue text-center mb-8">Common Questions</h2>
           <div className="space-y-2.5">
             {faqs.map((f, i) => (
               <div key={i} className="bg-white border border-gray-100 rounded-2xl overflow-hidden">
@@ -420,7 +420,7 @@ export default function AdsLandingPageClient() {
       <section className="py-12 sm:py-14 px-4 bg-gradient-to-br from-brand-blue to-[#0d1e45] text-white">
         <div className="max-w-2xl mx-auto text-center space-y-5">
           <div className="text-3xl">🚀</div>
-          <h2 className="text-2xl sm:text-3xl font-black">
+          <h2 className="text-2xl sm:text-3xl font-bold">
             Your Creator Career Starts<br />
             <span className="text-brand-orange">With One Decision Today</span>
           </h2>
@@ -429,7 +429,7 @@ export default function AdsLandingPageClient() {
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center pt-1">
             <button onClick={scrollToForm} id="final-enroll-btn"
-              className="inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white font-black px-8 py-4 rounded-xl text-sm transition shadow-xl shadow-brand-orange/30 active:scale-95 w-full sm:w-auto animate-enroll">
+              className="inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white font-bold px-8 py-4 rounded-xl text-sm transition shadow-xl shadow-brand-orange/30 active:scale-95 w-full sm:w-auto animate-enroll">
               <Flame size={15} /> Apply Before Seats Fill Up
             </button>
             <a href="https://wa.me/918143937367?text=Hi!%20Saw%20your%20ad.%20Tell%20me%20about%20the%20Content%20Creation%20Course."

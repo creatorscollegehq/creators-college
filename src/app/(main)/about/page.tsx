@@ -61,14 +61,14 @@ export default function AboutPage() {
             
             {/* Left Narrative Column */}
             <div className="lg:col-span-4 space-y-6">
-              <span className="inline-block bg-brand-orange/10 border border-brand-orange/20 text-brand-orange text-xs font-black tracking-widest uppercase px-3 py-1 rounded-full">
+              <span className="inline-block bg-brand-orange/10 border border-brand-orange/20 text-brand-orange text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full">
                 👤 MEET OUR FOUNDER
               </span>
               <div className="space-y-2">
-                <h1 className="text-3xl sm:text-4xl font-black text-brand-blue dark:text-white tracking-tight">
+                <h1 className="text-3xl sm:text-4xl font-bold text-brand-blue dark:text-white tracking-tight">
                   The Vision Behind <span className="text-brand-orange">Creators College</span>
                 </h1>
-                <p className="text-xs sm:text-sm font-black text-[#0066cc] uppercase tracking-wider">
+                <p className="text-xs sm:text-sm font-bold text-[#0066cc] uppercase tracking-wider">
                   Content Creator. Entrepreneur. Visionary.
                 </p>
               </div>
@@ -103,7 +103,7 @@ export default function AboutPage() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
                 <div className="text-white space-y-1">
-                  <span className="text-[9px] font-black bg-brand-orange text-white px-2 py-0.5 rounded uppercase tracking-widest">CEO and Founder</span>
+                  <span className="text-[9px] font-bold bg-brand-orange text-white px-2 py-0.5 rounded uppercase tracking-widest">CEO and Founder</span>
                   <p className="text-xs font-bold text-gray-200 group-hover:text-white flex items-center gap-1">Cecil Srungarapati at Creators College Academy &rarr;</p>
                 </div>
               </div>
@@ -118,7 +118,7 @@ export default function AboutPage() {
                   <div className="w-8 h-8 rounded-full bg-brand-orange/10 text-brand-orange flex items-center justify-center shrink-0">
                     <Target size={16} />
                   </div>
-                  <h4 className="font-black text-sm text-brand-blue dark:text-white uppercase tracking-wider">Our Mission</h4>
+                  <h4 className="font-bold text-sm text-brand-blue dark:text-white uppercase tracking-wider">Our Mission</h4>
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-normal pl-10">
                   To empower creators with practical skills, real-world knowledge and the confidence to build a successful career or business through content.
@@ -131,7 +131,7 @@ export default function AboutPage() {
                   <div className="w-8 h-8 rounded-full bg-[#0066cc]/10 text-[#0066cc] flex items-center justify-center shrink-0">
                     <Eye size={16} />
                   </div>
-                  <h4 className="font-black text-sm text-brand-blue dark:text-white uppercase tracking-wider">Our Vision</h4>
+                  <h4 className="font-bold text-sm text-brand-blue dark:text-white uppercase tracking-wider">Our Vision</h4>
                 </div>
                 <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-normal pl-10">
                   To become India's most trusted platform for content creation education, helping millions turn their creativity into opportunities.
@@ -144,7 +144,7 @@ export default function AboutPage() {
                   <div className="w-8 h-8 rounded-full bg-brand-blue/10 text-brand-blue dark:text-white flex items-center justify-center shrink-0">
                     <Award size={16} />
                   </div>
-                  <h4 className="font-black text-sm text-brand-blue dark:text-white uppercase tracking-wider">Our Values</h4>
+                  <h4 className="font-bold text-sm text-brand-blue dark:text-white uppercase tracking-wider">Our Values</h4>
                 </div>
                 <div className="grid grid-cols-2 gap-2 pl-10 text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 font-bold">
                   <div>✓ Creativity</div>
@@ -177,7 +177,7 @@ export default function AboutPage() {
                 className="w-full h-full object-cover object-top group-hover:scale-105 transition duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-5">
-                <span className="text-[9px] font-black bg-brand-orange text-white px-2 py-0.5 rounded uppercase tracking-widest">
+                <span className="text-[9px] font-bold bg-brand-orange text-white px-2 py-0.5 rounded uppercase tracking-widest">
                   Managing Partner
                 </span>
               </div>
@@ -185,14 +185,14 @@ export default function AboutPage() {
 
             {/* Summary */}
             <div className="md:col-span-8 space-y-4 text-left">
-              <span className="inline-block bg-brand-orange/10 border border-brand-orange/20 text-brand-orange text-xs font-black tracking-widest uppercase px-3 py-1 rounded-full">
+              <span className="inline-block bg-brand-orange/10 border border-brand-orange/20 text-brand-orange text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full">
                 Meet Our Leadership
               </span>
               <div className="space-y-1">
-                <h2 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white tracking-tight group-hover:text-brand-orange transition">
+                <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white tracking-tight group-hover:text-brand-orange transition">
                   Lavanya Ganji
                 </h2>
-                <p className="text-xs sm:text-sm font-black text-brand-orange uppercase tracking-wider">
+                <p className="text-xs sm:text-sm font-bold text-brand-orange uppercase tracking-wider">
                   Founder &amp; CEO, Telugu Twenty
                 </p>
               </div>
@@ -225,25 +225,25 @@ export default function AboutPage() {
       {/* SECTION 2: Metrics Bar */}
       <section className="py-8 bg-[#0a1931] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 sm:grid-cols-5 gap-6 text-center text-xs font-black">
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-6 text-center text-xs font-bold">
             <div className="space-y-1">
-              <div className="text-xl sm:text-2xl font-black text-brand-orange">110M+</div>
+              <div className="text-xl sm:text-2xl font-bold text-brand-orange">110M+</div>
               <p className="text-[10px] text-white/70">Views Generated Across Platforms</p>
             </div>
             <div className="space-y-1">
-              <div className="text-xl sm:text-2xl font-black text-brand-orange">800K+</div>
+              <div className="text-xl sm:text-2xl font-bold text-brand-orange">800K+</div>
               <p className="text-[10px] text-white/77">Followers Across Social Platforms</p>
             </div>
             <div className="space-y-1">
-              <div className="text-xl sm:text-2xl font-black text-brand-orange">2,000+</div>
+              <div className="text-xl sm:text-2xl font-bold text-brand-orange">2,000+</div>
               <p className="text-[10px] text-white/70">Business Projects Completed</p>
             </div>
             <div className="space-y-1">
-              <div className="text-xl sm:text-2xl font-black text-brand-orange">10+</div>
+              <div className="text-xl sm:text-2xl font-bold text-brand-orange">10+</div>
               <p className="text-[10px] text-white/77">Multinational Companies Worked</p>
             </div>
             <div className="space-y-1 col-span-2 sm:col-span-1">
-              <div className="text-xl sm:text-2xl font-black text-brand-orange">5+</div>
+              <div className="text-xl sm:text-2xl font-bold text-brand-orange">5+</div>
               <p className="text-[10px] text-white/70">Years of Experience in Content</p>
             </div>
           </div>
@@ -254,10 +254,10 @@ export default function AboutPage() {
       <section className="py-12 md:py-20 bg-white dark:bg-[#090d16] border-b border-gray-100 dark:border-white/5 text-left">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="space-y-2">
-            <span className="text-xs font-black uppercase text-brand-orange tracking-widest block">
+            <span className="text-xs font-bold uppercase text-brand-orange tracking-widest block">
               OUR FOUNDATION STORY
             </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white tracking-tight">
               Learn. Create. Grow.
             </h2>
           </div>
@@ -288,10 +288,10 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           
           <div className="text-center space-y-2">
-            <span className="text-xs font-black uppercase text-brand-orange tracking-widest block">
+            <span className="text-xs font-bold uppercase text-brand-orange tracking-widest block">
               PORTFOLIO HIGHLIGHTS
             </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white tracking-tight">
               A Track Record of Impact
             </h2>
           </div>
@@ -303,7 +303,7 @@ export default function AboutPage() {
               <div className="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
                 <Building size={20} />
               </div>
-              <h4 className="font-black text-sm text-brand-blue dark:text-white leading-tight">Worked with 10+ Multinational Companies</h4>
+              <h4 className="font-bold text-sm text-brand-blue dark:text-white leading-tight">Worked with 10+ Multinational Companies</h4>
               <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
                 Trusted by global brands for content strategy, production and growth.
               </p>
@@ -314,7 +314,7 @@ export default function AboutPage() {
               <div className="w-10 h-10 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center">
                 <Users size={20} />
               </div>
-              <h4 className="font-black text-sm text-brand-blue dark:text-white leading-tight">Founder of Telugu Tea Talks</h4>
+              <h4 className="font-bold text-sm text-brand-blue dark:text-white leading-tight">Founder of Telugu Tea Talks</h4>
               <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
                 Built a community of 800,000+ followers across platforms.
               </p>
@@ -325,7 +325,7 @@ export default function AboutPage() {
               <div className="w-10 h-10 rounded-xl bg-brand-orange/10 text-brand-orange flex items-center justify-center">
                 <Trophy size={20} />
               </div>
-              <h4 className="font-black text-sm text-brand-blue dark:text-white leading-tight">Managed 2,000+ Business Projects</h4>
+              <h4 className="font-bold text-sm text-brand-blue dark:text-white leading-tight">Managed 2,000+ Business Projects</h4>
               <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
                 Helped 2,000+ businesses grow their brand and reach through content.
               </p>
@@ -336,7 +336,7 @@ export default function AboutPage() {
               <div className="w-10 h-10 rounded-xl bg-brand-blue/10 text-brand-blue flex items-center justify-center">
                 <Eye size={20} />
               </div>
-              <h4 className="font-black text-sm text-brand-blue dark:text-white leading-tight">CEO of Perfect Prime News</h4>
+              <h4 className="font-bold text-sm text-brand-blue dark:text-white leading-tight">CEO of Perfect Prime News</h4>
               <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
                 Leading a digital news platform with 110 million+ views and growing.
               </p>
@@ -378,10 +378,10 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           
           <div className="text-center space-y-2">
-            <span className="text-xs font-black uppercase text-brand-orange tracking-widest block">
+            <span className="text-xs font-bold uppercase text-brand-orange tracking-widest block">
               EXPERTISE AREAS
             </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white tracking-tight">
               What I Do
             </h2>
           </div>
@@ -393,7 +393,7 @@ export default function AboutPage() {
               <div className="w-12 h-12 rounded-full bg-brand-orange/20 text-brand-orange flex items-center justify-center shrink-0">
                 <Video size={22} />
               </div>
-              <h4 className="font-black text-xs sm:text-sm uppercase tracking-wider">Content Creation &amp; Strategy</h4>
+              <h4 className="font-bold text-xs sm:text-sm uppercase tracking-wider">Content Creation &amp; Strategy</h4>
               <p className="text-[11px] text-gray-400 leading-relaxed font-normal">
                 Creating content that informs, entertains and drives results.
               </p>
@@ -404,7 +404,7 @@ export default function AboutPage() {
               <div className="w-12 h-12 rounded-full bg-brand-orange/20 text-brand-orange flex items-center justify-center shrink-0">
                 <Users size={22} />
               </div>
-              <h4 className="font-black text-xs sm:text-sm uppercase tracking-wider">Influencer Marketing</h4>
+              <h4 className="font-bold text-xs sm:text-sm uppercase tracking-wider">Influencer Marketing</h4>
               <p className="text-[11px] text-gray-400 leading-relaxed font-normal">
                 Helping brands connect with the right audience through creators.
               </p>
@@ -415,7 +415,7 @@ export default function AboutPage() {
               <div className="w-12 h-12 rounded-full bg-brand-orange/20 text-brand-orange flex items-center justify-center shrink-0">
                 <Trophy size={22} />
               </div>
-              <h4 className="font-black text-xs sm:text-sm uppercase tracking-wider">Social Media Growth</h4>
+              <h4 className="font-bold text-xs sm:text-sm uppercase tracking-wider">Social Media Growth</h4>
               <p className="text-[11px] text-gray-400 leading-relaxed font-normal">
                 Building and scaling platforms with organic strategies.
               </p>
@@ -426,7 +426,7 @@ export default function AboutPage() {
               <div className="w-12 h-12 rounded-full bg-brand-orange/20 text-brand-orange flex items-center justify-center shrink-0">
                 <Award size={22} />
               </div>
-              <h4 className="font-black text-xs sm:text-sm uppercase tracking-wider">Brand Collaborations</h4>
+              <h4 className="font-bold text-xs sm:text-sm uppercase tracking-wider">Brand Collaborations</h4>
               <p className="text-[11px] text-gray-400 leading-relaxed font-normal">
                 Partnering with brands to create impactful campaigns.
               </p>
@@ -437,7 +437,7 @@ export default function AboutPage() {
               <div className="w-12 h-12 rounded-full bg-brand-orange/20 text-brand-orange flex items-center justify-center shrink-0">
                 <BookOpen size={22} />
               </div>
-              <h4 className="font-black text-xs sm:text-sm uppercase tracking-wider">Digital Storytelling</h4>
+              <h4 className="font-bold text-xs sm:text-sm uppercase tracking-wider">Digital Storytelling</h4>
               <p className="text-[11px] text-gray-400 leading-relaxed font-normal">
                 Turning ideas into stories that leave a lasting impression.
               </p>
@@ -526,7 +526,7 @@ export default function AboutPage() {
           <div className="space-y-6 pt-8 border-t border-gray-100 dark:border-white/5">
             <div className="text-center space-y-2">
               <span className="text-xs font-bold uppercase tracking-widest text-brand-orange font-bold">Curriculum Modules</span>
-              <h2 className="text-xl sm:text-2xl font-black text-brand-blue dark:text-white tracking-tight">
+              <h2 className="text-xl sm:text-2xl font-bold text-brand-blue dark:text-white tracking-tight">
                 What We Teach
               </h2>
             </div>
@@ -550,7 +550,7 @@ export default function AboutPage() {
           </div>
 
           <div className="text-center pt-8 border-t border-gray-100 dark:border-white/5 space-y-4">
-            <h3 className="text-lg sm:text-xl md:text-2xl font-black text-brand-blue dark:text-white">Learn Today. Lead Tomorrow.</h3>
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-brand-blue dark:text-white">Learn Today. Lead Tomorrow.</h3>
             <div>
               <Link
                 href="/courses"

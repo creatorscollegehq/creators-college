@@ -8,7 +8,6 @@ import WhatsAppGateModal from "./WhatsAppGateModal";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [theme, setTheme] = useState<"light" | "dark">("light");
   const [isWhatsAppGateOpen, setIsWhatsAppGateOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const pathname = usePathname();
@@ -41,7 +40,6 @@ export default function Header() {
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
     const preferredTheme = savedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-    setTheme(preferredTheme);
     if (preferredTheme === "dark") {
       document.documentElement.classList.add("dark");
     } else {
@@ -50,14 +48,8 @@ export default function Header() {
   }, []);
 
   const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    if (newTheme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+    const isDark = document.documentElement.classList.toggle("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
   };
 
   const isLandingPage = pathname?.startsWith("/lp/");
@@ -81,7 +73,7 @@ export default function Header() {
       <span className="sm:hidden">
         🔥 Launch Offer: ₹30,000 Course for Just ₹5,000! &rarr;
       </span>
-      <Link href="/checkout" className="underline hover:text-brand-charcoal transition inline-flex items-center gap-0.5 font-black uppercase whitespace-nowrap">
+      <Link href="/checkout" className="underline hover:text-brand-charcoal transition inline-flex items-center gap-0.5 font-bold uppercase whitespace-nowrap">
         Enroll
       </Link>
     </div>
@@ -106,7 +98,8 @@ export default function Header() {
                 className="text-white hover:text-brand-orange transition p-2 rounded-full hover:bg-white/5"
                 aria-label="Toggle theme"
               >
-                {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
+                <Moon size={20} className="dark:hidden" />
+                <Sun size={20} className="hidden dark:block" />
               </button>
               <button
                 onClick={() => setIsWhatsAppGateOpen(true)}
@@ -125,6 +118,11 @@ export default function Header() {
             style={{ width: `${scrollProgress}%` }}
           />
         </div>
+        <WhatsAppGateModal
+          isOpen={isWhatsAppGateOpen}
+          onClose={() => setIsWhatsAppGateOpen(false)}
+          whatsappUrl="https://wa.me/918143937367?text=Hi%20Creators%20College,%20I'd%20like%20to%20enquire%20about%20your%20courses."
+        />
       </div>
     );
   }
@@ -175,7 +173,8 @@ export default function Header() {
                 className="text-brand-charcoal dark:text-white hover:text-brand-orange transition p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/5 cursor-pointer"
                 aria-label="Toggle theme"
               >
-                {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
+                <Moon size={20} className="dark:hidden" />
+                <Sun size={20} className="hidden dark:block" />
               </button>
               <Link
                 href="/checkout"
@@ -185,19 +184,19 @@ export default function Header() {
               </Link>
             </div>
 
-            {/* Mobile menu button & Theme toggle */}
-            <div className="flex lg:hidden items-center gap-3">
-              <button
-                onClick={toggleTheme}
-                className="text-brand-charcoal dark:text-white hover:text-brand-orange transition p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/5"
-                aria-label="Toggle theme"
+            {/* Mobile Buy Now + menu button */}
+            <div className="flex lg:hidden items-center gap-2">
+              <Link
+                href="/checkout"
+                className="inline-flex items-center gap-1 rounded-full bg-brand-orange px-3.5 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-brand-orange-dark active:scale-[0.97]"
               >
-                {theme === "light" ? <Moon size={20} /> : <Sun size={20} />}
-              </button>
+                Buy Now
+                <ArrowRight size={13} />
+              </Link>
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 type="button"
-                className="inline-flex items-center justify-center p-2 rounded-md text-brand-charcoal dark:text-white hover:text-brand-orange focus:outline-none transition duration-200"
+                className="inline-flex items-center justify-center rounded-md p-2 text-brand-charcoal transition duration-200 hover:text-brand-orange focus:outline-none dark:text-white"
                 aria-controls="mobile-menu"
                 aria-expanded={isOpen}
               >
@@ -229,7 +228,7 @@ export default function Header() {
                   </Link>
                 );
               })}
-              <div className="pt-4 px-3">
+              <div className="space-y-3 px-3 pt-4">
                 <Link
                   href="/checkout"
                   onClick={() => setIsOpen(false)}
@@ -237,6 +236,15 @@ export default function Header() {
                 >
                   Enroll Now
                 </Link>
+                <button
+                  onClick={toggleTheme}
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-gray-200 py-3 text-sm font-semibold text-brand-charcoal transition hover:border-brand-orange hover:text-brand-orange dark:border-white/10 dark:text-white"
+                >
+                  <Moon size={18} className="dark:hidden" />
+                  <Sun size={18} className="hidden dark:block" />
+                  <span className="dark:hidden">Switch to Dark Mode</span>
+                  <span className="hidden dark:inline">Switch to Light Mode</span>
+                </button>
               </div>
             </div>
           </div>

@@ -38,7 +38,7 @@ export default function CapCutLandingPage() {
               <Sparkles size={12} className="stroke-[2.5]" />
               Video Editors Bootcamp
             </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-brand-blue tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-blue tracking-tight leading-tight">
               Master CapCut Mobile Video Editing. <br />
               <span className="text-brand-orange">Create Premium Reels & Shorts.</span>
             </h1>

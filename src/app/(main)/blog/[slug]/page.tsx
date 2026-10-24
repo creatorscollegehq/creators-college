@@ -86,17 +86,17 @@ const portableTextComponents = {
   },
   block: {
     h1: ({ children }: any) => (
-      <h1 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white pt-8 pb-3 text-left tracking-tight border-b border-gray-100 dark:border-white/5 mb-4">
+      <h1 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white pt-8 pb-3 text-left tracking-tight border-b border-gray-100 dark:border-white/5 mb-4">
         {children}
       </h1>
     ),
     h2: ({ children }: any) => (
-      <h2 className="text-xl sm:text-2xl font-black text-brand-blue dark:text-white pt-7 pb-2.5 text-left tracking-tight">
+      <h2 className="text-xl sm:text-2xl font-bold text-brand-blue dark:text-white pt-7 pb-2.5 text-left tracking-tight">
         {children}
       </h2>
     ),
     h3: ({ children }: any) => (
-      <h3 className="text-lg sm:text-xl font-extrabold text-brand-blue dark:text-white pt-6 pb-2 text-left tracking-tight">
+      <h3 className="text-lg sm:text-xl font-semibold text-brand-blue dark:text-white pt-6 pb-2 text-left tracking-tight">
         {children}
       </h3>
     ),
@@ -238,10 +238,10 @@ export default async function BlogPostDetail({ params }: PageProps) {
             Back to Blog Hub
           </Link>
 
-          <span className="block text-sm sm:text-base uppercase tracking-widest text-brand-orange font-extrabold">
+          <span className="block text-sm sm:text-base uppercase tracking-widest text-brand-orange font-semibold">
             {post.category}
           </span>
-          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.1] max-w-5xl">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] max-w-5xl">
             {post.title}
           </h1>
 
@@ -321,7 +321,7 @@ export default async function BlogPostDetail({ params }: PageProps) {
                   </Link>
                 ) : null}
                 <div className="space-y-1">
-                  <div className="text-[10px] font-extrabold uppercase tracking-wider text-brand-orange">
+                  <div className="text-[10px] font-semibold uppercase tracking-wider text-brand-orange">
                     Written By
                   </div>
                   {isCecilAuthor ? (
@@ -361,10 +361,10 @@ export default async function BlogPostDetail({ params }: PageProps) {
               
               <div className="bg-gradient-to-br from-[#0c152b] to-[#12234f] text-white p-6 rounded-2xl border border-brand-orange/30 space-y-4 text-left shadow-lg relative overflow-hidden">
                 {/* Decorative badge */}
-                <span className="absolute top-0 right-0 bg-brand-orange text-white text-[9px] uppercase font-extrabold tracking-widest px-2.5 py-1 rounded-bl-lg shadow">
+                <span className="absolute top-0 right-0 bg-brand-orange text-white text-[9px] uppercase font-semibold tracking-widest px-2.5 py-1 rounded-bl-lg shadow">
                   Limited Slots
                 </span>
-                <h4 className="font-extrabold text-xs uppercase tracking-wider text-brand-orange">
+                <h4 className="font-semibold text-xs uppercase tracking-wider text-brand-orange">
                   ⚡ Early-Bird Offer
                 </h4>
                 <div className="space-y-2">
@@ -377,7 +377,7 @@ export default async function BlogPostDetail({ params }: PageProps) {
                 </div>
                 <Link
                   href="/checkout"
-                  className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-brand-orange to-brand-orange/90 hover:from-brand-orange-dark hover:to-brand-orange text-white font-extrabold py-3 rounded-xl text-xs tracking-wider transition-all duration-300 hover:scale-[1.03] shadow-md shadow-brand-orange/20 uppercase"
+                  className="w-full inline-flex items-center justify-center gap-2 bg-gradient-to-r from-brand-orange to-brand-orange/90 hover:from-brand-orange-dark hover:to-brand-orange text-white font-semibold py-3 rounded-xl text-xs tracking-wider transition-all duration-300 hover:scale-[1.03] shadow-md shadow-brand-orange/20 uppercase"
                 >
                   Enroll Now &amp; Save 50%
                   <ArrowRight size={14} />

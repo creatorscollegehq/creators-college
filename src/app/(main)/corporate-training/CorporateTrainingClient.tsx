@@ -62,14 +62,14 @@ export default function CorporateTrainingPage() {
             
             {/* Left text column */}
             <div className="lg:col-span-7 space-y-6">
-              <span className="inline-block bg-brand-orange/20 border border-brand-orange/40 text-brand-orange text-xs font-black tracking-widest uppercase px-4 py-1.5 rounded-full">
+              <span className="inline-block bg-brand-orange/20 border border-brand-orange/40 text-brand-orange text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full">
                 B2B &amp; INSTITUTIONAL TRAINING
               </span>
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-xl bg-brand-orange/15 text-brand-orange flex items-center justify-center shrink-0">
                   <Building size={28} />
                 </div>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-tight">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white leading-tight">
                   Corporate <span className="text-brand-orange">Training</span>
                 </h1>
               </div>
@@ -78,7 +78,7 @@ export default function CorporateTrainingPage() {
               </p>
               
               {/* Bottom stats boxes */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 text-xs font-black text-white/95">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4 text-xs font-bold text-white/95">
                 <div className="flex items-center gap-2.5 bg-white/5 border border-white/10 p-3.5 rounded-xl shadow-sm">
                   <span className="text-xl">👥</span>
                   <div>
@@ -118,8 +118,8 @@ export default function CorporateTrainingPage() {
                 className="w-full h-full object-cover opacity-90"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#061129] via-transparent to-transparent flex flex-col justify-end p-6 space-y-2">
-                <span className="inline-block self-start text-[9px] font-black bg-brand-orange text-white px-2 py-0.5 rounded-md tracking-widest">LIVE SESSION</span>
-                <h4 className="font-extrabold text-sm sm:text-base text-white">Content Creation: From Script to Publishing</h4>
+                <span className="inline-block self-start text-[9px] font-bold bg-brand-orange text-white px-2 py-0.5 rounded-md tracking-widest">LIVE SESSION</span>
+                <h4 className="font-semibold text-sm sm:text-base text-white">Content Creation: From Script to Publishing</h4>
                 <p className="text-[10px] text-gray-400">Customized workshop format tailored for colleges and corporations.</p>
               </div>
             </div>
@@ -135,10 +135,10 @@ export default function CorporateTrainingPage() {
             
             {/* Left Content column */}
             <div className="lg:col-span-7 space-y-6">
-              <span className="text-xs sm:text-sm font-black uppercase text-brand-orange tracking-widest block">
+              <span className="text-xs sm:text-sm font-bold uppercase text-brand-orange tracking-widest block">
                 EMPOWER YOUR TEAM
               </span>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-brand-blue dark:text-white leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-brand-blue dark:text-white leading-tight">
                 Corporate Content Creation Training &amp; Digital Skills Programs in Telugu
               </h2>
               <div className="space-y-4 text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
@@ -152,11 +152,11 @@ export default function CorporateTrainingPage() {
 
               {/* Core Expertise Checklist Grid */}
               <div className="space-y-4 pt-4 border-t border-gray-100 dark:border-white/5">
-                <span className="text-[10px] sm:text-xs font-black uppercase text-brand-orange tracking-widest block">
+                <span className="text-[10px] sm:text-xs font-bold uppercase text-brand-orange tracking-widest block">
                   OUR CORE EXPERTISE: CONTENT CREATION
                 </span>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm font-extrabold text-brand-charcoal dark:text-white">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm font-semibold text-brand-charcoal dark:text-white">
                   <div className="flex items-center gap-2">
                     <span className="text-brand-orange text-sm shrink-0">✓</span> Content Strategy &amp; Idea Generation
                   </div>
@@ -200,7 +200,7 @@ export default function CorporateTrainingPage() {
             {/* Right Callout Box column */}
             <div className="lg:col-span-5 w-full bg-[#0a1931] text-white p-6 sm:p-8 rounded-3xl border border-white/5 shadow-xl space-y-6 flex flex-col justify-between">
               <div className="space-y-2">
-                <h3 className="text-xl sm:text-2xl font-black tracking-tight">Request Training</h3>
+                <h3 className="text-xl sm:text-2xl font-bold tracking-tight">Request Training</h3>
                 <p className="text-xs text-gray-300 font-medium leading-relaxed">
                   Need a custom training proposal or discovery syllabus? Select an action below:
                 </p>
@@ -209,7 +209,7 @@ export default function CorporateTrainingPage() {
               <div className="space-y-3">
                 <button 
                   onClick={handleScrollToForm}
-                  className="w-full inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white font-black py-4 px-6 rounded-xl text-xs tracking-wider uppercase shadow-lg transition duration-200"
+                  className="w-full inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-4 px-6 rounded-xl text-xs tracking-wider uppercase shadow-lg transition duration-200"
                 >
                   <FileText size={16} /> REQUEST A CORPORATE TRAINING PROPOSAL
                 </button>
@@ -217,14 +217,14 @@ export default function CorporateTrainingPage() {
                   href="https://wa.me/918143937367" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2 bg-[#132c52] hover:bg-[#1b3d71] border border-white/10 text-white font-black py-4 px-6 rounded-xl text-xs tracking-wider uppercase shadow transition duration-200"
+                  className="w-full inline-flex items-center justify-center gap-2 bg-[#132c52] hover:bg-[#1b3d71] border border-white/10 text-white font-bold py-4 px-6 rounded-xl text-xs tracking-wider uppercase shadow transition duration-200"
                 >
                   <Calendar size={16} /> SCHEDULE A DISCOVERY CALL
                 </a>
               </div>
 
               {/* Box Footer Stats icons */}
-              <div className="grid grid-cols-4 gap-2 pt-6 border-t border-white/10 text-center text-[9px] text-gray-300 font-black">
+              <div className="grid grid-cols-4 gap-2 pt-6 border-t border-white/10 text-center text-[9px] text-gray-300 font-bold">
                 <div className="space-y-1">
                   <div className="w-8 h-8 rounded-full bg-white/5 mx-auto flex items-center justify-center text-brand-orange">⚙️</div>
                   <p>Custom Programs</p>
@@ -253,10 +253,10 @@ export default function CorporateTrainingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           
           <div className="text-center space-y-2">
-            <span className="inline-block bg-brand-orange/10 border border-brand-orange/20 text-brand-orange text-xs font-black tracking-widest uppercase px-4 py-1.5 rounded-full">
+            <span className="inline-block bg-brand-orange/10 border border-brand-orange/20 text-brand-orange text-xs font-bold tracking-widest uppercase px-4 py-1.5 rounded-full">
               B2B PROGRAM CATEGORIES
             </span>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-brand-blue dark:text-white tracking-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-brand-blue dark:text-white tracking-tight">
               Customized Training Solutions
             </h2>
           </div>
@@ -275,7 +275,7 @@ export default function CorporateTrainingPage() {
               </div>
               <div className="p-4 space-y-3 flex flex-col flex-grow justify-between">
                 <div className="space-y-2">
-                  <h4 className="font-black text-sm text-brand-blue dark:text-white leading-tight">College Workshops</h4>
+                  <h4 className="font-bold text-sm text-brand-blue dark:text-white leading-tight">College Workshops</h4>
                   <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Same curriculum, examples tailored for students.</p>
                   <div className="text-[11px] text-gray-500 dark:text-gray-400 space-y-1 font-bold pt-1 border-t border-gray-50 dark:border-white/5">
                     <div>✓ Engaging &amp; practical sessions</div>
@@ -285,7 +285,7 @@ export default function CorporateTrainingPage() {
                 </div>
                 <button 
                   onClick={handleScrollToForm}
-                  className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white text-[10px] font-black py-2 rounded-lg shadow-sm uppercase tracking-wider text-center mt-3"
+                  className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white text-[10px] font-bold py-2 rounded-lg shadow-sm uppercase tracking-wider text-center mt-3"
                 >
                   Book a College Workshop &rarr;
                 </button>
@@ -304,7 +304,7 @@ export default function CorporateTrainingPage() {
               </div>
               <div className="p-4 space-y-3 flex flex-col flex-grow justify-between">
                 <div className="space-y-2">
-                  <h4 className="font-black text-sm text-brand-blue dark:text-white leading-tight">School Programs</h4>
+                  <h4 className="font-bold text-sm text-brand-blue dark:text-white leading-tight">School Programs</h4>
                   <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Same curriculum, simplified for younger learners.</p>
                   <div className="text-[11px] text-gray-500 dark:text-gray-400 space-y-1 font-bold pt-1 border-t border-gray-50 dark:border-white/5">
                     <div>✓ Creative &amp; interactive learning</div>
@@ -314,7 +314,7 @@ export default function CorporateTrainingPage() {
                 </div>
                 <button 
                   onClick={handleScrollToForm}
-                  className="w-full bg-[#0a1931] hover:bg-[#132c52] text-white text-[10px] font-black py-2 rounded-lg shadow-sm uppercase tracking-wider text-center mt-3"
+                  className="w-full bg-[#0a1931] hover:bg-[#132c52] text-white text-[10px] font-bold py-2 rounded-lg shadow-sm uppercase tracking-wider text-center mt-3"
                 >
                   Book a School Program &rarr;
                 </button>
@@ -333,7 +333,7 @@ export default function CorporateTrainingPage() {
               </div>
               <div className="p-4 space-y-3 flex flex-col flex-grow justify-between">
                 <div className="space-y-2">
-                  <h4 className="font-black text-sm text-brand-blue dark:text-white leading-tight">Business Training</h4>
+                  <h4 className="font-bold text-sm text-brand-blue dark:text-white leading-tight">Business Training</h4>
                   <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Same curriculum, focused on product marketing &amp; growth.</p>
                   <div className="text-[11px] text-gray-500 dark:text-gray-400 space-y-1 font-bold pt-1 border-t border-gray-50 dark:border-white/5">
                     <div>✓ Create your own content</div>
@@ -343,7 +343,7 @@ export default function CorporateTrainingPage() {
                 </div>
                 <button 
                   onClick={handleScrollToForm}
-                  className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white text-[10px] font-black py-2 rounded-lg shadow-sm uppercase tracking-wider text-center mt-3"
+                  className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white text-[10px] font-bold py-2 rounded-lg shadow-sm uppercase tracking-wider text-center mt-3"
                 >
                   Book Business Training &rarr;
                 </button>
@@ -362,7 +362,7 @@ export default function CorporateTrainingPage() {
               </div>
               <div className="p-4 space-y-3 flex flex-col flex-grow justify-between">
                 <div className="space-y-2">
-                  <h4 className="font-black text-sm text-brand-blue dark:text-white leading-tight">Corporate Content Training</h4>
+                  <h4 className="font-bold text-sm text-brand-blue dark:text-white leading-tight">Corporate Content Training</h4>
                   <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Same curriculum, focused on internal branding, HR &amp; PR.</p>
                   <div className="text-[11px] text-gray-500 dark:text-gray-400 space-y-1 font-bold pt-1 border-t border-gray-50 dark:border-white/5">
                     <div>✓ Build in-house content team</div>
@@ -372,7 +372,7 @@ export default function CorporateTrainingPage() {
                 </div>
                 <button 
                   onClick={handleScrollToForm}
-                  className="w-full bg-[#0a1931] hover:bg-[#132c52] text-white text-[10px] font-black py-2 rounded-lg shadow-sm uppercase tracking-wider text-center mt-3"
+                  className="w-full bg-[#0a1931] hover:bg-[#132c52] text-white text-[10px] font-bold py-2 rounded-lg shadow-sm uppercase tracking-wider text-center mt-3"
                 >
                   Talk to Our Corporate Team &rarr;
                 </button>
@@ -391,7 +391,7 @@ export default function CorporateTrainingPage() {
               </div>
               <div className="p-4 space-y-3 flex flex-col flex-grow justify-between">
                 <div className="space-y-2">
-                  <h4 className="font-black text-sm text-brand-blue dark:text-white leading-tight">Customized Programs</h4>
+                  <h4 className="font-bold text-sm text-brand-blue dark:text-white leading-tight">Customized Programs</h4>
                   <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">Same curriculum, tailored to goals, duration &amp; audience.</p>
                   <div className="text-[11px] text-gray-500 dark:text-gray-400 space-y-1 font-bold pt-1 border-t border-gray-50 dark:border-white/5">
                     <div>✓ As per your goals</div>
@@ -401,7 +401,7 @@ export default function CorporateTrainingPage() {
                 </div>
                 <button 
                   onClick={handleScrollToForm}
-                  className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white text-[10px] font-black py-2 rounded-lg shadow-sm uppercase tracking-wider text-center mt-3"
+                  className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white text-[10px] font-bold py-2 rounded-lg shadow-sm uppercase tracking-wider text-center mt-3"
                 >
                   Request Customized Proposal &rarr;
                 </button>
@@ -419,10 +419,10 @@ export default function CorporateTrainingPage() {
             
             {/* Left Column info details */}
             <div className="lg:col-span-4 space-y-4">
-              <span className="text-[10px] sm:text-xs font-black uppercase text-brand-orange tracking-widest block">
+              <span className="text-[10px] sm:text-xs font-bold uppercase text-brand-orange tracking-widest block">
                 ONE PRACTICAL CURRICULUM
               </span>
-              <h3 className="text-2xl sm:text-3xl font-black text-[#0a1931] dark:text-white uppercase leading-tight">
+              <h3 className="text-2xl sm:text-3xl font-bold text-[#0a1931] dark:text-white uppercase leading-tight">
                 Customized for Every Team
               </h3>
               <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
@@ -430,14 +430,14 @@ export default function CorporateTrainingPage() {
               </p>
               
               <div className="flex items-center gap-2 pt-2 text-[#0a1931] dark:text-white">
-                <span className="w-6 h-6 rounded bg-[#0a1931] text-white flex items-center justify-center font-black text-xs">C</span>
-                <span className="font-black text-xs uppercase tracking-wider">Creators College</span>
+                <span className="w-6 h-6 rounded bg-[#0a1931] text-white flex items-center justify-center font-bold text-xs">C</span>
+                <span className="font-bold text-xs uppercase tracking-wider">Creators College</span>
               </div>
             </div>
 
             {/* Right Column circles flowchart flow layout */}
             <div className="lg:col-span-8 space-y-4">
-              <h4 className="text-[10px] sm:text-xs font-black uppercase text-brand-orange tracking-widest block text-center lg:text-left">
+              <h4 className="text-[10px] sm:text-xs font-bold uppercase text-brand-orange tracking-widest block text-center lg:text-left">
                 WE TEACH CONTENT CREATION FROM START TO FINISH
               </h4>
               
@@ -448,7 +448,7 @@ export default function CorporateTrainingPage() {
                   <div className="w-16 h-16 rounded-full bg-brand-orange/10 border-2 border-brand-orange text-brand-orange flex items-center justify-center shadow-sm">
                     <Lightbulb size={24} />
                   </div>
-                  <h5 className="text-[10px] font-black text-brand-blue dark:text-white uppercase tracking-wider leading-tight">IDEA &amp; PLANNING</h5>
+                  <h5 className="text-[10px] font-bold text-brand-blue dark:text-white uppercase tracking-wider leading-tight">IDEA &amp; PLANNING</h5>
                 </div>
 
                 {/* Step 2 */}
@@ -456,7 +456,7 @@ export default function CorporateTrainingPage() {
                   <div className="w-16 h-16 rounded-full bg-brand-orange/10 border-2 border-brand-orange text-brand-orange flex items-center justify-center shadow-sm">
                     <Edit size={20} />
                   </div>
-                  <h5 className="text-[10px] font-black text-brand-blue dark:text-white uppercase tracking-wider leading-tight">SCRIPTING &amp; STORYTELLING</h5>
+                  <h5 className="text-[10px] font-bold text-brand-blue dark:text-white uppercase tracking-wider leading-tight">SCRIPTING &amp; STORYTELLING</h5>
                 </div>
 
                 {/* Step 3 */}
@@ -464,7 +464,7 @@ export default function CorporateTrainingPage() {
                   <div className="w-16 h-16 rounded-full bg-brand-orange/10 border-2 border-brand-orange text-brand-orange flex items-center justify-center shadow-sm">
                     <Video size={22} />
                   </div>
-                  <h5 className="text-[10px] font-black text-brand-blue dark:text-white uppercase tracking-wider leading-tight">SHOOTING (PROFESSIONAL)</h5>
+                  <h5 className="text-[10px] font-bold text-brand-blue dark:text-white uppercase tracking-wider leading-tight">SHOOTING (PROFESSIONAL)</h5>
                 </div>
 
                 {/* Step 4 */}
@@ -472,7 +472,7 @@ export default function CorporateTrainingPage() {
                   <div className="w-16 h-16 rounded-full bg-brand-orange/10 border-2 border-brand-orange text-brand-orange flex items-center justify-center shadow-sm">
                     <Smartphone size={24} />
                   </div>
-                  <h5 className="text-[10px] font-black text-brand-blue dark:text-white uppercase tracking-wider leading-tight">EDITING (MOBILE &amp; PC)</h5>
+                  <h5 className="text-[10px] font-bold text-brand-blue dark:text-white uppercase tracking-wider leading-tight">EDITING (MOBILE &amp; PC)</h5>
                 </div>
 
                 {/* Step 5 */}
@@ -480,7 +480,7 @@ export default function CorporateTrainingPage() {
                   <div className="w-16 h-16 rounded-full bg-brand-orange/10 border-2 border-brand-orange text-brand-orange flex items-center justify-center shadow-sm">
                     <Globe size={22} />
                   </div>
-                  <h5 className="text-[10px] font-black text-brand-blue dark:text-white uppercase tracking-wider leading-tight">PUBLISHING &amp; POSTING</h5>
+                  <h5 className="text-[10px] font-bold text-brand-blue dark:text-white uppercase tracking-wider leading-tight">PUBLISHING &amp; POSTING</h5>
                 </div>
 
                 {/* Step 6 */}
@@ -488,7 +488,7 @@ export default function CorporateTrainingPage() {
                   <div className="w-16 h-16 rounded-full bg-brand-orange/10 border-2 border-brand-orange text-brand-orange flex items-center justify-center shadow-sm">
                     <Share2 size={22} />
                   </div>
-                  <h5 className="text-[10px] font-black text-brand-blue dark:text-white uppercase tracking-wider leading-tight">GROWTH &amp; ENGAGEMENT</h5>
+                  <h5 className="text-[10px] font-bold text-brand-blue dark:text-white uppercase tracking-wider leading-tight">GROWTH &amp; ENGAGEMENT</h5>
                 </div>
 
               </div>
@@ -532,7 +532,7 @@ export default function CorporateTrainingPage() {
             
             {/* Left Column Stats */}
             <div className="lg:col-span-5 bg-brand-gray/30 dark:bg-white/5 border border-gray-100 dark:border-white/5 p-8 rounded-3xl space-y-6">
-              <h3 className="font-extrabold text-brand-blue dark:text-white text-lg">⭐ Why Organizations Choose Creators College</h3>
+              <h3 className="font-semibold text-brand-blue dark:text-white text-lg">⭐ Why Organizations Choose Creators College</h3>
               
               <div className="space-y-4 text-xs font-bold text-brand-charcoal dark:text-white">
                 <div>🎥 2,000+ Business Projects</div>
@@ -547,7 +547,7 @@ export default function CorporateTrainingPage() {
             {/* Right Column copy block */}
             <div className="lg:col-span-7 space-y-6">
               <span className="text-xs font-bold uppercase tracking-widest text-brand-orange">Why Choose Creators College for Corporate Training?</span>
-              <h2 className="text-3xl font-black text-brand-blue dark:text-white tracking-tight">Practical Learning That Drives Business Growth</h2>
+              <h2 className="text-3xl font-bold text-brand-blue dark:text-white tracking-tight">Practical Learning That Drives Business Growth</h2>
               <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
                 At Creators College, we bring practical experience from working on 2,000+ business projects, collaborating with 100+ brands, and generating 500M+ content views across digital platforms. Unlike traditional classroom training, our sessions are completely practical, interactive, and focused on real-world implementation.
               </p>
@@ -569,7 +569,7 @@ export default function CorporateTrainingPage() {
         <div className="max-w-3xl mx-auto px-4 text-left">
           <div className="text-center mb-12 space-y-3">
             <span className="text-xs font-bold uppercase tracking-widest text-brand-orange">FAQ</span>
-            <h2 className="text-3xl font-black text-brand-blue dark:text-white">Frequently Asked Questions</h2>
+            <h2 className="text-3xl font-bold text-brand-blue dark:text-white">Frequently Asked Questions</h2>
           </div>
 
           <div className="space-y-4">
@@ -600,8 +600,8 @@ export default function CorporateTrainingPage() {
             
             {/* Left column info */}
             <div className="md:col-span-5 space-y-6">
-              <span className="text-xs font-black bg-brand-orange text-white py-1 px-3 rounded-full">🚀 Ready to Upskill Your Team?</span>
-              <h3 className="text-2xl font-black text-brand-blue dark:text-white">Let's build your customized training program.</h3>
+              <span className="text-xs font-bold bg-brand-orange text-white py-1 px-3 rounded-full">🚀 Ready to Upskill Your Team?</span>
+              <h3 className="text-2xl font-bold text-brand-blue dark:text-white">Let's build your customized training program.</h3>
               <p className="text-xs text-gray-500 leading-relaxed font-normal">
                 Help your students, employees, or business teams master Content Creation, Video Editing, Social Media Management, and Digital Communication through practical, industry-focused training from Creators College.
               </p>
@@ -633,7 +633,7 @@ export default function CorporateTrainingPage() {
                 🤝
               </div>
               <div className="space-y-1">
-                <h4 className="font-black text-base sm:text-lg">Let's Build a Content-Driven Future Together</h4>
+                <h4 className="font-bold text-base sm:text-lg">Let's Build a Content-Driven Future Together</h4>
                 <p className="text-xs text-gray-300">Upskill your team with practical Content Creation training that creates real impact.</p>
               </div>
             </div>
@@ -642,11 +642,11 @@ export default function CorporateTrainingPage() {
             <div className="flex flex-wrap items-center gap-4">
               <button 
                 onClick={handleScrollToForm}
-                className="bg-brand-orange hover:bg-brand-orange-dark text-white font-black py-3 px-6 rounded-full text-xs tracking-wider uppercase shadow-lg transition duration-200"
+                className="bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3 px-6 rounded-full text-xs tracking-wider uppercase shadow-lg transition duration-200"
               >
                 CONNECT WITH OUR TRAINING TEAM &rarr;
               </button>
-              <div className="text-xs font-black space-y-0.5">
+              <div className="text-xs font-bold space-y-0.5">
                 <a href="tel:+918143937367" className="block text-brand-orange hover:underline">📞 81439 37367</a>
                 <a href="https://www.creatorscollege.in" className="block text-white/80 hover:underline">🌐 www.creatorscollege.in</a>
               </div>

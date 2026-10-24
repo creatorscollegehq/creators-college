@@ -65,7 +65,7 @@ export default function VideoGallery() {
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto space-y-3">
           <span className="text-xs font-bold uppercase tracking-widest text-brand-orange">Creative Showcase</span>
-          <h2 className="text-3xl font-extrabold text-brand-blue dark:text-white tracking-tight">
+          <h2 className="text-3xl font-semibold text-brand-blue dark:text-white tracking-tight">
             This is Our Work We Have Done
           </h2>
           <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -147,14 +147,14 @@ export default function VideoGallery() {
                     </div>
 
                     {/* Duration / Source badge */}
-                    <span className="absolute bottom-2 left-2 text-[8px] sm:text-[9px] font-extrabold uppercase tracking-wide bg-brand-blue text-white px-2 py-0.5 rounded shadow">
+                    <span className="absolute bottom-2 left-2 text-[8px] sm:text-[9px] font-semibold uppercase tracking-wide bg-brand-blue text-white px-2 py-0.5 rounded shadow">
                       {video.type}
                     </span>
                   </div>
 
                   {/* Info block */}
                   <div className="p-3 sm:p-5 flex-grow flex flex-col justify-between space-y-3 sm:space-y-4">
-                    <h4 className="font-extrabold text-[11px] sm:text-base text-brand-blue dark:text-white line-clamp-2 leading-tight">
+                    <h4 className="font-semibold text-[11px] sm:text-base text-brand-blue dark:text-white line-clamp-2 leading-tight">
                       {video.title}
                     </h4>
                     <div className="flex justify-between items-center text-[10px] sm:text-xs pt-1.5 sm:pt-2 border-t border-gray-100 dark:border-white/5">

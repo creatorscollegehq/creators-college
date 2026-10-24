@@ -62,7 +62,7 @@ export default function BrandsMarquee() {
         <h3 className="text-xs font-bold uppercase tracking-widest text-brand-orange">
           Proven Industry Trust
         </h3>
-        <h2 className="text-2xl md:text-3xl font-extrabold text-brand-blue dark:text-white mt-2">
+        <h2 className="text-2xl md:text-3xl font-semibold text-brand-blue dark:text-white mt-2">
           Empowering Creators &amp; Local Businesses
         </h2>
         <p className="text-sm text-gray-500 dark:text-gray-400 max-w-xl mx-auto mt-2">
@@ -79,13 +79,13 @@ export default function BrandsMarquee() {
         <div className="relative w-full flex items-center">
           <div className="animate-marquee-row1 whitespace-nowrap flex gap-6 tracking-wider items-center">
             {row1Brands.map((brand, i) => (
-              <div key={`r1-1-${i}`} className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full border ${brand.border} ${brand.bg} ${brand.color} shadow-sm font-extrabold text-xs sm:text-sm tracking-wide`}>
+              <div key={`r1-1-${i}`} className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full border ${brand.border} ${brand.bg} ${brand.color} shadow-sm font-semibold text-xs sm:text-sm tracking-wide`}>
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-orange shrink-0 animate-pulse" />
                 {brand.name}
               </div>
             ))}
             {row1Brands.map((brand, i) => (
-              <div key={`r1-2-${i}`} className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full border ${brand.border} ${brand.bg} ${brand.color} shadow-sm font-extrabold text-xs sm:text-sm tracking-wide`}>
+              <div key={`r1-2-${i}`} className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full border ${brand.border} ${brand.bg} ${brand.color} shadow-sm font-semibold text-xs sm:text-sm tracking-wide`}>
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-orange shrink-0 animate-pulse" />
                 {brand.name}
               </div>
@@ -97,13 +97,13 @@ export default function BrandsMarquee() {
         <div className="relative w-full flex items-center">
           <div className="animate-marquee-row2 whitespace-nowrap flex gap-6 tracking-wider items-center">
             {row2Brands.map((brand, i) => (
-              <div key={`r2-1-${i}`} className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full border ${brand.border} ${brand.bg} ${brand.color} shadow-sm font-extrabold text-xs sm:text-sm tracking-wide`}>
+              <div key={`r2-1-${i}`} className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full border ${brand.border} ${brand.bg} ${brand.color} shadow-sm font-semibold text-xs sm:text-sm tracking-wide`}>
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-orange shrink-0 animate-pulse" />
                 {brand.name}
               </div>
             ))}
             {row2Brands.map((brand, i) => (
-              <div key={`r2-2-${i}`} className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full border ${brand.border} ${brand.bg} ${brand.color} shadow-sm font-extrabold text-xs sm:text-sm tracking-wide`}>
+              <div key={`r2-2-${i}`} className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full border ${brand.border} ${brand.bg} ${brand.color} shadow-sm font-semibold text-xs sm:text-sm tracking-wide`}>
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-orange shrink-0 animate-pulse" />
                 {brand.name}
               </div>
@@ -115,13 +115,13 @@ export default function BrandsMarquee() {
         <div className="relative w-full flex items-center">
           <div className="animate-marquee-row3 whitespace-nowrap flex gap-6 tracking-wider items-center">
             {row3Brands.map((brand, i) => (
-              <div key={`r3-1-${i}`} className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full border ${brand.border} ${brand.bg} ${brand.color} shadow-sm font-extrabold text-xs sm:text-sm tracking-wide`}>
+              <div key={`r3-1-${i}`} className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full border ${brand.border} ${brand.bg} ${brand.color} shadow-sm font-semibold text-xs sm:text-sm tracking-wide`}>
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-orange shrink-0 animate-pulse" />
                 {brand.name}
               </div>
             ))}
             {row3Brands.map((brand, i) => (
-              <div key={`r3-2-${i}`} className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full border ${brand.border} ${brand.bg} ${brand.color} shadow-sm font-extrabold text-xs sm:text-sm tracking-wide`}>
+              <div key={`r3-2-${i}`} className={`flex items-center gap-1.5 px-5 py-2.5 rounded-full border ${brand.border} ${brand.bg} ${brand.color} shadow-sm font-semibold text-xs sm:text-sm tracking-wide`}>
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-orange shrink-0 animate-pulse" />
                 {brand.name}
               </div>
@@ -208,7 +208,7 @@ export default function BrandsMarquee() {
                         <div className="text-xs font-bold text-gray-400 dark:text-gray-500 font-mono">#{brand.rank}</div>
                         <div className="text-sm font-semibold text-brand-charcoal dark:text-white line-clamp-1">{brand.name}</div>
                       </div>
-                      <span className="text-[10px] uppercase tracking-wider font-extrabold text-brand-orange bg-brand-orange/10 px-2.5 py-1 rounded-full whitespace-nowrap">
+                      <span className="text-[10px] uppercase tracking-wider font-semibold text-brand-orange bg-brand-orange/10 px-2.5 py-1 rounded-full whitespace-nowrap">
                         {brand.category || "General"}
                       </span>
                     </div>

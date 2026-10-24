@@ -131,7 +131,7 @@ export default function InstantFormModal({ isOpen, onClose, source }: InstantFor
                 <PhoneCall size={22} className="animate-pulse" />
               </div>
               <div className="space-y-1.5 text-center">
-                <h3 className="text-xl font-black text-brand-blue dark:text-white tracking-tight">Instant Contact Form</h3>
+                <h3 className="text-xl font-bold text-brand-blue dark:text-white tracking-tight">Instant Contact Form</h3>
                 <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed max-w-xs mx-auto">
                   Fill in your details below and we will contact you instantly.
                 </p>

@@ -276,7 +276,7 @@ export default function CecilSrungarapatiPage() {
               </div>
 
               <div className="space-y-2">
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08] text-white">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.08] text-white">
                   Cecil Srungarapati
                 </h1>
                 <p className="text-xl sm:text-2xl font-bold text-brand-orange tracking-tight">
@@ -360,7 +360,7 @@ export default function CecilSrungarapatiPage() {
 
                 <div className="absolute bottom-5 left-5 right-5 z-20 space-y-1.5 bg-black/65 backdrop-blur-md border border-white/15 p-4 rounded-2xl shadow-xl select-none">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider bg-brand-orange text-white px-2 py-0.5 rounded">
+                    <span className="text-[10px] font-semibold uppercase tracking-wider bg-brand-orange text-white px-2 py-0.5 rounded">
                       Leadership
                     </span>
                     <span className="text-[11px] text-white/80 font-bold">
@@ -386,10 +386,10 @@ export default function CecilSrungarapatiPage() {
       <section className="py-12 md:py-16 bg-brand-gray/40 dark:bg-white/[0.02] border-b border-gray-100 dark:border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-            <span className="text-xs uppercase font-extrabold tracking-widest text-brand-orange">
+            <span className="text-xs uppercase font-semibold tracking-widest text-brand-orange">
               Executive Leadership
             </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white tracking-tight">
               Current Roles &amp; Ventures
             </h2>
             <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -405,7 +405,7 @@ export default function CecilSrungarapatiPage() {
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full ${role.badgeColor}`}>
+                    <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${role.badgeColor}`}>
                       {role.highlight}
                     </span>
                     <span className="text-xs font-semibold text-gray-400">
@@ -417,7 +417,7 @@ export default function CecilSrungarapatiPage() {
                     <p className="text-xs font-bold text-brand-orange uppercase tracking-wider">
                       {role.title}
                     </p>
-                    <h3 className="text-xl font-black text-brand-blue dark:text-white tracking-tight">
+                    <h3 className="text-xl font-bold text-brand-blue dark:text-white tracking-tight">
                       {role.organization}
                     </h3>
                   </div>
@@ -468,7 +468,7 @@ export default function CecilSrungarapatiPage() {
                   <Award size={16} />
                   Signature Academy
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white tracking-tight">
                   Founder &amp; CEO of Creators College
                 </h2>
                 <div className="space-y-4 text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed font-normal">
@@ -501,7 +501,7 @@ export default function CecilSrungarapatiPage() {
                   <Briefcase size={16} />
                   Career Evolution
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white tracking-tight">
                   From Engineering and IT to Entrepreneurship
                 </h2>
                 <div className="space-y-4 text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed font-normal">
@@ -536,7 +536,7 @@ export default function CecilSrungarapatiPage() {
                   <Tv size={16} />
                   Digital Media Growth
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white tracking-tight">
                   Building Telugu Tea Talks
                 </h2>
                 <div className="space-y-4 text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed font-normal">
@@ -564,7 +564,7 @@ export default function CecilSrungarapatiPage() {
                   <Radio size={16} />
                   Editorial Leadership
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white tracking-tight">
                   CEO of Perfect Prime News
                 </h2>
                 <div className="space-y-4 text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed font-normal">
@@ -583,7 +583,7 @@ export default function CecilSrungarapatiPage() {
                   <GraduationCap size={16} />
                   Practical Education
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white tracking-tight">
                   Educator and Trainer
                 </h2>
                 <div className="space-y-4 text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed font-normal">
@@ -610,10 +610,10 @@ export default function CecilSrungarapatiPage() {
               {/* Professional Focus Box */}
               <div className="bg-white dark:bg-[#131b2e] p-6 rounded-2xl border border-gray-200 dark:border-white/10 shadow-lg space-y-5">
                 <div className="space-y-1">
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-brand-orange">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-brand-orange">
                     Core Competencies
                   </span>
-                  <h3 className="text-lg font-black text-brand-blue dark:text-white tracking-tight">
+                  <h3 className="text-lg font-bold text-brand-blue dark:text-white tracking-tight">
                     Professional Focus
                   </h3>
                 </div>
@@ -639,10 +639,10 @@ export default function CecilSrungarapatiPage() {
               {/* Official Profiles Card */}
               <div className="bg-white dark:bg-[#131b2e] p-6 rounded-2xl border border-gray-200 dark:border-white/10 shadow-lg space-y-5">
                 <div className="space-y-1">
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-brand-orange">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-brand-orange">
                     Verified Channels
                   </span>
-                  <h3 className="text-lg font-black text-brand-blue dark:text-white tracking-tight">
+                  <h3 className="text-lg font-bold text-brand-blue dark:text-white tracking-tight">
                     Official Profiles
                   </h3>
                 </div>
@@ -680,10 +680,10 @@ export default function CecilSrungarapatiPage() {
 
               {/* Course CTA Card */}
               <div className="bg-gradient-to-br from-[#0c152b] to-[#12234f] text-white p-6 rounded-2xl border border-brand-orange/30 shadow-xl space-y-4">
-                <span className="bg-brand-orange text-white text-[9px] uppercase font-black tracking-widest px-2.5 py-1 rounded">
+                <span className="bg-brand-orange text-white text-[9px] uppercase font-bold tracking-widest px-2.5 py-1 rounded">
                   Learn with Cecil
                 </span>
-                <h4 className="text-base font-black text-white leading-tight">
+                <h4 className="text-base font-bold text-white leading-tight">
                   Master Content Creation in Telugu
                 </h4>
                 <p className="text-xs text-gray-300 leading-relaxed">

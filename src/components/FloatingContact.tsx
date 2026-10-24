@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Phone, ClipboardList } from "lucide-react";
 import WhatsAppGateModal from "./WhatsAppGateModal";
 import InstantFormModal from "./InstantFormModal";
@@ -12,25 +12,10 @@ export default function FloatingContact() {
   const [isInstantFormOpen, setIsInstantFormOpen] = useState(false);
   const [formSource, setFormSource] = useState("Instant Form Floating Button");
 
-  // One-time automatic popup trigger after 5 seconds of page interaction/load
-  useEffect(() => {
-    if (typeof window !== "undefined" && (window as any).scroll_popup_shown) return;
-
-    const timer = setTimeout(() => {
-      setFormSource(`Automatic Scroll Popup - ${window.location.pathname}`);
-      setIsInstantFormOpen(true);
-      if (typeof window !== "undefined") {
-        (window as any).scroll_popup_shown = true;
-      }
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <>
-      {/* Floating Action Buttons Stack (Vertical, Bottom Right) */}
-      <div className="fixed bottom-6 right-6 z-45 flex flex-col items-center gap-3">
+      {/* Floating Action Buttons Stack (Desktop only — mobile uses the sticky buy bar) */}
+      <div className="hidden lg:flex fixed bottom-6 right-6 z-40 flex-col items-center gap-3">
         {/* Call Button */}
         <div className="group relative">
           <a

@@ -141,8 +141,10 @@ export default function RootLayout({
                 "@id": "https://www.creatorscollege.in/cecil-srungarapati#person"
               },
               "sameAs": [
-                "https://www.youtube.com/@creatorscollege",
-                "https://www.instagram.com/creatorscollege"
+                "https://www.youtube.com/@creatorscollegeofficial",
+                "https://www.instagram.com/creatorscollege_/",
+                "https://www.facebook.com/profile.php?id=61591290489327",
+                "https://t.me/creatorscollege"
               ]
             }).replace(/</g, "\\u003c")
           }}

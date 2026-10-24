@@ -55,6 +55,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/lavanya-ganji" className="text-gray-400 hover:text-brand-orange text-sm transition duration-150">
+                  Lavanya Ganji (Managing Partner)
+                </Link>
+              </li>
+              <li>
                 <Link href="/courses" className="text-gray-400 hover:text-brand-orange text-sm transition duration-150">
                   Our Courses
                 </Link>

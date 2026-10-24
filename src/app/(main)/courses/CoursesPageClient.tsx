@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Check, Calendar, Laptop, Clock, Award, HelpCircle, CheckCircle } from "lucide-react";
+import { Check, Calendar, Laptop, Clock, Award, HelpCircle, CheckCircle, Lock } from "lucide-react";
 import LeadForm from "@/components/LeadForm";
 
 interface SyllabusModule {
@@ -130,7 +130,7 @@ export default function CoursesPage() {
         <div className="absolute inset-0 bg-black/45 dark:bg-black/70" />
         <div className="max-w-7xl mx-auto px-4 relative z-10 space-y-4">
           <span className="text-xs font-bold uppercase bg-brand-orange text-white px-3 py-1 rounded-full">Telugu Training Academy</span>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
             Current &amp; Upcoming Courses
           </h1>
           <p className="text-sm sm:text-base text-white/90 max-w-2xl mx-auto leading-relaxed font-medium">
@@ -144,7 +144,7 @@ export default function CoursesPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
           <div className="space-y-1">
             <h3 className="text-xs font-bold uppercase tracking-widest text-brand-orange">Academic Catalog</h3>
-            <h2 className="text-2xl font-black text-brand-blue dark:text-white">Select a Course to Explore</h2>
+            <h2 className="text-2xl font-bold text-brand-blue dark:text-white">Select a Course to Explore</h2>
           </div>
           <div className="flex flex-wrap justify-center gap-3">
             <button
@@ -211,8 +211,8 @@ export default function CoursesPage() {
               {/* Syllabus and Modules */}
               <div className="lg:col-span-7 space-y-8 text-left animate-fadeIn">
                 <div className="space-y-4">
-                  <span className="text-xs font-black uppercase bg-green-500 text-white px-2.5 py-1 rounded-full">Current Course</span>
-                  <h2 className="text-3xl font-extrabold text-brand-blue dark:text-white">Complete Telugu Content Creation Course</h2>
+                  <span className="text-xs font-bold uppercase bg-green-500 text-white px-2.5 py-1 rounded-full">Current Course</span>
+                  <h2 className="text-3xl font-semibold text-brand-blue dark:text-white">Complete Telugu Content Creation Course</h2>
                   <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
                     Learn Content Creation in Telugu – From Beginner to Professional. Build a successful career in Content Creation. Learn how to research content, write scripts, record voice-overs, shoot professional videos, edit content, publish on social media, manage pages, grow your audience, and build your personal brand through practical, step-by-step Telugu training.
                   </p>
@@ -253,7 +253,7 @@ export default function CoursesPage() {
                   </div>
 
                   <div className="bg-brand-gray/30 dark:bg-white/5 p-6 rounded-2xl border border-gray-100 dark:border-white/5">
-                    <h4 className="font-extrabold text-brand-blue dark:text-white border-b border-gray-200/50 dark:border-white/5 pb-2 mb-3">
+                    <h4 className="font-semibold text-brand-blue dark:text-white border-b border-gray-200/50 dark:border-white/5 pb-2 mb-3">
                       {contentCreationSyllabus[activeSyllabusIndex].title}
                     </h4>
                     <ul className="space-y-2 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
@@ -264,6 +264,13 @@ export default function CoursesPage() {
                         </li>
                       ))}
                     </ul>
+                    <div className="mt-4 flex items-start gap-2 rounded-xl bg-brand-orange/5 border border-brand-orange/15 px-3 py-2.5">
+                      <Lock size={13} className="mt-0.5 shrink-0 text-brand-orange" />
+                      <p className="text-[11px] leading-relaxed text-gray-500 dark:text-gray-400">
+                        Full module videos and resources are locked. After enrollment, our team shares your course
+                        access on WhatsApp.
+                      </p>
+                    </div>
                   </div>
                 </div>
 
@@ -339,10 +346,10 @@ export default function CoursesPage() {
               {/* Sidebar Signup & Payments */}
               <div className="lg:col-span-5 space-y-6 text-left">
                 <div className="bg-brand-blue p-8 rounded-3xl text-white space-y-6 shadow-xl border border-brand-blue-dark relative overflow-hidden">
-                  <span className="text-[10px] font-extrabold bg-brand-orange text-white py-1 px-3 rounded-full">Limited Launch Offer</span>
+                  <span className="text-[10px] font-semibold bg-brand-orange text-white py-1 px-3 rounded-full">Limited Launch Offer</span>
                   <div className="space-y-1 pt-2">
                     <div className="text-xs text-white/70 line-through">Original Value: ₹30,000</div>
-                    <div className="text-3xl font-black text-brand-orange">₹5,000 <span className="text-xs text-white font-normal">one-time fee</span></div>
+                    <div className="text-3xl font-bold text-brand-orange">₹5,000 <span className="text-xs text-white font-normal">one-time fee</span></div>
                   </div>
                   <div className="text-xs font-bold uppercase tracking-widest text-brand-orange">Course Highlights</div>
                   <ul className="text-xs space-y-2 text-white/80 border-t border-white/10 pt-4">
@@ -354,7 +361,7 @@ export default function CoursesPage() {
                   </ul>
                   <div className="space-y-3 pt-2">
                     <Link
-                      href="/checkout"
+                      href="/checkout?course=content-creation"
                       className="w-full inline-flex items-center justify-center bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3.5 rounded-xl text-sm transition shadow-lg animate-enroll"
                     >
                       Enroll Now
@@ -380,8 +387,8 @@ export default function CoursesPage() {
               {/* Syllabus and Modules */}
               <div className="lg:col-span-7 space-y-8 text-left animate-fadeIn">
                 <div className="space-y-4">
-                  <span className="text-xs font-black uppercase bg-green-500 text-white px-2.5 py-1 rounded-full">Current Course</span>
-                  <h2 className="text-3xl font-extrabold text-brand-blue dark:text-white">Complete Telugu CapCut Video Editing Course (Mobile &amp; PC)</h2>
+                  <span className="text-xs font-bold uppercase bg-green-500 text-white px-2.5 py-1 rounded-full">Current Course</span>
+                  <h2 className="text-3xl font-semibold text-brand-blue dark:text-white">Complete Telugu CapCut Video Editing Course (Mobile &amp; PC)</h2>
                   <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
                     Learn Professional Video Editing in Telugu with CapCut – From Beginner to Advanced. Master CapCut Video Editing using both Mobile and PC with our practical, step-by-step Telugu training. Learn how to edit professional Instagram Reels, YouTube Videos, Facebook Videos, Advertisements, Business Promotional Videos, Talking Videos, Travel Videos, Product Videos, and Cinematic Content using CapCut.
                   </p>
@@ -422,7 +429,7 @@ export default function CoursesPage() {
                   </div>
 
                   <div className="bg-brand-gray/30 dark:bg-white/5 p-6 rounded-2xl border border-gray-100 dark:border-white/5">
-                    <h4 className="font-extrabold text-brand-blue dark:text-white border-b border-gray-200/50 dark:border-white/5 pb-2 mb-3">
+                    <h4 className="font-semibold text-brand-blue dark:text-white border-b border-gray-200/50 dark:border-white/5 pb-2 mb-3">
                       {capcutSyllabus[activeSyllabusIndex].title}
                     </h4>
                     <ul className="space-y-2 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
@@ -433,6 +440,13 @@ export default function CoursesPage() {
                         </li>
                       ))}
                     </ul>
+                    <div className="mt-4 flex items-start gap-2 rounded-xl bg-brand-orange/5 border border-brand-orange/15 px-3 py-2.5">
+                      <Lock size={13} className="mt-0.5 shrink-0 text-brand-orange" />
+                      <p className="text-[11px] leading-relaxed text-gray-500 dark:text-gray-400">
+                        Full module videos and resources are locked. After enrollment, our team shares your course
+                        access on WhatsApp.
+                      </p>
+                    </div>
                   </div>
                 </div>
 
@@ -521,10 +535,10 @@ export default function CoursesPage() {
               {/* Sidebar Signup & Payments */}
               <div className="lg:col-span-5 space-y-6 text-left">
                 <div className="bg-brand-blue p-8 rounded-3xl text-white space-y-6 shadow-xl border border-brand-blue-dark relative overflow-hidden">
-                  <span className="text-[10px] font-extrabold bg-brand-orange text-white py-1 px-3 rounded-full">Limited Launch Offer</span>
+                  <span className="text-[10px] font-semibold bg-brand-orange text-white py-1 px-3 rounded-full">Limited Launch Offer</span>
                   <div className="space-y-1 pt-2">
                     <div className="text-xs text-white/70 line-through">Original Value: ₹30,000</div>
-                    <div className="text-3xl font-black text-brand-orange">₹5,000 <span className="text-xs text-white font-normal">one-time fee</span></div>
+                    <div className="text-3xl font-bold text-brand-orange">₹5,000 <span className="text-xs text-white font-normal">one-time fee</span></div>
                   </div>
                   <div className="text-xs font-bold uppercase tracking-widest text-brand-orange">Course Highlights</div>
                   <ul className="text-xs space-y-2 text-white/80 border-t border-white/10 pt-4">
@@ -536,7 +550,7 @@ export default function CoursesPage() {
                   </ul>
                   <div className="space-y-3 pt-2">
                     <Link
-                      href="/checkout"
+                      href="/checkout?course=capcut-editing"
                       className="w-full inline-flex items-center justify-center bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3.5 rounded-xl text-sm transition shadow-lg animate-enroll"
                     >
                       Enroll Now
@@ -562,11 +576,11 @@ export default function CoursesPage() {
               
               {/* Left Column Information */}
               <div className="lg:col-span-7 text-left space-y-6">
-                <span className="text-xs font-black uppercase bg-brand-orange text-white px-2.5 py-1 rounded-full">Coming Soon</span>
+                <span className="text-xs font-bold uppercase bg-brand-orange text-white px-2.5 py-1 rounded-full">Coming Soon</span>
                 
                 {activeCourseId === "premiere" && (
                   <div className="space-y-4">
-                    <h2 className="text-3xl font-black text-brand-blue dark:text-white">Complete Telugu Adobe Premiere Pro Course</h2>
+                    <h2 className="text-3xl font-bold text-brand-blue dark:text-white">Complete Telugu Adobe Premiere Pro Course</h2>
                     <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
                       We're building a comprehensive Telugu Adobe Premiere Pro Course designed to help beginners and professionals master industry-standard video editing used by filmmakers, YouTubers, content creators, agencies, and production houses. Our curriculum is currently under development to ensure you receive practical, project-based training with the latest editing techniques.
                     </p>
@@ -581,7 +595,7 @@ export default function CoursesPage() {
 
                 {activeCourseId === "aftereffects" && (
                   <div className="space-y-4">
-                    <h2 className="text-3xl font-black text-brand-blue dark:text-white">Complete Telugu Adobe After Effects Course</h2>
+                    <h2 className="text-3xl font-bold text-brand-blue dark:text-white">Complete Telugu Adobe After Effects Course</h2>
                     <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
                       Learn Motion Graphics, Visual Effects &amp; Animation in Telugu. The Complete Telugu Adobe After Effects Course is coming soon at Creators College. Learn professional Motion Graphics, Visual Effects (VFX), Logo Animation, Text Animation, YouTube Intro Animation, Instagram Reels Animation, 2D Motion Design, and Cinematic Effects through practical Telugu training.
                     </p>
@@ -596,7 +610,7 @@ export default function CoursesPage() {
 
                 {activeCourseId === "davinci" && (
                   <div className="space-y-4">
-                    <h2 className="text-3xl font-black text-brand-blue dark:text-white">Complete Telugu DaVinci Resolve Course</h2>
+                    <h2 className="text-3xl font-bold text-brand-blue dark:text-white">Complete Telugu DaVinci Resolve Course</h2>
                     <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
                       Learn Professional Video Editing &amp; Color Grading in Telugu. The Complete Telugu DaVinci Resolve Course is coming soon at Creators College. Learn Professional Video Editing, Advanced Color Grading, Color Correction, Audio Editing, Motion Graphics, Fusion Visual Effects, YouTube Video Editing, Instagram Reels, Film Editing, and Cinematic Post-Production through practical Telugu training.
                     </p>
@@ -633,7 +647,7 @@ export default function CoursesPage() {
                 ) : (
                   <form onSubmit={handleWaitlistSubmit} className="space-y-4">
                     <div className="space-y-1">
-                      <h3 className="text-xl font-black text-brand-blue dark:text-white">Join the Waiting List</h3>
+                      <h3 className="text-xl font-bold text-brand-blue dark:text-white">Join the Waiting List</h3>
                       <p className="text-xs text-gray-400">Secure early discounts and exclusive launch deals.</p>
                     </div>
 
@@ -716,7 +730,7 @@ export default function CoursesPage() {
       {/* Trust factors bottom banner */}
       <section className="py-16 bg-brand-gray/30 dark:bg-white/5 border-t border-gray-100 dark:border-white/5 text-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <h3 className="text-xl font-extrabold text-brand-blue dark:text-white">Why Learn Content Creation at Creators College?</h3>
+          <h3 className="text-xl font-semibold text-brand-blue dark:text-white">Why Learn Content Creation at Creators College?</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto text-left">
             <div className="p-4 bg-white dark:bg-[#090d16] border border-gray-100 dark:border-white/5 rounded-xl space-y-1">
               <span className="text-lg">🔥</span>

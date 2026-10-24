@@ -14,13 +14,13 @@ export default function Sitemap() {
           Back to Home
         </Link>
 
-        <h1 className="text-3xl font-black text-brand-blue dark:text-white tracking-tight">Sitemap</h1>
+        <h1 className="text-3xl font-bold text-brand-blue dark:text-white tracking-tight">Sitemap</h1>
         <p className="text-xs text-gray-400">Creators College Page Directory</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm">
           {/* Main Pages */}
           <div className="space-y-3 bg-brand-gray/30 dark:bg-white/5 p-6 rounded-2xl border border-gray-100 dark:border-white/5">
-            <h3 className="font-extrabold text-base text-brand-blue dark:text-white flex items-center gap-2">
+            <h3 className="font-semibold text-base text-brand-blue dark:text-white flex items-center gap-2">
               <Compass className="text-brand-orange" size={18} />
               Main Pages
             </h3>
@@ -37,7 +37,7 @@ export default function Sitemap() {
 
           {/* Academic & B2B Programs */}
           <div className="space-y-3 bg-brand-gray/30 dark:bg-white/5 p-6 rounded-2xl border border-gray-100 dark:border-white/5">
-            <h3 className="font-extrabold text-base text-brand-blue dark:text-white flex items-center gap-2">
+            <h3 className="font-semibold text-base text-brand-blue dark:text-white flex items-center gap-2">
               <Compass className="text-brand-orange" size={18} />
               Academic &amp; Corporate
             </h3>
@@ -57,7 +57,7 @@ export default function Sitemap() {
 
           {/* Legal Links */}
           <div className="space-y-3 bg-brand-gray/30 dark:bg-white/5 p-6 rounded-2xl border border-gray-100 dark:border-white/5 md:col-span-2">
-            <h3 className="font-extrabold text-base text-brand-blue dark:text-white flex items-center gap-2">
+            <h3 className="font-semibold text-base text-brand-blue dark:text-white flex items-center gap-2">
               <ShieldCheck className="text-brand-orange" size={18} />
               Legal Policies &amp; Terms
             </h3>

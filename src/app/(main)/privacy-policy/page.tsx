@@ -14,7 +14,7 @@ export default function PrivacyPolicy() {
           Back to Home
         </Link>
 
-        <h1 className="text-3xl font-black text-brand-blue dark:text-white tracking-tight">Privacy Policy</h1>
+        <h1 className="text-3xl font-bold text-brand-blue dark:text-white tracking-tight">Privacy Policy</h1>
         <p className="text-xs text-gray-400">Effective Date: July 2, 2026</p>
 
         <div className="space-y-6 text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">

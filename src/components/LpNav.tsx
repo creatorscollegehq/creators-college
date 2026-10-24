@@ -24,7 +24,7 @@ function CountdownTimer() {
   }, []);
   const f = (n: number) => String(n).padStart(2, "0");
   return (
-    <div className="flex items-center gap-1 font-mono font-black">
+    <div className="flex items-center gap-1 font-mono font-bold">
       {[f(time.h), f(time.m), f(time.s)].map((v, i) => (
         <React.Fragment key={i}>
           <span className="bg-white/25 text-white px-2 py-0.5 rounded text-xs sm:text-sm min-w-[26px] text-center">{v}</span>
@@ -99,7 +99,7 @@ export default function LpNav({ onEnroll }: LpNavProps) {
             <button
               onClick={onEnroll}
               id="nav-cta-btn"
-              className="bg-brand-orange hover:bg-brand-orange-dark text-white font-black px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm transition flex items-center gap-1.5 shadow-md shadow-brand-orange/20 active:scale-95 whitespace-nowrap animate-enroll"
+              className="bg-brand-orange hover:bg-brand-orange-dark text-white font-bold px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm transition flex items-center gap-1.5 shadow-md shadow-brand-orange/20 active:scale-95 whitespace-nowrap animate-enroll"
             >
               Enroll Now <ChevronRight size={13} />
             </button>

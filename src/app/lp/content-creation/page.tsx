@@ -38,7 +38,7 @@ export default function ContentCreationLandingPage() {
               <Sparkles size={12} className="stroke-[2.5]" />
               Limited Seats for Next Batch
             </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-brand-blue tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-blue tracking-tight leading-tight">
               Master Content Creation in Telugu. <br />
               <span className="text-brand-orange">Build a Profitable Digital Career.</span>
             </h1>

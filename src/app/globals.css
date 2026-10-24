@@ -34,8 +34,8 @@
   --font-sans: var(--font-sans);
 
   /* Global scales for default small text classes */
-  --font-size-xs: 0.8rem;
-  --font-size-sm: 0.9rem;
+  --font-size-xs: 0.8125rem;
+  --font-size-sm: 0.9375rem;
 }
 
 body {
@@ -181,15 +181,9 @@ body {
           drop-shadow(0px -1px 0px rgba(255, 255, 255, 0.95));
 }
 
-/* Global Font Size Scale Boost (Desktop + Mobile) */
+/* Base type scale */
 html {
-  font-size: 17.5px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 18.5px;
-  }
+  font-size: 16.5px;
 }
 
 /* Dynamic Enroll Button Pulse Animation with Glow */
@@ -217,28 +211,28 @@ html {
 
 /* Global scale overrides for custom arbitrary small text classes on the whole website */
 [class*="text-[8px]"], [class*="text-\[8px\]"] {
-  font-size: 0.7rem !important;
-}
-[class*="text-[8.5px]"], [class*="text-\[8.5px\]"] {
   font-size: 0.725rem !important;
 }
-[class*="text-[9px]"], [class*="text-\[9px\]"] {
+[class*="text-[8.5px]"], [class*="text-\[8.5px\]"] {
   font-size: 0.75rem !important;
 }
+[class*="text-[9px]"], [class*="text-\[9px\]"] {
+  font-size: 0.78rem !important;
+}
 [class*="text-[9.5px]"], [class*="text-\[9.5px\]"] {
-  font-size: 0.775rem !important;
+  font-size: 0.805rem !important;
 }
 [class*="text-[10px]"], [class*="text-\[10px\]"] {
-  font-size: 0.8rem !important;
+  font-size: 0.835rem !important;
 }
 [class*="text-[10.5px]"], [class*="text-\[10.5px\]"] {
-  font-size: 0.825rem !important;
+  font-size: 0.86rem !important;
 }
 [class*="text-[11px]"], [class*="text-\[11px\]"] {
-  font-size: 0.85rem !important;
+  font-size: 0.885rem !important;
 }
 [class*="text-[12px]"], [class*="text-\[12px\]"] {
-  font-size: 0.9rem !important;
+  font-size: 0.94rem !important;
 }
 
 

@@ -1,7 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
-import { CreditCard, CheckCircle2, MessageSquare, AlertCircle, Sparkles, Smartphone, QrCode } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { CreditCard, CheckCircle2, MessageSquare, AlertCircle, Smartphone, QrCode, Loader2, Lock, ShieldCheck } from "lucide-react";
+
+interface CashfreeCheckoutInstance {
+  checkout: (options: { paymentSessionId: string; redirectTarget: "_self" | "_blank" }) => Promise<void>;
+}
+
+type CashfreeWindow = Window & {
+  Cashfree?: (options: { mode: "sandbox" | "production" }) => CashfreeCheckoutInstance;
+  fbq?: (...args: unknown[]) => void;
+};
 
 export default function CheckoutPage() {
   const [selectedCourse, setSelectedCourse] = useState("content-creation");
@@ -12,6 +21,15 @@ export default function CheckoutPage() {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [orderGenerated, setOrderGenerated] = useState(false);
+  const [cashfreeLoading, setCashfreeLoading] = useState(false);
+  const [paymentNotice, setPaymentNotice] = useState("");
+
+  useEffect(() => {
+    const requestedCourse = new URLSearchParams(window.location.search).get("course");
+    if (requestedCourse !== "content-creation" && requestedCourse !== "capcut-editing") return;
+    const timer = setTimeout(() => setSelectedCourse(requestedCourse), 0);
+    return () => clearTimeout(timer);
+  }, []);
 
   const courses = {
     "content-creation": {
@@ -60,15 +78,14 @@ export default function CheckoutPage() {
     const eventId = `checkout_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
     // Fire client-side Meta Pixel InitiateCheckout event
-    if (typeof window !== "undefined" && (window as any).fbq) {
-      (window as any).fbq('track', 'InitiateCheckout', {
-        content_name: activeCourse.name,
-        value: Number(activeCourse.price),
-        currency: 'INR'
-      }, {
-        eventID: eventId
-      });
-    }
+    const fbq = (window as CashfreeWindow).fbq;
+    fbq?.('track', 'InitiateCheckout', {
+      content_name: activeCourse.name,
+      value: Number(activeCourse.price),
+      currency: 'INR'
+    }, {
+      eventID: eventId
+    });
 
     // Call server-side Meta Conversions API (CAPI) Proxy
     try {
@@ -83,11 +100,13 @@ export default function CheckoutPage() {
           email: formData.email,
           eventId: eventId,
           url: window.location.href,
-          source: `Checkout Page Form`,
-          eventName: "InitiateCheckout"
+          source: activeCourse.name,
+          eventName: "InitiateCheckout",
+          value: activeCourse.price,
+          currency: "INR"
         }),
       }).catch(err => console.error("Meta CAPI trigger error (silent):", err));
-    } catch (err) {
+    } catch {
       // Silent catch
     }
 
@@ -115,11 +134,88 @@ export default function CheckoutPage() {
     setOrderGenerated(true);
   };
 
+  const loadCashfreeScript = () =>
+    new Promise<boolean>((resolve) => {
+      if (typeof window === "undefined") return resolve(false);
+      if ((window as CashfreeWindow).Cashfree) return resolve(true);
+
+      const existing = document.querySelector('script[data-cashfree-sdk="true"]') as HTMLScriptElement | null;
+      if (existing) {
+        existing.addEventListener("load", () => resolve(true));
+        existing.addEventListener("error", () => resolve(false));
+        return;
+      }
+
+      const script = document.createElement("script");
+      script.src = "https://sdk.cashfree.com/js/v3/cashfree.js";
+      script.async = true;
+      script.dataset.cashfreeSdk = "true";
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+
+  const handleCashfreePay = async () => {
+    if (cashfreeLoading) return;
+    setCashfreeLoading(true);
+    setPaymentNotice("");
+
+    try {
+      const response = await fetch("/api/cashfree/create-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          courseId: selectedCourse,
+          courseName: activeCourse.name,
+          amount: activeCourse.price,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!data?.configured) {
+        setPaymentNotice(data?.message || "Cashfree is being activated. Please pay via UPI below.");
+        return;
+      }
+
+      if (!response.ok || !data?.paymentSessionId) {
+        setPaymentNotice(data?.error || "Unable to start the payment. Please try UPI below.");
+        return;
+      }
+
+      const loaded = await loadCashfreeScript();
+      if (!loaded) {
+        setPaymentNotice("Could not load the payment window. Please pay via UPI below.");
+        return;
+      }
+
+      const cashfree = (window as CashfreeWindow).Cashfree?.({
+        mode: data.environment === "production" ? "production" : "sandbox",
+      });
+      if (!cashfree) {
+        setPaymentNotice("Could not open the payment window. Please pay via UPI below.");
+        return;
+      }
+      await cashfree.checkout({
+        paymentSessionId: data.paymentSessionId,
+        redirectTarget: "_self",
+      });
+    } catch (error) {
+      console.error("Cashfree checkout error:", error);
+      setPaymentNotice("Payment could not be started. Please pay via UPI below.");
+    } finally {
+      setCashfreeLoading(false);
+    }
+  };
+
   // Click-to-pay deep link for UPI apps on mobile (optimized parameters for Google Pay, PhonePe, Paytm compatibility)
   const upiDeepLink = `upi://pay?pa=cecilkumar99830-1@oksbi&pn=CreatorsCollege&am=${activeCourse.price}&cu=INR&tn=CCEnroll`;
 
   // WhatsApp text for sending payment screenshot
-  const whatsappMsg = `Hi Creators College, I have completed the payment of ₹${activeCourse.price} for the ${activeCourse.name}. Here are my details:\nName: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email || "N/A"}\nPlease activate my enrollment.`;
+  const whatsappMsg = `Hi Creators College, I have completed the payment of ₹${activeCourse.price} for the ${activeCourse.name}. Please send my course access on WhatsApp.\n\nName: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email || "N/A"}\nPayment method: UPI`;
   const whatsappUrl = `https://wa.me/918143937367?text=${encodeURIComponent(whatsappMsg)}`;
 
   return (
@@ -129,9 +225,10 @@ export default function CheckoutPage() {
         {/* Header */}
         <div className="text-center mb-10 space-y-2">
           <span className="text-xs font-bold uppercase tracking-widest text-brand-orange">Secure Checkout</span>
-          <h1 className="text-3xl font-black text-brand-blue dark:text-white tracking-tight">Complete Your Enrollment</h1>
+          <h1 className="text-3xl font-bold text-brand-blue dark:text-white tracking-tight">Complete Your Enrollment</h1>
           <p className="text-sm text-gray-500 max-w-md mx-auto">
-            Fill in your registration details and complete payment via scan-and-pay UPI to secure your batch slot.
+            Enter your details and pay securely via Cashfree or UPI. After verification, your course access is sent
+            directly on WhatsApp.
           </p>
         </div>
 
@@ -161,7 +258,7 @@ export default function CheckoutPage() {
                         <div className="text-[11px] text-gray-400">Duration: {value.duration}</div>
                       </div>
                       <div className="text-right shrink-0">
-                        <div className="text-base font-black text-brand-orange">₹{value.price}</div>
+                        <div className="text-base font-bold text-brand-orange">₹{value.price}</div>
                         <div className="text-xs text-gray-400 line-through">₹{value.originalPrice}</div>
                       </div>
                     </div>
@@ -259,7 +356,7 @@ export default function CheckoutPage() {
               <div className="absolute top-0 right-0 w-32 h-32 bg-brand-orange/20 rounded-full blur-2xl pointer-events-none" />
               
               <div className="relative z-10 space-y-5 text-left">
-                <h3 className="font-extrabold text-base border-b border-white/10 pb-3">Order Summary</h3>
+                <h3 className="font-semibold text-base border-b border-white/10 pb-3">Order Summary</h3>
                 
                 <div className="space-y-2 text-xs text-white/80">
                   <div className="flex justify-between">
@@ -270,7 +367,7 @@ export default function CheckoutPage() {
                     <span>Active Discount</span>
                     <span>-₹{activeCourse.originalPrice - activeCourse.price}</span>
                   </div>
-                  <div className="flex justify-between pt-2 border-t border-white/10 text-base font-black text-white">
+                  <div className="flex justify-between pt-2 border-t border-white/10 text-base font-bold text-white">
                     <span>Total Amount</span>
                     <span>₹{activeCourse.price}</span>
                   </div>
@@ -278,15 +375,41 @@ export default function CheckoutPage() {
 
                 {orderGenerated ? (
                   <div className="space-y-4 pt-3 border-t border-white/10">
-                    <div className="text-xs font-bold uppercase tracking-wider text-brand-orange">
-                      UPI Payment Gateway
+                    <div className="space-y-2">
+                      <div className="text-xs font-bold uppercase tracking-wider text-brand-orange">
+                        Pay Securely
+                      </div>
+                      <button
+                        type="button"
+                        onClick={handleCashfreePay}
+                        disabled={cashfreeLoading}
+                        className="w-full inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange-dark disabled:opacity-70 text-white font-bold py-3 px-6 rounded-lg text-sm transition shadow-lg"
+                      >
+                        {cashfreeLoading ? <Loader2 size={16} className="animate-spin" /> : <CreditCard size={16} />}
+                        {cashfreeLoading ? "Opening secure payment..." : `Pay ₹${activeCourse.price.toLocaleString("en-IN")} via Cashfree`}
+                      </button>
+                      <p className="flex items-center justify-center gap-1.5 text-[10px] text-white/60">
+                        <Lock size={10} />
+                        UPI, Cards &amp; Netbanking · Powered by Cashfree
+                      </p>
+                      {paymentNotice && (
+                        <p className="text-[10px] leading-relaxed text-brand-orange bg-brand-orange/10 border border-brand-orange/20 rounded-lg px-3 py-2">
+                          {paymentNotice}
+                        </p>
+                      )}
                     </div>
-                    
+
+                    <div className="flex items-center gap-3 py-1">
+                      <span className="h-px flex-1 bg-white/10" />
+                      <span className="text-[10px] uppercase tracking-wider text-white/40">or pay directly via UPI</span>
+                      <span className="h-px flex-1 bg-white/10" />
+                    </div>
+
                     {/* Mobile Pay Link */}
                     <div className="block sm:hidden">
                       <a
                         href={upiDeepLink}
-                        className="w-full inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3 px-6 rounded-lg text-sm transition shadow-lg"
+                        className="w-full inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold py-3 px-6 rounded-lg text-sm transition border border-white/15"
                       >
                         <Smartphone size={16} />
                         Pay with UPI App
@@ -300,7 +423,7 @@ export default function CheckoutPage() {
                     <div className="space-y-3 bg-white/5 p-4 rounded-xl border border-white/10">
                       <div className="flex items-center gap-2">
                         <QrCode size={18} className="text-brand-orange shrink-0" />
-                        <span className="text-xs font-bold">UPI Scan & Pay Address</span>
+                        <span className="text-xs font-bold">UPI Scan &amp; Pay Address</span>
                       </div>
                       <div className="bg-white/10 py-2 px-3 rounded text-center select-all font-mono text-xs break-all text-white border border-white/10">
                         cecilkumar99830-1@oksbi
@@ -321,15 +444,26 @@ export default function CheckoutPage() {
                         <MessageSquare size={16} />
                         Send Screenshot on WhatsApp
                       </a>
-                      <p className="text-[9px] text-white/50 text-center mt-1 leading-relaxed">
-                        Submit screenshot on WhatsApp to instantly activate your seat.
+                      <p className="text-[10px] text-white/60 text-center mt-1.5 leading-relaxed">
+                        After verification, our team shares your course access on WhatsApp.
+                      </p>
+                    </div>
+
+                    <div className="pt-1 space-y-1.5 text-[10px] text-white/50 border-t border-white/10">
+                      <p className="flex items-center gap-1.5">
+                        <ShieldCheck size={11} />
+                        Access delivered on WhatsApp · Lifetime recordings
+                      </p>
+                      <p className="flex items-center gap-1.5">
+                        <CheckCircle2 size={11} />
+                        Duplicate or failed payments are verified and reversed
                       </p>
                     </div>
                   </div>
                 ) : (
                   <div className="bg-white/5 p-4 rounded-xl border border-white/10 text-center py-6">
                     <span className="text-xs text-white/60">
-                      Please enter your registration details to unlock the UPI payment options.
+                      Please enter your registration details to unlock the payment options.
                     </span>
                   </div>
                 )}

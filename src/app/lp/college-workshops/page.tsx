@@ -37,7 +37,7 @@ export default function CollegeWorkshopsLandingPage() {
               <GraduationCap size={12} className="stroke-[2.5]" />
               Campus Bootcamps & Electives
             </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-brand-blue tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-blue tracking-tight leading-tight">
               Practical College Workshops. <br />
               <span className="text-brand-orange">Prepare Students for the Creator Economy.</span>
             </h1>

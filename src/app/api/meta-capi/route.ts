@@ -12,7 +12,7 @@ function hashData(data: string): string {
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, phone, name, eventId, url, source, eventName } = await req.json();
+    const { email, phone, name, eventId, url, source, eventName, value, currency } = await req.json();
 
     const PIXEL_ID = process.env.META_PIXEL_ID || "1584046740011776";
     const ACCESS_TOKEN = process.env.META_ACCESS_TOKEN;
@@ -46,8 +46,8 @@ export async function POST(req: NextRequest) {
           },
           custom_data: {
             content_name: source || "Form Lead",
-            currency: "INR",
-            value: 0.00,
+            currency: currency || "INR",
+            value: Number(value) || 0,
           },
         },
       ],

@@ -71,7 +71,7 @@ export default function SuccessStoriesPage() {
       >
         <div className="absolute inset-0 bg-black/45 dark:bg-black/70" />
         <div className="max-w-7xl mx-auto px-4 relative z-10 space-y-4">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
             Creator Success Stories
           </h1>
           <p className="text-sm sm:text-base text-white/90 max-w-xl mx-auto leading-relaxed font-medium">
@@ -88,7 +88,7 @@ export default function SuccessStoriesPage() {
             <h3 className="text-xs font-bold uppercase tracking-widest text-brand-orange">
               Student Reviews
             </h3>
-            <h2 className="text-3xl font-extrabold text-brand-blue dark:text-white tracking-tight">
+            <h2 className="text-3xl font-semibold text-brand-blue dark:text-white tracking-tight">
               Testimonials from Our Alumni
             </h2>
             <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -136,7 +136,7 @@ export default function SuccessStoriesPage() {
             <h3 className="text-xs font-bold uppercase tracking-widest text-brand-orange">
               Practical Output
             </h3>
-            <h2 className="text-3xl font-extrabold text-brand-blue dark:text-white tracking-tight">
+            <h2 className="text-3xl font-semibold text-brand-blue dark:text-white tracking-tight">
               Featured Student Projects
             </h2>
             <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -181,7 +181,7 @@ export default function SuccessStoriesPage() {
 
                 {/* Project Meta details */}
                 <div className="p-5 text-left space-y-2">
-                  <span className="text-[9px] uppercase tracking-wider font-black text-brand-orange">
+                  <span className="text-[9px] uppercase tracking-wider font-bold text-brand-orange">
                     {proj.category}
                   </span>
                   <h4 className="font-bold text-sm sm:text-base text-brand-blue dark:text-white">{proj.title}</h4>

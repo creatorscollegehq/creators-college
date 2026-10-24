@@ -37,7 +37,7 @@ export default function CorporateLandingPage() {
               <Building size={12} className="stroke-[2.5]" />
               B2B Group Coaching Programs
             </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-brand-blue tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-blue tracking-tight leading-tight">
               Corporate Content Creation Training. <br />
               <span className="text-brand-orange">Scale Your Brand's Organic Reach.</span>
             </h1>

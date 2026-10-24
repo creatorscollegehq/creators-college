@@ -337,7 +337,7 @@ export default function LavanyaGanjiPage() {
               </div>
 
               <div className="space-y-2">
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.08] text-white">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.08] text-white">
                   Lavanya Ganji
                 </h1>
                 <p className="text-xl sm:text-2xl font-bold text-brand-orange tracking-tight">
@@ -421,7 +421,7 @@ export default function LavanyaGanjiPage() {
 
                 <div className="absolute bottom-5 left-5 right-5 z-20 space-y-1.5 bg-black/65 backdrop-blur-md border border-white/15 p-4 rounded-2xl shadow-xl select-none">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-extrabold uppercase tracking-wider bg-brand-orange text-white px-2 py-0.5 rounded">
+                    <span className="text-[10px] font-semibold uppercase tracking-wider bg-brand-orange text-white px-2 py-0.5 rounded">
                       Leadership
                     </span>
                     <span className="text-[11px] text-white/80 font-bold">
@@ -447,10 +447,10 @@ export default function LavanyaGanjiPage() {
       <section className="py-12 md:py-16 bg-brand-gray/40 dark:bg-white/[0.02] border-b border-gray-100 dark:border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-            <span className="text-xs uppercase font-extrabold tracking-widest text-brand-orange">
+            <span className="text-xs uppercase font-semibold tracking-widest text-brand-orange">
               Executive Leadership
             </span>
-            <h2 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white tracking-tight">
               Professional Designations
             </h2>
             <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -466,7 +466,7 @@ export default function LavanyaGanjiPage() {
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between gap-2">
-                    <span className={`text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full ${role.badgeColor}`}>
+                    <span className={`text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full ${role.badgeColor}`}>
                       {role.highlight}
                     </span>
                   </div>
@@ -478,7 +478,7 @@ export default function LavanyaGanjiPage() {
                     <p className="text-xs font-bold text-brand-orange uppercase tracking-wider">
                       {role.title}
                     </p>
-                    <h3 className="text-xl font-black text-brand-blue dark:text-white tracking-tight">
+                    <h3 className="text-xl font-bold text-brand-blue dark:text-white tracking-tight">
                       {role.organization}
                     </h3>
                   </div>
@@ -529,7 +529,7 @@ export default function LavanyaGanjiPage() {
                   <Award size={16} />
                   Signature Venture
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white tracking-tight">
                   Founder &amp; CEO of Telugu Twenty
                 </h2>
                 <div className="space-y-4 text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed font-normal">
@@ -561,7 +561,7 @@ export default function LavanyaGanjiPage() {
 
                 {/* Industries Served */}
                 <div className="pt-4 space-y-3">
-                  <h3 className="text-lg sm:text-xl font-extrabold text-brand-blue dark:text-white tracking-tight">
+                  <h3 className="text-lg sm:text-xl font-semibold text-brand-blue dark:text-white tracking-tight">
                     Industries Served
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -579,7 +579,7 @@ export default function LavanyaGanjiPage() {
 
                 {/* Project Portfolio */}
                 <div className="pt-4 space-y-3">
-                  <h3 className="text-lg sm:text-xl font-extrabold text-brand-blue dark:text-white tracking-tight">
+                  <h3 className="text-lg sm:text-xl font-semibold text-brand-blue dark:text-white tracking-tight">
                     Project Portfolio
                   </h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -602,7 +602,7 @@ export default function LavanyaGanjiPage() {
                   <Radio size={16} />
                   Media Leadership
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white tracking-tight">
                   Managing Director of Perfect Prime Media
                 </h2>
                 <div className="space-y-4 text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed font-normal">
@@ -621,7 +621,7 @@ export default function LavanyaGanjiPage() {
                   <Tv size={16} />
                   Digital Media Operations
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white tracking-tight">
                   Managing Director of Telugu Tea Talks
                 </h2>
                 <div className="space-y-4 text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed font-normal">
@@ -680,7 +680,7 @@ export default function LavanyaGanjiPage() {
                   <GraduationCap size={16} />
                   Academy Partnership
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white tracking-tight">
                   Managing Partner of Creators College
                 </h2>
                 <div className="space-y-4 text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed font-normal">
@@ -716,7 +716,7 @@ export default function LavanyaGanjiPage() {
                   <Briefcase size={16} />
                   Career Background
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white tracking-tight">
                   Previous Corporate Experience
                 </h2>
                 <div className="space-y-3">
@@ -726,14 +726,14 @@ export default function LavanyaGanjiPage() {
                       className="bg-white dark:bg-[#131b2e] border border-gray-200 dark:border-white/10 rounded-2xl p-5 shadow-sm flex flex-col sm:flex-row sm:items-center gap-3 justify-between"
                     >
                       <div className="space-y-1">
-                        <h3 className="text-base font-black text-brand-blue dark:text-white tracking-tight">
+                        <h3 className="text-base font-bold text-brand-blue dark:text-white tracking-tight">
                           {item.company}
                         </h3>
                         <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 font-medium">
                           {item.role}
                         </p>
                       </div>
-                      <span className="text-[11px] font-extrabold uppercase tracking-wider bg-brand-blue/10 text-brand-blue dark:text-blue-300 px-3 py-1.5 rounded-full shrink-0">
+                      <span className="text-[11px] font-semibold uppercase tracking-wider bg-brand-blue/10 text-brand-blue dark:text-blue-300 px-3 py-1.5 rounded-full shrink-0">
                         {item.duration}
                       </span>
                     </div>
@@ -755,7 +755,7 @@ export default function LavanyaGanjiPage() {
                   <Users size={16} />
                   Collaboration
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white tracking-tight">
+                <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white tracking-tight">
                   Founding and Collaboration History
                 </h2>
                 <div className="space-y-4 text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed font-normal">
@@ -782,10 +782,10 @@ export default function LavanyaGanjiPage() {
               {/* Professional Focus Box */}
               <div className="bg-white dark:bg-[#131b2e] p-6 rounded-2xl border border-gray-200 dark:border-white/10 shadow-lg space-y-5">
                 <div className="space-y-1">
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-brand-orange">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-brand-orange">
                     Core Competencies
                   </span>
-                  <h3 className="text-lg font-black text-brand-blue dark:text-white tracking-tight">
+                  <h3 className="text-lg font-bold text-brand-blue dark:text-white tracking-tight">
                     Professional Focus
                   </h3>
                 </div>
@@ -811,10 +811,10 @@ export default function LavanyaGanjiPage() {
               {/* Official Profiles Card */}
               <div className="bg-white dark:bg-[#131b2e] p-6 rounded-2xl border border-gray-200 dark:border-white/10 shadow-lg space-y-5">
                 <div className="space-y-1">
-                  <span className="text-[10px] font-extrabold uppercase tracking-wider text-brand-orange">
+                  <span className="text-[10px] font-semibold uppercase tracking-wider text-brand-orange">
                     Verified Channels
                   </span>
-                  <h3 className="text-lg font-black text-brand-blue dark:text-white tracking-tight">
+                  <h3 className="text-lg font-bold text-brand-blue dark:text-white tracking-tight">
                     Official Profiles
                   </h3>
                 </div>
@@ -852,10 +852,10 @@ export default function LavanyaGanjiPage() {
 
               {/* Connect CTA Card */}
               <div className="bg-gradient-to-br from-[#0c152b] to-[#12234f] text-white p-6 rounded-2xl border border-brand-orange/30 shadow-xl space-y-4">
-                <span className="bg-brand-orange text-white text-[9px] uppercase font-black tracking-widest px-2.5 py-1 rounded">
+                <span className="bg-brand-orange text-white text-[9px] uppercase font-bold tracking-widest px-2.5 py-1 rounded">
                   Collaborate
                 </span>
-                <h4 className="text-base font-black text-white leading-tight">
+                <h4 className="text-base font-bold text-white leading-tight">
                   Connect with Lavanya Ganji
                 </h4>
                 <p className="text-xs text-gray-300 leading-relaxed">

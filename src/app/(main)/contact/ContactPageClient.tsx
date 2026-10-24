@@ -173,10 +173,10 @@ export default function ContactPage() {
             
             {/* Left Content Column */}
             <div className="md:col-span-7 py-12 md:py-20 space-y-4 text-left pr-4 relative z-20">
-              <div className="inline-block self-start text-[10px] font-black uppercase bg-brand-orange text-white px-3 py-1 rounded-full tracking-wider">
+              <div className="inline-block self-start text-[10px] font-bold uppercase bg-brand-orange text-white px-3 py-1 rounded-full tracking-wider">
                 Get In Touch
               </div>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-tight">
                 Contact <br />
                 <span className="text-brand-orange">Creators College</span>
               </h1>
@@ -199,10 +199,10 @@ export default function ContactPage() {
             {/* Left Column: Info details cards in 2x2 grid + connect card */}
             <div className="lg:col-span-6 space-y-8 text-left">
               <div className="space-y-4">
-                <span className="text-sm font-black uppercase tracking-widest text-brand-orange">
+                <span className="text-sm font-bold uppercase tracking-widest text-brand-orange">
                   Reach Us
                 </span>
-                <h2 className="text-3xl sm:text-4xl font-black text-brand-blue dark:text-white tracking-tight">
+                <h2 className="text-3xl sm:text-4xl font-bold text-brand-blue dark:text-white tracking-tight">
                   Get in Touch Instantly
                 </h2>
                 <p className="text-sm sm:text-base text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
@@ -219,7 +219,7 @@ export default function ContactPage() {
                     <div className="w-12 h-12 rounded-full bg-brand-blue/10 dark:bg-white/5 text-brand-blue dark:text-white flex items-center justify-center shrink-0">
                       <MapPin size={24} />
                     </div>
-                    <h4 className="font-black text-base sm:text-lg text-brand-blue dark:text-white">Campus Address</h4>
+                    <h4 className="font-bold text-base sm:text-lg text-brand-blue dark:text-white">Campus Address</h4>
                   </div>
                   <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-medium">
                     Creators College, KPHB, Hyderabad, Telangana, India
@@ -232,12 +232,12 @@ export default function ContactPage() {
                     <div className="w-12 h-12 rounded-full bg-brand-orange/10 text-brand-orange flex items-center justify-center shrink-0">
                       <Phone size={24} />
                     </div>
-                    <h4 className="font-black text-base sm:text-lg text-brand-blue dark:text-white">Call Us</h4>
+                    <h4 className="font-bold text-base sm:text-lg text-brand-blue dark:text-white">Call Us</h4>
                   </div>
                   <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
                     Have questions about our courses or training? Our team is just a call away.
                   </p>
-                  <a href="tel:+918143937367" className="block text-sm sm:text-base font-black text-brand-orange hover:underline transition">
+                  <a href="tel:+918143937367" className="block text-sm sm:text-base font-bold text-brand-orange hover:underline transition">
                     📞 +91 81439 37367
                   </a>
                 </div>
@@ -248,7 +248,7 @@ export default function ContactPage() {
                     <div className="w-12 h-12 rounded-full bg-green-500/10 text-green-500 flex items-center justify-center shrink-0">
                       <MessageSquare size={24} />
                     </div>
-                    <h4 className="font-black text-base sm:text-lg text-brand-blue dark:text-white">WhatsApp Us</h4>
+                    <h4 className="font-bold text-base sm:text-lg text-brand-blue dark:text-white">WhatsApp Us</h4>
                   </div>
                   <div className="space-y-2">
                     <p className="text-xs text-gray-400 leading-relaxed">Chat with us to get instant assistance regarding:</p>
@@ -261,7 +261,7 @@ export default function ContactPage() {
                       <div>✓ Workshops</div>
                     </div>
                   </div>
-                  <a href="https://wa.me/918143937367" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-[#25d366] hover:bg-green-600 text-white text-xs font-black py-3 px-6 rounded-xl shadow transition tracking-wider uppercase">
+                  <a href="https://wa.me/918143937367" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-[#25d366] hover:bg-green-600 text-white text-xs font-bold py-3 px-6 rounded-xl shadow transition tracking-wider uppercase">
                     🟢 WhatsApp Now
                   </a>
                 </div>
@@ -272,12 +272,12 @@ export default function ContactPage() {
                     <div className="w-12 h-12 rounded-full bg-brand-blue/10 dark:bg-white/5 text-brand-blue dark:text-white flex items-center justify-center shrink-0">
                       <Mail size={24} />
                     </div>
-                    <h4 className="font-black text-base sm:text-lg text-brand-blue dark:text-white">Email Us</h4>
+                    <h4 className="font-bold text-base sm:text-lg text-brand-blue dark:text-white">Email Us</h4>
                   </div>
                   <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
                     For course inquiries, partnerships, corporate training, or support, send us an email:
                   </p>
-                  <a href="mailto:enquiry@creatorscollege.com" className="block text-sm sm:text-base font-black text-[#0066cc] hover:underline transition">
+                  <a href="mailto:enquiry@creatorscollege.com" className="block text-sm sm:text-base font-bold text-[#0066cc] hover:underline transition">
                     enquiry@creatorscollege.com
                   </a>
                 </div>
@@ -292,7 +292,7 @@ export default function ContactPage() {
                       <path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" />
                     </svg>
                   </div>
-                  <h4 className="font-black text-base sm:text-lg text-brand-blue dark:text-white">Connect With Us</h4>
+                  <h4 className="font-bold text-base sm:text-lg text-brand-blue dark:text-white">Connect With Us</h4>
                 </div>
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed max-w-sm">
@@ -340,8 +340,8 @@ export default function ContactPage() {
                       </svg>
                     </div>
                     <div>
-                      <span className="text-[9px] font-black uppercase text-brand-orange tracking-widest block mb-0.5">Send Us an Enquiry</span>
-                      <h3 className="text-base sm:text-lg font-black text-brand-blue dark:text-white leading-tight">
+                      <span className="text-[9px] font-bold uppercase text-brand-orange tracking-widest block mb-0.5">Send Us an Enquiry</span>
+                      <h3 className="text-base sm:text-lg font-bold text-brand-blue dark:text-white leading-tight">
                         Interested in joining Creators College?
                       </h3>
                       <p className="text-[11px] text-gray-400 font-medium leading-none">Fill out the enquiry form below, and our team will contact you shortly.</p>
@@ -484,7 +484,7 @@ export default function ContactPage() {
       <section className="py-12 bg-white dark:bg-[#090d16] border-t border-gray-100 dark:border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
           <div className="space-y-2">
-            <h3 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white tracking-tight">
+            <h3 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white tracking-tight">
               ⭐ <span className="text-brand-orange">Why</span> Contact Creators College?
             </h3>
             <p className="text-xs sm:text-sm text-gray-400 font-medium">When you reach out to us, we'll help you with:</p>
@@ -503,7 +503,7 @@ export default function ContactPage() {
                 }`}
               >
                 <span className="text-2xl">{box.icon}</span>
-                <h5 className={`text-[10px] font-black leading-tight ${activeBox === idx ? "text-white" : "text-brand-blue dark:text-white"}`}>
+                <h5 className={`text-[10px] font-bold leading-tight ${activeBox === idx ? "text-white" : "text-brand-blue dark:text-white"}`}>
                   {box.title}
                 </h5>
               </button>
@@ -512,7 +512,7 @@ export default function ContactPage() {
 
           {activeBox !== null && (
             <div className="bg-brand-blue/5 dark:bg-white/5 border border-brand-orange/20 rounded-2xl p-6 text-left max-w-2xl mx-auto animate-fadeIn mt-6 space-y-2">
-              <h4 className="font-black text-sm text-brand-orange uppercase tracking-wider flex items-center gap-2">
+              <h4 className="font-bold text-sm text-brand-orange uppercase tracking-wider flex items-center gap-2">
                 <span>{whyContactBoxes[activeBox].icon}</span>
                 <span>{whyContactBoxes[activeBox].title}</span>
               </h4>
@@ -527,7 +527,7 @@ export default function ContactPage() {
       {/* Our Courses Catalog */}
       <section className="py-12 md:py-20 bg-brand-gray/30 dark:bg-white/5 border-y border-gray-100 dark:border-white/5 text-left">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-          <h3 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white flex items-center gap-2">
+          <h3 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white flex items-center gap-2">
             🎓 Our Courses
           </h3>
 
@@ -542,7 +542,7 @@ export default function ContactPage() {
               />
               <div className="p-6 space-y-4 flex flex-col justify-between flex-grow">
                 <div className="space-y-2">
-                  <h4 className="font-black text-base text-brand-blue dark:text-white">🎬 Content Creation Course</h4>
+                  <h4 className="font-bold text-base text-brand-blue dark:text-white">🎬 Content Creation Course</h4>
                   <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
                     Master scripting, voiceover, mobile video shooting, editing, and page growth through practical Telugu training.
                   </p>
@@ -562,7 +562,7 @@ export default function ContactPage() {
               />
               <div className="p-6 space-y-4 flex flex-col justify-between flex-grow">
                 <div className="space-y-2">
-                  <h4 className="font-black text-base text-brand-orange">✂️ CapCut Video Editing Course</h4>
+                  <h4 className="font-bold text-base text-brand-orange">✂️ CapCut Video Editing Course</h4>
                   <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
                     Learn professional CapCut Video Editing, reels, shorts, animations, AI editing, and freelancing on Mobile &amp; PC.
                   </p>
@@ -576,7 +576,7 @@ export default function ContactPage() {
             {/* Upcoming Card (Dashed Border style) */}
             <div className="bg-white dark:bg-[#131b2e] rounded-2xl border-2 border-dashed border-brand-orange/30 p-6 flex flex-col justify-between hover:shadow-lg transition">
               <div className="space-y-4">
-                <h4 className="font-black text-base text-brand-blue dark:text-white flex items-center gap-2">
+                <h4 className="font-bold text-base text-brand-blue dark:text-white flex items-center gap-2">
                   🚀 Upcoming Courses
                 </h4>
                 <ul className="space-y-2 text-xs text-brand-charcoal dark:text-white font-bold pl-4 list-disc">
@@ -605,7 +605,7 @@ export default function ContactPage() {
             {/* Left lists */}
             <div className="lg:col-span-7 space-y-6">
               <div className="space-y-2">
-                <h3 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white flex items-center gap-2">
+                <h3 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white flex items-center gap-2">
                   🏢 Corporate Training
                 </h3>
                 <p className="text-xs sm:text-sm text-gray-400 font-medium">
@@ -626,7 +626,7 @@ export default function ContactPage() {
 
             {/* Right details */}
             <div className="lg:col-span-5 bg-white dark:bg-[#131b2e] p-6 rounded-2xl border border-gray-100 dark:border-white/5 shadow-md space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[10px] text-gray-500 dark:text-gray-400 font-extrabold">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[10px] text-gray-500 dark:text-gray-400 font-semibold">
                 <div className="flex items-center gap-2">🏫 College Workshops</div>
                 <div className="flex items-center gap-2">🎒 School Programs</div>
                 <div className="flex items-center gap-2">💼 Business Training</div>
@@ -647,7 +647,7 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-left space-y-8">
           <div className="text-center space-y-2">
             <span className="text-xs font-bold uppercase tracking-widest text-brand-orange">FAQ</span>
-            <h2 className="text-2xl sm:text-3xl font-black text-brand-blue dark:text-white">Contact Frequently Asked Questions</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-brand-blue dark:text-white">Contact Frequently Asked Questions</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">

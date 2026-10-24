@@ -60,7 +60,7 @@ export default function BlogHubClient({ posts, categories }: BlogHubClientProps)
             <Sparkles size={12} />
             Creators College Hub
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black tracking-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
             Creator Insights Blog
           </h1>
           <p className="text-sm sm:text-base text-white/90 max-w-xl mx-auto leading-relaxed font-medium">
@@ -76,7 +76,7 @@ export default function BlogHubClient({ posts, categories }: BlogHubClientProps)
           {/* Header of Section + Search */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-left">
             <div>
-              <h3 className="text-lg sm:text-xl font-black text-brand-blue dark:text-white tracking-tight">
+              <h3 className="text-lg sm:text-xl font-bold text-brand-blue dark:text-white tracking-tight">
                 Browse by Section
               </h3>
               <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">
@@ -126,7 +126,7 @@ export default function BlogHubClient({ posts, categories }: BlogHubClientProps)
                 >
                   <span className="text-2xl">{emoji}</span>
                   <div>
-                    <h4 className="font-extrabold text-xs sm:text-sm tracking-tight line-clamp-1">
+                    <h4 className="font-semibold text-xs sm:text-sm tracking-tight line-clamp-1">
                       {cat}
                     </h4>
                     <p className={`text-[10px] font-bold mt-1 ${isSelected ? "text-brand-orange" : "text-gray-400"}`}>
@@ -166,7 +166,7 @@ export default function BlogHubClient({ posts, categories }: BlogHubClientProps)
                   <span className="text-[10px] uppercase tracking-widest text-brand-orange font-bold">
                     {featuredPost.category}
                   </span>
-                  <h2 className="text-2xl sm:text-3xl font-black tracking-tight leading-tight">
+                  <h2 className="text-2xl sm:text-3xl font-bold tracking-tight leading-tight">
                     {featuredPost.title}
                   </h2>
                   <p className="text-sm text-gray-300 leading-relaxed">
@@ -194,7 +194,7 @@ export default function BlogHubClient({ posts, categories }: BlogHubClientProps)
 
           {/* Articles Grid */}
           <div>
-            <h3 className="text-xl font-extrabold text-brand-blue dark:text-white mb-8 tracking-tight">
+            <h3 className="text-xl font-semibold text-brand-blue dark:text-white mb-8 tracking-tight">
               {searchTerm || selectedCategory !== "All" ? "Search Results" : "Latest Articles"}
             </h3>
 
@@ -222,10 +222,10 @@ export default function BlogHubClient({ posts, categories }: BlogHubClientProps)
                       </div>
 
                       <div className="p-6 space-y-3">
-                        <span className="text-[10px] uppercase tracking-widest text-brand-orange font-extrabold">
+                        <span className="text-[10px] uppercase tracking-widest text-brand-orange font-semibold">
                           {post.category}
                         </span>
-                        <h4 className="font-extrabold text-base sm:text-lg text-brand-blue dark:text-white line-clamp-2">
+                        <h4 className="font-semibold text-base sm:text-lg text-brand-blue dark:text-white line-clamp-2">
                           {post.title}
                         </h4>
                         <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed line-clamp-3">
