@@ -67,6 +67,40 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 // PortableText custom render components
+function flattenText(node: React.ReactNode): string {
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(flattenText).join("");
+  if (React.isValidElement(node)) return flattenText((node.props as { children?: React.ReactNode }).children);
+  return "";
+}
+
+function readableLinkLabel(href: string): string {
+  try {
+    const url = new URL(href);
+    const slug = decodeURIComponent(url.pathname.split("/").filter(Boolean).pop() || "");
+    const label = slug
+      .replace(/\.(html?|php)$/i, "")
+      .replace(/-s-/gi, "'s ")
+      .replace(/[-_]+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+    if (!label) return "Read more";
+    return label.replace(/\b\w/g, (character) => character.toUpperCase());
+  } catch {
+    return "Read more";
+  }
+}
+
+function resolveLink(href: string) {
+  try {
+    const url = new URL(href);
+    if (url.hostname === "www.creatorscollege.in" || url.hostname === "creatorscollege.in") {
+      return { href: `${url.pathname}${url.search}${url.hash}`, internal: true };
+    }
+  } catch {}
+  return { href, internal: false };
+}
+
 const portableTextComponents = {
   types: {
     image: ({ value }: any) => (
@@ -130,16 +164,31 @@ const portableTextComponents = {
   },
   marks: {
     underline: ({ children }: any) => <u className="underline">{children}</u>,
-    link: ({ children, value }: any) => (
-      <a
-        href={value.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-brand-orange hover:underline font-semibold"
-      >
-        {children}
-      </a>
-    ),
+    link: ({ children, value }: any) => {
+      const rawText = flattenText(children).trim();
+      const { href, internal } = resolveLink(value.href);
+      const content = /^https?:\/\//i.test(rawText)
+        ? href.startsWith("/blog/")
+          ? "Read the article →"
+          : readableLinkLabel(value.href)
+        : children;
+      const className = "text-brand-orange hover:underline font-semibold";
+
+      if (internal) {
+        return <Link href={href} className={className}>{content}</Link>;
+      }
+
+      return (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={className}
+        >
+          {content}
+        </a>
+      );
+    },
   },
 };
 
