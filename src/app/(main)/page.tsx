@@ -13,17 +13,14 @@ import {
   CloudUpload,
   FileText,
   GraduationCap,
-  Maximize,
   MessageCircle,
   Mic,
   Play,
-  Settings,
   ShieldCheck,
   Sparkles,
   Target,
   Users,
   Video,
-  Volume2,
   X,
   Zap,
 } from "lucide-react";
@@ -41,7 +38,9 @@ const roadmapSteps = [
     icon: FileText,
     title: "Scripting",
     desc: "Learn how to write engaging scripts for reels and long videos.",
-    duration: "6:12",
+    duration: "0:44",
+    videoId: "0yX2-Jc6V2w",
+    videoTitle: "Video Script Writing for Beginners",
     gradient: "from-[#DBEAFE] to-[#BFDBFE]",
   },
   {
@@ -49,7 +48,9 @@ const roadmapSteps = [
     icon: Mic,
     title: "Voice-over",
     desc: "Learn clear voice-over and on-camera speaking skills.",
-    duration: "7:36",
+    duration: "",
+    videoId: undefined,
+    videoTitle: undefined,
     gradient: "from-[#DCFCE7] to-[#BBF7D0]",
   },
   {
@@ -57,7 +58,9 @@ const roadmapSteps = [
     icon: Clapperboard,
     title: "Editing",
     desc: "Learn to edit music videos, talking videos, voice-over reels and more.",
-    duration: "10:25",
+    duration: "0:32",
+    videoId: "fFWOW038J10",
+    videoTitle: "Video Editing for Beginners",
     gradient: "from-[#E0E7FF] to-[#C7D2FE]",
   },
   {
@@ -65,7 +68,9 @@ const roadmapSteps = [
     icon: Users,
     title: "Account Creations",
     desc: "Learn to create Instagram, Facebook and YouTube accounts step by step.",
-    duration: "6:48",
+    duration: "0:32",
+    videoId: "vw7d4tH_dvE",
+    videoTitle: "Account Creation Guide for Content Creators",
     gradient: "from-[#FCE7F3] to-[#FBCFE8]",
   },
   {
@@ -73,7 +78,9 @@ const roadmapSteps = [
     icon: CloudUpload,
     title: "Uploads",
     desc: "Learn how to upload videos with the right settings.",
-    duration: "5:18",
+    duration: "",
+    videoId: undefined,
+    videoTitle: undefined,
     gradient: "from-[#FFEDD5] to-[#FED7AA]",
   },
   {
@@ -81,7 +88,9 @@ const roadmapSteps = [
     icon: ChartNoAxesColumn,
     title: "Page Handling",
     desc: "Learn how to manage your pages and grow them.",
-    duration: "8:40",
+    duration: "0:29",
+    videoId: "gISyUpfoXvc",
+    videoTitle: "Social Media Page Handling",
     gradient: "from-[#CCFBF1] to-[#99F6E4]",
   },
 ];
@@ -343,20 +352,20 @@ function VideoThumb({
   src,
   alt,
   duration,
-  controls = false,
+  href = YOUTUBE_URL,
   className = "",
   sizes = "(max-width: 1024px) 100vw, 50vw",
 }: {
   src: string;
   alt: string;
-  duration: string;
-  controls?: boolean;
+  duration?: string;
+  href?: string;
   className?: string;
   sizes?: string;
 }) {
   return (
     <a
-      href={YOUTUBE_URL}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`Watch: ${alt}`}
@@ -373,21 +382,11 @@ function VideoThumb({
       <span className="absolute inset-0 m-auto flex h-16 w-16 items-center justify-center rounded-full bg-white text-brand-orange shadow-xl transition group-hover:scale-105">
         <Play size={24} fill="currentColor" strokeWidth={0} className="ml-1" />
       </span>
-      {controls ? (
-        <div className="absolute inset-x-0 bottom-0 flex items-center gap-2 bg-gradient-to-t from-black/85 to-transparent px-3 pb-2 pt-10 text-[11px] font-medium text-white">
-          <Play size={10} fill="currentColor" strokeWidth={0} />
-          <span>0:00 / 5:24</span>
-          <div className="ml-auto flex items-center gap-2.5">
-            <Volume2 size={13} />
-            <Settings size={13} />
-            <Maximize size={13} />
-          </div>
-        </div>
-      ) : (
+      {duration ? (
         <span className="absolute bottom-2 right-2 rounded bg-black/70 px-1.5 py-0.5 text-[10px] font-medium text-white">
           {duration}
         </span>
-      )}
+      ) : null}
     </a>
   );
 }
@@ -583,9 +582,8 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-5 items-center">
             <VideoThumb
               src="/hero_collage_wide.jpg"
-              alt="Creators College course introduction video"
-              duration="5:24"
-              controls
+              alt="Content Creation Is for Everyone — Creators College course introduction"
+              href="https://youtu.be/yu-KoSL7Ts"
               className="aspect-video w-full shadow-[0_22px_50px_-28px_rgba(11,27,75,0.45)]"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
@@ -641,19 +639,36 @@ export default function HomePage() {
                     </h3>
 
                     <a
-                      href={YOUTUBE_URL}
+                      href={step.videoId ? `https://youtu.be/${step.videoId}` : YOUTUBE_URL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`Watch ${step.title} lesson`}
-                      className={`group relative mt-3 block aspect-[4/3] overflow-hidden rounded-lg bg-gradient-to-br ${step.gradient}`}
+                      aria-label={step.videoId ? `Watch ${step.videoTitle}` : `Watch ${step.title} lessons on YouTube`}
+                      className={`group relative mt-3 block aspect-[4/3] overflow-hidden rounded-lg ${
+                        step.videoId ? "bg-[#0B1B4B]" : `bg-gradient-to-br ${step.gradient}`
+                      }`}
                     >
-                      <Icon size={46} className="absolute inset-0 m-auto text-white/60" strokeWidth={1.4} />
+                      {step.videoId ? (
+                        <>
+                          <Image
+                            src={`/videos/${step.videoId}.jpg`}
+                            alt={`${step.title} — ${step.videoTitle}`}
+                            fill
+                            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
+                            className="object-cover transition duration-500 group-hover:scale-[1.03]"
+                          />
+                          <div className="absolute inset-0 bg-black/20 transition group-hover:bg-black/10" />
+                        </>
+                      ) : (
+                        <Icon size={46} className="absolute inset-0 m-auto text-white/60" strokeWidth={1.4} />
+                      )}
                       <span className="absolute inset-0 m-auto flex h-7 w-7 items-center justify-center rounded-full bg-white/95 text-brand-orange shadow">
                         <Play size={10} fill="currentColor" strokeWidth={0} className="ml-0.5" />
                       </span>
-                      <span className="absolute bottom-1.5 right-1.5 rounded bg-black/65 px-1.5 py-0.5 text-[9px] font-medium text-white">
-                        {step.duration}
-                      </span>
+                      {step.duration ? (
+                        <span className="absolute bottom-1.5 right-1.5 rounded bg-black/65 px-1.5 py-0.5 text-[9px] font-medium text-white">
+                          {step.duration}
+                        </span>
+                      ) : null}
                     </a>
 
                     <p className="mt-2.5 text-[10.5px] leading-relaxed text-gray-500 dark:text-gray-400">
@@ -776,9 +791,10 @@ export default function HomePage() {
             </div>
 
             <VideoThumb
-              src="/cecil.jpg"
-              alt="Cecil Srungarapati sharing his teaching goal"
-              duration="4:58"
+              src="/videos/dTABmoxhu7M.jpg"
+              alt="My Goal Is to Teach Content Creation — Cecil Srungarapati"
+              duration="1:06"
+              href="https://youtu.be/dTABmoxhu7M"
               className="aspect-video w-full shadow-[0_22px_50px_-28px_rgba(11,27,75,0.45)]"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
