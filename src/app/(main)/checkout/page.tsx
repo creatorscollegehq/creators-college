@@ -142,10 +142,16 @@ export default function CheckoutPage() {
     setShowFallback(false);
     trackInitiateCheckout();
 
+    let checkoutTimeout: ReturnType<typeof setTimeout> | undefined;
+    let orderTimeout: ReturnType<typeof setTimeout> | undefined;
+    const orderController = new AbortController();
+
     try {
+      orderTimeout = setTimeout(() => orderController.abort(), 15000);
       const response = await fetch("/api/cashfree/create-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        signal: orderController.signal,
         body: JSON.stringify({
           name: formData.name,
           phone: formData.phone,
@@ -169,6 +175,12 @@ export default function CheckoutPage() {
         setShowFallback(true);
         return;
       }
+
+      checkoutTimeout = setTimeout(() => {
+        setPaymentNotice("Cashfree is taking too long to open. Please pay via UPI below or contact us on WhatsApp.");
+        setShowFallback(true);
+        setCashfreeLoading(false);
+      }, 12000);
 
       const loaded = await loadCashfreeScript();
       if (!loaded) {
@@ -195,6 +207,8 @@ export default function CheckoutPage() {
       setPaymentNotice("Payment could not be started. Please pay via UPI below or contact us on WhatsApp.");
       setShowFallback(true);
     } finally {
+      if (orderTimeout) clearTimeout(orderTimeout);
+      if (checkoutTimeout) clearTimeout(checkoutTimeout);
       setCashfreeLoading(false);
     }
   };
@@ -329,6 +343,14 @@ export default function CheckoutPage() {
                   <Lock size={10} /> UPI, Cards &amp; Netbanking · Powered by Cashfree
                 </p>
               </form>
+
+              <button
+                type="button"
+                onClick={() => setShowFallback((current) => !current)}
+                className="mt-2 w-full text-center text-[11px] font-semibold text-gray-500 underline decoration-gray-300 underline-offset-2 transition hover:text-brand-orange dark:text-gray-400"
+              >
+                {showFallback ? "Hide UPI payment option" : "Payment not opening? Pay via UPI instead"}
+              </button>
             </div>
 
             {paymentNotice ? (

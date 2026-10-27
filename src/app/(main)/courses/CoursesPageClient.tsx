@@ -2,9 +2,10 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Check, Calendar, Laptop, Clock, Award, HelpCircle, CheckCircle, Lock } from "lucide-react";
+import { CheckCircle, Lock } from "lucide-react";
 import LeadForm from "@/components/LeadForm";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
+import ContentCreationCourseClient from "./content-creation/ContentCreationCourseClient";
 
 interface SyllabusModule {
   title: string;
@@ -77,18 +78,6 @@ export default function CoursesPage() {
     }, 4000);
   };
 
-  const contentCreationSyllabus: SyllabusModule[] = [
-    { title: "Module 1 – Content Creation Fundamentals", lessons: ["Understanding Content Creation", "Social Media Platforms Overview", "Choosing the Right Niche", "Content Strategy Mapping"] },
-    { title: "Module 2 – Content Research & Scripting", lessons: ["Advanced Content Research", "Script Writing Frameworks", "Pacing & Storytelling Techniques", "High-Retention Hook Creation"] },
-    { title: "Module 3 – Voice Over & Communication", lessons: ["Voice Recording Techniques", "Speaking with On-Camera Confidence", "Teleprompter & Camera Communication"] },
-    { title: "Module 4 – Mobile Video Shooting", lessons: ["Mobile Camera Professional Settings", "Three-Point Lighting Techniques", "Cinematic Camera Angles & Pans", "Audio Recording & Hardware Setup", "Hands-on Video Shooting Assignments"] },
-    { title: "Module 5 – Video Editing (Mobile & PC)", lessons: ["Professional Editing Workflow", "CapCut Editing Fundamentals", "Adding Keyframe Transitions & Effects", "Dynamic Text, Titles & Auto Captions", "Background Music Ducking & Enhancements", "Color Grading & Filter Effects", "Optimized Video Export Settings"] },
-    { title: "Module 6 – Social Media Account Creation", lessons: ["Instagram Professional Profile Setup", "Facebook Page Branding Configuration", "YouTube Channel Creation & Verification", "Bio and Profile Optimization"] },
-    { title: "Module 7 – Social Media Page Management", lessons: ["Publishing Timelines & Uploading Guide", "Content Calendars & Scheduling", "Audience Comment & Engagement Strategies", "Multi-Platform Page Management"] },
-    { title: "Module 8 – Social Media Growth", lessons: ["Instagram Reels Algorithm Growth Tips", "YouTube Search & Suggestion SEO", "Facebook Organic reach scaling", "Organic Traffic Strategies", "Personal Branding Fundamentals"] },
-    { title: "Module 9 – Freelancing & Client Acquisition", lessons: ["Building a Video Editor Portfolio", "Local & Global Client Acquisition", "Pricing Your Content Services", "Earning Streams Through Creators Economy"] }
-  ];
-
   const capcutSyllabus: SyllabusModule[] = [
     { title: "Module 1 – Introduction to Video Editing", lessons: ["Understanding Video Editing Rules", "Types of Video Content & Formats", "Standard Editing Workflow", "Mobile vs PC Editing Interfaces"] },
     { title: "Module 2 – CapCut Installation & VPN Setup", lessons: ["Downloading CapCut Mobile & Desktop", "VPN Installation & Connection Setup", "Creating a CapCut Cloud Account", "Free vs Pro version highlights", "CapCut interface and layout"] },
@@ -100,16 +89,6 @@ export default function CoursesPage() {
     { title: "Module 8 – Social Media Video Editing", lessons: ["Editing Widescreen YouTube Videos", "Editing Portrait Instagram Reels & Shorts", "Talking-head Video Pacing cuts", "Business promotional ads & edits", "Travel & product showcases"] },
     { title: "Module 9 – Export & Delivery", lessons: ["Choosing Best Export Settings", "High Definition, 2K & 4K exports", "Compression and file formats", "Watermark-free export setup", "Organized client deliverable exports"] },
     { title: "Module 10 – Freelancing & Career Growth", lessons: ["Building your editing showreel", "Finding client work on Upwork & Fiverr", "Pricing structure for editing", "Client communication & contract rules"] }
-  ];
-
-  const contentCreationFaqs = [
-    { q: "Is this course suitable for beginners?", a: "Yes. The course is specially designed for complete beginners and taught step by step in Telugu." },
-    { q: "Do I need a laptop?", a: "No. You can complete the entire content creation course using just your mobile phone. A laptop is optional but recommended." },
-    { q: "Can I join online?", a: "Yes. We offer interactive live online batches that you can attend from anywhere." },
-    { q: "Will I receive a certificate?", a: "Yes. Students who successfully complete the course modules and practical assignments will receive a Course Completion Certificate." },
-    { q: "Will I get lifetime recordings?", a: "Yes. Every student receives lifetime access to all live class recordings." },
-    { q: "Will I learn freelancing?", a: "Yes. We include a full module on portfolio building, setting up freelance accounts, and client contracts." },
-    { q: "Will I learn how to get clients?", a: "Yes. We teach you step-by-step methods to approach businesses, pitch content strategy, and acquire paid clients." }
   ];
 
   const capcutFaqs = [
@@ -203,191 +182,12 @@ export default function CoursesPage() {
       </section>
 
       {/* Main Course Details Section */}
+      {activeCourseId === "creation" ? (
+        <ContentCreationCourseClient embedded />
+      ) : (
       <section className="py-5 md:py-7 bg-white dark:bg-[#090d16]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          {/* 1. Complete Telugu Content Creation Course DETAILS */}
-          {activeCourseId === "creation" && (
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-              {/* Syllabus and Modules */}
-              <div className="lg:col-span-7 space-y-4 text-left animate-fadeIn">
-                <div className="space-y-4">
-                  <span className="text-xs font-bold uppercase bg-green-500 text-white px-2.5 py-1 rounded-full">Current Course</span>
-                  <h2 className="text-3xl font-semibold text-brand-blue dark:text-white">Complete Telugu Content Creation Course</h2>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
-                    Learn Content Creation in Telugu – From Beginner to Professional. Build a successful career in Content Creation. Learn how to research content, write scripts, record voice-overs, shoot professional videos, edit content, publish on social media, manage pages, grow your audience, and build your personal brand through practical, step-by-step Telugu training.
-                  </p>
-                </div>
-
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 border-y border-gray-100 dark:border-white/5 py-4 text-xs font-bold text-brand-charcoal dark:text-white">
-                  <div>⏳ Duration: 20 Days</div>
-                  <div>🌐 Mode: Live Online &amp; Offline</div>
-                  <div>🗣️ Language: Telugu</div>
-                  <div>📜 Certificate: Yes</div>
-                </div>
-
-                {/* Why Learn Content Creation */}
-                <div className="space-y-3">
-                  <h3 className="text-lg font-bold text-brand-blue dark:text-white">🚀 Why Learn Content Creation?</h3>
-                  <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-                    Content creation is one of today's most in-demand digital skills. Businesses, influencers, educators, and professionals all need high-quality content to grow online. At Creators College, you'll learn the complete content creation workflow used by professionals—from planning and shooting to editing, publishing, and growing your social media presence.
-                  </p>
-                </div>
-
-                {/* Detailed Module Selector */}
-                <div className="space-y-4">
-                  <h3 className="text-lg font-bold text-brand-blue dark:text-white">📚 What You'll Learn ({contentCreationSyllabus.length} Modules)</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {contentCreationSyllabus.map((mod, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => setActiveSyllabusIndex(idx)}
-                        className={`px-3 py-1.5 rounded-lg text-[10px] sm:text-xs font-bold transition cursor-pointer ${
-                          activeSyllabusIndex === idx
-                            ? "bg-brand-blue text-white"
-                            : "bg-brand-gray dark:bg-white/5 text-gray-500 hover:bg-gray-100"
-                        }`}
-                      >
-                        Module {idx + 1}
-                      </button>
-                    ))}
-                  </div>
-
-                  <div className="bg-brand-gray/30 dark:bg-white/5 p-6 rounded-2xl border border-gray-100 dark:border-white/5">
-                    <h4 className="font-semibold text-brand-blue dark:text-white border-b border-gray-200/50 dark:border-white/5 pb-2 mb-3">
-                      {contentCreationSyllabus[activeSyllabusIndex].title}
-                    </h4>
-                    <ul className="space-y-2 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
-                      {contentCreationSyllabus[activeSyllabusIndex].lessons.map((lesson, lIdx) => (
-                        <li key={lIdx} className="flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-brand-orange" />
-                          {lesson}
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="mt-4 flex items-start gap-2 rounded-xl bg-brand-orange/5 border border-brand-orange/15 px-3 py-2.5">
-                      <Lock size={13} className="mt-0.5 shrink-0 text-brand-orange" />
-                      <p className="text-[11px] leading-relaxed text-gray-500 dark:text-gray-400">
-                        Full module videos and resources are locked. After enrollment, our team shares your course
-                        access on WhatsApp.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Who Can Join */}
-                <div className="space-y-3">
-                  <h3 className="text-lg font-bold text-brand-blue dark:text-white">👨🎓 Who Can Join This Course?</h3>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    {["Students", "Job Seekers", "Housewives", "Business Owners", "Working Professionals", "Freelancers", "Entrepreneurs", "YouTubers", "Instagram Creators", "Beginners"].map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-                        <span className="w-1.5 h-1.5 rounded-full bg-brand-orange" />
-                        {item}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* What you'll receive */}
-                <div className="space-y-3">
-                  <h3 className="text-lg font-bold text-brand-blue dark:text-white">📦 What You'll Receive</h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {[
-                      "20-Day Practical Training",
-                      "Lifetime Course Recordings",
-                      "Course Completion Certificate",
-                      "Real Business Projects",
-                      "Practical Assignments",
-                      "Lifetime Student Support",
-                      "WhatsApp Community Access"
-                    ].map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-                        <CheckCircle size={14} className="text-brand-orange shrink-0" />
-                        {item}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Career Opportunities */}
-                <div className="space-y-3 pt-4">
-                  <h3 className="text-lg font-bold text-brand-blue dark:text-white">💼 Career Opportunities</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {["Content Creator", "Social Media Manager", "Freelance Content Creator", "Video Content Specialist", "YouTube Creator", "Instagram Creator", "Personal Brand Consultant", "Digital Creator", "Business Content Strategist"].map((role, idx) => (
-                      <span key={idx} className="text-xs bg-brand-blue/5 dark:bg-white/5 border border-gray-100 dark:border-white/5 px-3 py-1.5 rounded-full text-brand-blue dark:text-white font-bold">{role}</span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* FAQs Section */}
-                <div className="space-y-4 pt-6 border-t border-gray-100 dark:border-white/5">
-                  <h3 className="text-lg font-bold text-brand-blue dark:text-white">❓ Frequently Asked Questions</h3>
-                  <div className="space-y-2">
-                    {contentCreationFaqs.map((faq, idx) => (
-                      <div key={idx} className="border border-gray-100 dark:border-white/5 rounded-xl overflow-hidden">
-                        <button
-                          onClick={() => setOpenFaqIndex(openFaqIndex === idx ? null : idx)}
-                          className="w-full px-5 py-3 bg-brand-gray/20 dark:bg-white/5 flex justify-between items-center text-left"
-                        >
-                          <span className="font-bold text-xs sm:text-sm text-brand-blue dark:text-white">{faq.q}</span>
-                          <span className="text-brand-orange font-bold">{openFaqIndex === idx ? "−" : "+"}</span>
-                        </button>
-                        {openFaqIndex === idx && (
-                          <div className="px-5 py-3 bg-white dark:bg-brand-gray border-t border-gray-50 dark:border-white/5">
-                            <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{faq.a}</p>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Sidebar Signup & Payments */}
-              <div className="lg:col-span-5 space-y-4 text-left">
-                <div className="bg-brand-blue p-5 rounded-3xl text-white space-y-4 shadow-xl border border-brand-blue-dark relative overflow-hidden">
-                  <span className="text-[10px] font-semibold bg-brand-orange text-white py-1 px-3 rounded-full">Limited Launch Offer</span>
-                  <div className="space-y-1 pt-2">
-                    <div className="text-xs text-white/70 line-through">Original Value: ₹30,000</div>
-                    <div className="text-3xl font-bold text-brand-orange">₹5,000 <span className="text-xs text-white font-normal">one-time fee</span></div>
-                  </div>
-                  <div className="text-xs font-bold uppercase tracking-widest text-brand-orange">Course Highlights</div>
-                  <ul className="text-xs space-y-2 text-white/80 border-t border-white/10 pt-4">
-                    <li>✅ 20-Day Practical Training</li>
-                    <li>✅ Live Online &amp; Offline Classes</li>
-                    <li>✅ Lifetime Course Recordings</li>
-                    <li>✅ Real Business Projects</li>
-                    <li>✅ Course Completion Certificate</li>
-                  </ul>
-                  <div className="space-y-3 pt-2">
-                    <Link
-                      href="/checkout"
-                      className="w-full inline-flex items-center justify-center bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3.5 rounded-xl text-sm transition shadow-lg animate-enroll"
-                    >
-                      Enroll Now
-                    </Link>
-                    <Link
-                      href="/courses/content-creation"
-                      className="w-full inline-flex items-center justify-center bg-white/10 hover:bg-white/20 text-white font-bold py-3.5 rounded-xl text-sm transition"
-                    >
-                      View Course &amp; Modules
-                    </Link>
-                    <Link
-                      href="/lp/free-demo"
-                      className="w-full inline-flex items-center justify-center bg-white/10 hover:bg-white/20 text-white font-bold py-3.5 rounded-xl text-sm transition"
-                    >
-                      Book a Free Demo Class
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Lead Form */}
-                <LeadForm defaultCourse="Complete Telugu Content Creation Course" />
-              </div>
-            </div>
-          )}
-
           {/* 2. Complete Telugu CapCut Video Editing Course DETAILS */}
           {activeCourseId === "capcut" && (
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -412,13 +212,13 @@ export default function CoursesPage() {
                 <div className="space-y-3">
                   <h3 className="text-lg font-bold text-brand-blue dark:text-white">🎬 Course Overview</h3>
                   <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-                    Video Editing is one of the most in-demand digital skills today. Every business, influencer, creator, and brand requires high-quality videos to attract audiences and grow online. The Complete Telugu CapCut Video Editing Course (Mobile &amp; PC) is designed to teach you professional editing techniques from scratch using CapCut. From installation to advanced editing, AI features, and freelancing, you'll learn everything required to become a confident video editor.
+                    Video Editing is one of the most in-demand digital skills today. Every business, influencer, creator, and brand requires high-quality videos to attract audiences and grow online. The Complete Telugu CapCut Video Editing Course (Mobile &amp; PC) is designed to teach you professional editing techniques from scratch using CapCut. From installation to advanced editing, AI features, and freelancing, you&apos;ll learn everything required to become a confident video editor.
                   </p>
                 </div>
 
                 {/* Detailed Module Selector */}
                 <div className="space-y-4">
-                  <h3 className="text-lg font-bold text-brand-blue dark:text-white">📚 What You'll Learn ({capcutSyllabus.length} Modules)</h3>
+                  <h3 className="text-lg font-bold text-brand-blue dark:text-white">📚 What You&apos;ll Learn ({capcutSyllabus.length} Modules)</h3>
                   <div className="flex flex-wrap gap-2">
                     {capcutSyllabus.map((mod, idx) => (
                       <button
@@ -483,7 +283,7 @@ export default function CoursesPage() {
 
                 {/* What you'll receive */}
                 <div className="space-y-3">
-                  <h3 className="text-lg font-bold text-brand-blue dark:text-white">📦 What You'll Receive</h3>
+                  <h3 className="text-lg font-bold text-brand-blue dark:text-white">📦 What You&apos;ll Receive</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {[
                       "20-Day Practical Training",
@@ -594,10 +394,10 @@ export default function CoursesPage() {
                   <div className="space-y-4">
                     <h2 className="text-3xl font-bold text-brand-blue dark:text-white">Complete Telugu Adobe Premiere Pro Course</h2>
                     <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
-                      We're building a comprehensive Telugu Adobe Premiere Pro Course designed to help beginners and professionals master industry-standard video editing used by filmmakers, YouTubers, content creators, agencies, and production houses. Our curriculum is currently under development to ensure you receive practical, project-based training with the latest editing techniques.
+                      We&apos;re building a comprehensive Telugu Adobe Premiere Pro Course designed to help beginners and professionals master industry-standard video editing used by filmmakers, YouTubers, content creators, agencies, and production houses. Our curriculum is currently under development to ensure you receive practical, project-based training with the latest editing techniques.
                     </p>
                     <div className="space-y-2">
-                      <h4 className="text-xs font-bold text-brand-blue dark:text-white uppercase tracking-wider">🚀 What You'll Learn:</h4>
+                      <h4 className="text-xs font-bold text-brand-blue dark:text-white uppercase tracking-wider">🚀 What You&apos;ll Learn:</h4>
                       <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
                         Professional Video Editing Workflow • Adobe Premiere Pro Interface • Timeline Editing • Multi-Camera Editing • Professional Transitions • Motion Graphics Integration • Audio Editing &amp; Mixing • Color Correction &amp; Color Grading • Cinematic Editing • Green Screen Editing • YouTube &amp; Reels Editing • Export Settings • Freelancing &amp; Career Guidance.
                       </p>
@@ -612,7 +412,7 @@ export default function CoursesPage() {
                       Learn Motion Graphics, Visual Effects &amp; Animation in Telugu. The Complete Telugu Adobe After Effects Course is coming soon at Creators College. Learn professional Motion Graphics, Visual Effects (VFX), Logo Animation, Text Animation, YouTube Intro Animation, Instagram Reels Animation, 2D Motion Design, and Cinematic Effects through practical Telugu training.
                     </p>
                     <div className="space-y-2">
-                      <h4 className="text-xs font-bold text-brand-blue dark:text-white uppercase tracking-wider">🚀 What You'll Learn:</h4>
+                      <h4 className="text-xs font-bold text-brand-blue dark:text-white uppercase tracking-wider">🚀 What You&apos;ll Learn:</h4>
                       <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
                         Adobe After Effects Interface • Motion Graphics Fundamentals • Logo Animation • Text Animation • Shape Layers • Keyframe Animation &amp; Graph Editor • Masking Techniques • Motion Tracking • Green Screen (Keying) • Visual Effects (VFX) • Camera &amp; 3D Layers • Particle Effects • Kinetic Typography • AI-Powered Motion Graphics • Rendering &amp; Export • Freelancing &amp; Career Guidance.
                       </p>
@@ -627,7 +427,7 @@ export default function CoursesPage() {
                       Learn Professional Video Editing &amp; Color Grading in Telugu. The Complete Telugu DaVinci Resolve Course is coming soon at Creators College. Learn Professional Video Editing, Advanced Color Grading, Color Correction, Audio Editing, Motion Graphics, Fusion Visual Effects, YouTube Video Editing, Instagram Reels, Film Editing, and Cinematic Post-Production through practical Telugu training.
                     </p>
                     <div className="space-y-2">
-                      <h4 className="text-xs font-bold text-brand-blue dark:text-white uppercase tracking-wider">🚀 What You'll Learn:</h4>
+                      <h4 className="text-xs font-bold text-brand-blue dark:text-white uppercase tracking-wider">🚀 What You&apos;ll Learn:</h4>
                       <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
                         DaVinci Resolve Interface &amp; Project Setup • Professional Video Editing &amp; Multi-Cam • Audio Editing &amp; Fairlight • Color Correction &amp; Advanced Color Grading • LUTs &amp; Cinematic Looks • Fusion Motion Graphics &amp; VFX • Green Screen Editing • YouTube &amp; Reels workflows • Film Editing • Export Settings • Client Delivery &amp; Freelancing.
                       </p>
@@ -738,6 +538,7 @@ export default function CoursesPage() {
 
         </div>
       </section>
+      )}
 
       {/* Trust factors bottom banner */}
       <section className="py-5 md:py-7 bg-brand-gray/30 dark:bg-white/5 border-t border-gray-100 dark:border-white/5 text-center">
