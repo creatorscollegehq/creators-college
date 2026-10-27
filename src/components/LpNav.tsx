@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/navigation"; // Wait, Next.js link is from "next/link"
 import NextLink from "next/link";
 import { ChevronRight, Phone, Menu, X } from "lucide-react";
 
@@ -72,9 +71,12 @@ export default function LpNav({ onEnroll }: LpNavProps) {
 
           {/* Logo */}
           <NextLink href="/" className="shrink-0">
-            <img
+            <Image
               src="/logo/2 Horizontal Logo.png"
               alt="Creators College Logo"
+              width={256}
+              height={102}
+              sizes="(max-width: 768px) 108px, 144px"
               className="h-9 sm:h-12 w-auto object-contain dark-logo-stroke"
             />
           </NextLink>

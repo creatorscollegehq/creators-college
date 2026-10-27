@@ -16,6 +16,8 @@ export default function CroExitPopup() {
 
     let armed = false;
     let shown = false;
+    let frame = 0;
+    let scrollAttached = false;
 
     const showPopup = () => {
       if (shown || sessionStorage.getItem("cc_exit_popup_seen")) return;
@@ -24,8 +26,24 @@ export default function CroExitPopup() {
       setOpen(true);
     };
 
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        if (scrollable > 0 && window.scrollY / scrollable > 0.85) showPopup();
+      });
+    };
+
+    const attachScroll = () => {
+      if (scrollAttached) return;
+      scrollAttached = true;
+      window.addEventListener("scroll", onScroll, { passive: true });
+    };
+
     const armTimer = setTimeout(() => {
       armed = true;
+      attachScroll();
     }, 12000);
 
     const fallbackTimer = setTimeout(showPopup, 75000);
@@ -35,19 +53,14 @@ export default function CroExitPopup() {
       if (event.clientY <= 0) showPopup();
     };
 
-    const onScroll = () => {
-      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-      if (scrollable > 0 && window.scrollY / scrollable > 0.85) showPopup();
-    };
-
     document.addEventListener("mouseout", onMouseOut);
-    window.addEventListener("scroll", onScroll, { passive: true });
 
     return () => {
       clearTimeout(armTimer);
       clearTimeout(fallbackTimer);
+      if (frame) window.cancelAnimationFrame(frame);
       document.removeEventListener("mouseout", onMouseOut);
-      window.removeEventListener("scroll", onScroll);
+      if (scrollAttached) window.removeEventListener("scroll", onScroll);
     };
   }, []);
 
@@ -97,12 +110,12 @@ export default function CroExitPopup() {
           </p>
         </div>
 
-        <Link
+        <Link prefetch={false}
           href="/checkout"
           onClick={() => setOpen(false)}
           className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-orange px-5 py-3 text-sm font-bold text-white shadow-lg shadow-brand-orange/25 transition hover:bg-brand-orange-dark"
         >
-          Buy Now — ₹5,000
+          Enroll Now — ₹5,000
           <ArrowRight size={16} />
         </Link>
 

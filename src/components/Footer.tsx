@@ -1,8 +1,6 @@
-"use client";
-
+import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Mail, Phone, MapPin, ExternalLink } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import {
   InstagramIcon as Instagram,
   FacebookIcon as Facebook,
@@ -11,25 +9,22 @@ import {
 
 
 export default function Footer() {
-  const pathname = usePathname();
-
-  // Hide footer on landing pages to maintain high conversion focus
-  const isLandingPage = pathname?.startsWith("/lp/");
-  if (isLandingPage) return null;
-
   return (
     <footer className="bg-[#111827] dark:bg-[#090d16] text-white border-t border-white/10 pt-10 pb-6 mt-auto">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-4">
           {/* Brand Info */}
           <div className="space-y-4">
-            <img
+            <Image
               src="/logo/2 Horizontal Logo.png"
               alt="Creators College Logo"
+              width={256}
+              height={102}
+              sizes="(max-width: 768px) 150px, 180px"
               className="h-14 w-auto object-contain mb-4 dark-logo-stroke"
             />
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-              India's premium practical academy for content creators. Learn scripting, professional shooting, video editing, and social media growth in Telugu.
+              India&apos;s premium practical academy for content creators. Learn scripting, professional shooting, video editing, and social media growth in Telugu.
             </p>
             <div className="pt-2">
               <span className="text-xs uppercase tracking-widest text-brand-orange font-bold">
@@ -45,37 +40,37 @@ export default function Footer() {
             </h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/about" className="text-gray-400 hover:text-brand-orange text-sm transition duration-150">
+                <Link prefetch={false} href="/about" className="text-gray-400 hover:text-brand-orange text-sm transition duration-150">
                   About Creators College
                 </Link>
               </li>
               <li>
-                <Link href="/cecil-srungarapati" className="text-gray-400 hover:text-brand-orange text-sm transition duration-150">
+                <Link prefetch={false} href="/cecil-srungarapati" className="text-gray-400 hover:text-brand-orange text-sm transition duration-150">
                   Cecil Srungarapati (Founder &amp; CEO)
                 </Link>
               </li>
               <li>
-                <Link href="/lavanya-ganji" className="text-gray-400 hover:text-brand-orange text-sm transition duration-150">
+                <Link prefetch={false} href="/lavanya-ganji" className="text-gray-400 hover:text-brand-orange text-sm transition duration-150">
                   Lavanya Ganji (Managing Partner)
                 </Link>
               </li>
               <li>
-                <Link href="/courses" className="text-gray-400 hover:text-brand-orange text-sm transition duration-150">
+                <Link prefetch={false} href="/courses" className="text-gray-400 hover:text-brand-orange text-sm transition duration-150">
                   Our Courses
                 </Link>
               </li>
               <li>
-                <Link href="/corporate-training" className="text-gray-400 hover:text-brand-orange text-sm transition duration-150">
+                <Link prefetch={false} href="/corporate-training" className="text-gray-400 hover:text-brand-orange text-sm transition duration-150">
                   Corporate & College Training
                 </Link>
               </li>
               <li>
-                <Link href="/success-stories" className="text-gray-400 hover:text-brand-orange text-sm transition duration-150">
+                <Link prefetch={false} href="/success-stories" className="text-gray-400 hover:text-brand-orange text-sm transition duration-150">
                   Success Stories
                 </Link>
               </li>
               <li>
-                <Link href="/blog" className="text-gray-400 hover:text-brand-orange text-sm transition duration-150">
+                <Link prefetch={false} href="/blog" className="text-gray-400 hover:text-brand-orange text-sm transition duration-150">
                   Creator Resources Blog
                 </Link>
               </li>
@@ -144,7 +139,7 @@ export default function Footer() {
               </a>
             </div>
             <div className="pt-2">
-              <Link
+              <Link prefetch={false}
                 href="/checkout"
                 className="w-full inline-flex items-center justify-center gap-1.5 bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-2.5 px-4 rounded-xl text-xs transition duration-200 hover-lift shadow-md text-center"
               >
@@ -163,17 +158,17 @@ export default function Footer() {
             </p>
             <p className="text-gray-600 text-[10px]">
               Designed & Developed by{" "}
-              <a href="https://www.creatorscollege.in" className="hover:text-brand-orange text-gray-500 hover:underline transition">
+              <a href="https://www.creatorscollege.in" className="underline underline-offset-2 hover:text-brand-orange text-gray-500 transition">
                 Creators College Team
               </a>
             </p>
           </div>
           <div className="flex flex-wrap gap-x-6 gap-y-2 justify-center sm:justify-end text-xs text-gray-500">
-            <Link href="/privacy-policy" className="hover:text-gray-300 transition duration-150">Privacy Policy</Link>
-            <Link href="/terms-conditions" className="hover:text-gray-300 transition duration-150">Terms &amp; Conditions</Link>
-            <Link href="/refund-policy" className="hover:text-gray-300 transition duration-150">Refund Policy</Link>
-            <Link href="/disclaimer" className="hover:text-gray-300 transition duration-150">Disclaimer</Link>
-            <Link href="/sitemap" className="hover:text-gray-300 transition duration-150">Sitemap</Link>
+            <Link prefetch={false} href="/privacy-policy" className="hover:text-gray-300 transition duration-150">Privacy Policy</Link>
+            <Link prefetch={false} href="/terms-conditions" className="hover:text-gray-300 transition duration-150">Terms &amp; Conditions</Link>
+            <Link prefetch={false} href="/refund-policy" className="hover:text-gray-300 transition duration-150">Refund Policy</Link>
+            <Link prefetch={false} href="/disclaimer" className="hover:text-gray-300 transition duration-150">Disclaimer</Link>
+            <Link prefetch={false} href="/sitemap" className="hover:text-gray-300 transition duration-150">Sitemap</Link>
           </div>
         </div>
       </div>

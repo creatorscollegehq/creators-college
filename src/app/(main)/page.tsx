@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Caveat } from "next/font/google";
@@ -11,7 +8,6 @@ import {
   Camera,
   ChartNoAxesColumn,
   Check,
-  ChevronDown,
   Clapperboard,
   CloudUpload,
   FileText,
@@ -32,10 +28,12 @@ import {
 import { FacebookIcon, InstagramIcon, YoutubeIcon } from "@/components/SocialIcons";
 import { testimonials } from "@/data/testimonials";
 import CroExitPopup from "@/components/CroExitPopup";
-import VideoModal, { type ActiveVideo } from "@/components/VideoModal";
-import WhatsAppIcon from "@/components/WhatsAppIcon";
+import HomeAnalytics from "@/components/HomeAnalytics";
+import HomeFaq from "@/components/HomeFaq";
+import HomeStickyBar from "@/components/HomeStickyBar";
+import HomeVideoModal from "@/components/HomeVideoModal";
 
-const caveat = Caveat({ subsets: ["latin"], weight: ["600", "700"], display: "swap" });
+const caveat = Caveat({ subsets: ["latin"], weight: "600", display: "swap" });
 
 const YOUTUBE_URL = "https://www.youtube.com/@creatorscollegeofficial";
 
@@ -199,31 +197,37 @@ const valueItems = [
     title: "Complete Content Creation Course",
     desc: "Scripting to page handling in one clear path.",
     value: "₹30,000",
+    href: "/courses/content-creation",
   },
   {
     title: "11 Step-by-Step Modules",
     desc: "73 lessons in the right order without guesswork.",
     value: "Included",
+    href: "/courses/content-creation#curriculum",
   },
   {
     title: "Lifetime Access to Recordings",
     desc: "Rewatch any lesson whenever you want.",
     value: "Included",
+    href: "/courses/content-creation",
   },
   {
     title: "WhatsApp Doubt Support",
     desc: "Ask questions and get guidance from the team.",
     value: "Included",
+    href: "https://wa.me/918143937367?text=Hi%2C%20I%20need%20help%20with%20the%20Content%20Creation%20Course",
   },
   {
     title: "Practical Assignments",
     desc: "Learn by creating, not just watching.",
     value: "Included",
+    href: "/courses/content-creation#curriculum",
   },
   {
     title: "Course Completion Certificate",
     desc: "Showcase your achievement after finishing.",
     value: "Included",
+    href: "/courses/content-creation#curriculum",
   },
 ];
 
@@ -412,7 +416,6 @@ function VideoThumb({
   duration,
   videoId,
   videoTitle,
-  onPlay,
   className = "",
   sizes = "(max-width: 1024px) 100vw, 50vw",
 }: {
@@ -421,7 +424,6 @@ function VideoThumb({
   duration?: string;
   videoId?: string;
   videoTitle?: string;
-  onPlay?: (video: ActiveVideo) => void;
   className?: string;
   sizes?: string;
 }) {
@@ -446,12 +448,13 @@ function VideoThumb({
     </>
   );
 
-  if (videoId && onPlay) {
+  if (videoId) {
     return (
       <button
         type="button"
-        onClick={() => onPlay({ id: videoId, title: videoTitle ?? alt })}
-        aria-label={`Play: ${videoTitle ?? alt}`}
+        data-video-id={videoId}
+        data-video-title={videoTitle ?? alt}
+        aria-label={`Play: ${videoTitle ?? alt}${duration ? `, ${duration}` : ""}`}
         className={`group relative block overflow-hidden rounded-2xl bg-[#0B1B4B] ${className}`}
       >
         {content}
@@ -473,28 +476,6 @@ function VideoThumb({
 }
 
 export default function HomePage() {
-  const [showStickyBar, setShowStickyBar] = useState(false);
-  const [activeFAQ, setActiveFAQ] = useState<number | null>(null);
-  const [activeFaqTab, setActiveFaqTab] = useState("eligibility");
-  const [activeVideo, setActiveVideo] = useState<ActiveVideo | null>(null);
-
-  const activeFaqItems = faqCategories.find((category) => category.key === activeFaqTab)?.items ?? faqCategories[0].items;
-
-  useEffect(() => {
-    const fbq = (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq;
-    fbq?.("track", "ViewContent", {
-      content_name: "Complete Telugu Content Creation Course",
-      content_category: "Course",
-      value: 5000,
-      currency: "INR",
-    });
-
-    const onScroll = () => setShowStickyBar(window.scrollY > 560);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   const courseSchema = {
     "@context": "https://schema.org",
     "@graph": [
@@ -608,14 +589,14 @@ export default function HomePage() {
               </div>
 
               <div className="mt-4 flex max-w-[520px] flex-col gap-2 sm:flex-row">
-                <Link
+                <Link prefetch={false}
                   href="/checkout"
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-orange px-8 py-3.5 text-lg font-bold text-white shadow-lg shadow-brand-orange/25 transition hover:bg-brand-orange-dark hover:shadow-brand-orange/35 sm:flex-1"
                 >
-                  Buy Now
+                  Enroll Now
                   <ArrowRight size={20} />
                 </Link>
-                <Link
+                <Link prefetch={false}
                   href="/courses/content-creation"
                   className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-gray-200 bg-white px-5 py-3.5 text-sm font-bold text-[#0B1B4B] transition hover:border-brand-orange/40 hover:text-brand-orange dark:border-white/15 dark:bg-white/5 dark:text-white"
                 >
@@ -675,7 +656,6 @@ export default function HomePage() {
               alt="Content Creation Fundamentals — Creators College course introduction"
               videoId="MIKU_dgWis8"
               videoTitle="Content Creation Fundamentals"
-              onPlay={setActiveVideo}
               className="aspect-video w-full shadow-[0_22px_50px_-28px_rgba(11,27,75,0.45)]"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
@@ -707,82 +687,84 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="mt-5 grid grid-cols-2 gap-2.5 md:grid-cols-3 lg:grid-cols-5 lg:gap-4">
+          <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-5 lg:gap-3">
             {roadmapSteps.map((step) => {
               const Icon = step.icon;
-              const mediaClass = `group relative mt-3 block aspect-[4/3] w-full overflow-hidden rounded-lg ${
-                step.videoId ? "bg-[#0B1B4B]" : `bg-gradient-to-br ${step.gradient}`
-              }`;
-              const media = (
+              const hasVideo = Boolean(step.videoId);
+              const cardClass =
+                "group relative flex w-full items-center gap-2.5 rounded-2xl border border-white bg-white p-2.5 text-left shadow-[0_8px_24px_-18px_rgba(11,27,75,0.45)] transition duration-200 hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange/60 dark:border-white/10 dark:bg-[#0d1424] md:flex-col md:items-stretch md:gap-2 md:p-3";
+              const content = (
                 <>
-                  {step.videoId ? (
-                    <>
-                      <Image
-                        src={`/videos/${step.videoId}.jpg`}
-                        alt={`${step.title} — ${step.videoTitle}`}
-                        fill
-                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 18vw"
-                        className="object-cover transition duration-500 group-hover:scale-[1.03]"
-                      />
-                      <div className="absolute inset-0 bg-black/20 transition group-hover:bg-black/10" />
-                    </>
-                  ) : (
-                    <Icon size={42} className="absolute inset-0 m-auto text-white/60" strokeWidth={1.4} />
-                  )}
-                  <span className="absolute inset-0 m-auto flex h-7 w-7 items-center justify-center rounded-full bg-white/95 text-brand-orange shadow">
-                    {step.videoId ? (
-                      <Play size={10} fill="currentColor" strokeWidth={0} className="ml-0.5" />
-                    ) : (
-                      <Lock size={11} />
-                    )}
-                  </span>
-                  {step.duration ? (
-                    <span className="absolute bottom-1.5 right-1.5 rounded bg-black/65 px-1.5 py-0.5 text-[9px] font-medium text-white">
-                      {step.duration}
-                    </span>
-                  ) : (
-                    <span className="absolute inset-x-0 bottom-1.5 text-center text-[8px] font-bold uppercase tracking-wide text-[#0B1B4B]/70">
-                      Unlock in course
-                    </span>
-                  )}
-                </>
-              );
-
-              return (
-                <div key={step.title} className="relative">
-                  <div className="h-full rounded-2xl border border-white bg-white p-3 shadow-sm dark:border-white/10 dark:bg-[#0d1424]">
-                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand-orange text-[10px] font-bold text-white">
+                  <div className="flex shrink-0 items-center gap-1.5 md:w-full md:justify-between">
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-orange text-[9px] font-bold text-white">
                       {step.num}
                     </span>
-                    <div className="mt-1.5 flex justify-center text-[#0B1B4B] dark:text-white">
-                      <Icon size={23} strokeWidth={1.8} />
-                    </div>
-                    <h3 className="mt-1 text-center text-[12px] font-bold text-[#0B1B4B] dark:text-white">
+                    <Icon size={16} className="hidden text-[#0B1B4B] dark:text-white md:block" strokeWidth={1.8} />
+                  </div>
+
+                  <div className="min-w-0 flex-1 md:flex-none">
+                    <h3 className="flex items-center gap-1.5 text-[12px] font-bold leading-tight text-[#0B1B4B] dark:text-white">
+                      <Icon size={14} className="shrink-0 md:hidden" strokeWidth={1.9} />
                       {step.title}
                     </h3>
-
-                    {step.videoId ? (
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setActiveVideo({ id: step.videoId as string, title: step.videoTitle ?? step.title })
-                        }
-                        aria-label={`Play ${step.videoTitle}`}
-                        className={mediaClass}
-                      >
-                        {media}
-                      </button>
-                    ) : (
-                      <Link href="/checkout" aria-label={`Unlock ${step.title} in the course`} className={mediaClass}>
-                        {media}
-                      </Link>
-                    )}
-
-                    <p className="mt-2 text-[10px] leading-relaxed text-gray-500 dark:text-gray-400">
+                    <p className="mt-0.5 line-clamp-2 text-[10px] leading-snug text-gray-500 dark:text-gray-400 md:mt-1.5 md:min-h-[30px] md:line-clamp-none">
                       {step.desc}
                     </p>
                   </div>
-                </div>
+
+                  <div
+                    className={`relative h-[52px] w-[70px] shrink-0 overflow-hidden rounded-xl md:mt-1 md:h-auto md:w-full md:aspect-[4/3] ${
+                      hasVideo ? "bg-[#0B1B4B]" : `bg-gradient-to-br ${step.gradient}`
+                    }`}
+                  >
+                    {hasVideo ? (
+                      <>
+                        <Image
+                          src={`/videos/${step.videoId}.jpg`}
+                          alt={`${step.title} — ${step.videoTitle}`}
+                          fill
+                          sizes="(max-width: 640px) 70px, (max-width: 1024px) 50vw, 18vw"
+                          className="object-cover transition duration-500 group-hover:scale-[1.03]"
+                        />
+                        <div className="absolute inset-0 bg-black/20 transition group-hover:bg-black/10" />
+                      </>
+                    ) : (
+                      <Icon size={24} className="absolute inset-0 m-auto text-white/70" strokeWidth={1.4} />
+                    )}
+                    <span className="absolute inset-0 m-auto flex h-6 w-6 items-center justify-center rounded-full bg-white/95 text-brand-orange shadow md:h-8 md:w-8">
+                      {hasVideo ? (
+                        <Play size={10} fill="currentColor" strokeWidth={0} className="ml-0.5" />
+                      ) : (
+                        <Lock size={11} />
+                      )}
+                    </span>
+                    {step.duration ? (
+                      <span className="absolute bottom-1 right-1 rounded bg-black/65 px-1 py-0.5 text-[8px] font-medium text-white">
+                        {step.duration}
+                      </span>
+                    ) : (
+                      <span className="absolute inset-x-0 bottom-1 text-center text-[7px] font-bold uppercase tracking-wide text-[#0B1B4B]/70">
+                        Unlock
+                      </span>
+                    )}
+                  </div>
+                </>
+              );
+
+              return hasVideo ? (
+                <button
+                  key={step.title}
+                  type="button"
+                  data-video-id={step.videoId}
+                  data-video-title={step.videoTitle ?? step.title}
+                  className={cardClass}
+                >
+                  {content}
+                </button>
+              ) : (
+                <Link prefetch={false} key={step.title} href="/checkout" className={cardClass}>
+                  {content}
+                </Link>
               );
             })}
           </div>
@@ -903,7 +885,6 @@ export default function HomePage() {
               duration="1:06"
               videoId="dTABmoxhu7M"
               videoTitle="My Goal Is to Teach Content Creation"
-              onPlay={setActiveVideo}
               className="aspect-video w-full shadow-[0_22px_50px_-28px_rgba(11,27,75,0.45)]"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
@@ -938,11 +919,11 @@ export default function HomePage() {
                   Save ₹25,000
                 </span>
               </div>
-              <Link
+              <Link prefetch={false}
                 href="/checkout"
                 className="mt-4 inline-flex w-full max-w-sm items-center justify-center gap-2 rounded-xl bg-brand-orange px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-brand-orange/25 transition hover:bg-brand-orange-dark"
               >
-                Buy Now
+                Enroll Now
                 <ArrowRight size={18} />
               </Link>
               <p className="mt-2.5 text-xs text-gray-500 dark:text-gray-400">
@@ -952,21 +933,40 @@ export default function HomePage() {
 
             <div className="rounded-3xl border border-gray-100 bg-[#F8FAFC] p-4 shadow-sm dark:border-white/10 dark:bg-white/[0.04] sm:p-6">
               <div className="space-y-2.5">
-                {valueItems.map((item) => (
-                  <div
-                    key={item.title}
-                    className="flex items-start gap-3 rounded-2xl bg-white p-3 shadow-sm dark:bg-white/[0.05] sm:p-3.5"
-                  >
-                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400">
-                      <Check size={16} strokeWidth={3} />
-                    </span>
-                    <div className="min-w-0">
-                      <p className="text-sm font-bold text-[#0B1B4B] dark:text-white">{item.title}</p>
-                      <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">{item.desc}</p>
-                    </div>
-                    <span className="ml-auto shrink-0 text-[11px] font-semibold text-gray-400">{item.value}</span>
-                  </div>
-                ))}
+                {valueItems.map((item) => {
+                  const rowClass =
+                    "group flex items-start gap-3 rounded-2xl border border-transparent bg-white p-3 shadow-sm transition hover:border-brand-orange/30 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-orange/50 dark:bg-white/[0.05] sm:p-3.5";
+                  const rowContent = (
+                    <>
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400">
+                        <Check size={16} strokeWidth={3} />
+                      </span>
+                      <div className="min-w-0">
+                        <p className="text-sm font-bold text-[#0B1B4B] dark:text-white">{item.title}</p>
+                        <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">{item.desc}</p>
+                      </div>
+                      <span className="ml-auto shrink-0 text-[11px] font-semibold text-gray-400">
+                        {item.value}
+                        <ArrowRight size={12} className="opacity-0 transition group-hover:opacity-100" />
+                      </span>
+                    </>
+                  );
+                  return item.href.startsWith("http") ? (
+                    <a
+                      key={item.title}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={rowClass}
+                    >
+                      {rowContent}
+                    </a>
+                  ) : (
+                    <Link prefetch={false} key={item.title} href={item.href} className={rowClass}>
+                      {rowContent}
+                    </Link>
+                  );
+                })}
               </div>
               <div className="mt-4 flex items-center justify-between border-t border-gray-200 pt-4 dark:border-white/10">
                 <span className="text-sm font-semibold text-gray-500 dark:text-gray-400">Total value</span>
@@ -1023,7 +1023,7 @@ export default function HomePage() {
           </div>
 
           <div className="mt-4 text-center">
-            <Link
+            <Link prefetch={false}
               href="/checkout"
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-orange px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-orange/25 transition hover:bg-brand-orange-dark"
             >
@@ -1095,7 +1095,7 @@ export default function HomePage() {
           <span className="text-xs text-gray-600 dark:text-gray-300">
             Launch offer: ₹30,000 course at ₹5,000
           </span>
-          <Link href="/checkout" className="text-xs font-bold text-brand-orange hover:underline">
+          <Link prefetch={false} href="/checkout" className="text-xs font-bold text-brand-orange hover:underline">
             Join the current batch →
           </Link>
         </div>
@@ -1146,11 +1146,11 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <Link
+              <Link prefetch={false}
                 href="/checkout"
                 className="mt-4 inline-flex w-full max-w-md items-center justify-center gap-2 rounded-xl bg-brand-orange px-8 py-3.5 text-lg font-bold text-white shadow-xl shadow-brand-orange/25 transition hover:bg-brand-orange-dark"
               >
-                Buy Now — ₹5,000
+                Enroll Now — ₹5,000
                 <ArrowRight size={20} />
               </Link>
 
@@ -1188,14 +1188,32 @@ export default function HomePage() {
                 </div>
 
                 <div className="mt-4 grid grid-cols-2 gap-2">
-                  {roadmapSteps.map((step) => (
-                    <div key={step.title} className="flex items-center gap-1.5 rounded-lg bg-white/[0.06] px-2.5 py-2">
-                      <Check size={12} strokeWidth={3} className="shrink-0 text-emerald-400" />
-                      <span className="min-w-0 truncate text-[10.5px] font-medium text-white/80">
-                        {step.title === "Account Creations" ? "Accounts" : step.title}
-                      </span>
-                    </div>
-                  ))}
+                  {roadmapSteps.map((step) => {
+                    const chipClass =
+                      "flex items-center gap-1.5 rounded-lg bg-white/[0.06] px-2.5 py-2 text-left transition hover:bg-white/[0.12] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FFC93C]/70";
+                    const label = step.title === "Account Creations" ? "Accounts" : step.title;
+                    const content = (
+                      <>
+                        <Check size={12} strokeWidth={3} className="shrink-0 text-emerald-400" />
+                        <span className="min-w-0 truncate text-[10.5px] font-medium text-white/80">{label}</span>
+                      </>
+                    );
+                    return step.videoId ? (
+                      <button
+                        key={step.title}
+                        type="button"
+                        data-video-id={step.videoId}
+                        data-video-title={step.videoTitle ?? step.title}
+                        className={chipClass}
+                      >
+                        {content}
+                      </button>
+                    ) : (
+                      <Link prefetch={false} key={step.title} href="/checkout" className={chipClass}>
+                        {content}
+                      </Link>
+                    );
+                  })}
                 </div>
 
                 <div className="mt-4 flex items-center justify-between gap-3 rounded-xl bg-[#FFC93C] px-3.5 py-3">
@@ -1217,120 +1235,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="bg-[#F8FAFC] py-5 dark:bg-white/[0.03] md:py-7">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-brand-orange">FAQ</span>
-            <h2 className="mt-2 text-3xl font-bold tracking-tight text-[#0B1B4B] dark:text-white sm:text-4xl">
-              Frequently Asked Questions
-            </h2>
-            <p className="mx-auto mt-2.5 max-w-xl text-sm leading-relaxed text-gray-600 dark:text-gray-300 sm:text-base">
-              Everything you need to know before enrolling.
-            </p>
-          </div>
+      <HomeFaq categories={faqCategories} />
 
-          <div className="mt-4 grid gap-6 lg:grid-cols-[240px_1fr] lg:gap-5">
-            <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-2 lg:mx-0 lg:flex-col lg:overflow-visible lg:px-0">
-              {faqCategories.map((category) => (
-                <button
-                  key={category.key}
-                  onClick={() => {
-                    setActiveFaqTab(category.key);
-                    setActiveFAQ(null);
-                  }}
-                  className={`shrink-0 rounded-xl px-4 py-2.5 text-left text-xs font-bold transition sm:text-sm lg:w-full ${
-                    activeFaqTab === category.key
-                      ? "bg-[#0B1B4B] text-white shadow-md dark:bg-brand-orange"
-                      : "bg-white text-gray-600 hover:text-brand-orange dark:bg-white/5 dark:text-gray-300"
-                  }`}
-                >
-                  {category.label}
-                </button>
-              ))}
-            </div>
-
-            <div className="space-y-2.5">
-              {activeFaqItems.map((faq, index) => {
-                const isOpen = activeFAQ === index;
-                return (
-                  <div
-                    key={faq.q}
-                    className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm dark:border-white/10 dark:bg-[#0d1424]"
-                  >
-                    <button
-                      onClick={() => setActiveFAQ(isOpen ? null : index)}
-                      className="flex w-full items-center justify-between gap-4 px-4 py-3 text-left sm:px-5"
-                      aria-expanded={isOpen}
-                    >
-                      <span className="text-sm font-semibold text-[#0B1B4B] dark:text-white sm:text-base">
-                        {faq.q}
-                      </span>
-                      <ChevronDown
-                        size={18}
-                        className={`shrink-0 text-brand-orange transition-transform ${isOpen ? "rotate-180" : ""}`}
-                      />
-                    </button>
-                    {isOpen && (
-                      <div className="border-t border-gray-100 px-4 py-3 dark:border-white/5 sm:px-5">
-                        <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">{faq.a}</p>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          <p className="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
-            Still have questions?{" "}
-            <a
-              href="https://wa.me/918143937367?text=Hi%2C%20I%20have%20a%20question%20about%20the%20Telugu%20Content%20Creation%20Course"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-bold text-brand-orange hover:underline"
-            >
-              Chat on WhatsApp
-            </a>
-          </p>
-        </div>
-      </section>
-
-      {/* Sticky mobile CTA */}
-      <div
-        className={`fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 backdrop-blur transition-transform duration-300 dark:border-white/10 dark:bg-[#0b1220]/95 lg:hidden ${
-          showStickyBar ? "translate-y-0" : "translate-y-full"
-        }`}
-      >
-        <div className="flex items-center justify-between gap-3 px-4 py-3">
-          <div>
-            <div className="flex items-baseline gap-2">
-              <span className="text-lg font-bold leading-none text-[#0B1B4B] dark:text-white">₹5,000</span>
-              <span className="text-[11px] text-gray-400 line-through">₹30,000</span>
-            </div>
-            <p className="mt-1 text-[10px] text-gray-500 dark:text-gray-400">Offer Price · Only</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <a
-              href="https://wa.me/918143937367?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%20Telugu%20Content%20Creation%20Course"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Chat on WhatsApp"
-              className="flex h-11 w-11 items-center justify-center rounded-xl border border-gray-200 text-[#0B1B4B] dark:border-white/15 dark:text-white"
-            >
-              <WhatsAppIcon size={18} className="text-[#25D366]" />
-            </a>
-            <Link
-              href="/checkout"
-              className="inline-flex items-center justify-center rounded-xl bg-brand-orange px-5 py-3 text-sm font-bold text-white shadow-md shadow-brand-orange/25"
-            >
-              Buy Now
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      <VideoModal video={activeVideo} onClose={() => setActiveVideo(null)} />
+      <HomeStickyBar />
+      <HomeVideoModal />
+      <HomeAnalytics />
       <CroExitPopup />
     </div>
   );

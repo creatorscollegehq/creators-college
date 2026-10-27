@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ArrowRight, Sun, Moon } from "lucide-react";
@@ -10,23 +11,33 @@ import WhatsAppIcon from "./WhatsAppIcon";
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isWhatsAppGateOpen, setIsWhatsAppGateOpen] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const progressRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
-  // Track window scroll progress for top indicator bar
   useEffect(() => {
-    const handleScroll = () => {
+    let frame = 0;
+
+    const updateProgress = () => {
+      frame = 0;
+      const bar = progressRef.current;
+      if (!bar) return;
       const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalScroll > 0) {
-        const progress = (window.scrollY / totalScroll) * 100;
-        setScrollProgress(progress);
-      } else {
-        setScrollProgress(0);
-      }
+      bar.style.width = totalScroll > 0 ? `${(window.scrollY / totalScroll) * 100}%` : "0%";
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(updateProgress);
+    };
+
+    updateProgress();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
   }, []);
 
   // Smooth scroll to top when clicking the logo on the Home Page
@@ -71,14 +82,14 @@ export default function Header() {
       <span className="hidden sm:inline">
         🔥 Launch Offer: ₹30,000 Course for Just ₹5,000 | Save ₹25,000 | Limited-Time Enrollment &rarr;
       </span>
-      <Link
+      <Link prefetch={false}
         href="/checkout"
         className="sm:hidden inline-flex flex-col items-center leading-tight hover:text-brand-charcoal transition"
       >
         <span>🔥 Launch Offer: ₹30,000 Course</span>
         <span>at just ₹5,000 · Enroll &rarr;</span>
       </Link>
-      <Link href="/checkout" className="hidden sm:inline-flex underline hover:text-brand-charcoal transition items-center gap-0.5 font-bold uppercase whitespace-nowrap">
+      <Link prefetch={false} href="/checkout" className="hidden sm:inline-flex underline hover:text-brand-charcoal transition items-center gap-0.5 font-bold uppercase whitespace-nowrap">
         Enroll
       </Link>
     </div>
@@ -90,10 +101,13 @@ export default function Header() {
         {announcementStripe}
         <header className="w-full bg-brand-blue py-3 sm:py-3 border-b border-brand-blue-dark dark:bg-brand-gray dark:border-white/5 relative">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-12 sm:h-14">
-            <Link href="/" onClick={handleLogoClick} className="flex items-center">
-              <img 
-                src="/logo/2 Horizontal Logo.png" 
-                alt="Creators College Logo" 
+            <Link prefetch={false} href="/" onClick={handleLogoClick} className="flex items-center">
+              <Image
+                src="/logo/2 Horizontal Logo.png"
+                alt="Creators College Logo"
+                width={256}
+                height={102}
+                sizes="(max-width: 768px) 132px, 168px"
                 className="h-11 sm:h-11 md:h-14 w-auto object-contain transition-all dark-logo-stroke"
               />
             </Link>
@@ -119,9 +133,9 @@ export default function Header() {
         </header>
         {/* Scroll Progress Indicator Bar */}
         <div className="w-full h-[3px] bg-brand-orange/20 absolute bottom-0 left-0 z-50">
-          <div 
-            className="h-full bg-brand-orange transition-all duration-75 origin-left"
-            style={{ width: `${scrollProgress}%` }}
+          <div
+            ref={progressRef}
+            className="h-full w-0 bg-brand-orange transition-[width] duration-75 origin-left"
           />
         </div>
         <WhatsAppGateModal
@@ -143,11 +157,14 @@ export default function Header() {
           <div className="flex items-center justify-between h-18 sm:h-18">
             {/* Logo */}
             <div className="flex-shrink-0 py-2">
-              <Link href="/" onClick={handleLogoClick} className="flex items-center">
-                <img
+              <Link prefetch={false} href="/" onClick={handleLogoClick} className="flex items-center">
+                <Image
                   src={logoSrc}
                   alt="Creators College Logo"
-                  className="h-12 sm:h-12 md:h-15 w-auto object-contain transition-all dark-logo-stroke"
+                  width={256}
+                  height={102}
+                  sizes="(max-width: 768px) 132px, 168px"
+                  className="h-11 sm:h-12 md:h-15 w-auto object-contain transition-all dark-logo-stroke"
                 />
               </Link>
             </div>
@@ -157,7 +174,7 @@ export default function Header() {
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
                 return (
-                  <Link
+                  <Link prefetch={false}
                     key={link.href}
                     href={link.href}
                     className={`text-sm font-bold tracking-wide transition duration-200 py-2 border-b-2 hover:text-brand-orange ${
@@ -182,7 +199,7 @@ export default function Header() {
                 <Moon size={20} className="dark:hidden" />
                 <Sun size={20} className="hidden dark:block" />
               </button>
-              <Link
+              <Link prefetch={false}
                 href="/checkout"
                 className="bg-brand-orange hover:bg-brand-orange-dark text-white px-6 py-2.5 rounded-full text-sm font-bold tracking-wide shadow-lg hover:shadow-brand-orange/20 transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] animate-enroll"
               >
@@ -190,19 +207,19 @@ export default function Header() {
               </Link>
             </div>
 
-            {/* Mobile Buy Now + menu button */}
-            <div className="flex lg:hidden items-center gap-2">
-              <Link
+            {/* Mobile Enroll CTA + menu button */}
+            <div className="flex shrink-0 items-center gap-1.5 sm:gap-2 lg:hidden">
+              <Link prefetch={false}
                 href="/checkout"
-                className="inline-flex items-center gap-1 rounded-full bg-brand-orange px-3.5 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-brand-orange-dark active:scale-[0.97]"
+                className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full bg-brand-orange px-3.5 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-brand-orange-dark active:scale-[0.97]"
               >
-                Buy Now
-                <ArrowRight size={13} />
+                Enroll Now
+                <ArrowRight size={13} className="hidden min-[360px]:block" />
               </Link>
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 type="button"
-                className="inline-flex items-center justify-center rounded-md p-2 text-brand-charcoal transition duration-200 hover:text-brand-orange focus:outline-none dark:text-white"
+                className="inline-flex items-center justify-center rounded-md p-1.5 text-brand-charcoal transition duration-200 hover:text-brand-orange focus:outline-none dark:text-white sm:p-2"
                 aria-controls="mobile-menu"
                 aria-expanded={isOpen}
               >
@@ -220,7 +237,7 @@ export default function Header() {
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
                 return (
-                  <Link
+                  <Link prefetch={false}
                     key={link.href}
                     href={link.href}
                     onClick={() => setIsOpen(false)}
@@ -235,7 +252,7 @@ export default function Header() {
                 );
               })}
               <div className="space-y-3 px-3 pt-4">
-                <Link
+                <Link prefetch={false}
                   href="/checkout"
                   onClick={() => setIsOpen(false)}
                   className="block w-full bg-brand-orange hover:bg-brand-orange-dark text-white py-3 rounded-full text-base font-bold shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] animate-enroll justify-center"
@@ -259,9 +276,9 @@ export default function Header() {
 
       {/* Scroll Progress Indicator Bar */}
       <div className="w-full h-[3px] bg-brand-orange/20 absolute bottom-0 left-0 z-50">
-        <div 
-          className="h-full bg-brand-orange transition-all duration-75 origin-left"
-          style={{ width: `${scrollProgress}%` }}
+        <div
+          ref={progressRef}
+          className="h-full w-0 bg-brand-orange transition-[width] duration-75 origin-left"
         />
       </div>
 

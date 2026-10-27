@@ -15,10 +15,21 @@ export default function FloatingContact() {
   const [showOnMobile, setShowOnMobile] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setShowOnMobile(window.scrollY > 220);
-    onScroll();
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      setShowOnMobile(window.scrollY > 220);
+    };
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(update);
+    };
+    update();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   return (

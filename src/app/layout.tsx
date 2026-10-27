@@ -1,19 +1,12 @@
 import type { Metadata } from "next";
-import { Outfit, Inter } from "next/font/google";
+import { Outfit } from "next/font/google";
+import DeferredThirdParty from "@/components/DeferredThirdParty";
 import FloatingContact from "@/components/FloatingContact";
 import "./globals.css";
-
-import Script from "next/script";
 
 const outfit = Outfit({
   subsets: ["latin"],
   variable: "--font-outfit",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
   display: "swap",
 });
 
@@ -46,9 +39,9 @@ export const metadata: Metadata = {
     locale: "en_IN",
   },
   icons: {
-    icon: "/logo/5%20Favicon.png",
-    shortcut: "/logo/5%20Favicon.png",
-    apple: "/logo/5%20Favicon.png",
+    icon: [{ url: "/logo/favicon-32.png", sizes: "32x32", type: "image/png" }],
+    shortcut: "/logo/favicon-32.png",
+    apple: [{ url: "/logo/favicon-180.png", sizes: "180x180", type: "image/png" }],
   },
   verification: {
     google: "may_Kc9UR87qLNcWRNxuX7ddAQ247N4uQR9msbP6lLM",
@@ -66,56 +59,18 @@ export default function RootLayout({
   const gtmId = "GTM-WDMNVL34";
 
   return (
-    <html lang="en" className={`${outfit.variable} ${inter.variable} scroll-smooth`}>
+    <html lang="en" className={`${outfit.variable} scroll-smooth`}>
       <head>
-        {/* Google tag (gtag.js) */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-D418QEH1D5"
-          strategy="afterInteractive"
-        />
-        <Script
-          id="google-analytics"
-          strategy="afterInteractive"
+        <script
           dangerouslySetInnerHTML={{
             __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-
-              gtag('config', 'G-D418QEH1D5');
-            `,
-          }}
-        />
-        {/* Google Tag Manager */}
-        <Script
-          id="gtm-script"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','${gtmId}');
-            `,
-          }}
-        />
-        {/* Meta Pixel Code */}
-        <Script
-          id="meta-pixel"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              !function(f,b,e,v,n,t,s)
-              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
-              t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '1584046740011776');
-              fbq('track', 'PageView');
+              window.fbq = window.fbq || function () {
+                window.fbq.callMethod ? window.fbq.callMethod.apply(window.fbq, arguments) : window.fbq.queue.push(arguments);
+              };
+              window.fbq.push = window.fbq;
+              window.fbq.loaded = false;
+              window.fbq.version = '2.0';
+              window.fbq.queue = [];
             `,
           }}
         />
@@ -187,6 +142,7 @@ export default function RootLayout({
           />
         </noscript>
         {children}
+        <DeferredThirdParty />
         <FloatingContact />
       </body>
     </html>
