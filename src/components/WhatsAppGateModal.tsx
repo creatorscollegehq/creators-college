@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { X, Send } from "lucide-react";
+import WhatsAppIcon from "./WhatsAppIcon";
 
 interface WhatsAppGateModalProps {
   isOpen: boolean;
@@ -104,11 +105,9 @@ export default function WhatsAppGateModal({ isOpen, onClose, whatsappUrl }: What
         </button>
 
         <div className="p-6 text-center space-y-4">
-          <img
-            src="/whatsapp-logo.png"
-            alt="WhatsApp Logo"
-            className="w-16 h-16 object-contain mx-auto"
-          />
+          <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/25">
+            <WhatsAppIcon size={36} />
+          </span>
           <div className="space-y-2 text-center">
             <h3 className="text-xl font-bold text-brand-blue dark:text-white">Chat with Coordinator</h3>
             <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed max-w-xs mx-auto">

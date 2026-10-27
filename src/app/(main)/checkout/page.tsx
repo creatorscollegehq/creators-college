@@ -1,7 +1,19 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { CreditCard, CheckCircle2, MessageSquare, AlertCircle, Smartphone, QrCode, Loader2, Lock, ShieldCheck } from "lucide-react";
+import React, { useState } from "react";
+import Link from "next/link";
+import {
+  AlertCircle,
+  ArrowRight,
+  CheckCircle2,
+  CreditCard,
+  Loader2,
+  Lock,
+  QrCode,
+  ShieldCheck,
+  Smartphone,
+} from "lucide-react";
+import WhatsAppIcon from "@/components/WhatsAppIcon";
 
 interface CashfreeCheckoutInstance {
   checkout: (options: { paymentSessionId: string; redirectTarget: "_self" | "_blank" }) => Promise<void>;
@@ -12,41 +24,24 @@ type CashfreeWindow = Window & {
   fbq?: (...args: unknown[]) => void;
 };
 
+const COURSE = {
+  id: "content-creation",
+  name: "Complete Telugu Content Creation Course",
+  price: 5000,
+  originalPrice: 30000,
+  duration: "20 Days",
+};
+
 export default function CheckoutPage() {
-  const [selectedCourse, setSelectedCourse] = useState("content-creation");
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
     email: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [orderGenerated, setOrderGenerated] = useState(false);
   const [cashfreeLoading, setCashfreeLoading] = useState(false);
   const [paymentNotice, setPaymentNotice] = useState("");
-
-  useEffect(() => {
-    const requestedCourse = new URLSearchParams(window.location.search).get("course");
-    if (requestedCourse !== "content-creation" && requestedCourse !== "capcut-editing") return;
-    const timer = setTimeout(() => setSelectedCourse(requestedCourse), 0);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const courses = {
-    "content-creation": {
-      name: "Complete Telugu Content Creation Course",
-      price: 5000,
-      originalPrice: 30000,
-      duration: "20 Days"
-    },
-    "capcut-editing": {
-      name: "Complete Telugu CapCut Video Editing Course (Mobile & PC)",
-      price: 5000,
-      originalPrice: 30000,
-      duration: "20 Days"
-    }
-  };
-
-  const activeCourse = courses[selectedCourse as keyof typeof courses];
+  const [showFallback, setShowFallback] = useState(false);
 
   const validate = () => {
     const tempErrors: Record<string, string> = {};
@@ -71,67 +66,50 @@ export default function CheckoutPage() {
     }
   };
 
-  const handleGenerateOrder = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validate()) return;
-
-    const eventId = `checkout_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-
-    // Fire client-side Meta Pixel InitiateCheckout event
+  const trackInitiateCheckout = () => {
+    const eventId = `checkout_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
     const fbq = (window as CashfreeWindow).fbq;
-    fbq?.('track', 'InitiateCheckout', {
-      content_name: activeCourse.name,
-      value: Number(activeCourse.price),
-      currency: 'INR'
-    }, {
-      eventID: eventId
-    });
 
-    // Call server-side Meta Conversions API (CAPI) Proxy
-    try {
-      fetch("/api/meta-capi", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
-          email: formData.email,
-          eventId: eventId,
-          url: window.location.href,
-          source: activeCourse.name,
-          eventName: "InitiateCheckout",
-          value: activeCourse.price,
-          currency: "INR"
-        }),
-      }).catch(err => console.error("Meta CAPI trigger error (silent):", err));
-    } catch {
-      // Silent catch
-    }
+    fbq?.(
+      "track",
+      "InitiateCheckout",
+      {
+        content_name: COURSE.name,
+        value: COURSE.price,
+        currency: "INR",
+      },
+      { eventID: eventId }
+    );
 
-    // Send lead to Google Sheets API
-    try {
-      await fetch("/api/lead", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          phone: formData.phone,
-          email: formData.email || "N/A",
-          course: activeCourse.name,
-          message: `Generated checkout order for ₹${activeCourse.price}. User needs to pay and send screenshot.`,
-          source: `Checkout Page Form`,
-          type: "enrollment",
-        }),
-      });
-    } catch (err) {
-      console.error("Failed to post checkout lead to Google Sheets:", err);
-    }
+    fetch("/api/meta-capi", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        eventId,
+        url: window.location.href,
+        source: COURSE.name,
+        eventName: "InitiateCheckout",
+        value: COURSE.price,
+        currency: "INR",
+      }),
+    }).catch((err) => console.error("Meta CAPI trigger error (silent):", err));
 
-    setOrderGenerated(true);
+    fetch("/api/lead", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email || "N/A",
+        course: COURSE.name,
+        message: `Checkout started for ₹${COURSE.price}. Payment pending.`,
+        source: "Checkout Page",
+        type: "enrollment",
+      }),
+    }).catch((err) => console.error("Failed to post checkout lead:", err));
   };
 
   const loadCashfreeScript = () =>
@@ -155,10 +133,14 @@ export default function CheckoutPage() {
       document.body.appendChild(script);
     });
 
-  const handleCashfreePay = async () => {
-    if (cashfreeLoading) return;
+  const handlePayment = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (cashfreeLoading || !validate()) return;
+
     setCashfreeLoading(true);
     setPaymentNotice("");
+    setShowFallback(false);
+    trackInitiateCheckout();
 
     try {
       const response = await fetch("/api/cashfree/create-order", {
@@ -168,9 +150,9 @@ export default function CheckoutPage() {
           name: formData.name,
           phone: formData.phone,
           email: formData.email,
-          courseId: selectedCourse,
-          courseName: activeCourse.name,
-          amount: activeCourse.price,
+          courseId: COURSE.id,
+          courseName: COURSE.name,
+          amount: COURSE.price,
         }),
       });
 
@@ -178,17 +160,20 @@ export default function CheckoutPage() {
 
       if (!data?.configured) {
         setPaymentNotice(data?.message || "Cashfree is being activated. Please pay via UPI below.");
+        setShowFallback(true);
         return;
       }
 
       if (!response.ok || !data?.paymentSessionId) {
         setPaymentNotice(data?.error || "Unable to start the payment. Please try UPI below.");
+        setShowFallback(true);
         return;
       }
 
       const loaded = await loadCashfreeScript();
       if (!loaded) {
         setPaymentNotice("Could not load the payment window. Please pay via UPI below.");
+        setShowFallback(true);
         return;
       }
 
@@ -197,284 +182,240 @@ export default function CheckoutPage() {
       });
       if (!cashfree) {
         setPaymentNotice("Could not open the payment window. Please pay via UPI below.");
+        setShowFallback(true);
         return;
       }
+
       await cashfree.checkout({
         paymentSessionId: data.paymentSessionId,
         redirectTarget: "_self",
       });
     } catch (error) {
       console.error("Cashfree checkout error:", error);
-      setPaymentNotice("Payment could not be started. Please pay via UPI below.");
+      setPaymentNotice("Payment could not be started. Please pay via UPI below or contact us on WhatsApp.");
+      setShowFallback(true);
     } finally {
       setCashfreeLoading(false);
     }
   };
 
-  // Click-to-pay deep link for UPI apps on mobile (optimized parameters for Google Pay, PhonePe, Paytm compatibility)
-  const upiDeepLink = `upi://pay?pa=cecilkumar99830-1@oksbi&pn=CreatorsCollege&am=${activeCourse.price}&cu=INR&tn=CCEnroll`;
+  const upiDeepLink = `upi://pay?pa=cecilkumar99830-1@oksbi&pn=CreatorsCollege&am=${COURSE.price}&cu=INR&tn=CCEnroll`;
 
-  // WhatsApp text for sending payment screenshot
-  const whatsappMsg = `Hi Creators College, I have completed the payment of ₹${activeCourse.price} for the ${activeCourse.name}. Please send my course access on WhatsApp.\n\nName: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email || "N/A"}\nPayment method: UPI`;
+  const whatsappMsg = `Hi Creators College, I have completed the payment of ₹${COURSE.price} for the ${COURSE.name}. Please send my course access on WhatsApp.\n\nName: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email || "N/A"}\nPayment method: UPI`;
   const whatsappUrl = `https://wa.me/918143937367?text=${encodeURIComponent(whatsappMsg)}`;
+  const helpUrl =
+    "https://wa.me/918143937367?text=Hi%2C%20I%20need%20help%20with%20the%20Content%20Creation%20Course%20checkout";
 
   return (
-    <div className="w-full bg-brand-gray/30 dark:bg-brand-gray/10 py-5 md:py-7 flex-grow">
-      <div className="max-w-4xl mx-auto px-4">
-        
-        {/* Header */}
-        <div className="text-center mb-4 space-y-2">
-          <span className="text-xs font-bold uppercase tracking-widest text-brand-orange">Secure Checkout</span>
-          <h1 className="text-3xl font-bold text-brand-blue dark:text-white tracking-tight">Complete Your Enrollment</h1>
-          <p className="text-sm text-gray-500 max-w-md mx-auto">
-            Enter your details and pay securely via Cashfree or UPI. After verification, your course access is sent
-            directly on WhatsApp.
-          </p>
+    <div className="flex-grow bg-[#F3F6F8] py-4 dark:bg-[#090d16] md:py-7">
+      <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+        <nav className="mb-3 flex items-center gap-1.5 text-[11px] font-semibold text-gray-500 dark:text-gray-400">
+          <Link href="/" className="hover:text-brand-orange">Home</Link>
+          <span>/</span>
+          <Link href="/courses/content-creation" className="hover:text-brand-orange">Content Creation Course</Link>
+          <span>/</span>
+          <span className="text-brand-orange">Checkout</span>
+        </nav>
+
+        <div className="mb-4 flex flex-wrap items-end justify-between gap-2">
+          <div>
+            <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-orange">Secure Checkout</span>
+            <h1 className="mt-1 text-2xl font-bold tracking-tight text-[#0B1B4B] dark:text-white sm:text-3xl">
+              Complete Your Enrollment
+            </h1>
+            <p className="mt-1 text-xs text-gray-600 dark:text-gray-300 sm:text-sm">
+              Enter your details and pay securely. Course access is sent on WhatsApp after verification.
+            </p>
+          </div>
+          <Link
+            href="/courses/content-creation"
+            className="inline-flex items-center gap-1 text-[11px] font-bold text-[#0B1B4B] hover:text-brand-orange dark:text-white"
+          >
+            View course details <ArrowRight size={13} />
+          </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-start">
-          
-          {/* Left panel: details form & selector */}
-          <div className="md:col-span-7 space-y-4">
-            
-            {/* Course Selection */}
-            {!orderGenerated && (
-              <div className="bg-white dark:bg-brand-gray p-6 rounded-2xl border border-gray-200/50 dark:border-white/5 shadow-md text-left space-y-4">
-                <h3 className="font-bold text-base text-brand-blue dark:text-white">1. Select Your Program</h3>
-                
-                <div className="space-y-3">
-                  {Object.entries(courses).map(([key, value]) => (
-                    <div
-                      key={key}
-                      onClick={() => setSelectedCourse(key)}
-                      className={`p-4 rounded-xl border transition cursor-pointer flex justify-between items-center ${
-                        selectedCourse === key
-                          ? "border-brand-orange bg-brand-orange/5"
-                          : "border-gray-100 bg-gray-50 dark:bg-white/5 hover:bg-gray-100/50"
-                      }`}
-                    >
-                      <div className="space-y-1">
-                        <div className="text-sm font-bold text-brand-charcoal dark:text-white">{value.name}</div>
-                        <div className="text-[11px] text-gray-400">Duration: {value.duration}</div>
-                      </div>
-                      <div className="text-right shrink-0">
-                        <div className="text-base font-bold text-brand-orange">₹{value.price.toLocaleString("en-IN")}</div>
-                        <div className="text-xs text-gray-400 line-through">₹{value.originalPrice.toLocaleString("en-IN")}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+        <div className="grid gap-4 lg:grid-cols-[1fr_360px] lg:items-start">
+          <div className="order-2 space-y-3 lg:order-1">
+            <div className="rounded-2xl border border-gray-200/70 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-[#0d1424] sm:p-5">
+              <div className="flex items-center justify-between gap-2">
+                <h2 className="text-sm font-bold text-[#0B1B4B] dark:text-white">Student Details</h2>
+                <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-gray-500 dark:text-gray-400">
+                  <Lock size={11} /> Secure form
+                </span>
               </div>
-            )}
 
-            {/* Registration details */}
-            <div className="bg-white dark:bg-brand-gray p-6 rounded-2xl border border-gray-200/50 dark:border-white/5 shadow-md text-left space-y-4">
-              <h3 className="font-bold text-base text-brand-blue dark:text-white">
-                {orderGenerated ? "Registration Details" : "2. Student Information"}
-              </h3>
-
-              {!orderGenerated ? (
-                <form onSubmit={handleGenerateOrder} className="space-y-4">
-                  {/* Name */}
-                  <div className="space-y-1">
-                    <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Full Name</label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      className={`w-full px-4 py-2.5 rounded-lg border text-sm focus:outline-none bg-white dark:bg-white/5 text-brand-charcoal dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 ${
-                        errors.name ? "border-red-500" : "border-gray-200 dark:border-white/10"
-                      }`}
-                      placeholder="e.g. Rahul Kumar"
-                    />
-                    {errors.name && <p className="text-red-500 text-xs flex items-center gap-1"><AlertCircle size={12} /> {errors.name}</p>}
-                  </div>
-
-                  {/* Phone */}
-                  <div className="space-y-1">
-                    <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Phone / WhatsApp Number</label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className={`w-full px-4 py-2.5 rounded-lg border text-sm focus:outline-none bg-white dark:bg-white/5 text-brand-charcoal dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 ${
-                        errors.phone ? "border-red-500" : "border-gray-200 dark:border-white/10"
-                      }`}
-                      placeholder="e.g. 9876543210"
-                    />
-                    {errors.phone && <p className="text-red-500 text-xs flex items-center gap-1"><AlertCircle size={12} /> {errors.phone}</p>}
-                  </div>
-
-                  {/* Email */}
-                  <div className="space-y-1">
-                    <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Email Address (Optional)</label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className={`w-full px-4 py-2.5 rounded-lg border text-sm focus:outline-none bg-white dark:bg-white/5 text-brand-charcoal dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 ${
-                        errors.email ? "border-red-500" : "border-gray-200 dark:border-white/10"
-                      }`}
-                      placeholder="e.g. rahul@example.com"
-                    />
-                    {errors.email && <p className="text-red-500 text-xs flex items-center gap-1"><AlertCircle size={12} /> {errors.email}</p>}
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3 px-6 rounded-lg text-sm transition hover-lift shadow-md"
-                  >
-                    Generate Payment Order
-                  </button>
-                </form>
-              ) : (
-                <div className="space-y-3 text-sm border-t border-gray-100 dark:border-white/5 pt-3">
-                  <div><span className="text-gray-400">Student Name:</span> <strong className="text-brand-charcoal dark:text-white">{formData.name}</strong></div>
-                  <div><span className="text-gray-400">Phone Number:</span> <strong className="text-brand-charcoal dark:text-white">{formData.phone}</strong></div>
-                  {formData.email && <div><span className="text-gray-400">Email:</span> <strong className="text-brand-charcoal dark:text-white">{formData.email}</strong></div>}
-                  <div><span className="text-gray-400">Program Selected:</span> <strong className="text-brand-charcoal dark:text-white">{activeCourse.name}</strong></div>
-                  <button
-                    onClick={() => setOrderGenerated(false)}
-                    className="text-xs text-brand-orange hover:underline font-bold"
-                  >
-                    Change details or course
-                  </button>
+              <form onSubmit={handlePayment} className="mt-3 space-y-3">
+                <div className="space-y-1">
+                  <label htmlFor="name" className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                    Full Name
+                  </label>
+                  <input
+                    id="name"
+                    type="text"
+                    name="name"
+                    autoComplete="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className={`w-full rounded-lg border bg-white px-3.5 py-2.5 text-sm text-[#0B1B4B] outline-none transition focus:border-brand-orange dark:bg-white/5 dark:text-white ${
+                      errors.name ? "border-red-500" : "border-gray-200 dark:border-white/10"
+                    }`}
+                    placeholder="e.g. Rahul Kumar"
+                  />
+                  {errors.name ? (
+                    <p className="flex items-center gap-1 text-[11px] text-red-500">
+                      <AlertCircle size={12} /> {errors.name}
+                    </p>
+                  ) : null}
                 </div>
-              )}
 
+                <div className="space-y-1">
+                  <label htmlFor="phone" className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                    Phone / WhatsApp Number
+                  </label>
+                  <input
+                    id="phone"
+                    type="tel"
+                    name="phone"
+                    autoComplete="tel"
+                    inputMode="tel"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    className={`w-full rounded-lg border bg-white px-3.5 py-2.5 text-sm text-[#0B1B4B] outline-none transition focus:border-brand-orange dark:bg-white/5 dark:text-white ${
+                      errors.phone ? "border-red-500" : "border-gray-200 dark:border-white/10"
+                    }`}
+                    placeholder="e.g. 9876543210"
+                  />
+                  {errors.phone ? (
+                    <p className="flex items-center gap-1 text-[11px] text-red-500">
+                      <AlertCircle size={12} /> {errors.phone}
+                    </p>
+                  ) : null}
+                </div>
+
+                <div className="space-y-1">
+                  <label htmlFor="email" className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+                    Email Address <span className="font-medium normal-case text-gray-400">(optional)</span>
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    autoComplete="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className={`w-full rounded-lg border bg-white px-3.5 py-2.5 text-sm text-[#0B1B4B] outline-none transition focus:border-brand-orange dark:bg-white/5 dark:text-white ${
+                      errors.email ? "border-red-500" : "border-gray-200 dark:border-white/10"
+                    }`}
+                    placeholder="e.g. rahul@example.com"
+                  />
+                  {errors.email ? (
+                    <p className="flex items-center gap-1 text-[11px] text-red-500">
+                      <AlertCircle size={12} /> {errors.email}
+                    </p>
+                  ) : null}
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={cashfreeLoading}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-brand-orange px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-orange/25 transition hover:bg-brand-orange-dark disabled:cursor-not-allowed disabled:opacity-70"
+                >
+                  {cashfreeLoading ? <Loader2 size={17} className="animate-spin" /> : <CreditCard size={17} />}
+                  {cashfreeLoading ? "Opening secure payment..." : `Pay ₹${COURSE.price.toLocaleString("en-IN")} Securely`}
+                </button>
+
+                <p className="flex items-center justify-center gap-1.5 text-[10px] text-gray-500 dark:text-gray-400">
+                  <Lock size={10} /> UPI, Cards &amp; Netbanking · Powered by Cashfree
+                </p>
+              </form>
             </div>
 
-          </div>
+            {paymentNotice ? (
+              <div className="rounded-xl border border-brand-orange/20 bg-brand-orange/5 px-3.5 py-3 text-[11px] leading-relaxed text-[#0B1B4B] dark:text-gray-200">
+                {paymentNotice}
+              </div>
+            ) : null}
 
-          {/* Right panel: Order details / UPI Gateway */}
-          <div className="md:col-span-5 space-y-4">
-            
-            <div className="bg-brand-blue text-white rounded-3xl p-6 shadow-xl relative overflow-hidden border border-brand-blue-dark">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-brand-orange/20 rounded-full blur-2xl pointer-events-none" />
-              
-              <div className="relative z-10 space-y-4 text-left">
-                <h3 className="font-semibold text-base border-b border-white/10 pb-3">Order Summary</h3>
-                
-                <div className="space-y-2 text-xs text-white/80">
-                  <div className="flex justify-between">
-                    <span>Course Subtotal</span>
-                    <span className="line-through">₹{activeCourse.originalPrice.toLocaleString("en-IN")}</span>
-                  </div>
-                  <div className="flex justify-between font-bold text-brand-orange text-sm">
-                    <span>Active Discount</span>
-                    <span>-₹{(activeCourse.originalPrice - activeCourse.price).toLocaleString("en-IN")}</span>
-                  </div>
-                  <div className="flex justify-between pt-2 border-t border-white/10 text-base font-bold text-white">
-                    <span>Total Amount</span>
-                    <span>₹{activeCourse.price.toLocaleString("en-IN")}</span>
-                  </div>
+            {showFallback ? (
+              <div className="rounded-2xl border border-gray-200/70 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-[#0d1424]">
+                <div className="flex items-center gap-2">
+                  <QrCode size={17} className="text-brand-orange" />
+                  <h2 className="text-sm font-bold text-[#0B1B4B] dark:text-white">Pay Directly via UPI</h2>
+                </div>
+                <p className="mt-1 text-[11px] text-gray-500 dark:text-gray-400">
+                  Use the UPI ID below, then send the payment screenshot on WhatsApp.
+                </p>
+
+                <div className="mt-2.5 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-center font-mono text-xs text-[#0B1B4B] select-all dark:border-white/10 dark:bg-white/5 dark:text-white">
+                  cecilkumar99830-1@oksbi
                 </div>
 
-                {orderGenerated ? (
-                  <div className="space-y-4 pt-3 border-t border-white/10">
-                    <div className="space-y-2">
-                      <div className="text-xs font-bold uppercase tracking-wider text-brand-orange">
-                        Pay Securely
-                      </div>
-                      <button
-                        type="button"
-                        onClick={handleCashfreePay}
-                        disabled={cashfreeLoading}
-                        className="w-full inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange-dark disabled:opacity-70 text-white font-bold py-3 px-6 rounded-lg text-sm transition shadow-lg"
-                      >
-                        {cashfreeLoading ? <Loader2 size={16} className="animate-spin" /> : <CreditCard size={16} />}
-                        {cashfreeLoading ? "Opening secure payment..." : `Pay ₹${activeCourse.price.toLocaleString("en-IN")} via Cashfree`}
-                      </button>
-                      <p className="flex items-center justify-center gap-1.5 text-[10px] text-white/60">
-                        <Lock size={10} />
-                        UPI, Cards &amp; Netbanking · Powered by Cashfree
-                      </p>
-                      {paymentNotice && (
-                        <p className="text-[10px] leading-relaxed text-brand-orange bg-brand-orange/10 border border-brand-orange/20 rounded-lg px-3 py-2">
-                          {paymentNotice}
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="flex items-center gap-3 py-1">
-                      <span className="h-px flex-1 bg-white/10" />
-                      <span className="text-[10px] uppercase tracking-wider text-white/40">or pay directly via UPI</span>
-                      <span className="h-px flex-1 bg-white/10" />
-                    </div>
-
-                    {/* Mobile Pay Link */}
-                    <div className="block sm:hidden">
-                      <a
-                        href={upiDeepLink}
-                        className="w-full inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold py-3 px-6 rounded-lg text-sm transition border border-white/15"
-                      >
-                        <Smartphone size={16} />
-                        Pay with UPI App
-                      </a>
-                      <p className="text-[10px] text-center text-white/60 mt-1.5 leading-relaxed">
-                        Tapping opens GPay, PhonePe, or Paytm on your phone.
-                      </p>
-                    </div>
-
-                    {/* PC QR mockup */}
-                    <div className="space-y-3 bg-white/5 p-4 rounded-xl border border-white/10">
-                      <div className="flex items-center gap-2">
-                        <QrCode size={18} className="text-brand-orange shrink-0" />
-                        <span className="text-xs font-bold">UPI Scan &amp; Pay Address</span>
-                      </div>
-                      <div className="bg-white/10 py-2 px-3 rounded text-center select-all font-mono text-xs break-all text-white border border-white/10">
-                        cecilkumar99830-1@oksbi
-                      </div>
-                      <p className="text-[10px] text-white/50 leading-relaxed">
-                        Copy the UPI Address above to complete payment on GPay, Paytm, or PhonePe.
-                      </p>
-                    </div>
-
-                    {/* WhatsApp notification action */}
-                    <div className="pt-2">
-                      <a
-                        href={whatsappUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg text-sm transition hover-lift shadow-md"
-                      >
-                        <MessageSquare size={16} />
-                        Send Screenshot on WhatsApp
-                      </a>
-                      <p className="text-[10px] text-white/60 text-center mt-1.5 leading-relaxed">
-                        After verification, our team shares your course access on WhatsApp.
-                      </p>
-                    </div>
-
-                    <div className="pt-1 space-y-1.5 text-[10px] text-white/50 border-t border-white/10">
-                      <p className="flex items-center gap-1.5">
-                        <ShieldCheck size={11} />
-                        Access delivered on WhatsApp · Lifetime recordings
-                      </p>
-                      <p className="flex items-center gap-1.5">
-                        <CheckCircle2 size={11} />
-                        Duplicate or failed payments are verified and reversed
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="bg-white/5 p-4 rounded-xl border border-white/10 text-center py-5">
-                    <span className="text-xs text-white/60">
-                      Please enter your registration details to unlock the payment options.
-                    </span>
-                  </div>
-                )}
-
+                <div className="mt-2.5 grid gap-2 sm:grid-cols-2">
+                  <a
+                    href={upiDeepLink}
+                    className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-gray-200 px-3 py-2.5 text-[11px] font-bold text-[#0B1B4B] transition hover:border-brand-orange/40 sm:hidden dark:border-white/15 dark:text-white"
+                  >
+                    <Smartphone size={14} /> Pay with UPI App
+                  </a>
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-[#25D366] px-3 py-2.5 text-[11px] font-bold text-white transition hover:bg-[#1fb959] sm:col-span-2"
+                  >
+                    <WhatsAppIcon size={15} /> Send Payment Screenshot
+                  </a>
+                </div>
               </div>
-            </div>
+            ) : null}
 
+            <p className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-[10px] text-gray-500 dark:text-gray-400">
+              <span className="inline-flex items-center gap-1"><ShieldCheck size={12} /> Secure payment</span>
+              <span className="inline-flex items-center gap-1"><CheckCircle2 size={12} /> Access on WhatsApp</span>
+              <a href={helpUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-bold text-[#0B1B4B] hover:text-brand-orange dark:text-white">
+                <WhatsAppIcon size={12} className="text-[#25D366]" /> Need help?
+              </a>
+            </p>
           </div>
 
+          <aside className="order-1 rounded-2xl border border-gray-200/70 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-[#0d1424] lg:order-2 lg:sticky lg:top-24">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-brand-orange">Order Summary</p>
+                <h2 className="mt-1 text-sm font-bold leading-snug text-[#0B1B4B] dark:text-white">{COURSE.name}</h2>
+              </div>
+              <span className="shrink-0 rounded-full bg-[#FFC93C] px-2 py-1 text-[9px] font-bold text-[#0B1B4B]">Save ₹25,000</span>
+            </div>
+
+            <div className="mt-3 space-y-1.5 text-[11px] text-gray-600 dark:text-gray-300">
+              <p className="flex items-center justify-between"><span>Duration</span><strong className="text-[#0B1B4B] dark:text-white">{COURSE.duration}</strong></p>
+              <p className="flex items-center justify-between"><span>Modules</span><strong className="text-[#0B1B4B] dark:text-white">11 Modules</strong></p>
+              <p className="flex items-center justify-between"><span>Lessons</span><strong className="text-[#0B1B4B] dark:text-white">73 Lessons</strong></p>
+              <p className="flex items-center justify-between"><span>Language</span><strong className="text-[#0B1B4B] dark:text-white">Telugu</strong></p>
+            </div>
+
+            <div className="mt-3 space-y-1.5 border-t border-gray-100 pt-3 text-[11px] dark:border-white/10">
+              <p className="flex items-center justify-between text-gray-500 dark:text-gray-400">
+                <span>Original Price</span>
+                <span className="line-through">₹{COURSE.originalPrice.toLocaleString("en-IN")}</span>
+              </p>
+              <p className="flex items-center justify-between font-semibold text-emerald-600">
+                <span>Discount</span>
+                <span>-₹{(COURSE.originalPrice - COURSE.price).toLocaleString("en-IN")}</span>
+              </p>
+              <p className="flex items-center justify-between border-t border-gray-100 pt-2 text-base font-bold text-[#0B1B4B] dark:border-white/10 dark:text-white">
+                <span>Total</span>
+                <span>₹{COURSE.price.toLocaleString("en-IN")}</span>
+              </p>
+            </div>
+
+            <div className="mt-3 rounded-lg bg-[#F3F6F8] px-3 py-2.5 text-[10px] leading-relaxed text-gray-600 dark:bg-white/5 dark:text-gray-300">
+              <p className="flex items-start gap-1.5"><CheckCircle2 size={12} className="mt-0.5 shrink-0 text-emerald-600" /> Lifetime recordings + certificate</p>
+              <p className="mt-1 flex items-start gap-1.5"><WhatsAppIcon size={12} className="mt-0.5 shrink-0 text-[#25D366]" /> WhatsApp doubt support</p>
+            </div>
+          </aside>
         </div>
-
       </div>
     </div>
   );

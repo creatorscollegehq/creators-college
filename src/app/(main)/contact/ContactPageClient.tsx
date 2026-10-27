@@ -2,7 +2,8 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { Mail, Phone, MapPin, ExternalLink, ShieldCheck, CheckCircle, MessageSquare, X } from "lucide-react";
+import { Mail, Phone, MapPin, ExternalLink, ShieldCheck, CheckCircle, X } from "lucide-react";
+import WhatsAppIcon from "@/components/WhatsAppIcon";
 import {
   InstagramIcon as Instagram,
   FacebookIcon as Facebook,
@@ -251,7 +252,7 @@ export default function ContactPage() {
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 rounded-full bg-green-500/10 text-green-500 flex items-center justify-center shrink-0">
-                        <MessageSquare size={24} />
+                        <WhatsAppIcon size={24} />
                       </div>
                       <h4 className="font-bold text-base sm:text-lg text-brand-blue dark:text-white">WhatsApp Us</h4>
                     </div>
@@ -268,7 +269,7 @@ export default function ContactPage() {
                     </div>
                   </div>
                   <a href="https://wa.me/918143937367" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-[#25d366] hover:bg-green-600 text-white text-xs font-bold py-3 px-6 rounded-xl shadow transition tracking-wider uppercase">
-                    🟢 WhatsApp Now
+                    <WhatsAppIcon size={15} /> WhatsApp Now
                   </a>
                 </div>
 
@@ -741,8 +742,8 @@ export default function ContactPage() {
                 <Link href="/checkout" className="bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3 px-6 rounded-full text-xs shadow-lg transition animate-enroll">
                   Enroll Now
                 </Link>
-                <a href="https://wa.me/918143937367" target="_blank" rel="noopener noreferrer" className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-5 rounded-full text-xs shadow transition">
-                  WhatsApp Us
+                <a href="https://wa.me/918143937367" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-5 rounded-full text-xs shadow transition">
+                  <WhatsAppIcon size={14} /> WhatsApp Us
                 </a>
                 <a href="tel:+918143937367" className="bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold py-3 px-5 rounded-full text-xs transition">
                   Call Now

@@ -45,7 +45,7 @@ export default function Sitemap() {
             </h3>
             <ul className="space-y-2 text-xs sm:text-sm text-gray-600 dark:text-gray-300">
               <li><strong>Current Courses:</strong></li>
-              <li className="pl-4"><Link href="/courses" className="hover:text-brand-orange">Complete Telugu Content Creation Course</Link></li>
+              <li className="pl-4"><Link href="/courses/content-creation" className="hover:text-brand-orange">Complete Telugu Content Creation Course</Link></li>
               <li className="pl-4"><Link href="/courses" className="hover:text-brand-orange">CapCut Video Editing Course</Link></li>
               <li><strong>Upcoming:</strong></li>
               <li className="pl-4">Adobe Premiere Pro</li>

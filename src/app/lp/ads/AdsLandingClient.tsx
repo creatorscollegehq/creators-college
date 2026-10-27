@@ -2,11 +2,12 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import {
-  Check, ChevronRight, MessageSquare, Shield,
+  Check, ChevronRight, Shield,
   ChevronDown, X, Star, Flame, BadgeCheck, TrendingUp,
   Phone, AlertTriangle, Clock, Zap
 } from "lucide-react";
 import LpNav from "@/components/LpNav";
+import WhatsAppIcon from "@/components/WhatsAppIcon";
 
 // ─── Live Seat Counter ──────────────────────────────────────────
 const TOTAL_SEATS = 12;
@@ -67,7 +68,7 @@ function EnrollForm({ source = "Ads LP", onSuccess, compact }: { source?: string
       <a href={`https://wa.me/918143937367?text=${encodeURIComponent(`Hi! I registered at Creators College. Name: ${name}, Phone: ${phone}`)}`}
         target="_blank" rel="noopener noreferrer"
         className="w-full inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 rounded-xl text-sm transition">
-        <MessageSquare size={15} /> Confirm on WhatsApp
+        <WhatsAppIcon size={15} /> Confirm on WhatsApp
       </a>
     </div>
   );

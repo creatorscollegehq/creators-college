@@ -16,6 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/contact',
     '/corporate-training',
     '/courses',
+    '/courses/content-creation',
     '/disclaimer',
     '/privacy-policy',
     '/refund-policy',
@@ -56,7 +57,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
-    priority: route === '' ? 1.0 : route === '/cecil-srungarapati' || route === '/lavanya-ganji' ? 0.9 : route.startsWith('/lp/') ? 0.8 : 0.6,
+    priority: route === '' ? 1.0 : route === '/courses/content-creation' || route === '/cecil-srungarapati' || route === '/lavanya-ganji' ? 0.9 : route.startsWith('/lp/') ? 0.8 : 0.6,
   }));
 
   const blogEntries = blogSlugs.map((item) => ({

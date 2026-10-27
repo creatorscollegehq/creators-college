@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ArrowRight, MessageCircle, ShieldCheck, X } from "lucide-react";
+import { ArrowRight, ShieldCheck, X } from "lucide-react";
+import WhatsAppIcon from "./WhatsAppIcon";
 
 const WHATSAPP_URL =
   "https://wa.me/918143937367?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%20Telugu%20Content%20Creation%20Course";
@@ -112,7 +113,7 @@ export default function CroExitPopup() {
           onClick={() => setOpen(false)}
           className="mt-2.5 flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-3 text-sm font-bold text-emerald-700 transition hover:bg-emerald-100 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-400"
         >
-          <MessageCircle size={16} />
+          <WhatsAppIcon size={16} />
           Chat on WhatsApp
         </a>
 

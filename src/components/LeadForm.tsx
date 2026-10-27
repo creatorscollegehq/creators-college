@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Send, CheckCircle2, MessageSquare, AlertCircle } from "lucide-react";
+import { Send, CheckCircle2, AlertCircle } from "lucide-react";
+import WhatsAppIcon from "@/components/WhatsAppIcon";
 
 interface LeadFormProps {
   defaultCourse?: string;
@@ -158,7 +159,7 @@ export default function LeadForm({ defaultCourse = "Content Creation Course", is
             rel="noopener noreferrer"
             className="w-full inline-flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-full shadow-md text-sm cursor-pointer transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:shadow-green-600/20 active:scale-[0.98]"
           >
-            <MessageSquare size={18} />
+            <WhatsAppIcon size={18} />
             Confirm &amp; Send on WhatsApp
           </a>
 

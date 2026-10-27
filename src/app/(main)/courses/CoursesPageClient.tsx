@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Check, Calendar, Laptop, Clock, Award, HelpCircle, CheckCircle, Lock } from "lucide-react";
 import LeadForm from "@/components/LeadForm";
+import WhatsAppIcon from "@/components/WhatsAppIcon";
 
 interface SyllabusModule {
   title: string;
@@ -361,10 +362,16 @@ export default function CoursesPage() {
                   </ul>
                   <div className="space-y-3 pt-2">
                     <Link
-                      href="/checkout?course=content-creation"
+                      href="/checkout"
                       className="w-full inline-flex items-center justify-center bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3.5 rounded-xl text-sm transition shadow-lg animate-enroll"
                     >
                       Enroll Now
+                    </Link>
+                    <Link
+                      href="/courses/content-creation"
+                      className="w-full inline-flex items-center justify-center bg-white/10 hover:bg-white/20 text-white font-bold py-3.5 rounded-xl text-sm transition"
+                    >
+                      View Full Course Page
                     </Link>
                     <Link
                       href="/lp/free-demo"
@@ -549,12 +556,17 @@ export default function CoursesPage() {
                     <li>✅ Course Completion Certificate</li>
                   </ul>
                   <div className="space-y-3 pt-2">
-                    <Link
-                      href="/checkout?course=capcut-editing"
-                      className="w-full inline-flex items-center justify-center bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3.5 rounded-xl text-sm transition shadow-lg animate-enroll"
+                    <p className="rounded-lg bg-white/10 px-3 py-2 text-[11px] leading-relaxed text-white/75">
+                      Admissions for this batch are closed. Enquire for the next CapCut batch.
+                    </p>
+                    <a
+                      href="https://wa.me/918143937367?text=Hi%2C%20I%20want%20to%20enquire%20about%20the%20next%20CapCut%20Video%20Editing%20batch"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3.5 rounded-xl text-sm transition shadow-lg"
                     >
-                      Enroll Now
-                    </Link>
+                      <WhatsAppIcon size={16} /> Enquire About Next Batch
+                    </a>
                     <Link
                       href="/lp/free-demo"
                       className="w-full inline-flex items-center justify-center bg-white/10 hover:bg-white/20 text-white font-bold py-3.5 rounded-xl text-sm transition"

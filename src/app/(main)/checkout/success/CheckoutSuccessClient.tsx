@@ -3,7 +3,8 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { ArrowRight, CheckCircle2, Lock, MessageCircle, ShieldCheck } from "lucide-react";
+import { ArrowRight, CheckCircle2, Lock, ShieldCheck } from "lucide-react";
+import WhatsAppIcon from "@/components/WhatsAppIcon";
 
 export default function CheckoutSuccessClient() {
   const searchParams = useSearchParams();
@@ -112,7 +113,7 @@ export default function CheckoutSuccessClient() {
               rel="noopener noreferrer"
               className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-green-600 hover:bg-green-700 px-6 py-3.5 text-sm font-semibold text-white transition shadow-lg shadow-green-600/20"
             >
-              <MessageCircle size={17} />
+              <WhatsAppIcon size={17} />
               Send Confirmation on WhatsApp
             </a>
             <p className="text-center text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed">

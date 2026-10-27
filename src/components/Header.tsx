@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ArrowRight, Sun, Moon } from "lucide-react";
 import WhatsAppGateModal from "./WhatsAppGateModal";
+import WhatsAppIcon from "./WhatsAppIcon";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -109,6 +110,7 @@ export default function Header() {
                 onClick={() => setIsWhatsAppGateOpen(true)}
                 className="inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wide shadow-md cursor-pointer transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:shadow-brand-orange/20 active:scale-[0.97]"
               >
+                <WhatsAppIcon size={16} />
                 Chat with Coordinator
                 <ArrowRight size={14} />
               </button>

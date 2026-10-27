@@ -4,8 +4,11 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Caveat } from "next/font/google";
+import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
+  BookOpen,
+  Camera,
   ChartNoAxesColumn,
   Check,
   ChevronDown,
@@ -13,9 +16,11 @@ import {
   CloudUpload,
   FileText,
   GraduationCap,
+  Lock,
   MessageCircle,
   Mic,
   Play,
+  Search,
   ShieldCheck,
   Sparkles,
   Target,
@@ -27,70 +32,123 @@ import {
 import { FacebookIcon, InstagramIcon, YoutubeIcon } from "@/components/SocialIcons";
 import { testimonials } from "@/data/testimonials";
 import CroExitPopup from "@/components/CroExitPopup";
+import VideoModal, { type ActiveVideo } from "@/components/VideoModal";
+import WhatsAppIcon from "@/components/WhatsAppIcon";
 
 const caveat = Caveat({ subsets: ["latin"], weight: ["600", "700"], display: "swap" });
 
 const YOUTUBE_URL = "https://www.youtube.com/@creatorscollegeofficial";
 
-const roadmapSteps = [
+type HomeRoadmapStep = {
+  num: string;
+  icon: LucideIcon;
+  title: string;
+  desc: string;
+  duration: string;
+  videoId?: string;
+  videoTitle?: string;
+  gradient: string;
+};
+
+const roadmapSteps: HomeRoadmapStep[] = [
   {
     num: "01",
-    icon: FileText,
-    title: "Scripting",
-    desc: "Learn how to write engaging scripts for reels and long videos.",
-    duration: "0:44",
-    videoId: "0yX2-Jc6V2w",
-    videoTitle: "Video Script Writing for Beginners",
+    icon: BookOpen,
+    title: "Fundamentals",
+    desc: "Understand content creation, platforms, niches and the complete workflow.",
+    duration: "0:28",
+    videoId: "MIKU_dgWis8",
+    videoTitle: "Content Creation Fundamentals",
     gradient: "from-[#DBEAFE] to-[#BFDBFE]",
   },
   {
     num: "02",
-    icon: Mic,
-    title: "Voice-over",
-    desc: "Learn clear voice-over and on-camera speaking skills.",
-    duration: "",
-    videoId: undefined,
-    videoTitle: undefined,
+    icon: Search,
+    title: "Research",
+    desc: "Find topics, customer problems, competitors and trending content ideas.",
+    duration: "0:51",
+    videoId: "s5YqrafCRRU",
+    videoTitle: "Data Collection and Research",
     gradient: "from-[#DCFCE7] to-[#BBF7D0]",
   },
   {
     num: "03",
-    icon: Clapperboard,
-    title: "Editing",
-    desc: "Learn to edit music videos, talking videos, voice-over reels and more.",
-    duration: "0:32",
-    videoId: "fFWOW038J10",
-    videoTitle: "Video Editing for Beginners",
+    icon: FileText,
+    title: "Scripting",
+    desc: "Write hooks, main content and calls to action that retain viewers.",
+    duration: "0:44",
+    videoId: "0yX2-Jc6V2w",
+    videoTitle: "Video Script Writing for Beginners",
     gradient: "from-[#E0E7FF] to-[#C7D2FE]",
   },
   {
     num: "04",
+    icon: Mic,
+    title: "Voice Over",
+    desc: "Record clear, confident voice overs for reels and long videos.",
+    duration: "0:30",
+    videoId: "SXKPfrJsEac",
+    videoTitle: "Content Creation Voice Over",
+    gradient: "from-[#FCE7F3] to-[#FBCFE8]",
+  },
+  {
+    num: "05",
+    icon: MessageCircle,
+    title: "Live Talking",
+    desc: "Present naturally on camera and speak with confidence.",
+    duration: "0:27",
+    videoId: "Vyd0uVddGdM",
+    videoTitle: "Live Talking in Content Creation",
+    gradient: "from-[#FFEDD5] to-[#FED7AA]",
+  },
+  {
+    num: "06",
+    icon: Camera,
+    title: "Shooting",
+    desc: "Learn mobile camera settings, lighting, framing and cinematic shots.",
+    duration: "0:28",
+    videoId: "FV9xMIHFe34",
+    videoTitle: "Content Creation Mobile Shooting",
+    gradient: "from-[#CCFBF1] to-[#99F6E4]",
+  },
+  {
+    num: "07",
+    icon: Clapperboard,
+    title: "Editing",
+    desc: "Edit reels and long videos in CapCut with cuts, captions and effects.",
+    duration: "0:32",
+    videoId: "fFWOW038J10",
+    videoTitle: "Video Editing for Beginners",
+    gradient: "from-[#FEF3C7] to-[#FDE68A]",
+  },
+  {
+    num: "08",
     icon: Users,
     title: "Account Creations",
-    desc: "Learn to create Instagram, Facebook and YouTube accounts step by step.",
+    desc: "Create Instagram, Facebook and YouTube accounts step by step.",
     duration: "0:32",
     videoId: "vw7d4tH_dvE",
     videoTitle: "Account Creation Guide for Content Creators",
     gradient: "from-[#FCE7F3] to-[#FBCFE8]",
   },
   {
-    num: "05",
+    num: "09",
     icon: CloudUpload,
     title: "Uploads",
-    desc: "Learn how to upload videos with the right settings.",
+    desc: "Publish with the right titles, captions, hashtags and covers.",
     duration: "",
     videoId: undefined,
     videoTitle: undefined,
     gradient: "from-[#FFEDD5] to-[#FED7AA]",
   },
   {
-    num: "06",
+    num: "10",
     icon: ChartNoAxesColumn,
-    title: "Page Handling",
-    desc: "Learn how to manage your pages and grow them.",
-    duration: "0:29",
-    videoId: "gISyUpfoXvc",
-    videoTitle: "Social Media Page Handling",
+    title: "Analytics",
+    desc: "Read analytics and improve reach, retention and performance.",
+    duration: "",
+    videoId: undefined,
+    videoTitle: undefined,
     gradient: "from-[#CCFBF1] to-[#99F6E4]",
   },
 ];
@@ -143,8 +201,8 @@ const valueItems = [
     value: "₹30,000",
   },
   {
-    title: "6 Step-by-Step Modules",
-    desc: "Learn in the right order without guesswork.",
+    title: "11 Step-by-Step Modules",
+    desc: "73 lessons in the right order without guesswork.",
     value: "Included",
   },
   {
@@ -170,7 +228,7 @@ const valueItems = [
 ];
 
 const comparisonRows = [
-  { label: "Learning path", free: "Scattered videos", course: "6-step roadmap" },
+  { label: "Learning path", free: "Scattered videos", course: "10-step roadmap" },
   { label: "Language", free: "Mixed / English", course: "100% Telugu" },
   { label: "Doubt support", free: "Comments only", course: "WhatsApp support" },
   { label: "Practice", free: "No feedback", course: "Guided assignments" },
@@ -203,7 +261,7 @@ const faqCategories = [
     items: [
       {
         q: "Which courses are currently available?",
-        a: "Complete Telugu Content Creation Course and Complete Telugu CapCut Video Editing Course (Mobile & PC).",
+        a: "Admissions are open for the Complete Telugu Content Creation Course. The CapCut Video Editing Course is not accepting new enrollments right now — message us on WhatsApp to join the next batch.",
       },
       {
         q: "What is the course duration?",
@@ -352,25 +410,23 @@ function VideoThumb({
   src,
   alt,
   duration,
-  href = YOUTUBE_URL,
+  videoId,
+  videoTitle,
+  onPlay,
   className = "",
   sizes = "(max-width: 1024px) 100vw, 50vw",
 }: {
   src: string;
   alt: string;
   duration?: string;
-  href?: string;
+  videoId?: string;
+  videoTitle?: string;
+  onPlay?: (video: ActiveVideo) => void;
   className?: string;
   sizes?: string;
 }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`Watch: ${alt}`}
-      className={`group relative block overflow-hidden rounded-2xl bg-[#0B1B4B] ${className}`}
-    >
+  const content = (
+    <>
       <Image
         src={src}
         alt={alt}
@@ -387,6 +443,31 @@ function VideoThumb({
           {duration}
         </span>
       ) : null}
+    </>
+  );
+
+  if (videoId && onPlay) {
+    return (
+      <button
+        type="button"
+        onClick={() => onPlay({ id: videoId, title: videoTitle ?? alt })}
+        aria-label={`Play: ${videoTitle ?? alt}`}
+        className={`group relative block overflow-hidden rounded-2xl bg-[#0B1B4B] ${className}`}
+      >
+        {content}
+      </button>
+    );
+  }
+
+  return (
+    <a
+      href={YOUTUBE_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Watch: ${alt}`}
+      className={`group relative block overflow-hidden rounded-2xl bg-[#0B1B4B] ${className}`}
+    >
+      {content}
     </a>
   );
 }
@@ -395,6 +476,7 @@ export default function HomePage() {
   const [showStickyBar, setShowStickyBar] = useState(false);
   const [activeFAQ, setActiveFAQ] = useState<number | null>(null);
   const [activeFaqTab, setActiveFaqTab] = useState("eligibility");
+  const [activeVideo, setActiveVideo] = useState<ActiveVideo | null>(null);
 
   const activeFaqItems = faqCategories.find((category) => category.key === activeFaqTab)?.items ?? faqCategories[0].items;
 
@@ -532,6 +614,12 @@ export default function HomePage() {
                 Buy Now
                 <ArrowRight size={20} />
               </Link>
+              <Link
+                href="/courses/content-creation"
+                className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-[#0B1B4B] underline decoration-brand-orange/40 underline-offset-4 dark:text-white"
+              >
+                View full course curriculum <ArrowRight size={13} />
+              </Link>
 
               <TrustRow className="mt-4" />
             </div>
@@ -540,7 +628,7 @@ export default function HomePage() {
               <div className="relative mx-auto w-full max-w-[560px] lg:max-w-none">
                 <div className="relative aspect-[5/4] overflow-hidden rounded-[2rem] shadow-[0_28px_65px_-32px_rgba(11,27,75,0.5)]">
                   <Image
-                    src="/cecil.jpg"
+                    src="/cecil-srungarapati-founder-creators-college.jpeg"
                     alt="Cecil Srungarapati, founder of Creators College"
                     fill
                     priority
@@ -579,11 +667,13 @@ export default function HomePage() {
       {/* Course Introduction */}
       <section className="bg-[#EDF4F8] dark:bg-white/[0.03] py-5 md:py-7">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-5 items-center">
+          <div className="grid grid-cols-1 items-center gap-4 lg:grid-cols-2 lg:gap-5">
             <VideoThumb
-              src="/hero_collage_wide.jpg"
-              alt="Content Creation Is for Everyone — Creators College course introduction"
-              href="https://youtu.be/yu-KoSL7Ts"
+              src="/videos/MIKU_dgWis8.jpg"
+              alt="Content Creation Fundamentals — Creators College course introduction"
+              videoId="MIKU_dgWis8"
+              videoTitle="Content Creation Fundamentals"
+              onPlay={setActiveVideo}
               className="aspect-video w-full shadow-[0_22px_50px_-28px_rgba(11,27,75,0.45)]"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
@@ -615,63 +705,78 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="mt-5 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6 lg:gap-5">
-            {roadmapSteps.map((step, index) => {
+          <div className="mt-5 grid grid-cols-2 gap-2.5 md:grid-cols-3 lg:grid-cols-5 lg:gap-4">
+            {roadmapSteps.map((step) => {
               const Icon = step.icon;
+              const mediaClass = `group relative mt-3 block aspect-[4/3] w-full overflow-hidden rounded-lg ${
+                step.videoId ? "bg-[#0B1B4B]" : `bg-gradient-to-br ${step.gradient}`
+              }`;
+              const media = (
+                <>
+                  {step.videoId ? (
+                    <>
+                      <Image
+                        src={`/videos/${step.videoId}.jpg`}
+                        alt={`${step.title} — ${step.videoTitle}`}
+                        fill
+                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 18vw"
+                        className="object-cover transition duration-500 group-hover:scale-[1.03]"
+                      />
+                      <div className="absolute inset-0 bg-black/20 transition group-hover:bg-black/10" />
+                    </>
+                  ) : (
+                    <Icon size={42} className="absolute inset-0 m-auto text-white/60" strokeWidth={1.4} />
+                  )}
+                  <span className="absolute inset-0 m-auto flex h-7 w-7 items-center justify-center rounded-full bg-white/95 text-brand-orange shadow">
+                    {step.videoId ? (
+                      <Play size={10} fill="currentColor" strokeWidth={0} className="ml-0.5" />
+                    ) : (
+                      <Lock size={11} />
+                    )}
+                  </span>
+                  {step.duration ? (
+                    <span className="absolute bottom-1.5 right-1.5 rounded bg-black/65 px-1.5 py-0.5 text-[9px] font-medium text-white">
+                      {step.duration}
+                    </span>
+                  ) : (
+                    <span className="absolute inset-x-0 bottom-1.5 text-center text-[8px] font-bold uppercase tracking-wide text-[#0B1B4B]/70">
+                      Unlock in course
+                    </span>
+                  )}
+                </>
+              );
+
               return (
                 <div key={step.title} className="relative">
-                  {index < roadmapSteps.length - 1 && (
-                    <ArrowRight
-                      size={22}
-                      strokeWidth={2.5}
-                      className="absolute -right-[19px] top-[86px] z-10 hidden text-brand-orange lg:block"
-                    />
-                  )}
-                  <div className="h-full rounded-2xl border border-white bg-white p-3.5 shadow-sm dark:border-white/10 dark:bg-[#0d1424]">
-                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-brand-orange text-[11px] font-bold text-white">
+                  <div className="h-full rounded-2xl border border-white bg-white p-3 shadow-sm dark:border-white/10 dark:bg-[#0d1424]">
+                    <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand-orange text-[10px] font-bold text-white">
                       {step.num}
                     </span>
-                    <div className="mt-2 flex justify-center text-[#0B1B4B] dark:text-white">
-                      <Icon size={25} strokeWidth={1.8} />
+                    <div className="mt-1.5 flex justify-center text-[#0B1B4B] dark:text-white">
+                      <Icon size={23} strokeWidth={1.8} />
                     </div>
-                    <h3 className="mt-1.5 text-center text-[13px] font-bold text-[#0B1B4B] dark:text-white">
+                    <h3 className="mt-1 text-center text-[12px] font-bold text-[#0B1B4B] dark:text-white">
                       {step.title}
                     </h3>
 
-                    <a
-                      href={step.videoId ? `https://youtu.be/${step.videoId}` : YOUTUBE_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={step.videoId ? `Watch ${step.videoTitle}` : `Watch ${step.title} lessons on YouTube`}
-                      className={`group relative mt-3 block aspect-[4/3] overflow-hidden rounded-lg ${
-                        step.videoId ? "bg-[#0B1B4B]" : `bg-gradient-to-br ${step.gradient}`
-                      }`}
-                    >
-                      {step.videoId ? (
-                        <>
-                          <Image
-                            src={`/videos/${step.videoId}.jpg`}
-                            alt={`${step.title} — ${step.videoTitle}`}
-                            fill
-                            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 16vw"
-                            className="object-cover transition duration-500 group-hover:scale-[1.03]"
-                          />
-                          <div className="absolute inset-0 bg-black/20 transition group-hover:bg-black/10" />
-                        </>
-                      ) : (
-                        <Icon size={46} className="absolute inset-0 m-auto text-white/60" strokeWidth={1.4} />
-                      )}
-                      <span className="absolute inset-0 m-auto flex h-7 w-7 items-center justify-center rounded-full bg-white/95 text-brand-orange shadow">
-                        <Play size={10} fill="currentColor" strokeWidth={0} className="ml-0.5" />
-                      </span>
-                      {step.duration ? (
-                        <span className="absolute bottom-1.5 right-1.5 rounded bg-black/65 px-1.5 py-0.5 text-[9px] font-medium text-white">
-                          {step.duration}
-                        </span>
-                      ) : null}
-                    </a>
+                    {step.videoId ? (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setActiveVideo({ id: step.videoId as string, title: step.videoTitle ?? step.title })
+                        }
+                        aria-label={`Play ${step.videoTitle}`}
+                        className={mediaClass}
+                      >
+                        {media}
+                      </button>
+                    ) : (
+                      <Link href="/checkout" aria-label={`Unlock ${step.title} in the course`} className={mediaClass}>
+                        {media}
+                      </Link>
+                    )}
 
-                    <p className="mt-2.5 text-[10.5px] leading-relaxed text-gray-500 dark:text-gray-400">
+                    <p className="mt-2 text-[10px] leading-relaxed text-gray-500 dark:text-gray-400">
                       {step.desc}
                     </p>
                   </div>
@@ -688,12 +793,12 @@ export default function HomePage() {
           <h2 className="text-center text-2xl font-bold tracking-tight text-[#0B1B4B] dark:text-white sm:text-3xl lg:text-4xl">
             By the end of this course, you&apos;ll be able to
           </h2>
-          <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-3 grid grid-cols-2 gap-2.5 lg:grid-cols-4">
             {outcomes.map((item) => (
-              <div key={item.title} className={`rounded-2xl ${item.bg} p-5 text-center`}>
+              <div key={item.title} className={`rounded-xl ${item.bg} p-3 text-center sm:p-4`}>
                 <div className="flex justify-center">{item.icon}</div>
-                <h3 className="mt-3 text-sm font-bold text-[#0B1B4B]">{item.title}</h3>
-                <p className="mt-2 text-[11px] leading-relaxed text-gray-600">{item.desc}</p>
+                <h3 className="mt-2 text-xs font-bold text-[#0B1B4B] sm:text-sm">{item.title}</h3>
+                <p className="mt-1 text-[10px] leading-relaxed text-gray-600 sm:text-[11px]">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -727,11 +832,11 @@ export default function HomePage() {
               </ul>
             </div>
 
-            <div className="relative mx-auto w-full max-w-[420px] lg:max-w-[380px]">
+            <div className="relative mx-auto w-full max-w-[360px] lg:max-w-[380px]">
               <div className="pointer-events-none absolute -left-8 -top-8 h-28 w-28 rounded-full bg-brand-orange/15 blur-2xl" />
               <div className="pointer-events-none absolute -bottom-6 -right-6 h-32 w-32 rounded-full bg-[#FFC93C]/30 blur-2xl" />
 
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] border-4 border-white shadow-[0_28px_65px_-32px_rgba(11,27,75,0.5)] dark:border-white/10">
+              <div className="relative aspect-[5/4] overflow-hidden rounded-2xl border-4 border-white shadow-[0_28px_65px_-32px_rgba(11,27,75,0.5)] dark:border-white/10 sm:aspect-[4/5] sm:rounded-[2rem]">
                 <Image
                   src="/cecil-srungarapati-founder-creators-college.jpeg"
                   alt="Cecil Srungarapati teaching content creation in Telugu"
@@ -768,7 +873,7 @@ export default function HomePage() {
       {/* Goal */}
       <section className="bg-[#FBF3E4] dark:bg-white/[0.04] py-5 md:py-7">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 items-center gap-5 lg:grid-cols-2">
+          <div className="grid grid-cols-1 items-center gap-4 lg:grid-cols-2">
             <div>
               <div className="flex items-center gap-3">
                 <Target size={34} className="shrink-0 text-brand-orange" strokeWidth={2} />
@@ -794,7 +899,9 @@ export default function HomePage() {
               src="/videos/dTABmoxhu7M.jpg"
               alt="My Goal Is to Teach Content Creation — Cecil Srungarapati"
               duration="1:06"
-              href="https://youtu.be/dTABmoxhu7M"
+              videoId="dTABmoxhu7M"
+              videoTitle="My Goal Is to Teach Content Creation"
+              onPlay={setActiveVideo}
               className="aspect-video w-full shadow-[0_22px_50px_-28px_rgba(11,27,75,0.45)]"
               sizes="(max-width: 1024px) 100vw, 50vw"
             />
@@ -815,8 +922,8 @@ export default function HomePage() {
                 Everything you need to <span className="text-brand-orange">start creating</span>
               </h2>
               <p className="mt-2.5 max-w-lg text-sm leading-relaxed text-gray-600 dark:text-gray-300 sm:text-base">
-                One complete course, six practical modules and lifetime access — without jumping between random
-                YouTube playlists.
+                One complete course, 11 practical modules, 73 lessons and lifetime access — without jumping between
+                random YouTube playlists.
               </p>
               <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-[11px] font-bold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">
                 <span className="h-2 w-2 rounded-full bg-emerald-500" />
@@ -942,11 +1049,11 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 md:grid md:grid-cols-3 md:overflow-visible">
+          <div className="mt-3 flex snap-x snap-mandatory gap-2.5 overflow-x-auto pb-2 md:grid md:grid-cols-3 md:gap-4 md:overflow-visible">
             {testimonials.slice(0, 3).map((testimonial) => (
               <div
                 key={testimonial.name}
-                className="min-w-[280px] snap-start rounded-2xl border border-gray-100 bg-[#F8FAFC] p-4 dark:border-white/10 dark:bg-white/[0.04] md:min-w-0"
+                className="min-w-[260px] snap-start rounded-xl border border-gray-100 bg-[#F8FAFC] p-3.5 dark:border-white/10 dark:bg-white/[0.04] md:min-w-0"
               >
                 <div className="flex items-center gap-2.5">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-orange/10 text-sm font-bold text-brand-orange">
@@ -1092,7 +1199,7 @@ export default function HomePage() {
                 <div className="mt-4 flex items-center justify-between gap-3 rounded-xl bg-[#FFC93C] px-3.5 py-3">
                   <div>
                     <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-[#0B1B4B]/60">Lifetime Access</p>
-                    <p className="text-xs font-bold text-[#0B1B4B]">6 Modules · Learn at Your Own Pace</p>
+                    <p className="text-xs font-bold text-[#0B1B4B]">11 Modules · Learn at Your Own Pace</p>
                   </div>
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0B1B4B] text-white">
                     <Play size={12} fill="currentColor" strokeWidth={0} className="ml-0.5" />
@@ -1209,7 +1316,7 @@ export default function HomePage() {
               aria-label="Chat on WhatsApp"
               className="flex h-11 w-11 items-center justify-center rounded-xl border border-gray-200 text-[#0B1B4B] dark:border-white/15 dark:text-white"
             >
-              <MessageCircle size={18} />
+              <WhatsAppIcon size={18} className="text-[#25D366]" />
             </a>
             <Link
               href="/checkout"
@@ -1221,6 +1328,7 @@ export default function HomePage() {
         </div>
       </div>
 
+      <VideoModal video={activeVideo} onClose={() => setActiveVideo(null)} />
       <CroExitPopup />
     </div>
   );

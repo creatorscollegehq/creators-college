@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Phone, ClipboardList } from "lucide-react";
 import WhatsAppGateModal from "./WhatsAppGateModal";
 import InstantFormModal from "./InstantFormModal";
+import WhatsAppIcon from "./WhatsAppIcon";
 
 export default function FloatingContact() {
   const phone = "+918143937367";
@@ -11,55 +12,64 @@ export default function FloatingContact() {
   const [isWhatsAppGateOpen, setIsWhatsAppGateOpen] = useState(false);
   const [isInstantFormOpen, setIsInstantFormOpen] = useState(false);
   const [formSource, setFormSource] = useState("Instant Form Floating Button");
+  const [showOnMobile, setShowOnMobile] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setShowOnMobile(window.scrollY > 220);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <>
-      {/* Floating Action Buttons Stack (Desktop only — mobile uses the sticky buy bar) */}
-      <div className="hidden lg:flex fixed bottom-6 right-6 z-40 flex-col items-center gap-3">
-        {/* Call Button */}
+      <div
+        className={`fixed bottom-[78px] left-3 z-40 flex flex-row items-center gap-1.5 rounded-full border border-gray-200/80 bg-white/95 p-1.5 shadow-xl backdrop-blur transition-all duration-300 dark:border-white/10 dark:bg-[#0b1220]/95 lg:bottom-6 lg:left-auto lg:right-6 lg:flex-col lg:gap-3 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none ${
+          showOnMobile
+            ? "pointer-events-auto translate-y-0 opacity-100"
+            : "pointer-events-none translate-y-3 opacity-0 lg:pointer-events-auto lg:translate-y-0 lg:opacity-100"
+        }`}
+      >
         <div className="group relative">
           <a
             href={`tel:${phone}`}
-            className="w-12 h-12 rounded-full bg-brand-orange hover:bg-brand-orange-dark text-white flex items-center justify-center shadow-lg transition hover-lift duration-250 relative cursor-pointer"
+            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-brand-orange text-white shadow-lg transition duration-250 hover:bg-brand-orange-dark hover-lift lg:h-12 lg:w-12"
             aria-label="Call Coordinator"
           >
-            <Phone size={20} className="stroke-[2.5]" />
-            <span className="absolute right-14 top-1/2 -translate-y-1/2 bg-brand-charcoal text-white text-xs font-bold py-1.5 px-3 rounded-lg shadow-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none">
+            <Phone size={17} className="stroke-[2.5] lg:hidden" />
+            <Phone size={19} className="hidden stroke-[2.5] lg:block" />
+            <span className="pointer-events-none absolute right-14 top-1/2 hidden -translate-y-1/2 whitespace-nowrap rounded-lg bg-brand-charcoal px-3 py-1.5 text-xs font-bold text-white shadow-md opacity-0 transition group-hover:opacity-100 lg:block">
               Call Coordinator
             </span>
           </a>
         </div>
 
-        {/* Instant Form Button */}
         <div className="group relative">
           <button
             onClick={() => {
               setFormSource(`Instant Form Floating Button - ${window.location.pathname}`);
               setIsInstantFormOpen(true);
             }}
-            className="w-12 h-12 rounded-full bg-brand-blue hover:bg-brand-blue-dark text-white flex items-center justify-center shadow-lg transition hover-lift duration-250 relative cursor-pointer focus:outline-none"
+            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-brand-blue text-white shadow-lg transition duration-250 hover:bg-brand-blue-dark hover-lift focus:outline-none lg:h-12 lg:w-12"
             aria-label="Instant Contact Form"
           >
-            <ClipboardList size={20} className="stroke-[2.5]" />
-            <span className="absolute right-14 top-1/2 -translate-y-1/2 bg-brand-charcoal text-white text-xs font-bold py-1.5 px-3 rounded-lg shadow-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none">
-              ⚡ Instant Form
+            <ClipboardList size={17} className="stroke-[2.5] lg:hidden" />
+            <ClipboardList size={19} className="hidden stroke-[2.5] lg:block" />
+            <span className="pointer-events-none absolute right-14 top-1/2 hidden -translate-y-1/2 whitespace-nowrap rounded-lg bg-brand-charcoal px-3 py-1.5 text-xs font-bold text-white shadow-md opacity-0 transition group-hover:opacity-100 lg:block">
+              Instant Form
             </span>
           </button>
         </div>
 
-        {/* WhatsApp Button */}
         <div className="group relative">
           <button
             onClick={() => setIsWhatsAppGateOpen(true)}
-            className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition hover-lift duration-250 relative cursor-pointer focus:outline-none bg-white p-0.5 border border-gray-100 dark:border-white/5"
+            className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition duration-250 hover:bg-[#1fb959] hover-lift focus:outline-none lg:h-12 lg:w-12"
             aria-label="Chat on WhatsApp"
           >
-            <img
-              src="/whatsapp-logo.png"
-              alt="WhatsApp logo"
-              className="w-full h-full object-contain"
-            />
-            <span className="absolute right-14 top-1/2 -translate-y-1/2 bg-brand-charcoal text-white text-xs font-bold py-1.5 px-3 rounded-lg shadow-md whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none">
+            <WhatsAppIcon size={20} className="lg:hidden" />
+            <WhatsAppIcon size={23} className="hidden lg:block" />
+            <span className="pointer-events-none absolute right-14 top-1/2 hidden -translate-y-1/2 whitespace-nowrap rounded-lg bg-brand-charcoal px-3 py-1.5 text-xs font-bold text-white shadow-md opacity-0 transition group-hover:opacity-100 lg:block">
               Enquire on WhatsApp
             </span>
           </button>

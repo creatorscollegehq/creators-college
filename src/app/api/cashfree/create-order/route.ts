@@ -27,7 +27,9 @@ export async function POST(request: Request) {
     }
 
     const orderId = `cc_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
-    const origin = new URL(request.url).origin;
+    const requestOrigin = new URL(request.url).origin;
+    const configuredOrigin = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+    const origin = configuredOrigin || (requestOrigin.startsWith("https://") ? requestOrigin : "https://www.creatorscollege.in");
     const returnUrl = `${origin}/checkout/success?order_id=${orderId}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&course=${encodeURIComponent(courseName)}`;
 
     const response = await fetch(
