@@ -607,19 +607,21 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <Link
-                href="/checkout"
-                className="mt-4 inline-flex w-full max-w-[430px] items-center justify-center gap-2 rounded-xl bg-brand-orange px-8 py-3.5 text-lg font-bold text-white shadow-lg shadow-brand-orange/25 transition hover:bg-brand-orange-dark hover:shadow-brand-orange/35"
-              >
-                Buy Now
-                <ArrowRight size={20} />
-              </Link>
-              <Link
-                href="/courses/content-creation"
-                className="mt-2 inline-flex items-center gap-1 text-xs font-bold text-[#0B1B4B] underline decoration-brand-orange/40 underline-offset-4 dark:text-white"
-              >
-                View full course curriculum <ArrowRight size={13} />
-              </Link>
+              <div className="mt-4 flex max-w-[520px] flex-col gap-2 sm:flex-row">
+                <Link
+                  href="/checkout"
+                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-orange px-8 py-3.5 text-lg font-bold text-white shadow-lg shadow-brand-orange/25 transition hover:bg-brand-orange-dark hover:shadow-brand-orange/35 sm:flex-1"
+                >
+                  Buy Now
+                  <ArrowRight size={20} />
+                </Link>
+                <Link
+                  href="/courses/content-creation"
+                  className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-gray-200 bg-white px-5 py-3.5 text-sm font-bold text-[#0B1B4B] transition hover:border-brand-orange/40 hover:text-brand-orange dark:border-white/15 dark:bg-white/5 dark:text-white"
+                >
+                  View Course &amp; Modules <ArrowRight size={15} />
+                </Link>
+              </div>
 
               <TrustRow className="mt-4" />
             </div>

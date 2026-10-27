@@ -371,7 +371,7 @@ export default function CoursesPage() {
                       href="/courses/content-creation"
                       className="w-full inline-flex items-center justify-center bg-white/10 hover:bg-white/20 text-white font-bold py-3.5 rounded-xl text-sm transition"
                     >
-                      View Full Course Page
+                      View Course &amp; Modules
                     </Link>
                     <Link
                       href="/lp/free-demo"

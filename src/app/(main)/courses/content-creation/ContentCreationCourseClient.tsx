@@ -27,7 +27,6 @@ import {
   Wallet,
   Zap,
 } from "lucide-react";
-import VideoModal, { type ActiveVideo } from "@/components/VideoModal";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
 import {
   contentCreationModules,
@@ -98,12 +97,7 @@ const faqs = [
 
 export default function ContentCreationCourseClient() {
   const [openModule, setOpenModule] = useState<string | null>("01");
-  const [activeVideo, setActiveVideo] = useState<ActiveVideo | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
-
-  const playVideo = (video: CoursePreviewVideo) => {
-    setActiveVideo({ id: video.id, title: video.title });
-  };
 
   return (
     <div className="w-full bg-white pb-20 dark:bg-[#090d16] lg:pb-0">
@@ -134,6 +128,10 @@ export default function ContentCreationCourseClient() {
                 editing and account growth in one complete step-by-step course.
               </p>
 
+              <div className="mt-3 inline-flex items-center gap-1.5 rounded-full border border-brand-orange/20 bg-white px-3 py-1 text-[10px] font-bold text-[#0B1B4B] dark:border-white/10 dark:bg-white/5 dark:text-white">
+                <Lock size={11} className="text-brand-orange" /> All modules &amp; videos unlock after enrollment
+              </div>
+
               <div className="mt-4 flex flex-wrap items-end gap-x-4 gap-y-2">
                 <div>
                   <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400">Offer Price</p>
@@ -153,15 +151,14 @@ export default function ContentCreationCourseClient() {
                   href="/checkout"
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-orange px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-orange/25 transition hover:bg-brand-orange-dark"
                 >
-                  Enroll Now <ArrowRight size={17} />
+                  Unlock Full Course <ArrowRight size={17} />
                 </Link>
-                <button
-                  type="button"
-                  onClick={() => playVideo(previewVideos[0])}
+                <Link
+                  href="#curriculum"
                   className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-6 py-3.5 text-sm font-bold text-[#0B1B4B] transition hover:border-brand-orange/40 hover:text-brand-orange dark:border-white/15 dark:bg-white/5 dark:text-white"
                 >
-                  <Play size={16} fill="currentColor" /> Watch Free Preview
-                </button>
+                  <Lock size={15} /> View All Modules
+                </Link>
               </div>
 
               <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1.5 text-[11px] font-semibold text-gray-600 dark:text-gray-300">
@@ -175,10 +172,10 @@ export default function ContentCreationCourseClient() {
             <div className="relative mx-auto w-full max-w-[560px]">
               <div className="grid grid-cols-2 gap-2">
                 {previewVideos.slice(0, 4).map((video) => (
-                  <button
+                  <Link
                     key={video.id}
-                    type="button"
-                    onClick={() => playVideo(video)}
+                    href="/checkout"
+                    aria-label={`Unlock ${video.title}`}
                     className="group relative aspect-video overflow-hidden rounded-xl bg-black text-left shadow-lg"
                   >
                     <Image
@@ -188,19 +185,15 @@ export default function ContentCreationCourseClient() {
                       sizes="(max-width: 1024px) 50vw, 25vw"
                       className="object-cover transition duration-500 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-black/20 transition group-hover:bg-black/10" />
+                    <div className="absolute inset-0 bg-black/45 transition group-hover:bg-black/30" />
                     <span className="absolute inset-0 m-auto flex h-10 w-10 items-center justify-center rounded-full bg-white text-brand-orange shadow-lg transition group-hover:scale-105">
-                      <Play size={16} fill="currentColor" className="ml-0.5" />
+                      <Lock size={16} />
                     </span>
-                    <span className="absolute bottom-1.5 right-1.5 rounded bg-black/70 px-1.5 py-0.5 text-[9px] font-medium text-white">
-                      {video.duration}
+                    <span className="absolute inset-x-1.5 bottom-1.5 rounded bg-black/70 px-1.5 py-0.5 text-center text-[8px] font-bold uppercase tracking-wide text-white">
+                      Locked · Unlock to watch
                     </span>
-                  </button>
+                  </Link>
                 ))}
-              </div>
-              <div className="absolute -bottom-3 left-3 rounded-xl border border-black/5 bg-white px-3 py-2 shadow-lg dark:border-white/10 dark:bg-[#0d1424]">
-                <p className="text-[10px] font-bold text-[#0B1B4B] dark:text-white">73 lessons</p>
-                <p className="text-[9px] text-gray-500 dark:text-gray-400">Step-by-step in Telugu</p>
               </div>
             </div>
           </div>
@@ -228,7 +221,7 @@ export default function ContentCreationCourseClient() {
                 10 Steps From Beginner to Pro
               </h2>
               <p className="mt-1.5 max-w-2xl text-xs leading-relaxed text-gray-600 dark:text-gray-300 sm:text-sm">
-                Every step is covered inside the course. Tap any preview to watch a free lesson right here.
+                Every step is covered inside the course. Tap any locked lesson to enroll and unlock it.
               </p>
             </div>
             <Link
@@ -256,11 +249,10 @@ export default function ContentCreationCourseClient() {
                   </div>
 
                   {video ? (
-                    <button
-                      type="button"
-                      onClick={() => playVideo(video)}
+                    <Link
+                      href="/checkout"
                       className="group relative mx-2.5 mt-2 aspect-video overflow-hidden rounded-lg bg-black"
-                      aria-label={`Watch ${video.title}`}
+                      aria-label={`Unlock ${video.title}`}
                     >
                       <Image
                         src={`/videos/${video.id}.jpg`}
@@ -269,14 +261,14 @@ export default function ContentCreationCourseClient() {
                         sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 18vw"
                         className="object-cover transition duration-500 group-hover:scale-105"
                       />
-                      <div className="absolute inset-0 bg-black/20 transition group-hover:bg-black/10" />
+                      <div className="absolute inset-0 bg-black/45 transition group-hover:bg-black/30" />
                       <span className="absolute inset-0 m-auto flex h-7 w-7 items-center justify-center rounded-full bg-white/95 text-brand-orange shadow">
-                        <Play size={10} fill="currentColor" strokeWidth={0} className="ml-0.5" />
+                        <Lock size={11} />
                       </span>
-                      <span className="absolute bottom-1 right-1 rounded bg-black/70 px-1 py-0.5 text-[8px] font-medium text-white">
-                        {video.duration}
+                      <span className="absolute inset-x-1 bottom-1 rounded bg-black/70 px-1 py-0.5 text-center text-[7px] font-bold uppercase tracking-wide text-white">
+                        Locked
                       </span>
-                    </button>
+                    </Link>
                   ) : (
                     <Link
                       href="/checkout"
@@ -298,27 +290,27 @@ export default function ContentCreationCourseClient() {
         </div>
       </section>
 
-      {/* Free previews */}
+      {/* Locked video library */}
       <section className="bg-[#EDF4F8] py-6 dark:bg-white/[0.03] md:py-9">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-end justify-between gap-3">
             <div>
-              <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-orange">Free Preview</span>
+              <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-orange">Inside the Course</span>
               <h2 className="mt-1 text-2xl font-bold tracking-tight text-[#0B1B4B] dark:text-white sm:text-3xl">
-                Watch Before You Enroll
+                Preview the Lessons. Unlock to Watch.
               </h2>
             </div>
             <span className="hidden text-[11px] font-semibold text-gray-500 dark:text-gray-400 sm:block">
-              Tap to play · No redirect
+              All videos locked · Enroll to unlock
             </span>
           </div>
 
           <div className="mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
             {previewVideos.map((video) => (
-              <button
+              <Link
                 key={video.id}
-                type="button"
-                onClick={() => playVideo(video)}
+                href="/checkout"
+                aria-label={`Unlock ${video.title}`}
                 className="group overflow-hidden rounded-xl border border-gray-200/70 bg-white text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-white/10 dark:bg-[#0d1424]"
               >
                 <div className="relative aspect-video bg-black">
@@ -329,9 +321,9 @@ export default function ContentCreationCourseClient() {
                     sizes="(max-width: 640px) 50vw, 25vw"
                     className="object-cover transition duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-black/15" />
+                  <div className="absolute inset-0 bg-black/45 transition group-hover:bg-black/30" />
                   <span className="absolute inset-0 m-auto flex h-8 w-8 items-center justify-center rounded-full bg-white/95 text-brand-orange shadow">
-                    <Play size={11} fill="currentColor" strokeWidth={0} className="ml-0.5" />
+                    <Lock size={12} />
                   </span>
                   <span className="absolute bottom-1.5 right-1.5 rounded bg-black/70 px-1.5 py-0.5 text-[9px] font-medium text-white">
                     {video.duration}
@@ -341,16 +333,16 @@ export default function ContentCreationCourseClient() {
                   <h3 className="line-clamp-2 text-[11px] font-bold leading-snug text-[#0B1B4B] dark:text-white">
                     {video.title}
                   </h3>
-                  <p className="mt-0.5 text-[9px] font-semibold text-brand-orange">Free preview</p>
+                  <p className="mt-0.5 text-[9px] font-semibold text-brand-orange">Locked · Unlock to watch</p>
                 </div>
-              </button>
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
       {/* Modules */}
-      <section className="bg-white py-6 dark:bg-[#090d16] md:py-9">
+      <section id="curriculum" className="scroll-mt-24 bg-white py-6 dark:bg-[#090d16] md:py-9">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-orange">Full Curriculum</span>
@@ -365,7 +357,6 @@ export default function ContentCreationCourseClient() {
           <div className="mt-4 space-y-2">
             {contentCreationModules.map((module) => {
               const isOpen = openModule === module.number;
-              const preview = module.preview;
               return (
                 <div
                   key={module.number}
@@ -381,26 +372,22 @@ export default function ContentCreationCourseClient() {
                         {module.number}
                       </span>
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[12px] font-bold text-[#0B1B4B] dark:text-white sm:text-sm">
+                        <span className="block text-[12px] font-bold leading-snug text-[#0B1B4B] dark:text-white sm:text-sm">
                           {module.title}
                         </span>
-                        <span className="block text-[10px] text-gray-500 dark:text-gray-400">
+                        <span className="mt-0.5 block text-[10px] text-gray-500 dark:text-gray-400">
                           {module.lessons.length} {module.lessons.length === 1 ? "lesson" : "lessons"} · Locked
                         </span>
                       </span>
                     </button>
 
-                    {preview ? (
-                      <button
-                        type="button"
-                        onClick={() => playVideo(preview)}
-                        className="hidden items-center gap-1 rounded-full bg-emerald-50 px-2 py-1 text-[9px] font-bold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 sm:inline-flex"
-                      >
-                        <Play size={9} fill="currentColor" /> Preview
-                      </button>
-                    ) : null}
-
-                    <Lock size={14} className="shrink-0 text-brand-orange" />
+                    <Link
+                      href="/checkout"
+                      aria-label={`Unlock ${module.title}`}
+                      className="inline-flex shrink-0 items-center gap-1 rounded-full bg-brand-orange/10 px-2 py-1 text-[9px] font-bold text-brand-orange transition hover:bg-brand-orange/20"
+                    >
+                      <Lock size={10} /> <span className="hidden sm:inline">Unlock</span>
+                    </Link>
                     <button
                       type="button"
                       onClick={() => setOpenModule(isOpen ? null : module.number)}
@@ -419,11 +406,8 @@ export default function ContentCreationCourseClient() {
                           href="/checkout"
                           className="flex items-center gap-2.5 border-b border-gray-100 px-3 py-2.5 last:border-0 hover:bg-brand-orange/5 dark:border-white/5"
                         >
-                          <span className="relative flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-gray-400 dark:bg-white/5">
-                            <Play size={11} />
-                            <span className="absolute -bottom-1 -right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-white text-brand-orange shadow dark:bg-[#0d1424]">
-                              <Lock size={7} />
-                            </span>
+                          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md bg-gray-100 text-brand-orange dark:bg-white/5">
+                            <Lock size={11} />
                           </span>
                           <span className="min-w-0 flex-1 truncate text-[11px] font-medium text-gray-700 dark:text-gray-300">
                             {lesson}
@@ -613,7 +597,6 @@ export default function ContentCreationCourseClient() {
         </div>
       </div>
 
-      <VideoModal video={activeVideo} onClose={() => setActiveVideo(null)} />
     </div>
   );
 }
