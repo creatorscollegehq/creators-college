@@ -103,11 +103,20 @@ async function uploadOne(file, key) {
   );
 }
 
-const files = (await collect(sourceDir)).sort();
+const files = (await collect(sourceDir))
+  .filter((file) => {
+    const ageSeconds = (Date.now() - statSync(file).mtimeMs) / 1000;
+    if (ageSeconds < 30) {
+      console.log(`Skipping ${path.relative(sourceDir, file)} (still encoding)`);
+      return false;
+    }
+    return true;
+  })
+  .sort();
 
 if (!files.length) {
-  console.error("No video files found. Use .mp4/.m4v/.mov/.webm files inside module folders.");
-  process.exit(1);
+  console.log("No stable video files to upload right now.");
+  process.exit(0);
 }
 
 const jobs = files.map((file) => ({
