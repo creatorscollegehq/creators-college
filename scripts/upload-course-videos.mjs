@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Upload course videos to the private R2 bucket.
+ * Upload course videos to the private Backblaze B2 bucket.
  *
  * Arrange files like this before running:
  *   videos/module-01/lesson-01.mp4
