@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Search, Users } from "lucide-react";
+import { courseLessons } from "@/lib/courseContent";
 import {
   formatDateTime,
   formatINR,
@@ -12,6 +13,7 @@ import {
 import { Card, EmptyState, PageHeader, Pagination, StatCard, StatusBadge } from "../ui";
 
 const PAGE_SIZE = 25;
+const TOTAL_LESSONS = courseLessons.length;
 
 const STATUS_TABS = [
   { value: "", label: "All" },
@@ -36,10 +38,10 @@ function ProgressCell({ student }: { student: StudentRow }) {
       <div className="h-1.5 w-16 overflow-hidden rounded-full bg-gray-100">
         <div
           className="h-full rounded-full bg-emerald-500"
-          style={{ width: `${Math.min(100, Math.round((completed / 73) * 100))}%` }}
+          style={{ width: `${Math.min(100, Math.round((completed / TOTAL_LESSONS) * 100))}%` }}
         />
       </div>
-      <span className="text-[10px] font-semibold tabular-nums text-gray-500">{completed}/73</span>
+      <span className="text-[10px] font-semibold tabular-nums text-gray-500">{completed}/{TOTAL_LESSONS}</span>
     </div>
   );
 }
@@ -236,7 +238,7 @@ export default async function AdminStudentsPage({
       </Card>
 
       <p className="text-[10px] text-gray-400">
-        Progress is counted from the analytics migration’s lesson progress table; 73 lessons make 100%.
+        Progress is counted from the analytics migration’s lesson progress table; {TOTAL_LESSONS} lessons make 100%.
       </p>
     </div>
   );

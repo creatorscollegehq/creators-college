@@ -18,6 +18,7 @@ import {
   formatRelative,
   getStudent,
 } from "@/lib/adminData";
+import { courseLessons } from "@/lib/courseContent";
 import { Badge, Card, EmptyState, PageHeader, StatCard, StatusBadge } from "../../ui";
 import StudentActions from "./StudentActions";
 
@@ -59,7 +60,7 @@ export default async function AdminStudentDetailPage({
         <StatCard
           label="Lessons completed"
           value={formatNumber(stats?.completed_lessons ?? 0)}
-          hint="out of 73"
+          hint={`out of ${courseLessons.length}`}
           icon={<BookOpenCheck size={16} />}
           accent="green"
         />

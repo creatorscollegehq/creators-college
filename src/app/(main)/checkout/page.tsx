@@ -14,6 +14,7 @@ import {
   Smartphone,
 } from "lucide-react";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
+import { CONTENT_CREATION_COURSE } from "@/data/contentCreationCourse";
 import { track } from "@/lib/track";
 
 interface CashfreeCheckoutInstance {
@@ -434,8 +435,8 @@ export default function CheckoutPage() {
 
             <div className="mt-3 space-y-1.5 text-[11px] text-gray-600 dark:text-gray-300">
               <p className="flex items-center justify-between"><span>Duration</span><strong className="text-[#0B1B4B] dark:text-white">{COURSE.duration}</strong></p>
-              <p className="flex items-center justify-between"><span>Modules</span><strong className="text-[#0B1B4B] dark:text-white">11 Modules</strong></p>
-              <p className="flex items-center justify-between"><span>Lessons</span><strong className="text-[#0B1B4B] dark:text-white">73 Lessons</strong></p>
+              <p className="flex items-center justify-between"><span>Modules</span><strong className="text-[#0B1B4B] dark:text-white">{CONTENT_CREATION_COURSE.totalModules} Modules</strong></p>
+              <p className="flex items-center justify-between"><span>Lessons</span><strong className="text-[#0B1B4B] dark:text-white">{CONTENT_CREATION_COURSE.totalLessons} Lessons</strong></p>
               <p className="flex items-center justify-between"><span>Language</span><strong className="text-[#0B1B4B] dark:text-white">Telugu</strong></p>
             </div>
 

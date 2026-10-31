@@ -15,7 +15,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
-import type { ModuleSummary } from "@/lib/courseContent";
+import type { LessonSummary, ModuleSummary } from "@/lib/courseContent";
 import { PROGRESS_EVENT, readProgress } from "@/lib/progress";
 import { track } from "@/lib/track";
 import LogoutButton from "@/components/learn/LogoutButton";
@@ -79,6 +79,32 @@ export default function LearnDashboard({
   const percent = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
   const nextLesson = allLessons.find((lesson) => !completed[lesson.id]) ?? allLessons[0];
   const initials = useMemo(() => initialsFor(studentName, studentEmail), [studentName, studentEmail]);
+
+  const renderLesson = (lesson: LessonSummary) => {
+    const done = Boolean(completed[lesson.id]);
+    return (
+      <li key={lesson.id}>
+        <Link
+          href={lesson.href}
+          className="flex items-center gap-3 px-4 py-3 md:px-5 text-sm transition hover:bg-brand-orange/5 dark:hover:bg-white/[0.03]"
+        >
+          {done ? (
+            <CheckCircle2 size={18} className="shrink-0 text-green-500" />
+          ) : (
+            <Circle size={18} className="shrink-0 text-gray-300 dark:text-white/20" />
+          )}
+          <span
+            className={`min-w-0 flex-1 truncate ${
+              done ? "text-gray-400 dark:text-gray-500" : "text-brand-charcoal dark:text-white/85"
+            }`}
+          >
+            {lesson.lessonIndex}. {lesson.title}
+          </span>
+          <PlayCircle size={16} className="shrink-0 text-brand-orange/70" />
+        </Link>
+      </li>
+    );
+  };
 
   return (
     <div className="flex-grow bg-brand-gray/30 dark:bg-brand-gray/10 py-6 md:py-10">
@@ -195,35 +221,28 @@ export default function LearnDashboard({
                         />
                       </div>
                     </summary>
-                    <ul className="border-t border-gray-100 dark:border-white/5">
-                      {module.lessons.map((lesson) => {
-                        const done = Boolean(completed[lesson.id]);
-                        return (
-                          <li key={lesson.id}>
-                            <Link
-                              href={lesson.href}
-                              className="flex items-center gap-3 px-4 py-3 md:px-5 text-sm transition hover:bg-brand-orange/5 dark:hover:bg-white/[0.03]"
-                            >
-                              {done ? (
-                                <CheckCircle2 size={18} className="shrink-0 text-green-500" />
-                              ) : (
-                                <Circle size={18} className="shrink-0 text-gray-300 dark:text-white/20" />
-                              )}
-                              <span
-                                className={`min-w-0 flex-1 truncate ${
-                                  done
-                                    ? "text-gray-400 dark:text-gray-500"
-                                    : "text-brand-charcoal dark:text-white/85"
-                                }`}
-                              >
-                                {lesson.lessonIndex}. {lesson.title}
-                              </span>
-                              <PlayCircle size={16} className="shrink-0 text-brand-orange/70" />
-                            </Link>
-                          </li>
-                        );
-                      })}
-                    </ul>
+                    {module.sections ? (
+                      <div className="border-t border-gray-100 dark:border-white/5">
+                        {module.sections.map((section, sectionIndex) => {
+                          const sectionCompleted = section.lessons.filter((lesson) => completed[lesson.id]).length;
+                          return (
+                            <div key={`${section.title}-${sectionIndex}`}>
+                              <p className="flex items-center justify-between gap-3 border-b border-gray-100 bg-brand-gray/40 px-4 py-2 text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:border-white/5 dark:bg-white/[0.03] dark:text-gray-400 md:px-5">
+                                <span className="truncate">{section.title}</span>
+                                <span className="shrink-0 tabular-nums">
+                                  {sectionCompleted}/{section.lessons.length}
+                                </span>
+                              </p>
+                              <ul>{section.lessons.map(renderLesson)}</ul>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    ) : (
+                      <ul className="border-t border-gray-100 dark:border-white/5">
+                        {module.lessons.map(renderLesson)}
+                      </ul>
+                    )}
                   </details>
                 );
               })}

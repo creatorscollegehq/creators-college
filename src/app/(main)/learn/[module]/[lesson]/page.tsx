@@ -39,6 +39,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
         title: found.lesson.title,
         moduleNumber: found.lesson.moduleNumber,
         moduleTitle: found.lesson.moduleTitle,
+        sectionTitle: found.lesson.sectionTitle,
         lessonIndex: found.lesson.lessonIndex,
       }}
       videoUrl={videoUrl}

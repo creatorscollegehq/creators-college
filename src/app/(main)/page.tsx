@@ -27,6 +27,7 @@ import {
 } from "lucide-react";
 import { FacebookIcon, InstagramIcon, YoutubeIcon } from "@/components/SocialIcons";
 import { testimonials } from "@/data/testimonials";
+import { CONTENT_CREATION_COURSE } from "@/data/contentCreationCourse";
 import CroExitPopup from "@/components/CroExitPopup";
 import HomeAnalytics from "@/components/HomeAnalytics";
 import HomeFaq from "@/components/HomeFaq";
@@ -200,8 +201,8 @@ const valueItems = [
     href: "/courses/content-creation",
   },
   {
-    title: "11 Step-by-Step Modules",
-    desc: "73 lessons in the right order without guesswork.",
+    title: `${CONTENT_CREATION_COURSE.totalModules} Step-by-Step Modules`,
+    desc: `${CONTENT_CREATION_COURSE.totalLessons} lessons in the right order without guesswork.`,
     value: "Included",
     href: "/courses/content-creation#curriculum",
   },
@@ -905,7 +906,7 @@ export default function HomePage() {
                 Everything you need to <span className="text-brand-orange">start creating</span>
               </h2>
               <p className="mt-2.5 max-w-lg text-sm leading-relaxed text-gray-600 dark:text-gray-300 sm:text-base">
-                One complete course, 11 practical modules, 73 lessons and lifetime access — without jumping between
+                One complete course, {CONTENT_CREATION_COURSE.totalModules} practical modules, {CONTENT_CREATION_COURSE.totalLessons} lessons and lifetime access — without jumping between
                 random YouTube playlists.
               </p>
               <div className="mt-4 inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1.5 text-[11px] font-bold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">
@@ -1219,7 +1220,7 @@ export default function HomePage() {
                 <div className="mt-4 flex items-center justify-between gap-3 rounded-xl bg-[#FFC93C] px-3.5 py-3">
                   <div>
                     <p className="text-[9px] font-bold uppercase tracking-[0.14em] text-[#0B1B4B]/60">Lifetime Access</p>
-                    <p className="text-xs font-bold text-[#0B1B4B]">11 Modules · Learn at Your Own Pace</p>
+                    <p className="text-xs font-bold text-[#0B1B4B]">{CONTENT_CREATION_COURSE.totalModules} Modules · Learn at Your Own Pace</p>
                   </div>
                   <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#0B1B4B] text-white">
                     <Play size={12} fill="currentColor" strokeWidth={0} className="ml-0.5" />

@@ -21,6 +21,7 @@ interface LessonPlayerProps {
     title: string;
     moduleNumber: string;
     moduleTitle: string;
+    sectionTitle?: string;
     lessonIndex: number;
   };
   videoUrl: string | null;
@@ -43,6 +44,7 @@ export default function LessonPlayer({
   moduleLessonCount,
 }: LessonPlayerProps) {
   const [completed, setCompleted] = useState(false);
+  const [failedUrl, setFailedUrl] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const lastSyncRef = useRef(0);
   const savedSecondsRef = useRef(0);
@@ -159,7 +161,7 @@ export default function LessonPlayer({
 
         <div className="mt-3 rounded-3xl overflow-hidden border border-gray-200/60 dark:border-white/10 bg-white dark:bg-[#0d1424] shadow-[0_30px_70px_-40px_rgba(15,23,42,0.35)]">
           <div className="relative aspect-video w-full bg-black">
-            {videoUrl ? (
+            {videoUrl && failedUrl !== videoUrl ? (
               <>
                 <video
                   key={videoUrl}
@@ -173,6 +175,7 @@ export default function LessonPlayer({
                   onPlay={handlePlay}
                   onTimeUpdate={handleTimeUpdate}
                   onEnded={handleComplete}
+                  onError={() => setFailedUrl(videoUrl)}
                   onContextMenu={(event) => event.preventDefault()}
                   src={videoUrl}
                 />
@@ -200,6 +203,11 @@ export default function LessonPlayer({
                 <p className="text-[10px] font-semibold uppercase tracking-wider text-brand-orange">
                   Module {lesson.moduleNumber} · {lesson.moduleTitle}
                 </p>
+                {lesson.sectionTitle && (
+                  <p className="mt-0.5 text-[10px] font-medium uppercase tracking-wide text-gray-400">
+                    {lesson.sectionTitle}
+                  </p>
+                )}
                 <h1 className="mt-1 text-xl md:text-2xl font-bold tracking-tight text-brand-charcoal dark:text-white">
                   {lesson.lessonIndex}. {lesson.title}
                 </h1>

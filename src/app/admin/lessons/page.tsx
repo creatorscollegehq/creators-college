@@ -37,7 +37,7 @@ export default async function AdminLessonsPage() {
   }
 
   const lessons = data.lessons || [];
-  const totalCourseLessons = courseLessons.length || 73;
+  const totalCourseLessons = courseLessons.length;
   const completionRate = percent(Number(data.totals?.completions) || 0, lessons.reduce((sum, row) => sum + Number(row.viewers), 0));
   const coverage = percent(Number(data.totals?.tracked_lessons) || 0, totalCourseLessons);
   const titleById = new Map(courseLessons.map((lesson) => [lesson.id, lesson.title]));

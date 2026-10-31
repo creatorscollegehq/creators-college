@@ -30,6 +30,7 @@ import {
 import VideoModal, { type ActiveVideo } from "@/components/VideoModal";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
 import {
+  CONTENT_CREATION_COURSE,
   contentCreationModules,
   contentCreationRoadmap,
   type CoursePreviewVideo,
@@ -48,8 +49,7 @@ const roadmapIcons = {
   analytics: BarChart3,
 };
 
-const previewVideos: CoursePreviewVideo[] = [
-  ...contentCreationRoadmap.flatMap((step) => (step.video ? [step.video] : [])),
+const previewVideos: CoursePreviewVideo[] = [  ...contentCreationRoadmap.flatMap((step) => (step.video ? [step.video] : [])),
   {
     id: "gISyUpfoXvc",
     title: "Social Media Page Handling",
@@ -57,13 +57,40 @@ const previewVideos: CoursePreviewVideo[] = [
   },
 ];
 
+function LockedLessonRow({ lesson }: { lesson: string }) {
+  return (
+    <Link
+      href="/checkout"
+      aria-label={`Unlock lesson: ${lesson}`}
+      className="group flex items-center gap-2.5 border-b border-gray-100 px-3 py-2.5 last:border-0 hover:bg-brand-orange/5 dark:border-white/5"
+    >
+      <span className="relative flex h-10 w-16 shrink-0 items-center justify-center overflow-hidden rounded-md bg-gradient-to-br from-[#0B1B4B] to-[#123c9e] text-white">
+        <Play size={12} fill="currentColor" className="ml-0.5 opacity-90" />
+        <span className="absolute inset-0 bg-black/20" />
+        <span className="absolute bottom-0.5 right-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-white text-brand-orange shadow">
+          <Lock size={7} />
+        </span>
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="line-clamp-2 block text-[11px] font-semibold leading-snug text-gray-700 group-hover:text-brand-orange dark:text-gray-300">
+          {lesson}
+        </span>
+        <span className="mt-0.5 block text-[9px] font-medium uppercase tracking-wide text-gray-400">
+          Video lesson · Locked
+        </span>
+      </span>
+      <Lock size={13} className="shrink-0 text-brand-orange" />
+    </Link>
+  );
+}
+
 const included: {
   icon: ComponentType<{ size?: number; className?: string }>;
   title: string;
   desc: string;
 }[] = [
-  { icon: BookOpen, title: "11 Complete Modules", desc: "Fundamentals to analytics in one clear path." },
-  { icon: Play, title: "73 Step-by-Step Lessons", desc: "Short, practical lessons taught in Telugu." },
+  { icon: BookOpen, title: `${CONTENT_CREATION_COURSE.totalModules} Complete Modules`, desc: "Fundamentals to analytics in one clear path." },
+  { icon: Play, title: `${CONTENT_CREATION_COURSE.totalLessons} Step-by-Step Lessons`, desc: "Short, practical lessons taught in Telugu." },
   { icon: Clock, title: "Lifetime Recordings", desc: "Rewatch every lesson whenever you want." },
   { icon: WhatsAppIcon, title: "WhatsApp Doubt Support", desc: "Ask questions and get guidance from the team." },
   { icon: GraduationCap, title: "Completion Certificate", desc: "Certificate after completing the course." },
@@ -176,8 +203,8 @@ export default function ContentCreationCourseClient({ embedded = false }: { embe
               </div>
 
               <div className="mt-4 flex flex-wrap gap-x-4 gap-y-1.5 text-[11px] font-semibold text-gray-600 dark:text-gray-300">
-                <span className="inline-flex items-center gap-1.5"><Check size={13} className="text-emerald-600" /> 11 Modules</span>
-                <span className="inline-flex items-center gap-1.5"><Check size={13} className="text-emerald-600" /> 73 Lessons</span>
+                <span className="inline-flex items-center gap-1.5"><Check size={13} className="text-emerald-600" /> {CONTENT_CREATION_COURSE.totalModules} Modules</span>
+                <span className="inline-flex items-center gap-1.5"><Check size={13} className="text-emerald-600" /> {CONTENT_CREATION_COURSE.totalLessons} Lessons</span>
                 <span className="inline-flex items-center gap-1.5"><Check size={13} className="text-emerald-600" /> Lifetime Access</span>
                 <span className="inline-flex items-center gap-1.5"><Check size={13} className="text-emerald-600" /> Certificate</span>
               </div>
@@ -364,7 +391,7 @@ export default function ContentCreationCourseClient({ embedded = false }: { embe
           <div className="text-center">
             <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-orange">Full Curriculum</span>
             <h2 className="mt-1 text-2xl font-bold tracking-tight text-[#0B1B4B] dark:text-white sm:text-3xl">
-              11 Modules · 73 Lessons
+              {CONTENT_CREATION_COURSE.totalModules} Modules · {CONTENT_CREATION_COURSE.totalLessons} Lessons
             </h2>
             <p className="mx-auto mt-1.5 max-w-xl text-xs leading-relaxed text-gray-600 dark:text-gray-300 sm:text-sm">
               YouTube previews are free. Full module lessons unlock after enrollment. Tap a module to see the lessons inside.
@@ -429,31 +456,23 @@ export default function ContentCreationCourseClient({ embedded = false }: { embe
 
                   {isOpen ? (
                     <div className="border-t border-gray-100 dark:border-white/5">
-                      {module.lessons.map((lesson) => (
-                        <Link
-                          key={lesson}
-                          href="/checkout"
-                          aria-label={`Unlock lesson: ${lesson}`}
-                          className="group flex items-center gap-2.5 border-b border-gray-100 px-3 py-2.5 last:border-0 hover:bg-brand-orange/5 dark:border-white/5"
-                        >
-                          <span className="relative flex h-10 w-16 shrink-0 items-center justify-center overflow-hidden rounded-md bg-gradient-to-br from-[#0B1B4B] to-[#123c9e] text-white">
-                            <Play size={12} fill="currentColor" className="ml-0.5 opacity-90" />
-                            <span className="absolute inset-0 bg-black/20" />
-                            <span className="absolute bottom-0.5 right-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-white text-brand-orange shadow">
-                              <Lock size={7} />
-                            </span>
-                          </span>
-                          <span className="min-w-0 flex-1">
-                            <span className="line-clamp-2 block text-[11px] font-semibold leading-snug text-gray-700 group-hover:text-brand-orange dark:text-gray-300">
-                              {lesson}
-                            </span>
-                            <span className="mt-0.5 block text-[9px] font-medium uppercase tracking-wide text-gray-400">
-                              Video lesson · Locked
-                            </span>
-                          </span>
-                          <Lock size={13} className="shrink-0 text-brand-orange" />
-                        </Link>
-                      ))}
+                      {module.sections ? (
+                        module.sections.map((section) => (
+                          <div key={section.title}>
+                            <div className="flex items-center justify-between gap-2 border-b border-gray-100 bg-gray-50/80 px-3 py-1.5 dark:border-white/5 dark:bg-white/[0.03]">
+                              <span className="text-[10px] font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400">
+                                {section.title}
+                              </span>
+                              <span className="text-[9px] font-semibold text-gray-400">{section.lessons.length} lessons</span>
+                            </div>
+                            {section.lessons.map((lesson) => (
+                              <LockedLessonRow key={`${section.title}-${lesson}`} lesson={lesson} />
+                            ))}
+                          </div>
+                        ))
+                      ) : (
+                        module.lessons.map((lesson) => <LockedLessonRow key={lesson} lesson={lesson} />)
+                      )}
                       <div className="p-2.5">
                         <Link
                           href="/checkout"

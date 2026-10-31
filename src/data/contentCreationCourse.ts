@@ -1,3 +1,11 @@
+import {
+  aiLessons,
+  aiModuleTitle,
+  capcutModuleTitle,
+  capcutSections,
+  type CourseSectionData,
+} from "./contentCreationExtras";
+
 export interface CoursePreviewVideo {
   id: string;
   title: string;
@@ -16,6 +24,7 @@ export interface CourseModule {
   number: string;
   title: string;
   lessons: string[];
+  sections?: CourseSectionData[];
   preview?: CoursePreviewVideo;
 }
 
@@ -27,8 +36,8 @@ export const CONTENT_CREATION_COURSE = {
   duration: "20 Days",
   language: "Telugu",
   mode: "Live Online + Recordings",
-  totalModules: 11,
-  totalLessons: 73,
+  totalModules: 12,
+  totalLessons: 296,
 };
 
 export const contentCreationRoadmap: RoadmapStep[] = [
@@ -249,14 +258,9 @@ export const contentCreationModules: CourseModule[] = [
   },
   {
     number: "07",
-    title: "Mobile Video Editing - CapCut",
-    lessons: [
-      "Lesson 1: CapCut Interface and Project Setup",
-      "Lesson 2: Cutting, Timing and Speed",
-      "Lesson 3: Text, Captions and Overlays",
-      "Lesson 4: Music, Sound Effects and Mixing",
-      "Lesson 5: Export Settings for Reels and YouTube",
-    ],
+    title: capcutModuleTitle,
+    lessons: [],
+    sections: capcutSections,
     preview: {
       id: "fFWOW038J10",
       title: "Video Editing for Beginners",
@@ -308,5 +312,10 @@ export const contentCreationModules: CourseModule[] = [
     number: "10",
     title: "Analytics",
     lessons: ["Lesson 1: Understanding Instagram Reel Analytics"],
+  },
+  {
+    number: "11",
+    title: aiModuleTitle,
+    lessons: aiLessons,
   },
 ];

@@ -5,7 +5,7 @@ import ContentCreationCourseClient from "./ContentCreationCourseClient";
 export const metadata: Metadata = {
   title: "Complete Telugu Content Creation Course | Creators College",
   description:
-    "Learn content creation in Telugu from fundamentals to analytics. 11 modules, 73 lessons, live training, lifetime recordings, WhatsApp support and a completion certificate.",
+    `Learn content creation in Telugu from fundamentals to analytics. ${CONTENT_CREATION_COURSE.totalModules} modules, ${CONTENT_CREATION_COURSE.totalLessons} lessons, live training, lifetime recordings, WhatsApp support and a completion certificate.`,
   keywords: [
     "Content Creation Course",
     "Telugu Content Creation Course",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Complete Telugu Content Creation Course | Creators College",
     description:
-      "11 modules, 73 lessons and lifetime recordings. Learn content creation, scripting, shooting, editing and analytics in Telugu.",
+      `${CONTENT_CREATION_COURSE.totalModules} modules, ${CONTENT_CREATION_COURSE.totalLessons} lessons and lifetime recordings. Learn content creation, scripting, shooting, editing and analytics in Telugu.`,
     url: "https://www.creatorscollege.in/courses/content-creation",
     siteName: "Creators College",
     images: ["https://www.creatorscollege.in/cecil-srungarapati-founder-creators-college.jpeg"],
