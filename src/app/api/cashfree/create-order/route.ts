@@ -18,19 +18,25 @@ export async function POST(request: Request) {
     const body = await request.json();
     const name = String(body?.name || "").trim();
     const phone = String(body?.phone || "").replace(/\D/g, "").slice(-10);
-    const email = String(body?.email || "").trim();
+    const email = String(body?.email || "").trim().toLowerCase();
     const courseName = String(body?.courseName || "Creators College Course");
     const amount = Number(body?.amount) || 5000;
 
-    if (!name || phone.length !== 10) {
-      return NextResponse.json({ configured: true, error: "A valid name and 10-digit phone number are required." }, { status: 400 });
+    if (!name || phone.length !== 10 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return NextResponse.json(
+        {
+          configured: true,
+          error: "A valid name, 10-digit phone number and email are required. The email must match the Gmail you use to sign in.",
+        },
+        { status: 400 }
+      );
     }
 
     const orderId = `cc_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
     const requestOrigin = new URL(request.url).origin;
     const configuredOrigin = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
     const origin = configuredOrigin || (requestOrigin.startsWith("https://") ? requestOrigin : "https://www.creatorscollege.in");
-    const returnUrl = `${origin}/checkout/success?order_id=${orderId}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&course=${encodeURIComponent(courseName)}`;
+    const returnUrl = `${origin}/checkout/success?order_id=${orderId}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&email=${encodeURIComponent(email)}&course=${encodeURIComponent(courseName)}`;
 
     const response = await fetch(
       `${environment === "production" ? "https://api.cashfree.com/pg" : "https://sandbox.cashfree.com/pg"}/orders`,
@@ -50,7 +56,7 @@ export async function POST(request: Request) {
             customer_id: `cust_${phone}`,
             customer_name: name,
             customer_phone: phone,
-            customer_email: email || "enquiry@creatorscollege.com",
+            customer_email: email,
           },
           order_meta: {
             return_url: returnUrl,

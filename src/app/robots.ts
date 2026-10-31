@@ -10,6 +10,8 @@ export default function robots(): MetadataRoute.Robots {
           '/private/',
           '/studio/', // Sanity Studio — not for public crawling
           '/lp/ads',  // Paid ad landing page — noindex
+          '/learn',  // Enrolled student portal — private
+          '/checkout/success',
         ],
       },
     ],

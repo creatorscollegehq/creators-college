@@ -60,6 +60,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link prefetch={false} href="/learn" className="text-gray-400 hover:text-brand-orange text-sm transition duration-150">
+                  My Course
+                </Link>
+              </li>
+              <li>
                 <Link prefetch={false} href="/corporate-training" className="text-gray-400 hover:text-brand-orange text-sm transition duration-150">
                   Corporate & College Training
                 </Link>

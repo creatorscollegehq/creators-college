@@ -51,7 +51,9 @@ export default function CheckoutPage() {
     } else if (!/^\+?[0-9\s-]{10,15}$/.test(formData.phone.trim())) {
       tempErrors.phone = "Invalid phone number";
     }
-    if (formData.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+    if (!formData.email.trim()) {
+      tempErrors.email = "Email is required for course access";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
       tempErrors.email = "Invalid email format";
     }
     setErrors(tempErrors);
@@ -238,8 +240,14 @@ export default function CheckoutPage() {
               Complete Your Enrollment
             </h1>
             <p className="mt-1 text-xs text-gray-600 dark:text-gray-300 sm:text-sm">
-              Enter your details and pay securely. Course access is sent on WhatsApp after verification.
+              Enter your details and pay securely. After payment, sign in with the same Gmail to open your private course library.
             </p>
+            <Link
+              href="/learn"
+              className="mt-1.5 inline-flex items-center gap-1 text-[11px] font-semibold text-brand-orange hover:underline"
+            >
+              Already enrolled? Open My Course <ArrowRight size={12} />
+            </Link>
           </div>
           <Link
             href="/courses/content-creation"
@@ -309,7 +317,7 @@ export default function CheckoutPage() {
 
                 <div className="space-y-1">
                   <label htmlFor="email" className="block text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
-                    Email Address <span className="font-medium normal-case text-gray-400">(optional)</span>
+                    Email Address
                   </label>
                   <input
                     id="email"
@@ -321,13 +329,17 @@ export default function CheckoutPage() {
                     className={`w-full rounded-lg border bg-white px-3.5 py-2.5 text-sm text-[#0B1B4B] outline-none transition focus:border-brand-orange dark:bg-white/5 dark:text-white ${
                       errors.email ? "border-red-500" : "border-gray-200 dark:border-white/10"
                     }`}
-                    placeholder="e.g. rahul@example.com"
+                    placeholder="e.g. rahul@gmail.com"
                   />
                   {errors.email ? (
                     <p className="flex items-center gap-1 text-[11px] text-red-500">
                       <AlertCircle size={12} /> {errors.email}
                     </p>
-                  ) : null}
+                  ) : (
+                    <p className="text-[10px] leading-relaxed text-gray-500 dark:text-gray-400">
+                      Use the same Gmail you will use to sign in to My Course.
+                    </p>
+                  )}
                 </div>
 
                 <button

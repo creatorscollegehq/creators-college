@@ -93,7 +93,7 @@ const faqs = [
   },
   {
     q: "How will I get course access after payment?",
-    a: "After a successful payment, our team verifies your order and shares your course access and batch details on WhatsApp.",
+    a: "Instantly. After a successful payment, your course library unlocks automatically — no waiting for manual approval. Sign in anytime at My Course with your order ID and phone number.",
   },
   {
     q: "Is the payment secure?",
@@ -614,6 +614,12 @@ export default function ContentCreationCourseClient({ embedded = false }: { embe
             </a>
           </div>
           <p className="mt-3 text-[10px] text-white/60">Secure payment via Cashfree · UPI, Cards &amp; Netbanking</p>
+          <p className="mt-2 text-[11px] text-white/60">
+            Already enrolled?{" "}
+            <Link href="/learn" className="font-semibold text-white underline hover:text-brand-orange">
+              Open My Course
+            </Link>
+          </p>
         </div>
       </section>
 

@@ -200,6 +200,12 @@ export default function Header() {
                 <Sun size={20} className="hidden dark:block" />
               </button>
               <Link prefetch={false}
+                href="/learn"
+                className="text-sm font-bold text-brand-charcoal/80 dark:text-white/80 hover:text-brand-orange transition"
+              >
+                My Course
+              </Link>
+              <Link prefetch={false}
                 href="/checkout"
                 className="bg-brand-orange hover:bg-brand-orange-dark text-white px-6 py-2.5 rounded-full text-sm font-bold tracking-wide shadow-lg hover:shadow-brand-orange/20 transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] animate-enroll"
               >
@@ -258,6 +264,13 @@ export default function Header() {
                   className="block w-full bg-brand-orange hover:bg-brand-orange-dark text-white py-3 rounded-full text-base font-bold shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] animate-enroll justify-center"
                 >
                   Enroll Now
+                </Link>
+                <Link prefetch={false}
+                  href="/learn"
+                  onClick={() => setIsOpen(false)}
+                  className="block w-full rounded-full border border-gray-200 dark:border-white/10 py-3 text-sm font-bold text-brand-charcoal dark:text-white transition hover:border-brand-orange hover:text-brand-orange"
+                >
+                  My Course
                 </Link>
                 <button
                   onClick={toggleTheme}
