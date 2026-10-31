@@ -110,7 +110,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         error:
-          "This order has no email on record. Sign in with Google and use Claim Access with your order ID and phone number.",
+          "This order has no email on record. Message us on WhatsApp with your order ID so we can link it to your Google email.",
       },
       { status: 422 }
     );

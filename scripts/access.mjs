@@ -9,9 +9,7 @@
  *   node scripts/access.mjs restore <orderId>
  *
  * Use grant for manual/UPI students. They sign in with Google at /learn/login:
- * - if the Gmail matches <email>, access opens automatically;
- * - otherwise they use "Claim with Order ID" on /learn/claim with <orderId>
- *   and <phone>, which links their Google account once.
+ * the Gmail must match <email>, and access opens automatically.
  */
 import { existsSync, readFileSync } from "node:fs";
 import { createClient } from "@supabase/supabase-js";
@@ -121,7 +119,7 @@ async function grant() {
   console.log("Student instructions:");
   console.log(`  1. Open /learn/login and continue with Google using ${data.email}.`);
   console.log("  2. Access opens automatically when the Gmail matches.");
-  console.log("  3. If they use a different Gmail, use Claim on /learn/claim with the order ID and phone.");
+  console.log("  3. If they use a different Gmail, update the enrollment email or contact support.");
 }
 
 async function setStatus(status) {

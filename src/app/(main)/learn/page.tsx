@@ -1,25 +1,48 @@
 import type { Metadata } from "next";
-import { requireEnrollment } from "@/lib/access";
-import { courseLessons, courseModules, maskPhone } from "@/lib/courseContent";
+import { requireAuthUser } from "@/lib/access";
+import { getActiveEnrollmentForUser } from "@/lib/supabase";
+import { courseLessons, courseModules } from "@/lib/courseContent";
 import LearnDashboard from "./LearnDashboard";
 
 export const metadata: Metadata = {
-  title: "My Course | Creators College",
-  description: "Your private Creators College course library.",
+  title: "My Profile | Creators College",
+  description: "Your Creators College profile and enrolled courses.",
   robots: { index: false, follow: false },
 };
 
+function formatMonthYear(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleDateString("en-IN", { month: "short", year: "numeric" });
+}
+
+function formatDate(value: string) {
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" });
+}
+
 export default async function LearnPage() {
-  const { user, enrollment } = await requireEnrollment();
+  const user = await requireAuthUser();
+  const enrollment = await getActiveEnrollmentForUser(user.id, user.email);
 
   return (
     <LearnDashboard
-      orderId={enrollment.order_id}
-      studentName={enrollment.name || user.name}
+      studentName={user.name}
       studentEmail={user.email}
-      maskedPhone={maskPhone(enrollment.phone)}
-      modules={courseModules}
-      totalLessons={courseLessons.length}
+      enrollment={
+        enrollment
+          ? {
+              orderId: enrollment.order_id,
+              memberSince: formatMonthYear(enrollment.created_at),
+              accessUntil: enrollment.expires_at
+                ? `Access until ${formatDate(enrollment.expires_at)}`
+                : "Lifetime access",
+            }
+          : null
+      }
+      modules={enrollment ? courseModules : []}
+      totalLessons={enrollment ? courseLessons.length : 0}
     />
   );
 }

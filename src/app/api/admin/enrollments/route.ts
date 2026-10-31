@@ -53,7 +53,7 @@ export async function POST(request: Request) {
   } else {
     update.user_id = null;
     update.claimed_at = null;
-    message = "Google account unlinked. The student can claim again with the order ID and phone number.";
+    message = "Google account unlinked. The student regains access by signing in with their checkout email.";
   }
 
   const { data, error } = await client

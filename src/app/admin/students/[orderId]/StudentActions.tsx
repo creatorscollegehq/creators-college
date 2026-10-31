@@ -29,7 +29,7 @@ export default function StudentActions({
     }
     if (
       action === "unlink" &&
-      !window.confirm("Unlink the Google account? The payment stays active and the student can claim again with their order ID.")
+      !window.confirm("Unlink the Google account? The payment stays active. The student regains access by signing in with their checkout email.")
     ) {
       return;
     }

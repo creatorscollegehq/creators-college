@@ -4,11 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import {
-  Activity,
   BookOpenCheck,
   ExternalLink,
   LayoutDashboard,
-  LineChart,
   Loader2,
   LogOut,
   ShieldCheck,
@@ -17,10 +15,8 @@ import {
 
 const NAV = [
   { href: "/admin", label: "Overview", icon: LayoutDashboard },
-  { href: "/admin/traffic", label: "Traffic", icon: LineChart },
   { href: "/admin/students", label: "Students", icon: Users },
   { href: "/admin/lessons", label: "Lessons", icon: BookOpenCheck },
-  { href: "/admin/events", label: "Event feed", icon: Activity },
 ];
 
 export default function AdminShell({ email, children }: { email: string; children: ReactNode }) {

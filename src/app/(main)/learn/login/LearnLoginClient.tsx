@@ -291,8 +291,8 @@ export default function LearnLoginClient({
                 Use the same Gmail you entered at checkout.
               </p>
               <p className="text-[11px] leading-relaxed text-gray-500 dark:text-gray-400">
-                Paid via UPI instead? Sign in with Google first, then enter your order ID once to link the
-                enrollment. After that, Google login is enough.
+                Your enrolled courses appear in your profile automatically — no order ID needed. Signed in with a
+                different Gmail? Contact support and we will move your access.
               </p>
             </div>
 

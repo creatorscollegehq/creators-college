@@ -1,4 +1,5 @@
 import { cache } from "react";
+import { unstable_rethrow } from "next/navigation";
 import { createAuthServerClient, authConfig } from "./server";
 
 export interface AuthUser {
@@ -25,6 +26,7 @@ export const getAuthUser = cache(async (): Promise<AuthUser | null> => {
 
     return { id, email, name };
   } catch (error) {
+    unstable_rethrow(error);
     console.error("Supabase auth lookup failed:", error);
     return null;
   }

@@ -93,7 +93,7 @@ const faqs = [
   },
   {
     q: "How will I get course access after payment?",
-    a: "Instantly. After a successful payment, your course library unlocks automatically — no waiting for manual approval. Sign in anytime at My Course with your order ID and phone number.",
+    a: "Instantly. After a successful payment, your course library unlocks automatically — no waiting for manual approval. Sign in anytime at My Course with the same Google email you used at checkout.",
   },
   {
     q: "Is the payment secure?",

@@ -64,7 +64,7 @@ export default function CheckoutSuccessClient() {
       setStatus("error");
       track("payment_failed", { reason: "missing_details", orderId });
       setMessage(
-        "This link is missing your order details. Open My Course and sign in with Google, or claim access with your order ID and phone number."
+        "This link is missing your order details. Open My Course and sign in with Google using your checkout email."
       );
       return;
     }

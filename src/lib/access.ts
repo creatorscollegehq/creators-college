@@ -22,6 +22,6 @@ export async function requireAuthUser() {
 export async function requireEnrollment() {
   const user = await requireAuthUser();
   const enrollment = await getActiveEnrollmentForUser(user.id, user.email);
-  if (!enrollment) redirect("/learn/claim");
+  if (!enrollment) redirect("/learn");
   return { user, enrollment };
 }

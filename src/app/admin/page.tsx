@@ -2,7 +2,6 @@ import Link from "next/link";
 import { courseLessons } from "@/lib/courseContent";
 import {
   Activity,
-  ArrowRight,
   BookOpenCheck,
   CreditCard,
   IndianRupee,
@@ -112,12 +111,6 @@ export default async function AdminOverviewPage({
           title="Overview"
           description={`Business and learning performance for the last ${days} days.`}
         >
-          <Link
-            href="/api/admin/export?type=events&limit=5000"
-            className="rounded-xl border border-gray-200 bg-white px-3 py-2 text-[11px] font-bold text-gray-600 shadow-sm transition hover:border-brand-orange hover:text-brand-orange"
-          >
-            Export events CSV
-          </Link>
           <RangeTabs basePath="/admin" days={days} />
         </PageHeader>
 
@@ -216,11 +209,6 @@ export default async function AdminOverviewPage({
           <Card
             title="Conversion funnel"
             subtitle="Unique users/sessions at each step — check, pay, sign in, learn"
-            action={
-              <Link href="/admin/events" className="text-[10px] font-bold text-brand-orange hover:underline">
-                Open event feed
-              </Link>
-            }
           >
             <Funnel steps={overview.funnel} />
           </Card>
@@ -342,15 +330,7 @@ export default async function AdminOverviewPage({
         </div>
 
         <div className="grid gap-4 lg:grid-cols-[1.15fr_1fr]">
-          <Card
-            title="Live activity"
-            subtitle="Most recent tracked events"
-            action={
-              <Link href="/admin/events" className="text-[10px] font-bold text-brand-orange hover:underline">
-                Full feed <ArrowRight size={11} className="inline" />
-              </Link>
-            }
-          >
+          <Card title="Live activity" subtitle="Most recent tracked events">
             {feed.rows.length ? (
               <div className="divide-y divide-gray-100">
                 {feed.rows.map((event) => (
@@ -402,14 +382,6 @@ export default async function AdminOverviewPage({
                   suffix="views"
                 />
               </div>
-            </div>
-            <div className="mt-3">
-              <Link
-                href="/admin/traffic"
-                className="inline-flex items-center gap-1 text-[11px] font-bold text-brand-orange hover:underline"
-              >
-                Open traffic analytics <ArrowRight size={12} />
-              </Link>
             </div>
           </Card>
         </div>

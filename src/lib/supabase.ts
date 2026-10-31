@@ -151,22 +151,6 @@ export async function upsertEnrollment(input: EnrollmentInput): Promise<Enrollme
   return data as Enrollment;
 }
 
-export async function claimEnrollment(orderId: string, userId: string, email: string) {
-  const { data, error } = await getSupabase()
-    .from("enrollments")
-    .update({
-      user_id: userId,
-      email: email.toLowerCase(),
-      claimed_at: new Date().toISOString(),
-    })
-    .eq("order_id", orderId)
-    .select("*")
-    .maybeSingle();
-
-  if (error) throw new Error(error.message);
-  return data as Enrollment | null;
-}
-
 export async function pingSupabase() {
   if (!isSupabaseConfigured()) return false;
 
