@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { Phone, ClipboardList } from "lucide-react";
 import WhatsAppGateModal from "./WhatsAppGateModal";
 import InstantFormModal from "./InstantFormModal";
@@ -13,6 +14,7 @@ export default function FloatingContact() {
   const [isInstantFormOpen, setIsInstantFormOpen] = useState(false);
   const [formSource, setFormSource] = useState("Instant Form Floating Button");
   const [showOnMobile, setShowOnMobile] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     let frame = 0;
@@ -31,6 +33,10 @@ export default function FloatingContact() {
       window.removeEventListener("scroll", onScroll);
     };
   }, []);
+
+  if (pathname.startsWith("/admin") || pathname.startsWith("/studio")) {
+    return null;
+  }
 
   return (
     <>

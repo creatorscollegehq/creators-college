@@ -5,6 +5,7 @@ import Link from "next/link";
 import { BookOpen, CheckCircle2, ChevronDown, Circle, GraduationCap, PlayCircle } from "lucide-react";
 import type { ModuleSummary } from "@/lib/courseContent";
 import { PROGRESS_EVENT, readProgress } from "@/lib/progress";
+import { track } from "@/lib/track";
 import LogoutButton from "@/components/learn/LogoutButton";
 
 interface LearnDashboardProps {
@@ -25,6 +26,10 @@ export default function LearnDashboard({
   totalLessons,
 }: LearnDashboardProps) {
   const [completed, setCompleted] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    track("dashboard_view", { orderId });
+  }, [orderId]);
 
   useEffect(() => {
     const sync = () => setCompleted(readProgress(orderId));

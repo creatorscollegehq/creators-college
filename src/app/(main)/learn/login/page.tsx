@@ -12,17 +12,22 @@ export const metadata: Metadata = {
 const errors: Record<string, string> = {
   missing_code: "Google sign-in did not complete. Please try again.",
   auth: "We could not complete Google sign-in. Please try again.",
+  provider: "Google sign-in was cancelled. Please try again.",
+  session:
+    "Sign-in could not be completed in this browser. Please open creatorscollege.in in Chrome or Safari, allow cookies, and try again.",
   not_configured: "Google sign-in is not configured yet. Please contact support on WhatsApp.",
 };
 
 export default async function LearnLoginPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; next?: string }>;
 }) {
-  const user = await getAuthUser();
-  if (user) redirect("/learn");
+  const { error, next } = await searchParams;
+  const safeNext = typeof next === "string" && next.startsWith("/") && !next.startsWith("//") ? next : "";
 
-  const { error } = await searchParams;
-  return <LearnLoginClient initialError={error ? errors[error] || errors.auth : ""} />;
+  const user = await getAuthUser();
+  if (user) redirect(safeNext || "/learn");
+
+  return <LearnLoginClient initialError={error ? errors[error] || errors.auth : ""} nextPath={safeNext} />;
 }

@@ -35,3 +35,7 @@ alter table public.enrollments enable row level security;
 
 -- Intentionally no policies: the table is only reachable with the
 -- service role key, which stays on the server. The anon key cannot read it.
+
+-- Analytics + admin console: run
+-- supabase/migrations/20261031010000_admin_analytics.sql as well.
+-- It creates analytics_events, lesson_progress and the admin_* RPCs.

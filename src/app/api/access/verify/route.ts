@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { contextFromRequest, logServerEvent } from "@/lib/analytics";
 import {
   getEnrollmentByOrderId,
   isSupabaseConfigured,
@@ -25,6 +26,7 @@ export async function POST(request: Request) {
 
   const orderId = String(body?.orderId ?? "").trim();
   const phone = normalizePhone(body?.phone);
+  const context = contextFromRequest(request);
 
   if (!orderId || phone.length !== 10) {
     return NextResponse.json(
@@ -43,17 +45,38 @@ export async function POST(request: Request) {
   const existing = await getEnrollmentByOrderId(orderId);
   if (existing) {
     if (normalizePhone(existing.phone) !== phone) {
+      await logServerEvent({
+        event_name: "access_verify",
+        path: "/api/access/verify",
+        ...context,
+        metadata: { result: "phone_mismatch", orderId },
+      });
       return NextResponse.json(
         { error: "This order ID does not match that phone number." },
         { status: 403 }
       );
     }
     if (!isUsable(existing)) {
+      await logServerEvent({
+        event_name: "access_verify",
+        path: "/api/access/verify",
+        ...context,
+        metadata: { result: "inactive", orderId },
+      });
       return NextResponse.json(
         { error: "This enrollment is not active. Please contact support on WhatsApp." },
         { status: 403 }
       );
     }
+    await logServerEvent({
+      event_name: "access_verify",
+      path: "/api/access/verify",
+      ...context,
+      user_id: existing.user_id ?? null,
+      email: existing.email?.toLowerCase() ?? null,
+      value: Number(existing.amount) || null,
+      metadata: { result: "ok", source: "stored", orderId },
+    });
     return NextResponse.json({
       ok: true,
       enrollment: { orderId: existing.order_id, email: existing.email, name: existing.name },
@@ -62,6 +85,12 @@ export async function POST(request: Request) {
 
   const verified = await verifyPaidOrder(orderId, phone);
   if (!verified.ok) {
+    await logServerEvent({
+      event_name: "access_verify",
+      path: "/api/access/verify",
+      ...context,
+      metadata: { result: "failed", orderId, status: verified.status, error: verified.error.slice(0, 160) },
+    });
     return NextResponse.json({ error: verified.error }, { status: verified.status });
   }
 
@@ -71,6 +100,13 @@ export async function POST(request: Request) {
     .toLowerCase();
 
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    await logServerEvent({
+      event_name: "access_verify",
+      path: "/api/access/verify",
+      ...context,
+      value: Number(order.order_amount) || null,
+      metadata: { result: "no_email", orderId },
+    });
     return NextResponse.json(
       {
         error:
@@ -94,12 +130,28 @@ export async function POST(request: Request) {
       expires_at: null,
     });
 
+    await logServerEvent({
+      event_name: "access_verify",
+      path: "/api/access/verify",
+      ...context,
+      email,
+      value: Number(order.order_amount) || null,
+      metadata: { result: "ok", source: "cashfree", orderId },
+    });
+
     return NextResponse.json({
       ok: true,
       enrollment: { orderId: enrollment.order_id, email: enrollment.email, name: enrollment.name },
     });
   } catch (error) {
     console.error("Unable to save enrollment after payment verification:", error);
+    await logServerEvent({
+      event_name: "access_verify",
+      path: "/api/access/verify",
+      ...context,
+      email,
+      metadata: { result: "save_failed", orderId },
+    });
     return NextResponse.json(
       { error: "Payment is verified, but we could not save your access. Contact support on WhatsApp." },
       { status: 500 }

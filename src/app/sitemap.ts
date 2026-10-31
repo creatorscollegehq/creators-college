@@ -12,7 +12,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/cecil-srungarapati',
     '/lavanya-ganji',
     '/blog',
-    '/checkout',
     '/contact',
     '/corporate-training',
     '/courses',
@@ -55,7 +54,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticEntries = staticRoutes.map((route) => ({
     url: `${baseUrl}${route}`,
-    lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: route === '' ? 1.0 : route === '/courses/content-creation' || route === '/cecil-srungarapati' || route === '/lavanya-ganji' ? 0.9 : route.startsWith('/lp/') ? 0.8 : 0.6,
   }));

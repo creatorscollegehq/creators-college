@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { contextFromRequest, logServerEvent } from "@/lib/analytics";
 import { getAuthUser } from "@/lib/auth/session";
 import {
   claimEnrollment,
@@ -32,6 +33,11 @@ export async function POST(request: Request) {
 
   const orderId = String(body?.orderId ?? "").trim();
   const phone = normalizePhone(body?.phone);
+  const context = {
+    ...contextFromRequest(request),
+    user_id: user.id,
+    email: user.email?.toLowerCase() ?? null,
+  };
 
   if (!orderId || phone.length !== 10) {
     return NextResponse.json(
@@ -50,18 +56,36 @@ export async function POST(request: Request) {
   const existing = await getEnrollmentByOrderId(orderId);
   if (existing) {
     if (normalizePhone(existing.phone) !== phone) {
+      await logServerEvent({
+        event_name: "claim_failed",
+        path: "/api/access/claim",
+        ...context,
+        metadata: { reason: "phone_mismatch", orderId },
+      });
       return NextResponse.json(
         { error: "This order ID does not match that phone number." },
         { status: 403 }
       );
     }
     if (!isUsable(existing)) {
+      await logServerEvent({
+        event_name: "claim_failed",
+        path: "/api/access/claim",
+        ...context,
+        metadata: { reason: "inactive", orderId },
+      });
       return NextResponse.json(
         { error: "This enrollment is not active. Please contact support on WhatsApp." },
         { status: 403 }
       );
     }
     if (existing.user_id && existing.user_id !== user.id) {
+      await logServerEvent({
+        event_name: "claim_failed",
+        path: "/api/access/claim",
+        ...context,
+        metadata: { reason: "already_linked", orderId },
+      });
       return NextResponse.json(
         { error: "This enrollment is already linked to another Google account." },
         { status: 409 }
@@ -70,12 +94,25 @@ export async function POST(request: Request) {
 
     try {
       const claimed = await claimEnrollment(orderId, user.id, user.email);
+      await logServerEvent({
+        event_name: "claim_success",
+        path: "/api/access/claim",
+        ...context,
+        value: Number(existing.amount) || null,
+        metadata: { source: "stored", orderId },
+      });
       return NextResponse.json({
         ok: true,
         enrollment: { orderId: claimed?.order_id ?? orderId, email: user.email },
       });
     } catch (error) {
       console.error("Unable to link enrollment:", error);
+      await logServerEvent({
+        event_name: "claim_failed",
+        path: "/api/access/claim",
+        ...context,
+        metadata: { reason: "link_error", orderId },
+      });
       return NextResponse.json(
         { error: "Could not link this enrollment. Please contact support on WhatsApp." },
         { status: 500 }
@@ -85,6 +122,12 @@ export async function POST(request: Request) {
 
   const verified = await verifyPaidOrder(orderId, phone);
   if (!verified.ok) {
+    await logServerEvent({
+      event_name: "claim_failed",
+      path: "/api/access/claim",
+      ...context,
+      metadata: { reason: "not_paid", orderId, status: verified.status, error: verified.error.slice(0, 160) },
+    });
     return NextResponse.json({ error: verified.error }, { status: verified.status });
   }
 
@@ -105,12 +148,26 @@ export async function POST(request: Request) {
       expires_at: null,
     });
 
+    await logServerEvent({
+      event_name: "claim_success",
+      path: "/api/access/claim",
+      ...context,
+      value: Number(order.order_amount) || null,
+      metadata: { source: "cashfree", orderId },
+    });
+
     return NextResponse.json({
       ok: true,
       enrollment: { orderId: enrollment.order_id, email: enrollment.email },
     });
   } catch (error) {
     console.error("Unable to claim paid order:", error);
+    await logServerEvent({
+      event_name: "claim_failed",
+      path: "/api/access/claim",
+      ...context,
+      metadata: { reason: "save_error", orderId },
+    });
     return NextResponse.json(
       { error: "Payment is verified, but we could not link your account. Contact support on WhatsApp." },
       { status: 500 }

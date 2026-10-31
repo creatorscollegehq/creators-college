@@ -14,6 +14,7 @@ import {
   Smartphone,
 } from "lucide-react";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
+import { track } from "@/lib/track";
 
 interface CashfreeCheckoutInstance {
   checkout: (options: { paymentSessionId: string; redirectTarget: "_self" | "_blank" }) => Promise<void>;
@@ -143,6 +144,7 @@ export default function CheckoutPage() {
     setPaymentNotice("");
     setShowFallback(false);
     trackInitiateCheckout();
+    track("checkout_start", { course: COURSE.name }, { value: COURSE.price });
 
     let checkoutTimeout: ReturnType<typeof setTimeout> | undefined;
     let orderTimeout: ReturnType<typeof setTimeout> | undefined;
@@ -167,18 +169,21 @@ export default function CheckoutPage() {
       const data = await response.json();
 
       if (!data?.configured) {
+        track("checkout_error", { reason: "not_configured" });
         setPaymentNotice(data?.message || "Cashfree is being activated. Please pay via UPI below.");
         setShowFallback(true);
         return;
       }
 
       if (!response.ok || !data?.paymentSessionId) {
+        track("checkout_error", { reason: "order_failed", message: String(data?.error || "") });
         setPaymentNotice(data?.error || "Unable to start the payment. Please try UPI below.");
         setShowFallback(true);
         return;
       }
 
       checkoutTimeout = setTimeout(() => {
+        track("checkout_error", { reason: "sdk_timeout", orderId: data.orderId });
         setPaymentNotice("Cashfree is taking too long to open. Please pay via UPI below or contact us on WhatsApp.");
         setShowFallback(true);
         setCashfreeLoading(false);
@@ -186,6 +191,7 @@ export default function CheckoutPage() {
 
       const loaded = await loadCashfreeScript();
       if (!loaded) {
+        track("checkout_error", { reason: "sdk_load", orderId: data.orderId });
         setPaymentNotice("Could not load the payment window. Please pay via UPI below.");
         setShowFallback(true);
         return;
@@ -195,6 +201,7 @@ export default function CheckoutPage() {
         mode: data.environment === "production" ? "production" : "sandbox",
       });
       if (!cashfree) {
+        track("checkout_error", { reason: "sdk_missing", orderId: data.orderId });
         setPaymentNotice("Could not open the payment window. Please pay via UPI below.");
         setShowFallback(true);
         return;
@@ -206,6 +213,9 @@ export default function CheckoutPage() {
       });
     } catch (error) {
       console.error("Cashfree checkout error:", error);
+      track("checkout_error", {
+        reason: error instanceof DOMException && error.name === "AbortError" ? "order_timeout" : "network",
+      });
       setPaymentNotice("Payment could not be started. Please pay via UPI below or contact us on WhatsApp.");
       setShowFallback(true);
     } finally {

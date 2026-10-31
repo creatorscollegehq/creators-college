@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { AlertCircle, ArrowRight, CheckCircle2, Loader2, Lock, ShieldCheck } from "lucide-react";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
+import { track } from "@/lib/track";
 
 type Status = "checking" | "verified" | "error";
 
@@ -61,6 +62,7 @@ export default function CheckoutSuccessClient() {
   const verifyAccess = useCallback(async () => {
     if (!orderId || !phone) {
       setStatus("error");
+      track("payment_failed", { reason: "missing_details", orderId });
       setMessage(
         "This link is missing your order details. Open My Course and sign in with Google, or claim access with your order ID and phone number."
       );
@@ -80,6 +82,7 @@ export default function CheckoutSuccessClient() {
 
       if (!response.ok || !data?.ok) {
         setStatus("error");
+        track("payment_failed", { reason: "not_verified", message: String(data?.error || "") }, { value: 5000 });
         setMessage(data?.error || "We could not unlock your course access yet.");
         return;
       }
@@ -87,6 +90,7 @@ export default function CheckoutSuccessClient() {
       const purchaseEmail = String(data?.enrollment?.email || email || "").trim().toLowerCase();
       setVerifiedEmail(purchaseEmail);
       trackPurchase(purchaseEmail);
+      track("payment_verified", { orderId }, { value: 5000 });
       setStatus("verified");
       setMessage(
         purchaseEmail
@@ -95,6 +99,7 @@ export default function CheckoutSuccessClient() {
       );
     } catch (error) {
       console.error("Course access verification failed:", error);
+      track("payment_failed", { reason: "network", orderId });
       setStatus("error");
       setMessage("Network error while verifying your payment. Check your connection and try again.");
     }

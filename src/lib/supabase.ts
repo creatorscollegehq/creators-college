@@ -174,6 +174,10 @@ export async function pingSupabase() {
   return !error;
 }
 
+export function getSupabaseAdmin() {
+  return getSupabase();
+}
+
 export async function updateEnrollmentStatus(orderId: string, status: EnrollmentStatus) {
   const { data, error } = await getSupabase()
     .from("enrollments")

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import DeferredThirdParty from "@/components/DeferredThirdParty";
 import FloatingContact from "@/components/FloatingContact";
+import Tracker from "@/components/analytics/Tracker";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -142,6 +143,7 @@ export default function RootLayout({
           />
         </noscript>
         {children}
+        <Tracker />
         <DeferredThirdParty />
         <FloatingContact />
       </body>

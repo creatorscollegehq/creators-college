@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 
 declare global {
   interface Window {
@@ -32,9 +33,11 @@ function injectScript(id: string, src: string) {
 
 export default function DeferredThirdParty() {
   const loaded = useRef(false);
+  const pathname = usePathname();
+  const skip = pathname.startsWith("/admin") || pathname.startsWith("/studio");
 
   useEffect(() => {
-    if (loaded.current) return;
+    if (skip || loaded.current) return;
 
     let timer = 0;
     const events = ["pointerdown", "keydown", "touchstart", "scroll"] as const;
@@ -83,7 +86,7 @@ export default function DeferredThirdParty() {
     timer = window.setTimeout(load, 8000);
 
     return cleanup;
-  }, []);
+  }, [skip]);
 
   return null;
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type SyntheticEvent } from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, CheckCircle2, Clock, Lock, PlayCircle, ShieldCheck } from "lucide-react";
 import {
@@ -8,6 +8,7 @@ import {
   isLessonComplete,
   markLessonComplete,
 } from "@/lib/progress";
+import { track } from "@/lib/track";
 
 interface LessonLink {
   href: string;
@@ -42,6 +43,31 @@ export default function LessonPlayer({
   moduleLessonCount,
 }: LessonPlayerProps) {
   const [completed, setCompleted] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const lastSyncRef = useRef(0);
+  const savedSecondsRef = useRef(0);
+  const milestonesRef = useRef<Set<number>>(new Set());
+
+  const syncProgress = useCallback(
+    (watchedSeconds: number, isComplete: boolean) => {
+      savedSecondsRef.current = Math.max(savedSecondsRef.current, watchedSeconds);
+      fetch("/api/progress", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          lessonId: lesson.id,
+          moduleNumber: lesson.moduleNumber,
+          lessonIndex: lesson.lessonIndex,
+          watchedSeconds,
+          completed: isComplete,
+        }),
+        keepalive: true,
+      }).catch(() => {
+        // progress is also cached in localStorage, so failures are non-fatal
+      });
+    },
+    [lesson.id, lesson.moduleNumber, lesson.lessonIndex]
+  );
 
   useEffect(() => {
     const sync = () => setCompleted(isLessonComplete(orderId, lesson.id));
@@ -50,9 +76,74 @@ export default function LessonPlayer({
     return () => window.removeEventListener(PROGRESS_EVENT, sync);
   }, [orderId, lesson.id]);
 
+  useEffect(() => {
+    track("lesson_view", {
+      lessonId: lesson.id,
+      moduleNumber: lesson.moduleNumber,
+      lessonIndex: lesson.lessonIndex,
+      moduleTitle: lesson.moduleTitle,
+    });
+    syncProgress(0, false);
+  }, [lesson.id, lesson.moduleNumber, lesson.lessonIndex, lesson.moduleTitle, syncProgress]);
+
+  useEffect(() => {
+    return () => {
+      const seconds = videoRef.current
+        ? Math.floor(videoRef.current.currentTime)
+        : savedSecondsRef.current;
+      if (seconds > 0) syncProgress(seconds, false);
+    };
+  }, [syncProgress]);
+
+  const handlePlay = () => {
+    track("lesson_play", {
+      lessonId: lesson.id,
+      moduleNumber: lesson.moduleNumber,
+      lessonIndex: lesson.lessonIndex,
+    });
+  };
+
+  const handleTimeUpdate = (event: SyntheticEvent<HTMLVideoElement>) => {
+    const video = event.currentTarget;
+    const seconds = Math.floor(video.currentTime);
+
+    if (seconds - lastSyncRef.current >= 20) {
+      lastSyncRef.current = seconds;
+      syncProgress(seconds, false);
+    }
+
+    if (video.duration && Number.isFinite(video.duration)) {
+      const percent = (video.currentTime / video.duration) * 100;
+      for (const milestone of [25, 50, 75]) {
+        if (percent >= milestone && !milestonesRef.current.has(milestone)) {
+          milestonesRef.current.add(milestone);
+          track(
+            "video_progress",
+            { lessonId: lesson.id, percent: milestone },
+            { durationSeconds: seconds }
+          );
+        }
+      }
+    }
+  };
+
   const handleComplete = () => {
     markLessonComplete(orderId, lesson.id);
     setCompleted(true);
+
+    const seconds = videoRef.current
+      ? Math.floor(videoRef.current.currentTime)
+      : savedSecondsRef.current;
+    track(
+      "lesson_complete",
+      {
+        lessonId: lesson.id,
+        moduleNumber: lesson.moduleNumber,
+        lessonIndex: lesson.lessonIndex,
+      },
+      { durationSeconds: seconds }
+    );
+    syncProgress(seconds, true);
   };
 
   return (
@@ -72,12 +163,15 @@ export default function LessonPlayer({
               <>
                 <video
                   key={videoUrl}
+                  ref={videoRef}
                   className="h-full w-full"
                   controls
                   playsInline
                   preload="metadata"
                   controlsList="nodownload"
                   disablePictureInPicture
+                  onPlay={handlePlay}
+                  onTimeUpdate={handleTimeUpdate}
                   onEnded={handleComplete}
                   onContextMenu={(event) => event.preventDefault()}
                   src={videoUrl}

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { contextFromRequest, logServerEvent } from "@/lib/analytics";
 
 const CASHFREE_API_VERSION = "2023-08-01";
 
@@ -15,6 +16,7 @@ export async function POST(request: Request) {
   }
 
   try {
+    const context = contextFromRequest(request);
     const body = await request.json();
     const name = String(body?.name || "").trim();
     const phone = String(body?.phone || "").replace(/\D/g, "").slice(-10);
@@ -23,6 +25,12 @@ export async function POST(request: Request) {
     const amount = Number(body?.amount) || 5000;
 
     if (!name || phone.length !== 10 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      await logServerEvent({
+        event_name: "checkout_error",
+        path: "/api/cashfree/create-order",
+        ...context,
+        metadata: { reason: "invalid_details" },
+      });
       return NextResponse.json(
         {
           configured: true,
@@ -69,11 +77,25 @@ export async function POST(request: Request) {
     const data = await response.json();
 
     if (!response.ok) {
+      await logServerEvent({
+        event_name: "checkout_error",
+        path: "/api/cashfree/create-order",
+        ...context,
+        metadata: { reason: "cashfree_error", status: response.status, message: String(data?.message || "").slice(0, 200) },
+      });
       return NextResponse.json(
         { configured: true, error: data?.message || "Unable to create the payment order." },
         { status: 502 }
       );
     }
+
+    await logServerEvent({
+      event_name: "checkout_order_created",
+      path: "/api/cashfree/create-order",
+      ...context,
+      value: amount,
+      metadata: { orderId, courseName, environment },
+    });
 
     return NextResponse.json({
       configured: true,

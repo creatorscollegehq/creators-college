@@ -5,8 +5,15 @@ import Link from "next/link";
 import { AlertCircle, ArrowRight, Loader2, Lock } from "lucide-react";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
 import { createAuthBrowserClient, isAuthConfigured } from "@/lib/auth/client";
+import { track } from "@/lib/track";
 
-export default function LearnLoginClient({ initialError = "" }: { initialError?: string }) {
+export default function LearnLoginClient({
+  initialError = "",
+  nextPath = "",
+}: {
+  initialError?: string;
+  nextPath?: string;
+}) {
   const [error, setError] = useState(initialError);
   const [loading, setLoading] = useState(false);
 
@@ -21,20 +28,25 @@ export default function LearnLoginClient({ initialError = "" }: { initialError?:
     setLoading(true);
     try {
       const supabase = createAuthBrowserClient();
+      const callbackUrl = nextPath
+        ? `${window.location.origin}/auth/callback?next=${encodeURIComponent(nextPath)}`
+        : `${window.location.origin}/auth/callback`;
       const { error: authError } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${window.location.origin}/auth/callback?next=/learn`,
+          redirectTo: callbackUrl,
           queryParams: { prompt: "select_account" },
         },
       });
 
       if (authError) {
+        track("login_failed", { stage: "oauth_start", message: authError.message });
         setError(authError.message || "Google sign-in failed. Please try again.");
         setLoading(false);
       }
     } catch (err) {
       console.error("Google sign-in failed:", err);
+      track("login_failed", { stage: "network" });
       setError("Google sign-in failed. Please try again.");
       setLoading(false);
     }
