@@ -104,6 +104,7 @@ async function uploadOne(file, key) {
 }
 
 const files = (await collect(sourceDir))
+  .filter((file) => !path.basename(file).includes(".partial."))
   .filter((file) => {
     const ageSeconds = (Date.now() - statSync(file).mtimeMs) / 1000;
     if (ageSeconds < 30) {
