@@ -22,7 +22,7 @@
 import { createReadStream, existsSync, readFileSync, statSync } from "node:fs";
 import { readdir } from "node:fs/promises";
 import path from "node:path";
-import { HeadObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { ListObjectsV2Command, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
 function loadEnv() {
   for (const file of [".env.local", ".env"]) {
@@ -125,8 +125,53 @@ const jobs = files.map((file) => ({
   key: `${prefix}/${path.relative(sourceDir, file).split(path.sep).join("/")}`,
 }));
 
-console.log(`${dryRun ? "Would upload" : "Uploading"} ${jobs.length} video(s) to bucket "${bucket || "(dry run)"}":`);
-for (const job of jobs) console.log(`  ${job.key}  (${(statSync(job.file).size / (1024 * 1024)).toFixed(1)} MB)`);
+// B2 keeps every upload as a new version, so re-sending an identical file quietly
+// duplicates storage. One list call tells us what is already there; HeadObject would
+// cost one Class B transaction per file and can be blocked by the daily cap.
+async function existingSizes() {
+  const sizes = new Map();
+  let token;
+  do {
+    const page = await client.send(
+      new ListObjectsV2Command({
+        Bucket: bucket,
+        Prefix: `${prefix}/`,
+        MaxKeys: 1000,
+        ContinuationToken: token,
+      })
+    );
+    for (const object of page.Contents || []) sizes.set(object.Key, Number(object.Size));
+    token = page.IsTruncated ? page.NextContinuationToken : undefined;
+  } while (token);
+  return sizes;
+}
+
+let uploaded = new Map();
+if (!dryRun) {
+  try {
+    uploaded = await existingSizes();
+  } catch (error) {
+    console.error("Unable to list bucket contents:", error.message || error);
+    console.error("Skipping this pass rather than risk duplicate uploads.");
+    process.exit(1);
+  }
+}
+
+const pending = jobs.filter((job) => uploaded.get(job.key) !== statSync(job.file).size);
+const alreadyUploaded = jobs.length - pending.length;
+
+if (!pending.length) {
+  console.log(`All ${jobs.length} video(s) already in bucket "${bucket}" — nothing to upload.`);
+  process.exit(0);
+}
+
+console.log(
+  `${dryRun ? "Would upload" : "Uploading"} ${pending.length} video(s) to bucket "${bucket || "(dry run)"}"` +
+    (alreadyUploaded ? ` (skipping ${alreadyUploaded} already uploaded):` : ":")
+);
+for (const job of pending) {
+  console.log(`  ${job.key}  (${(statSync(job.file).size / (1024 * 1024)).toFixed(1)} MB)`);
+}
 
 if (dryRun) {
   console.log("\nDry run only. Re-run without --dry-run to upload.");
@@ -135,27 +180,14 @@ if (dryRun) {
 
 let index = 0;
 async function worker() {
-  while (index < jobs.length) {
-    const job = jobs[index++];
-    const size = statSync(job.file).size;
-    try {
-      const head = await client.send(
-        new HeadObjectCommand({ Bucket: bucket, Key: job.key })
-      );
-      if (head.ContentLength === size) {
-        console.log(`Skip ${job.key} (already uploaded)`);
-        continue;
-      }
-    } catch {
-      // object does not exist yet
-    }
-
+  while (index < pending.length) {
+    const job = pending[index++];
     const started = Date.now();
-    let uploaded = false;
-    for (let attempt = 1; attempt <= 3 && !uploaded; attempt++) {
+    let sent = false;
+    for (let attempt = 1; attempt <= 3 && !sent; attempt++) {
       try {
         await uploadOne(job.file, job.key);
-        uploaded = true;
+        sent = true;
       } catch (error) {
         console.error(
           `Attempt ${attempt} failed ${job.key}:`,
@@ -164,7 +196,7 @@ async function worker() {
         if (attempt < 3) await new Promise((resolve) => setTimeout(resolve, 5000 * attempt));
       }
     }
-    if (uploaded) {
+    if (sent) {
       console.log(`Done ${job.key} in ${((Date.now() - started) / 1000).toFixed(1)}s`);
     } else {
       process.exitCode = 1;
