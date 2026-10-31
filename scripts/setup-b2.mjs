@@ -100,4 +100,27 @@ upsertEnv({ B2_BUCKET_NAME: bucket.bucketName, B2_REGION: region, B2_ENDPOINT: e
 console.log(`Bucket: ${bucket.bucketName} (${bucket.bucketType})`);
 console.log(`Region: ${region}`);
 console.log(`Endpoint: ${endpoint}`);
-console.log("Saved B2_BUCKET_NAME, B2_REGION and B2_ENDPOINT to .env.local.");
+
+// The master application key cannot be used with the S3-compatible API, so
+// create a bucket-scoped key for uploads and signed playback.
+const keyResponse = await fetch(`${apiUrl}/b2api/v3/b2_create_key`, {
+  method: "POST",
+  headers: { ...headers, "Content-Type": "application/json" },
+  body: JSON.stringify({
+    accountId,
+    bucketId: bucket.bucketId,
+    capabilities: ["listBuckets", "listFiles", "readFiles", "writeFiles", "deleteFiles"],
+    keyName: `s3-${bucket.bucketName}`,
+  }),
+});
+
+if (!keyResponse.ok) {
+  console.error(`Unable to create S3 key (${keyResponse.status}): ${(await keyResponse.text()).slice(0, 300)}`);
+  console.error("If you are re-running with an already-scoped key, S3 credentials are already in .env.local.");
+  process.exit(1);
+}
+
+const createdKey = await keyResponse.json();
+upsertEnv({ B2_KEY_ID: createdKey.applicationKeyId, B2_APPLICATION_KEY: createdKey.applicationKey });
+console.log(`Created bucket-scoped S3 key "${createdKey.keyName}".`);
+console.log("Saved B2_KEY_ID and B2_APPLICATION_KEY (scoped S3 key) to .env.local.");

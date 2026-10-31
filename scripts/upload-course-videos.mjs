@@ -22,7 +22,7 @@
 import { createReadStream, existsSync, readFileSync, statSync } from "node:fs";
 import { readdir } from "node:fs/promises";
 import path from "node:path";
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { HeadObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 
 function loadEnv() {
   for (const file of [".env.local", ".env"]) {
@@ -127,12 +127,36 @@ let index = 0;
 async function worker() {
   while (index < jobs.length) {
     const job = jobs[index++];
-    const started = Date.now();
+    const size = statSync(job.file).size;
     try {
-      await uploadOne(job.file, job.key);
+      const head = await client.send(
+        new HeadObjectCommand({ Bucket: bucket, Key: job.key })
+      );
+      if (head.ContentLength === size) {
+        console.log(`Skip ${job.key} (already uploaded)`);
+        continue;
+      }
+    } catch {
+      // object does not exist yet
+    }
+
+    const started = Date.now();
+    let uploaded = false;
+    for (let attempt = 1; attempt <= 3 && !uploaded; attempt++) {
+      try {
+        await uploadOne(job.file, job.key);
+        uploaded = true;
+      } catch (error) {
+        console.error(
+          `Attempt ${attempt} failed ${job.key}:`,
+          error.message || error
+        );
+        if (attempt < 3) await new Promise((resolve) => setTimeout(resolve, 5000 * attempt));
+      }
+    }
+    if (uploaded) {
       console.log(`Done ${job.key} in ${((Date.now() - started) / 1000).toFixed(1)}s`);
-    } catch (error) {
-      console.error(`Failed ${job.key}:`, error.message || error);
+    } else {
       process.exitCode = 1;
     }
   }
