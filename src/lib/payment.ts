@@ -38,11 +38,11 @@ export async function verifyPaidOrder(orderId: string, phone: string): Promise<P
     };
   }
 
-  if (order.order_currency !== "INR" || Number(order.order_amount) < COURSE_PRICE) {
+  if (!order.order_currency || order.order_currency !== "INR") {
     return {
       ok: false,
       status: 402,
-      error: "The paid amount does not match this course. Please contact support.",
+      error: "The paid currency is not supported. Please contact support.",
     };
   }
 

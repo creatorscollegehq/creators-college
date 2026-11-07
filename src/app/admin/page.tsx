@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { courseLessons } from "@/lib/courseContent";
+import { getCoupons } from "@/lib/couponStore";
 import {
   Activity,
   BookOpenCheck,
@@ -8,6 +9,7 @@ import {
   LogIn,
   MousePointerClick,
   PlayCircle,
+  TicketPercent,
   TrendingUp,
   UserCheck,
   Users,
@@ -39,6 +41,7 @@ import {
   StatCard,
   StatusBadge,
 } from "./ui";
+import CouponsManager from "./CouponsManager";
 
 function trend(daily: DailyPoint[], key: "revenue" | "page_views" | "sessions", days: number) {
   if (days < 14 || daily.length < 14) return undefined;
@@ -65,6 +68,14 @@ export default async function AdminOverviewPage({
   let overview: OverviewData | null = null;
   let feed: EventsData | null = null;
   let traffic: TrafficData | null = null;
+  let couponError: string | null = null;
+  let coupons: Awaited<ReturnType<typeof getCoupons>> | [] = [];
+  try {
+    coupons = await getCoupons();
+  } catch (error) {
+    couponError = error instanceof Error ? error.message : "Unknown error";
+    console.error("Admin coupons failed:", couponError);
+  }
   let loadError = "";
 
   try {
@@ -113,6 +124,8 @@ export default async function AdminOverviewPage({
         >
           <RangeTabs basePath="/admin" days={days} />
         </PageHeader>
+
+        <CouponsManager initialCoupons={coupons} error={couponError} />
 
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           <StatCard

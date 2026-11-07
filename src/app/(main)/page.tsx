@@ -652,14 +652,14 @@ export default function HomePage() {
       <section className="bg-[#EDF4F8] dark:bg-white/[0.03] py-5 md:py-7">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 items-center gap-4 lg:grid-cols-2 lg:gap-5">
-            <VideoThumb
-              src="/videos/MIKU_dgWis8.jpg"
-              alt="Content Creation Fundamentals — Creators College course introduction"
-              videoId="MIKU_dgWis8"
-              videoTitle="Content Creation Fundamentals"
-              className="aspect-video w-full shadow-[0_22px_50px_-28px_rgba(11,27,75,0.45)]"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
+              <VideoThumb
+                src="/videos/OoNnpxh7aqo.jpg"
+                alt="Start Your Content Creation Journey Today — Creators College course introduction"
+                videoId="OoNnpxh7aqo"
+                videoTitle="Start Your Content Creation Journey Today"
+                className="aspect-video w-full shadow-[0_22px_50px_-28px_rgba(11,27,75,0.45)]"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#0B1B4B] dark:text-white">
                 Course Introduction
@@ -817,31 +817,19 @@ export default function HomePage() {
               </ul>
             </div>
 
-            <div className="relative mx-auto w-full max-w-[360px] lg:max-w-[380px]">
+            <div className="relative mx-auto w-full max-w-[380px] lg:max-w-[420px]">
               <div className="pointer-events-none absolute -left-8 -top-8 h-28 w-28 rounded-full bg-brand-orange/15 blur-2xl" />
               <div className="pointer-events-none absolute -bottom-6 -right-6 h-32 w-32 rounded-full bg-[#FFC93C]/30 blur-2xl" />
 
-              <div className="relative aspect-[5/4] overflow-hidden rounded-2xl border-4 border-white shadow-[0_28px_65px_-32px_rgba(11,27,75,0.5)] dark:border-white/10 sm:aspect-[4/5] sm:rounded-[2rem]">
-                <Image
-                  src="/cecil-srungarapati-founder-creators-college.jpeg"
-                  alt="Cecil Srungarapati teaching content creation in Telugu"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 45vw"
-                  className="object-cover object-center"
+              <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-[#0B1B4B] shadow-[0_28px_65px_-32px_rgba(11,27,75,0.5)]">
+                <VideoThumb
+                  src="/videos/ygu-KoSL7Ts.jpg"
+                  alt="Suitable for Everyone — Creators College content creation course intro"
+                  videoId="ygu-KoSL7Ts"
+                  videoTitle="Suitable for Everyone"
+                  className="relative aspect-video w-full"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0B1B4B]/80 via-[#0B1B4B]/10 to-transparent" />
-
-                <div className="absolute inset-x-4 bottom-4 rounded-2xl bg-white/95 p-3.5 shadow-lg backdrop-blur">
-                  <div className="flex items-center gap-2">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-brand-orange text-white">
-                      <Check size={14} strokeWidth={3} />
-                    </span>
-                    <p className="text-xs font-bold text-[#0B1B4B]">No prior experience needed</p>
-                  </div>
-                  <p className="mt-1.5 text-[11px] leading-relaxed text-gray-600">
-                    Students, homemakers, job holders and business owners — anyone can learn.
-                  </p>
-                </div>
               </div>
 
               <div className="absolute -right-3 top-5 rotate-3 rounded-xl bg-[#FFC93C] px-3 py-1.5 text-[11px] font-bold text-[#0B1B4B] shadow-lg">

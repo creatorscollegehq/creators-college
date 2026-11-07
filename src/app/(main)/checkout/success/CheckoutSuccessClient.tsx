@@ -16,6 +16,7 @@ export default function CheckoutSuccessClient() {
   const phone = searchParams.get("phone") || "";
   const email = (searchParams.get("email") || "").trim().toLowerCase();
   const course = searchParams.get("course") || "Complete Telugu Content Creation Course";
+  const couponCode = (searchParams.get("coupon_code") || "").trim();
 
   const [status, setStatus] = useState<Status>("checking");
   const [message, setMessage] = useState("Verifying your payment with Cashfree...");
@@ -76,7 +77,7 @@ export default function CheckoutSuccessClient() {
       const response = await fetch("/api/access/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ orderId, phone, name }),
+        body: JSON.stringify({ orderId, phone, name, couponCode }),
       });
       const data = await response.json().catch(() => ({}));
 

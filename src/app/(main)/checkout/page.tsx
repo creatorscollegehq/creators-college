@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   AlertCircle,
   ArrowRight,
@@ -12,10 +13,12 @@ import {
   QrCode,
   ShieldCheck,
   Smartphone,
+  TicketPercent,
 } from "lucide-react";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
 import { CONTENT_CREATION_COURSE } from "@/data/contentCreationCourse";
 import { track } from "@/lib/track";
+import type { PublicCoupon } from "@/lib/coupons";
 
 interface CashfreeCheckoutInstance {
   checkout: (options: { paymentSessionId: string; redirectTarget: "_self" | "_blank" }) => Promise<void>;
@@ -35,15 +38,23 @@ const COURSE = {
 };
 
 export default function CheckoutPage() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
     email: "",
   });
+  const [couponInput, setCouponInput] = useState("");
+  const [couponData, setCouponData] = useState<PublicCoupon | null>(null);
+  const [couponError, setCouponError] = useState<string | null>(null);
+  const [couponBusy, setCouponBusy] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [cashfreeLoading, setCashfreeLoading] = useState(false);
   const [paymentNotice, setPaymentNotice] = useState("");
   const [showFallback, setShowFallback] = useState(false);
+
+  const finalPrice = couponData?.discountedPrice ?? COURSE.price;
+
 
   const validate = () => {
     const tempErrors: Record<string, string> = {};
@@ -67,6 +78,33 @@ export default function CheckoutPage() {
     setFormData((prev) => ({ ...prev, [name]: value }));
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const applyCoupon = async (event?: React.FormEvent<HTMLFormElement>) => {
+    event?.preventDefault();
+    if (!couponInput.trim() || couponBusy) return;
+
+    setCouponBusy(true);
+    setCouponError(null);
+    try {
+      const response = await fetch("/api/coupon/validate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ code: couponInput.trim() }),
+      });
+      const data = await response.json().catch(() => null);
+      if (!response.ok || !data?.ok || !data?.coupon) {
+        setCouponData(null);
+        setCouponError(data?.error || "Coupon code is not valid.");
+        return;
+      }
+      setCouponData(data.coupon);
+    } catch (error) {
+      console.error(error);
+      setCouponError("Network error. Please try again.");
+    } finally {
+      setCouponBusy(false);
     }
   };
 
@@ -145,7 +183,7 @@ export default function CheckoutPage() {
     setPaymentNotice("");
     setShowFallback(false);
     trackInitiateCheckout();
-    track("checkout_start", { course: COURSE.name }, { value: COURSE.price });
+    track("checkout_start", { course: COURSE.name }, { value: finalPrice });
 
     let checkoutTimeout: ReturnType<typeof setTimeout> | undefined;
     let orderTimeout: ReturnType<typeof setTimeout> | undefined;
@@ -163,11 +201,17 @@ export default function CheckoutPage() {
           email: formData.email,
           courseId: COURSE.id,
           courseName: COURSE.name,
-          amount: COURSE.price,
+          amount: finalPrice,
+          couponCode: couponData?.code,
         }),
       });
 
       const data = await response.json();
+
+      if (data?.freeCoupon) {
+        router.push(data.successUrl);
+        return;
+      }
 
       if (!data?.configured) {
         track("checkout_error", { reason: "not_configured" });
@@ -353,13 +397,39 @@ export default function CheckoutPage() {
                   )}
                 </div>
 
+                <div className="rounded-xl border border-gray-200 bg-gray-50 px-3 py-2.5">
+                  <form onSubmit={applyCoupon} className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <TicketPercent size={13} className="text-brand-orange" />
+                      <p className="text-[11px] font-bold text-[#0B1B4B]">Coupon code</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        value={couponInput}
+                        onChange={(event) => setCouponInput(event.target.value.toUpperCase())}
+                        placeholder="Cecil's special offer"
+                        className="min-w-0 flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-xs text-brand-blue outline-none transition focus:border-brand-orange"
+                      />
+                      <button
+                        type="submit"
+                        disabled={couponBusy}
+                        className="flex shrink-0 items-center gap-1 rounded-lg bg-[#0B1B4B] px-4 py-2.5 text-[11px] font-bold text-white transition hover:bg-[#123c9e] disabled:opacity-60"
+                      >
+                        {couponBusy ? <Loader2 size={13} className="animate-spin" /> : <CheckCircle2 size={13} />}
+                        Apply
+                      </button>
+                    </div>
+                  </form>
+                </div>
+
                 <button
                   type="submit"
                   disabled={cashfreeLoading}
                   className="flex w-full items-center justify-center gap-2 rounded-xl bg-brand-orange px-5 py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-orange/25 transition hover:bg-brand-orange-dark disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   {cashfreeLoading ? <Loader2 size={17} className="animate-spin" /> : <CreditCard size={17} />}
-                  {cashfreeLoading ? "Opening secure payment..." : `Pay ₹${COURSE.price.toLocaleString("en-IN")} Securely`}
+                  {cashfreeLoading ? "Opening secure payment..." : `Pay ₹${finalPrice.toLocaleString("en-IN")} Securely`}
                 </button>
 
                 <p className="flex items-center justify-center gap-1.5 text-[10px] text-gray-500 dark:text-gray-400">
@@ -447,12 +517,29 @@ export default function CheckoutPage() {
               </p>
               <p className="flex items-center justify-between font-semibold text-emerald-600">
                 <span>Discount</span>
-                <span>-₹{(COURSE.originalPrice - COURSE.price).toLocaleString("en-IN")}</span>
+                <span>-₹{(COURSE.originalPrice - finalPrice).toLocaleString("en-IN")}</span>
               </p>
+              {couponData ? (
+                <p className="flex items-center justify-between rounded-md bg-emerald-50 px-2 py-1 font-semibold text-emerald-700 dark:bg-emerald-500/10">
+                  <span className="inline-flex items-center gap-1">
+                    <TicketPercent size={12} /> {couponData.code}
+                  </span>
+                  <span>{couponData.percentOff}% off</span>
+                </p>
+              ) : null}
               <p className="flex items-center justify-between border-t border-gray-100 pt-2 text-base font-bold text-[#0B1B4B] dark:border-white/10 dark:text-white">
                 <span>Total</span>
-                <span>₹{COURSE.price.toLocaleString("en-IN")}</span>
+                <span>₹{finalPrice.toLocaleString("en-IN")}</span>
               </p>
+              {couponError ? (
+                <p className="flex items-center gap-1 text-[11px] font-semibold text-red-500">
+                  <AlertCircle size={12} /> {couponError}
+                </p>
+              ) : couponData ? (
+                <p className="text-[10px] font-semibold text-emerald-600">
+                  Coupon applied successfully.
+                </p>
+              ) : null}
             </div>
 
             <div className="mt-3 rounded-lg bg-[#F3F6F8] px-3 py-2.5 text-[10px] leading-relaxed text-gray-600 dark:bg-white/5 dark:text-gray-300">
