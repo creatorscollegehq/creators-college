@@ -652,14 +652,14 @@ export default function HomePage() {
       <section className="bg-[#EDF4F8] dark:bg-white/[0.03] py-5 md:py-7">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 items-center gap-4 lg:grid-cols-2 lg:gap-5">
-              <VideoThumb
-                src="/videos/OoNnpxh7aqo.jpg"
-                alt="Start Your Content Creation Journey Today — Creators College course introduction"
-                videoId="OoNnpxh7aqo"
-                videoTitle="Start Your Content Creation Journey Today"
-                className="aspect-video w-full shadow-[0_22px_50px_-28px_rgba(11,27,75,0.45)]"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
+            <VideoThumb
+              src="/videos/OoNnpxh7aqo.jpg"
+              alt="Start Your Content Creation Journey Today — Creators College course introduction"
+              videoId="OoNnpxh7aqo"
+              videoTitle="Start Your Content Creation Journey Today"
+              className="aspect-video w-full shadow-[0_22px_50px_-28px_rgba(11,27,75,0.45)]"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#0B1B4B] dark:text-white">
                 Course Introduction

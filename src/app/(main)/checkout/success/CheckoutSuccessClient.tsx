@@ -104,7 +104,7 @@ export default function CheckoutSuccessClient() {
       setStatus("error");
       setMessage("Network error while verifying your payment. Check your connection and try again.");
     }
-  }, [email, name, orderId, phone, trackPurchase]);
+  }, [couponCode, email, name, orderId, phone, trackPurchase]);
 
   useEffect(() => {
     const timer = setTimeout(() => void verifyAccess(), 0);

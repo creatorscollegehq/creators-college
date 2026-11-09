@@ -7,7 +7,7 @@ import {
   upsertEnrollment,
   type Enrollment,
 } from "@/lib/supabase";
-import { COURSE_SLUG, normalizePhone, verifyPaidOrder } from "@/lib/payment";
+import { COURSE_PRICE, COURSE_SLUG, normalizePhone, verifyPaidOrder } from "@/lib/payment";
 
 function isUsable(enrollment: Enrollment) {
   if (enrollment.status !== "active") return false;
@@ -43,11 +43,10 @@ export async function POST(request: Request) {
     );
   }
 
-  const couponOrder = await getCouponOrder(orderId);
-
-  const existing = couponOrder
-    ? null
-    : await getEnrollmentByOrderId(orderId);
+  // Read any stored enrollment first: a coupon order already created one, and
+  // reloading the success page must not re-run the coupon use increment.
+  const existing = await getEnrollmentByOrderId(orderId);
+  const couponOrder = existing ? null : await getCouponOrder(orderId);
 
   if (couponOrder) {
     const coupon = couponOrder.couponCode ? await getCouponByCode(couponOrder.couponCode) : null;
@@ -63,7 +62,7 @@ export async function POST(request: Request) {
         { status: 404 }
       );
     }
-    const couponVerified = await verifyPaidOrder(orderId, phone);
+    const couponVerified = await verifyPaidOrder(orderId, phone, couponOrder.amount);
     if (!couponVerified.ok) {
       await logServerEvent({
         event_name: "access_verify",
@@ -74,23 +73,10 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: couponVerified.error }, { status: couponVerified.status });
     }
 
-    const paidAmount = Number(couponVerified.order.order_amount) || 0;
-    if (Math.abs(paidAmount - couponOrder.amount) > 0.01) {
-      await logServerEvent({
-        event_name: "access_verify",
-        path: "/api/access/verify",
-        ...context,
-        metadata: { result: "coupon_amount_mismatch", orderId, expected: couponOrder.amount, paid: paidAmount },
-      });
-      return NextResponse.json(
-        { error: "That payment did not match your coupon price. Message us on WhatsApp." },
-        { status: 402 }
-      );
-    }
-
-    // In this branch the customer got a paid coupon. We create the enrollment
-    // only after the verified paid amount matches the discounted order amount.
+    // verifyPaidOrder already rejected the order when the amount paid did not
+    // match the coupon price recorded at checkout.
     const order = couponVerified.order;
+    const paidAmount = Number(order.order_amount) || 0;
     const email = String(order.customer_details?.customer_email ?? body?.email ?? "")
       .trim()
       .toLowerCase();
@@ -202,7 +188,7 @@ export async function POST(request: Request) {
     });
   }
 
-  const verified = await verifyPaidOrder(orderId, phone);
+  const verified = await verifyPaidOrder(orderId, phone, COURSE_PRICE);
   if (!verified.ok) {
     await logServerEvent({
       event_name: "access_verify",

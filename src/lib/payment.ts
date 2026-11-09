@@ -11,7 +11,11 @@ export type PaidOrderResult =
   | { ok: true; order: CashfreeOrder; phone: string }
   | { ok: false; status: number; error: string };
 
-export async function verifyPaidOrder(orderId: string, phone: string): Promise<PaidOrderResult> {
+export async function verifyPaidOrder(
+  orderId: string,
+  phone: string,
+  expectedAmount: number
+): Promise<PaidOrderResult> {
   const result = await fetchCashfreeOrder(orderId);
 
   if (!result.ok) {
@@ -43,6 +47,15 @@ export async function verifyPaidOrder(orderId: string, phone: string): Promise<P
       ok: false,
       status: 402,
       error: "The paid currency is not supported. Please contact support.",
+    };
+  }
+
+  const paidAmount = Number(order.order_amount) || 0;
+  if (Math.abs(paidAmount - expectedAmount) > 0.01) {
+    return {
+      ok: false,
+      status: 402,
+      error: "The paid amount does not match this course price. Please contact support on WhatsApp.",
     };
   }
 

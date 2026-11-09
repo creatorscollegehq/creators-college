@@ -75,7 +75,11 @@ export async function getCouponByCode(code: string): Promise<Coupon | null> {
     .eq("code", normalized.toLowerCase())
     .maybeSingle();
 
-  if (error || !data) return null;
+  if (error) {
+    console.error("Coupon lookup failed:", error.message);
+    return null;
+  }
+  if (!data) return null;
   const row = data as Record<string, unknown>;
   return {
     code: String(row.code ?? "").toUpperCase(),
@@ -130,12 +134,12 @@ export function clampPercentOff(value: unknown) {
 export async function incrementCouponUse(code: string) {
   const normalized = normalizeCouponCode(code);
   if (!normalized) return;
-  const { data, error } = await getSupabaseAdmin()
-    .rpc("coupon_use", { p_code: normalized.toLowerCase() })
-    .maybeSingle();
+  const { error } = await getSupabaseAdmin().rpc("coupon_use", {
+    p_code: normalized.toLowerCase(),
+  });
 
-  if (error || !data) {
-    console.error("Coupon use update failed:", error?.message);
+  if (error) {
+    console.error("Coupon use update failed:", error.message);
   }
 }
 

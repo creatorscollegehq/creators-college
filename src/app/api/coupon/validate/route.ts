@@ -2,11 +2,7 @@ import { NextResponse } from "next/server";
 import { getCouponByCode, toPublicCoupon, validateCoupon } from "@/lib/coupons";
 import { COURSE_PRICE } from "@/lib/payment";
 
-export default async function handler(request: Request) {
-  if (request.method !== "POST") {
-    return NextResponse.json({ ok: false, error: "Method not allowed." }, { status: 405 });
-  }
-
+export async function POST(request: Request) {
   let body: Record<string, unknown>;
   try {
     body = await request.json();
@@ -26,8 +22,4 @@ export default async function handler(request: Request) {
   }
 
   return NextResponse.json({ ok: true, coupon: coupon ? toPublicCoupon(coupon, COURSE_PRICE) : null });
-}
-
-export async function POST(request: Request) {
-  return handler(request);
 }

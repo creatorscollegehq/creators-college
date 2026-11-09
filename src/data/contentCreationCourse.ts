@@ -134,22 +134,12 @@ export const contentCreationRoadmap: RoadmapStep[] = [
     title: "Uploads",
     description: "Publish with the right titles, captions, hashtags, covers and schedule.",
     icon: "upload",
-    video: {
-      id: "ZQFqPuGVJNo",
-      title: "Video Uploads",
-      duration: "0:24",
-    },
   },
   {
     num: "10",
     title: "Analytics",
     description: "Read Instagram analytics and improve reach, retention and performance.",
     icon: "analytics",
-    video: {
-      id: "yalZPTmEl6s",
-      title: "Video Analytics",
-      duration: "0:22",
-    },
   },
 ];
 
@@ -317,21 +307,11 @@ export const contentCreationModules: CourseModule[] = [
       "Lesson 8: Uploading Reels as YouTube Shorts",
       "Lesson 9: Managing Comments and Engagement",
     ],
-    preview: {
-      id: "ZQFqPuGVJNo",
-      title: "Video Uploads",
-      duration: "0:24",
-    },
   },
   {
     number: "10",
     title: "Analytics",
     lessons: ["Lesson 1: Understanding Instagram Reel Analytics"],
-    preview: {
-      id: "yalZPTmEl6s",
-      title: "Video Analytics",
-      duration: "0:22",
-    },
   },
   {
     number: "11",
