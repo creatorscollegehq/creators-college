@@ -87,6 +87,9 @@ export default function CourseCurriculum() {
           {contentCreationModules.map((module) => {
             const isOpen = openModule === module.number;
             const preview = module.preview;
+            const lessonCount = module.sections
+              ? module.sections.reduce((total, section) => total + section.lessons.length, 0)
+              : module.lessons.length;
             let lessonCursor = 0;
 
             return (
@@ -119,7 +122,7 @@ export default function CourseCurriculum() {
                       </span>
                       <span className="mt-1 inline-flex items-center gap-1.5 text-[10px] font-semibold text-gray-500 dark:text-gray-400">
                         <Lock size={10} />
-                        {module.lessons.length} {module.lessons.length === 1 ? "lesson" : "lessons"}
+                        {lessonCount} {lessonCount === 1 ? "lesson" : "lessons"}
                         {module.sections ? ` · ${module.sections.length} sections` : ""}
                       </span>
                     </span>
@@ -220,7 +223,7 @@ export default function CourseCurriculum() {
                         href="/checkout"
                         className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-brand-orange px-3 py-3 text-[11px] font-bold text-white shadow-md shadow-brand-orange/20 transition hover:bg-brand-orange-dark sm:text-xs"
                       >
-                        Unlock all {module.lessons.length} lessons in this module <ArrowRight size={13} />
+                        Unlock all {lessonCount} lessons in this module <ArrowRight size={13} />
                       </Link>
                     </div>
                   </div>
