@@ -37,6 +37,7 @@ function loadEnv() {
 loadEnv();
 
 const dryRun = process.argv.includes("--dry-run");
+const concurrency = Math.min(12, Math.max(1, Number(process.env.COPY_CONCURRENCY) || 3));
 const prefix = (process.env.B2_VIDEO_PREFIX || "courses/content-creation").replace(/^\/+|\/+$/g, "");
 
 const contentTypes = {
@@ -162,31 +163,36 @@ async function worker() {
   while (index < pending.length) {
     const object = pending[index++];
     const started = Date.now();
-    try {
-      const result = await source.send(new GetObjectCommand({ Bucket: b2Bucket, Key: object.key }));
-      const body = await streamBody(result.Body);
-      await target.send(
-        new PutObjectCommand({
-          Bucket: r2Bucket,
-          Key: object.key,
-          Body: body,
-          ContentLength: body.length,
-          ContentType: contentTypes[path.extname(object.key).toLowerCase()] || "application/octet-stream",
-          CacheControl: "private, max-age=0",
-          Metadata: { migratedFrom: "b2" },
-        })
-      );
-      copied++;
-      console.log(
-        `[${copied}/${pending.length}] ${object.key} (${(body.length / (1024 * 1024)).toFixed(1)} MB) ` +
-          `${((Date.now() - started) / 1000).toFixed(1)}s`
-      );
-    } catch (error) {
-      console.error(`Failed ${object.key}:`, error.message || error);
-      process.exitCode = 1;
+    let done = false;
+    for (let attempt = 1; attempt <= 3 && !done; attempt++) {
+      try {
+        const result = await source.send(new GetObjectCommand({ Bucket: b2Bucket, Key: object.key }));
+        const body = await streamBody(result.Body);
+        await target.send(
+          new PutObjectCommand({
+            Bucket: r2Bucket,
+            Key: object.key,
+            Body: body,
+            ContentLength: body.length,
+            ContentType: contentTypes[path.extname(object.key).toLowerCase()] || "application/octet-stream",
+            CacheControl: "private, max-age=0",
+            Metadata: { migratedFrom: "b2" },
+          })
+        );
+        copied++;
+        done = true;
+        console.log(
+          `[${copied}/${pending.length}] ${object.key} (${(body.length / (1024 * 1024)).toFixed(1)} MB) ` +
+            `${((Date.now() - started) / 1000).toFixed(1)}s`
+        );
+      } catch (error) {
+        console.error(`Attempt ${attempt} failed ${object.key}:`, error.message || error);
+        if (attempt < 3) await new Promise((resolve) => setTimeout(resolve, 2000 * attempt));
+        else process.exitCode = 1;
+      }
     }
   }
 }
 
-await Promise.all([worker(), worker(), worker()]);
+await Promise.all(Array.from({ length: concurrency }, () => worker()));
 console.log(`\nCopy finished: ${copied}/${pending.length} file(s) moved to R2.`);
