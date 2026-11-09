@@ -117,7 +117,7 @@ export default function CheckoutPage() {
       "InitiateCheckout",
       {
         content_name: COURSE.name,
-        value: COURSE.price,
+        value: finalPrice,
         currency: "INR",
       },
       { eventID: eventId }
@@ -134,7 +134,7 @@ export default function CheckoutPage() {
         url: window.location.href,
         source: COURSE.name,
         eventName: "InitiateCheckout",
-        value: COURSE.price,
+        value: finalPrice,
         currency: "INR",
       }),
     }).catch((err) => console.error("Meta CAPI trigger error (silent):", err));
@@ -147,7 +147,7 @@ export default function CheckoutPage() {
         phone: formData.phone,
         email: formData.email || "N/A",
         course: COURSE.name,
-        message: `Checkout started for ₹${COURSE.price}. Payment pending.`,
+        message: `Checkout started for ₹${finalPrice}. Payment pending.`,
         source: "Checkout Page",
         type: "enrollment",
       }),
@@ -270,9 +270,9 @@ export default function CheckoutPage() {
     }
   };
 
-  const upiDeepLink = `upi://pay?pa=cecilkumar99830-1@oksbi&pn=CreatorsCollege&am=${COURSE.price}&cu=INR&tn=CCEnroll`;
+  const upiDeepLink = `upi://pay?pa=cecilkumar99830-1@oksbi&pn=CreatorsCollege&am=${finalPrice}&cu=INR&tn=CCEnroll`;
 
-  const whatsappMsg = `Hi Creators College, I have completed the payment of ₹${COURSE.price} for the ${COURSE.name}. Please send my course access on WhatsApp.\n\nName: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email || "N/A"}\nPayment method: UPI`;
+  const whatsappMsg = `Hi Creators College, I have completed the payment of ₹${finalPrice} for the ${COURSE.name}. Please send my course access on WhatsApp.\n\nName: ${formData.name}\nPhone: ${formData.phone}\nEmail: ${formData.email || "N/A"}\nPayment method: UPI`;
   const whatsappUrl = `https://wa.me/918143937367?text=${encodeURIComponent(whatsappMsg)}`;
   const helpUrl =
     "https://wa.me/918143937367?text=Hi%2C%20I%20need%20help%20with%20the%20Content%20Creation%20Course%20checkout";

@@ -6,11 +6,6 @@ import { COURSE_PRICE } from "@/lib/payment";
 
 const CASHFREE_API_VERSION = "2023-08-01";
 
-type PaidCouponOrder = {
-  amount: number;
-  couponCode?: string;
-};
-
 function text(value: unknown) {
   return String(value ?? "").trim();
 }
@@ -142,7 +137,7 @@ export default async function CreateCashfreeOrder(request: Request) {
             phone
           )}&email=${encodeURIComponent(email)}&course=${encodeURIComponent(
             courseName
-          )}&coupon_code=${encodeURIComponent(couponCode)}`,
+          )}&coupon_code=${encodeURIComponent(couponCode)}&amount=0`,
         },
         { status: 200 }
       );
@@ -152,7 +147,7 @@ export default async function CreateCashfreeOrder(request: Request) {
     const requestOrigin = new URL(request.url).origin;
     const configuredOrigin = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
     const origin = configuredOrigin || (requestOrigin.startsWith("https://") ? requestOrigin : "https://www.creatorscollege.in");
-    const successUrl = `${origin}/checkout/success?order_id=${encodeURIComponent(orderId)}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&email=${encodeURIComponent(email)}&course=${encodeURIComponent(courseName)}`;
+    const successUrl = `${origin}/checkout/success?order_id=${encodeURIComponent(orderId)}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&email=${encodeURIComponent(email)}&course=${encodeURIComponent(courseName)}&amount=${orderAmount}`;
 
     const response = await fetch(
       `${environment === "production" ? "https://api.cashfree.com/pg" : "https://sandbox.cashfree.com/pg"}/orders`,
@@ -239,5 +234,3 @@ export default async function CreateCashfreeOrder(request: Request) {
 export async function POST(request: Request) {
   return CreateCashfreeOrder(request);
 }
-
-export type { PaidCouponOrder };

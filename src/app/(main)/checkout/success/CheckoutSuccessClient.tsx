@@ -17,6 +17,8 @@ export default function CheckoutSuccessClient() {
   const email = (searchParams.get("email") || "").trim().toLowerCase();
   const course = searchParams.get("course") || "Complete Telugu Content Creation Course";
   const couponCode = (searchParams.get("coupon_code") || "").trim();
+  const amountParam = Number(searchParams.get("amount"));
+  const amount = Number.isFinite(amountParam) && amountParam >= 0 ? amountParam : 5000;
 
   const [status, setStatus] = useState<Status>("checking");
   const [message, setMessage] = useState("Verifying your payment with Cashfree...");
@@ -39,7 +41,7 @@ export default function CheckoutSuccessClient() {
     fbq?.(
       "track",
       "Purchase",
-      { content_name: course, value: 5000, currency: "INR" },
+      { content_name: course, value: amount, currency: "INR" },
       { eventID: eventId }
     );
 
@@ -54,11 +56,11 @@ export default function CheckoutSuccessClient() {
         url: window.location.href,
         source: course,
         eventName: "Purchase",
-        value: 5000,
+        value: amount,
         currency: "INR",
       }),
     }).catch((error) => console.error("Meta CAPI Purchase trigger error (silent):", error));
-  }, [course, name, orderId, phone]);
+  }, [amount, course, name, orderId, phone]);
 
   const verifyAccess = useCallback(async () => {
     if (!orderId || !phone) {
@@ -83,7 +85,7 @@ export default function CheckoutSuccessClient() {
 
       if (!response.ok || !data?.ok) {
         setStatus("error");
-        track("payment_failed", { reason: "not_verified", message: String(data?.error || "") }, { value: 5000 });
+        track("payment_failed", { reason: "not_verified", message: String(data?.error || "") }, { value: amount });
         setMessage(data?.error || "We could not unlock your course access yet.");
         return;
       }
@@ -91,7 +93,7 @@ export default function CheckoutSuccessClient() {
       const purchaseEmail = String(data?.enrollment?.email || email || "").trim().toLowerCase();
       setVerifiedEmail(purchaseEmail);
       trackPurchase(purchaseEmail);
-      track("payment_verified", { orderId }, { value: 5000 });
+      track("payment_verified", { orderId }, { value: amount });
       setStatus("verified");
       setMessage(
         purchaseEmail
@@ -104,7 +106,7 @@ export default function CheckoutSuccessClient() {
       setStatus("error");
       setMessage("Network error while verifying your payment. Check your connection and try again.");
     }
-  }, [couponCode, email, name, orderId, phone, trackPurchase]);
+  }, [amount, couponCode, email, name, orderId, phone, trackPurchase]);
 
   useEffect(() => {
     const timer = setTimeout(() => void verifyAccess(), 0);
@@ -139,7 +141,9 @@ export default function CheckoutSuccessClient() {
               </div>
               <div className="flex justify-between gap-4">
                 <span className="text-gray-500 dark:text-gray-400">Amount</span>
-                <span className="font-semibold text-brand-charcoal dark:text-white">₹5,000</span>
+                <span className="font-semibold text-brand-charcoal dark:text-white">
+                  {amount > 0 ? `₹${amount.toLocaleString("en-IN")}` : "FREE"}
+                </span>
               </div>
               {orderId && (
                 <div className="flex justify-between gap-4">
