@@ -9,7 +9,6 @@ import {
   LogIn,
   MousePointerClick,
   PlayCircle,
-  TicketPercent,
   TrendingUp,
   UserCheck,
   Users,
@@ -73,8 +72,11 @@ export default async function AdminOverviewPage({
   try {
     coupons = await getCoupons();
   } catch (error) {
-    couponError = error instanceof Error ? error.message : "Unknown error";
-    console.error("Admin coupons failed:", couponError);
+    const raw = error instanceof Error ? error.message : "Unknown error";
+    couponError = /could not find the table|PGRST205|does not exist/i.test(raw)
+      ? "Coupon tables are not created in Supabase yet. Run supabase/migrations/20261107000000_coupon_system.sql once in the Supabase SQL Editor, then reload this page. Until then CECILSSPECIAL will not work at checkout."
+      : raw;
+    console.error("Admin coupons failed:", raw);
   }
   let loadError = "";
 
