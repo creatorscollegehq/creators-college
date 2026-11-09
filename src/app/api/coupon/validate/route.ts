@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getCouponByCode, toPublicCoupon, validateCoupon } from "@/lib/coupons";
+import { CouponError, getCouponByCode, toPublicCoupon, validateCoupon } from "@/lib/coupons";
 import { COURSE_PRICE } from "@/lib/payment";
 
 export async function POST(request: Request) {
@@ -15,7 +15,17 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "Enter a coupon code." }, { status: 400 });
   }
 
-  const coupon = await getCouponByCode(rawCode);
+  let coupon;
+  try {
+    coupon = await getCouponByCode(rawCode);
+  } catch (caught) {
+    if (caught instanceof CouponError) {
+      return NextResponse.json({ ok: false, error: caught.message }, { status: caught.status });
+    }
+    console.error("Coupon validate failed:", caught);
+    return NextResponse.json({ ok: false, error: "Coupon check failed. Please try again." }, { status: 500 });
+  }
+
   const error = validateCoupon(coupon);
   if (error) {
     return NextResponse.json({ ok: false, error: error.message }, { status: error.status });

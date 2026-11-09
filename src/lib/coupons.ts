@@ -46,6 +46,11 @@ export class CouponError extends Error {
 
 const COUPON_COLUMNS = "code,title,percent_off,max_uses,used_count,starts_at,expires_at,active";
 
+const MISSING_TABLE = /could not find the table|PGRST205|schema cache|does not exist/i;
+
+export const COUPON_SETUP_MESSAGE =
+  "Coupons are not set up yet. In the admin panel run the one-time coupon setup SQL, then try the code again.";
+
 export function normalizeCouponCode(value: unknown) {
   return String(value ?? "").trim().toUpperCase();
 }
@@ -77,6 +82,11 @@ export async function getCouponByCode(code: string): Promise<Coupon | null> {
 
   if (error) {
     console.error("Coupon lookup failed:", error.message);
+    // A missing table is a setup problem, not a bad code: surface it clearly so
+    // the checkout and admin pages stop claiming the coupon does not exist.
+    if (MISSING_TABLE.test(error.message || "")) {
+      throw new CouponError("invalid", COUPON_SETUP_MESSAGE, 503);
+    }
     return null;
   }
   if (!data) return null;

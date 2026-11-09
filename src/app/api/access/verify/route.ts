@@ -49,7 +49,16 @@ export async function POST(request: Request) {
   const couponOrder = existing ? null : await getCouponOrder(orderId);
 
   if (couponOrder) {
-    const coupon = couponOrder.couponCode ? await getCouponByCode(couponOrder.couponCode) : null;
+    let coupon: Awaited<ReturnType<typeof getCouponByCode>> = null;
+    try {
+      coupon = couponOrder.couponCode ? await getCouponByCode(couponOrder.couponCode) : null;
+    } catch (caught) {
+      console.error("Coupon lookup failed while verifying access:", caught);
+      return NextResponse.json(
+        { error: "Coupons are not set up yet. Please contact support on WhatsApp with your order ID." },
+        { status: 503 }
+      );
+    }
     if (!coupon) {
       await logServerEvent({
         event_name: "access_verify",

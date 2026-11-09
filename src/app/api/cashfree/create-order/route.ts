@@ -1,6 +1,13 @@
 import { NextResponse } from "next/server";
 import { contextFromRequest, logServerEvent } from "@/lib/analytics";
-import { couponDiscountedPrice, getCouponByCode, incrementCouponUse, recordCouponOrder, validateCoupon } from "@/lib/coupons";
+import {
+  CouponError,
+  couponDiscountedPrice,
+  getCouponByCode,
+  incrementCouponUse,
+  recordCouponOrder,
+  validateCoupon,
+} from "@/lib/coupons";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { COURSE_PRICE } from "@/lib/payment";
 
@@ -55,7 +62,14 @@ export default async function CreateCashfreeOrder(request: Request) {
     let orderAmount = COURSE_PRICE;
 
     if (couponInput) {
-      coupon = await getCouponByCode(couponInput);
+      try {
+        coupon = await getCouponByCode(couponInput);
+      } catch (caught) {
+        if (caught instanceof CouponError) {
+          return NextResponse.json({ configured: true, error: caught.message }, { status: caught.status });
+        }
+        throw caught;
+      }
       const validation = validateCoupon(coupon);
       if (validation) {
         couponError = { code: validation.code, message: validation.message };

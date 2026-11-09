@@ -398,7 +398,7 @@ export default function CheckoutPage() {
                 </div>
 
                 <div className="rounded-xl border border-gray-200 bg-gray-50 px-3 py-2.5">
-                  <form onSubmit={applyCoupon} className="space-y-2">
+                  <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <TicketPercent size={13} className="text-brand-orange" />
                       <p className="text-[11px] font-bold text-[#0B1B4B]">Coupon code</p>
@@ -408,11 +408,18 @@ export default function CheckoutPage() {
                         type="text"
                         value={couponInput}
                         onChange={(event) => setCouponInput(event.target.value.toUpperCase())}
+                        onKeyDown={(event) => {
+                          if (event.key === "Enter") {
+                            event.preventDefault();
+                            void applyCoupon();
+                          }
+                        }}
                         placeholder="Cecil's special offer"
                         className="min-w-0 flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2.5 text-xs text-brand-blue outline-none transition focus:border-brand-orange"
                       />
                       <button
-                        type="submit"
+                        type="button"
+                        onClick={() => void applyCoupon()}
                         disabled={couponBusy}
                         className="flex shrink-0 items-center gap-1 rounded-lg bg-[#0B1B4B] px-4 py-2.5 text-[11px] font-bold text-white transition hover:bg-[#123c9e] disabled:opacity-60"
                       >
@@ -420,7 +427,7 @@ export default function CheckoutPage() {
                         Apply
                       </button>
                     </div>
-                  </form>
+                  </div>
                 </div>
 
                 <button

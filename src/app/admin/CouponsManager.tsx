@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, Plus, Save, Trash2, X } from "lucide-react";
+import { Check, Copy, Database, ExternalLink, Loader2, Plus, Save, Trash2, X } from "lucide-react";
 import { clampPercentOff, type Coupon } from "@/lib/coupons";
+import { COUPON_SETUP_SQL } from "@/lib/couponSetupSql";
 
 function Field({
   label,
@@ -45,9 +46,13 @@ function toLocalInput(value: string | null) {
 export default function CouponsManager({
   initialCoupons,
   error,
+  setupMissing = false,
+  sqlEditorUrl,
 }: {
   initialCoupons: Coupon[];
   error?: string | null;
+  setupMissing?: boolean;
+  sqlEditorUrl?: string | null;
 }) {
   const router = useRouter();
   const [draft, setDraft] = useState(emptyDraft());
@@ -141,6 +146,8 @@ export default function CouponsManager({
 
   return (
     <div className="space-y-4">
+      {setupMissing ? <SetupCard sqlEditorUrl={sqlEditorUrl ?? null} /> : null}
+
       <div className="rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
@@ -279,6 +286,63 @@ export default function CouponsManager({
           ))}
         </div>
       )}
+    </div>
+  );
+}
+
+function SetupCard({ sqlEditorUrl }: { sqlEditorUrl: string | null }) {
+  const [copied, setCopied] = useState(false);
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(COUPON_SETUP_SQL);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    } catch (error) {
+      console.error("Copy failed:", error);
+    }
+  };
+
+  return (
+    <div className="rounded-2xl border border-amber-200 bg-amber-50/80 p-5">
+      <h2 className="flex items-center gap-2 text-sm font-bold text-[#0B1B4B]">
+        <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-amber-500/15 text-amber-600">
+          <Database size={15} />
+        </span>
+        One-time setup: create the coupon tables
+      </h2>
+      <p className="mt-1.5 text-xs leading-relaxed text-amber-900/80">
+        Coupons cannot be saved or redeemed until this SQL runs once in Supabase. Copy it, paste it in the
+        Supabase SQL Editor and press Run. It is safe to run again later — it never deletes existing coupons.
+      </p>
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        <button
+          type="button"
+          onClick={() => void copy()}
+          className="inline-flex items-center gap-1.5 rounded-xl bg-[#0B1B4B] px-4 py-2.5 text-[11px] font-bold text-white transition hover:bg-[#123c9e]"
+        >
+          {copied ? <Check size={13} /> : <Copy size={13} />}
+          {copied ? "Copied — now paste it in Supabase" : "Copy setup SQL"}
+        </button>
+        {sqlEditorUrl ? (
+          <a
+            href={sqlEditorUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-amber-300 bg-white px-4 py-2.5 text-[11px] font-bold text-[#0B1B4B] transition hover:border-amber-400"
+          >
+            <ExternalLink size={13} /> Open Supabase SQL Editor
+          </a>
+        ) : null}
+      </div>
+      <details className="mt-3">
+        <summary className="cursor-pointer text-[11px] font-bold text-amber-900/70">
+          View the SQL before running it
+        </summary>
+        <pre className="mt-2 max-h-64 overflow-auto rounded-xl bg-[#0B1B4B] p-3 text-[10px] leading-relaxed text-white/90">
+          {COUPON_SETUP_SQL}
+        </pre>
+      </details>
     </div>
   );
 }

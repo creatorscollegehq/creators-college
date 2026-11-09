@@ -78,6 +78,9 @@ export default async function AdminOverviewPage({
       : raw;
     console.error("Admin coupons failed:", raw);
   }
+  const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+  const projectRef = supabaseUrl.match(/https:\/\/([a-z0-9]+)\.supabase\.co/)?.[1];
+  const couponSetupMissing = /not created in Supabase yet/i.test(couponError || "");
   let loadError = "";
 
   try {
@@ -127,7 +130,14 @@ export default async function AdminOverviewPage({
           <RangeTabs basePath="/admin" days={days} />
         </PageHeader>
 
-        <CouponsManager initialCoupons={coupons} error={couponError} />
+        <CouponsManager
+          initialCoupons={coupons}
+          error={couponError}
+          setupMissing={couponSetupMissing}
+          sqlEditorUrl={
+            projectRef ? `https://supabase.com/dashboard/project/${projectRef}/sql/new` : null
+          }
+        />
 
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
           <StatCard
