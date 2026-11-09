@@ -6,24 +6,15 @@ import Link from "next/link";
 import Image from "next/image";
 import {
   ArrowRight,
-  BarChart3,
   BookOpen,
-  Camera,
   Check,
   ChevronDown,
-  Clapperboard,
   Clock,
-  FileText,
   GraduationCap,
   Lock,
-  MessageCircle,
-  Mic,
   Play,
-  Search,
   ShieldCheck,
   Sparkles,
-  Upload,
-  Users,
   Wallet,
   Zap,
 } from "lucide-react";
@@ -31,58 +22,19 @@ import VideoModal, { type ActiveVideo } from "@/components/VideoModal";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
 import {
   CONTENT_CREATION_COURSE,
-  contentCreationModules,
   contentCreationRoadmap,
   type CoursePreviewVideo,
 } from "@/data/contentCreationCourse";
+import CourseCurriculum from "./CourseCurriculum";
 
-const roadmapIcons = {
-  book: BookOpen,
-  search: Search,
-  script: FileText,
-  mic: Mic,
-  live: MessageCircle,
-  camera: Camera,
-  edit: Clapperboard,
-  accounts: Users,
-  upload: Upload,
-  analytics: BarChart3,
-};
-
-const previewVideos: CoursePreviewVideo[] = [  ...contentCreationRoadmap.flatMap((step) => (step.video ? [step.video] : [])),
+const previewVideos: CoursePreviewVideo[] = [
+  ...contentCreationRoadmap.flatMap((step) => (step.video ? [step.video] : [])),
   {
     id: "gISyUpfoXvc",
     title: "Social Media Page Handling",
     duration: "Bonus",
   },
 ];
-
-function LockedLessonRow({ lesson }: { lesson: string }) {
-  return (
-    <Link
-      href="/checkout"
-      aria-label={`Unlock lesson: ${lesson}`}
-      className="group flex items-center gap-2.5 border-b border-gray-100 px-3 py-2.5 last:border-0 hover:bg-brand-orange/5 dark:border-white/5"
-    >
-      <span className="relative flex h-10 w-16 shrink-0 items-center justify-center overflow-hidden rounded-md bg-gradient-to-br from-[#0B1B4B] to-[#123c9e] text-white">
-        <Play size={12} fill="currentColor" className="ml-0.5 opacity-90" />
-        <span className="absolute inset-0 bg-black/20" />
-        <span className="absolute bottom-0.5 right-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-white text-brand-orange shadow">
-          <Lock size={7} />
-        </span>
-      </span>
-      <span className="min-w-0 flex-1">
-        <span className="line-clamp-2 block text-[11px] font-semibold leading-snug text-gray-700 group-hover:text-brand-orange dark:text-gray-300">
-          {lesson}
-        </span>
-        <span className="mt-0.5 block text-[9px] font-medium uppercase tracking-wide text-gray-400">
-          Video lesson · Locked
-        </span>
-      </span>
-      <Lock size={13} className="shrink-0 text-brand-orange" />
-    </Link>
-  );
-}
 
 const included: {
   icon: ComponentType<{ size?: number; className?: string }>;
@@ -129,7 +81,6 @@ const faqs = [
 ];
 
 export default function ContentCreationCourseClient({ embedded = false }: { embedded?: boolean }) {
-  const [openModule, setOpenModule] = useState<string | null>("01");
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [activeVideo, setActiveVideo] = useState<ActiveVideo | null>(null);
 
@@ -253,242 +204,8 @@ export default function ContentCreationCourseClient({ embedded = false }: { embe
         </div>
       </section>
 
-      {/* Roadmap */}
-      <section className="bg-white py-6 dark:bg-[#090d16] md:py-9">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-wrap items-end justify-between gap-3">
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-orange">Course Roadmap</span>
-              <h2 className="mt-1 text-2xl font-bold tracking-tight text-[#0B1B4B] dark:text-white sm:text-3xl">
-                10 Steps From Beginner to Pro
-              </h2>
-              <p className="mt-1.5 max-w-2xl text-xs leading-relaxed text-gray-600 dark:text-gray-300 sm:text-sm">
-                Every step is covered inside the course. Tap any YouTube preview to watch it right here.
-              </p>
-            </div>
-            <Link
-              href="/checkout"
-              className="inline-flex items-center gap-1.5 rounded-lg bg-brand-orange px-4 py-2.5 text-[11px] font-bold text-white shadow-md shadow-brand-orange/20 transition hover:bg-brand-orange-dark"
-            >
-              Enroll Now <ArrowRight size={14} />
-            </Link>
-          </div>
-
-          <div className="mt-4 grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
-            {contentCreationRoadmap.map((step) => {
-              const Icon = roadmapIcons[step.icon];
-              const video = step.video;
-              return (
-                <div
-                  key={step.num}
-                  className="flex flex-col overflow-hidden rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-white/10 dark:bg-[#0d1424]"
-                >
-                  <div className="flex items-center justify-between px-2.5 pt-2.5">
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-orange text-[9px] font-bold text-white">
-                      {step.num}
-                    </span>
-                    <Icon size={15} className="text-brand-blue dark:text-white" />
-                  </div>
-
-                  {video ? (
-                    <button
-                      type="button"
-                      onClick={() => playVideo(video)}
-                      className="group relative mx-2.5 mt-2 aspect-video overflow-hidden rounded-lg bg-black"
-                      aria-label={`Play ${video.title}`}
-                    >
-                      <Image
-                        src={`/videos/${video.id}.jpg`}
-                        alt={video.title}
-                        fill
-                        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 18vw"
-                        className="object-cover transition duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-black/20 transition group-hover:bg-black/10" />
-                      <span className="absolute inset-0 m-auto flex h-7 w-7 items-center justify-center rounded-full bg-white/95 text-brand-orange shadow">
-                        <Play size={10} fill="currentColor" strokeWidth={0} className="ml-0.5" />
-                      </span>
-                      <span className="absolute bottom-1 right-1 rounded bg-black/70 px-1 py-0.5 text-[8px] font-medium text-white">
-                        {video.duration}
-                      </span>
-                    </button>
-                  ) : (
-                    <Link
-                      href="/checkout"
-                      className="group mx-2.5 mt-2 flex aspect-video flex-col items-center justify-center gap-1 rounded-lg bg-gradient-to-br from-[#0B1B4B] to-[#123c9e] text-white"
-                    >
-                      <Lock size={17} />
-                      <span className="text-[9px] font-semibold">Unlock in course</span>
-                    </Link>
-                  )}
-
-                  <div className="p-2.5">
-                    <h3 className="text-[12px] font-bold text-[#0B1B4B] dark:text-white">{step.title}</h3>
-                    <p className="mt-1 text-[10px] leading-relaxed text-gray-500 dark:text-gray-400">{step.description}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* YouTube previews */}
-      <section className="bg-[#EDF4F8] py-6 dark:bg-white/[0.03] md:py-9">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-end justify-between gap-3">
-            <div>
-              <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-orange">Free Preview</span>
-              <h2 className="mt-1 text-2xl font-bold tracking-tight text-[#0B1B4B] dark:text-white sm:text-3xl">
-                Watch Before You Enroll
-              </h2>
-            </div>
-            <span className="hidden text-[11px] font-semibold text-gray-500 dark:text-gray-400 sm:block">
-              Tap to play · YouTube previews
-            </span>
-          </div>
-
-          <div className="mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
-            {previewVideos.map((video) => (
-              <button
-                key={video.id}
-                type="button"
-                onClick={() => playVideo(video)}
-                aria-label={`Play ${video.title}`}
-                className="group overflow-hidden rounded-xl border border-gray-200/70 bg-white text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md dark:border-white/10 dark:bg-[#0d1424]"
-              >
-                <div className="relative aspect-video bg-black">
-                  <Image
-                    src={`/videos/${video.id}.jpg`}
-                    alt={video.title}
-                    fill
-                    sizes="(max-width: 640px) 50vw, 25vw"
-                    className="object-cover transition duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/15" />
-                  <span className="absolute inset-0 m-auto flex h-8 w-8 items-center justify-center rounded-full bg-white/95 text-brand-orange shadow">
-                    <Play size={11} fill="currentColor" strokeWidth={0} className="ml-0.5" />
-                  </span>
-                  <span className="absolute bottom-1.5 right-1.5 rounded bg-black/70 px-1.5 py-0.5 text-[9px] font-medium text-white">
-                    {video.duration}
-                  </span>
-                </div>
-                <div className="p-2.5">
-                  <h3 className="line-clamp-2 text-[11px] font-bold leading-snug text-[#0B1B4B] dark:text-white">
-                    {video.title}
-                  </h3>
-                  <p className="mt-0.5 text-[9px] font-semibold text-brand-orange">Free preview</p>
-                </div>
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Modules */}
-      <section id="curriculum" className="scroll-mt-24 bg-white py-6 dark:bg-[#090d16] md:py-9">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-brand-orange">Full Curriculum</span>
-            <h2 className="mt-1 text-2xl font-bold tracking-tight text-[#0B1B4B] dark:text-white sm:text-3xl">
-              {CONTENT_CREATION_COURSE.totalModules} Modules · {CONTENT_CREATION_COURSE.totalLessons} Lessons
-            </h2>
-            <p className="mx-auto mt-1.5 max-w-xl text-xs leading-relaxed text-gray-600 dark:text-gray-300 sm:text-sm">
-              YouTube previews are free. Full module lessons unlock after enrollment. Tap a module to see the lessons inside.
-            </p>
-          </div>
-
-          <div className="mt-4 space-y-2">
-            {contentCreationModules.map((module) => {
-              const isOpen = openModule === module.number;
-              const preview = module.preview;
-              return (
-                <div
-                  key={module.number}
-                  className="overflow-hidden rounded-xl border border-gray-200/70 bg-white shadow-sm dark:border-white/10 dark:bg-[#0d1424]"
-                >
-                  <div className="flex items-center gap-2.5 p-3">
-                    <button
-                      type="button"
-                      onClick={() => setOpenModule(isOpen ? null : module.number)}
-                      className="flex min-w-0 flex-1 items-center gap-2.5 text-left"
-                    >
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand-orange/10 text-[11px] font-bold text-brand-orange">
-                        {module.number}
-                      </span>
-                      <span className="min-w-0 flex-1">
-                        <span className="block text-[12px] font-bold leading-snug text-[#0B1B4B] dark:text-white sm:text-sm">
-                          {module.title}
-                        </span>
-                        <span className="mt-0.5 block text-[10px] text-gray-500 dark:text-gray-400">
-                          {module.lessons.length} {module.lessons.length === 1 ? "lesson" : "lessons"} · Locked
-                        </span>
-                      </span>
-                    </button>
-
-                    {preview ? (
-                      <button
-                        type="button"
-                        onClick={() => playVideo(preview)}
-                        aria-label={`Play ${preview.title}`}
-                        className="hidden items-center gap-1 rounded-full bg-emerald-50 px-2 py-1 text-[9px] font-bold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 sm:inline-flex"
-                      >
-                        <Play size={9} fill="currentColor" /> Preview
-                      </button>
-                    ) : null}
-
-                    <Link
-                      href="/checkout"
-                      aria-label={`Unlock ${module.title}`}
-                      className="inline-flex shrink-0 items-center gap-1 rounded-full bg-brand-orange/10 px-2 py-1 text-[9px] font-bold text-brand-orange transition hover:bg-brand-orange/20"
-                    >
-                      <Lock size={10} /> <span className="hidden sm:inline">Unlock</span>
-                    </Link>
-                    <button
-                      type="button"
-                      onClick={() => setOpenModule(isOpen ? null : module.number)}
-                      aria-label={isOpen ? `Collapse ${module.title}` : `Expand ${module.title}`}
-                      className="shrink-0 p-1 text-gray-400"
-                    >
-                      <ChevronDown size={16} className={`transition ${isOpen ? "rotate-180" : ""}`} />
-                    </button>
-                  </div>
-
-                  {isOpen ? (
-                    <div className="border-t border-gray-100 dark:border-white/5">
-                      {module.sections ? (
-                        module.sections.map((section) => (
-                          <div key={section.title}>
-                            <div className="flex items-center justify-between gap-2 border-b border-gray-100 bg-gray-50/80 px-3 py-1.5 dark:border-white/5 dark:bg-white/[0.03]">
-                              <span className="text-[10px] font-bold uppercase tracking-wide text-gray-500 dark:text-gray-400">
-                                {section.title}
-                              </span>
-                              <span className="text-[9px] font-semibold text-gray-400">{section.lessons.length} lessons</span>
-                            </div>
-                            {section.lessons.map((lesson) => (
-                              <LockedLessonRow key={`${section.title}-${lesson}`} lesson={lesson} />
-                            ))}
-                          </div>
-                        ))
-                      ) : (
-                        module.lessons.map((lesson) => <LockedLessonRow key={lesson} lesson={lesson} />)
-                      )}
-                      <div className="p-2.5">
-                        <Link
-                          href="/checkout"
-                          className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-brand-orange px-3 py-2.5 text-[11px] font-bold text-white shadow-md shadow-brand-orange/20 transition hover:bg-brand-orange-dark"
-                        >
-                          Unlock Full Module <ArrowRight size={13} />
-                        </Link>
-                      </div>
-                    </div>
-                  ) : null}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      {/* Full Curriculum */}
+      <CourseCurriculum />
 
       {/* Included */}
       <section className="bg-[#FDF6EC] py-6 dark:bg-white/[0.04] md:py-9">

@@ -5,6 +5,24 @@ import { useRouter } from "next/navigation";
 import { Loader2, Plus, Save, Trash2, X } from "lucide-react";
 import { clampPercentOff, type Coupon } from "@/lib/coupons";
 
+function Field({
+  label,
+  hint,
+  children,
+}: {
+  label: string;
+  hint: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <label className="block">
+      <span className="mb-1.5 block text-[11px] font-bold uppercase tracking-wide text-gray-500">{label}</span>
+      {children}
+      <span className="mt-1.5 block text-[10px] font-medium leading-relaxed text-gray-400">{hint}</span>
+    </label>
+  );
+}
+
 function emptyDraft() {
   return {
     title: "",
@@ -148,65 +166,80 @@ export default function CouponsManager({
         ) : null}
 
         <form onSubmit={handleSubmit} className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-          <input
-            type="text"
-            required
-            value={draft.code}
-            onChange={(event) => handleField("code", event.target.value.toUpperCase())}
-            placeholder="Coupon code"
-            className={inputClass}
-          />
-          <input
-            type="text"
-            value={draft.title}
-            onChange={(event) => handleField("title", event.target.value)}
-            placeholder="Friendly name (optional)"
-            className={inputClass}
-          />
-          <input
-            type="number"
-            min={0}
-            max={100}
-            required
-            value={draft.percentOff}
-            onChange={(event) => handleField("percentOff", String(clampPercentOff(event.target.value)))}
-            placeholder="Percent off"
-            className={inputClass}
-          />
-          <input
-            type="number"
-            min={0}
-            required
-            value={draft.maxUses}
-            onChange={(event) =>
-              handleField("maxUses", String(Math.max(0, Math.ceil(Number(event.target.value) || 0))))
-            }
-            placeholder="Max uses (0 = unlimited)"
-            className={inputClass}
-          />
-          <input
-            type="datetime-local"
-            value={draft.startsAt}
-            onChange={(event) => handleField("startsAt", event.target.value)}
-            placeholder="Starts at"
-            className={inputClass}
-          />
-          <input
-            type="datetime-local"
-            value={draft.expiresAt}
-            onChange={(event) => handleField("expiresAt", event.target.value)}
-            placeholder="Expires at"
-            className={inputClass}
-          />
-          <label className="flex items-center gap-3 rounded-xl bg-gray-50 px-4 py-3 text-sm text-gray-700">
+          <Field
+            label="Coupon code"
+            hint="Students type this code at checkout. Use capital letters without spaces, e.g. CECILSSPECIAL."
+          >
             <input
-              type="checkbox"
-              checked={draft.active}
-              onChange={(event) => handleField("active", event.target.checked)}
-              className="h-4 w-4 rounded border-gray-300 text-brand-orange"
+              type="text"
+              required
+              value={draft.code}
+              onChange={(event) => handleField("code", event.target.value.toUpperCase())}
+              placeholder="CECILSSPECIAL"
+              className={inputClass}
             />
-            Active
-          </label>
+          </Field>
+          <Field label="Friendly name (optional)" hint="Only for you in this admin panel, so you remember what the coupon is for.">
+            <input
+              type="text"
+              value={draft.title}
+              onChange={(event) => handleField("title", event.target.value)}
+              placeholder="e.g. Cecil special free access"
+              className={inputClass}
+            />
+          </Field>
+          <Field label="Discount percent" hint="100 = full course free, 50 = half price. Any value between 1 and 100.">
+            <input
+              type="number"
+              min={0}
+              max={100}
+              required
+              value={draft.percentOff}
+              onChange={(event) => handleField("percentOff", String(clampPercentOff(event.target.value)))}
+              placeholder="100"
+              className={inputClass}
+            />
+          </Field>
+          <Field label="How many times it can be used" hint="Keep 0 for unlimited uses. Set 20 to stop the coupon after 20 students redeem it.">
+            <input
+              type="number"
+              min={0}
+              required
+              value={draft.maxUses}
+              onChange={(event) =>
+                handleField("maxUses", String(Math.max(0, Math.ceil(Number(event.target.value) || 0))))
+              }
+              placeholder="0 = unlimited"
+              className={inputClass}
+            />
+          </Field>
+          <Field label="Starts at (optional)" hint="Leave empty to start working immediately. Time is in your local timezone.">
+            <input
+              type="datetime-local"
+              value={draft.startsAt}
+              onChange={(event) => handleField("startsAt", event.target.value)}
+              className={inputClass}
+            />
+          </Field>
+          <Field label="Expires at (optional)" hint="Leave empty for no expiry. After this time the code stops working by itself.">
+            <input
+              type="datetime-local"
+              value={draft.expiresAt}
+              onChange={(event) => handleField("expiresAt", event.target.value)}
+              className={inputClass}
+            />
+          </Field>
+          <Field label="Show this coupon on checkout" hint="Un-tick to switch the coupon off without deleting it. It can be re-enabled any time.">
+            <span className="flex h-12 items-center gap-3 rounded-xl border border-gray-100 bg-gray-50 px-4 text-sm text-gray-700">
+              <input
+                type="checkbox"
+                checked={draft.active}
+                onChange={(event) => handleField("active", event.target.checked)}
+                className="h-4 w-4 rounded border-gray-300 text-brand-orange"
+              />
+              {draft.active ? "Active" : "Hidden"}
+            </span>
+          </Field>
           <div className="flex items-center gap-2">
             <button
               type="submit"
