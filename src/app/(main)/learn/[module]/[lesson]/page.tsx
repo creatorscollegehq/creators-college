@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { requireEnrollment } from "@/lib/access";
-import { courseLessons, findLesson, maskPhone, videoKeyFor } from "@/lib/courseContent";
+import { courseLessons, courseModules, findLesson, maskPhone, videoKeyFor } from "@/lib/courseContent";
 import { getSignedVideoUrl } from "@/lib/videoStorage";
 import LessonPlayer from "./LessonPlayer";
 
@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: LessonPageProps): Promise<Met
   const { module, lesson } = await params;
   const found = findLesson(module, Number.parseInt(lesson, 10));
   return {
-    title: found ? `${found.lesson.title} | My Course` : "My Course | Creators College",
+    title: found ? `${found.lesson.title} | My Profile` : "My Profile | Creators College",
     robots: { index: false, follow: false },
   };
 }
@@ -34,6 +34,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
 
   return (
     <LessonPlayer
+      key={found.lesson.id}
       lesson={{
         id: found.lesson.id,
         title: found.lesson.title,
@@ -49,6 +50,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
       next={found.next ? { href: found.next.href, title: found.next.title } : null}
       totalLessons={courseLessons.length}
       moduleLessonCount={moduleLessonCount}
+      modules={courseModules}
     />
   );
 }

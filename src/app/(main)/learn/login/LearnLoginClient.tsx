@@ -220,7 +220,7 @@ export default function LearnLoginClient({
             <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-white/10 border border-white/15">
               <Lock size={24} className="text-brand-orange" />
             </span>
-            <h1 className="mt-4 text-2xl font-bold tracking-tight">My Course</h1>
+            <h1 className="mt-4 text-2xl font-bold tracking-tight">My Profile</h1>
             <p className="mt-2 text-sm text-white/70 leading-relaxed">
               Sign in with Google to open your private course library.
             </p>

@@ -561,9 +561,16 @@ export default function CoursesPage() {
               <p className="text-[10px] text-gray-400">Learn strategies that get viral reach.</p>
             </div>
             <div className="p-4 bg-white dark:bg-[#090d16] border border-gray-100 dark:border-white/5 rounded-xl space-y-1">
-              <span className="text-lg">🎙️</span>
-              <h4 className="font-bold text-xs text-brand-blue dark:text-white">Live Reviews</h4>
-              <p className="text-[10px] text-gray-400">Weekly live class doubts &amp; assignments.</p>
+              <span className="text-lg">💬</span>
+              <a
+                href="https://wa.me/918143937367?text=Hi%20Creators%20College%2C%20I%20have%20a%20doubt%20about%20the%20course."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block font-bold text-xs text-brand-blue hover:text-brand-orange dark:text-white"
+              >
+                WhatsApp Doubts
+              </a>
+              <p className="text-[10px] text-gray-400">Direct doubt support from our team.</p>
             </div>
           </div>
         </div>

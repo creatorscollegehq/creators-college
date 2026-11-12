@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Upload course videos to the private Backblaze B2 bucket.
+ * Upload course videos to the private Cloudflare R2 bucket.
  *
  * Arrange files like this before running:
  *   videos/module-01/lesson-01.mp4
@@ -12,12 +12,12 @@
  *   node scripts/upload-course-videos.mjs videos --dry-run
  *
  * Keys become courses/content-creation/<relative path>. Override the prefix
- * with B2_VIDEO_PREFIX if needed. Nothing is made public; the app serves
+ * with R2_VIDEO_PREFIX if needed. Nothing is made public; the app serves
  * short-lived signed URLs only.
  *
  * Requires in .env.local:
- *   B2_KEY_ID, B2_APPLICATION_KEY, B2_BUCKET_NAME, B2_REGION
- *   (optional B2_ENDPOINT if the region endpoint differs)
+ *   R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET_NAME
+ *   (optional R2_ENDPOINT)
  */
 import { createReadStream, existsSync, readFileSync, statSync } from "node:fs";
 import { readdir } from "node:fs/promises";
@@ -46,18 +46,18 @@ if (!sourceDir || !existsSync(sourceDir) || !statSync(sourceDir).isDirectory()) 
   process.exit(1);
 }
 
-const keyId = process.env.B2_KEY_ID;
-const applicationKey = process.env.B2_APPLICATION_KEY;
-const bucket = process.env.B2_BUCKET_NAME;
-const region = process.env.B2_REGION;
+const keyId = process.env.R2_ACCESS_KEY_ID;
+const applicationKey = process.env.R2_SECRET_ACCESS_KEY;
+const bucket = process.env.R2_BUCKET_NAME;
+const accountId = process.env.R2_ACCOUNT_ID;
+const endpoint = process.env.R2_ENDPOINT || (accountId ? `https://${accountId}.r2.cloudflarestorage.com` : undefined);
 
-if (!dryRun && (!keyId || !applicationKey || !bucket || !region)) {
-  console.error("Missing B2_KEY_ID, B2_APPLICATION_KEY, B2_BUCKET_NAME or B2_REGION in .env.local");
+if (!dryRun && (!keyId || !applicationKey || !bucket || !endpoint)) {
+  console.error("Missing R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY, R2_BUCKET_NAME or R2_ACCOUNT_ID in .env.local");
   process.exit(1);
 }
 
-const endpoint = process.env.B2_ENDPOINT || `https://s3.${region}.backblazeb2.com`;
-const prefix = (process.env.B2_VIDEO_PREFIX || "courses/content-creation").replace(/^\/+|\/+$/g, "");
+const prefix = (process.env.R2_VIDEO_PREFIX || "courses/content-creation").replace(/^\/+|\/+$/g, "");
 const extensions = new Set([".mp4", ".m4v", ".mov", ".webm"]);
 const contentTypes = {
   ".mp4": "video/mp4",
@@ -69,7 +69,7 @@ const contentTypes = {
 const client = dryRun
   ? null
   : new S3Client({
-      region,
+      region: "auto",
       endpoint,
       credentials: { accessKeyId: keyId, secretAccessKey: applicationKey },
       requestChecksumCalculation: "WHEN_REQUIRED",

@@ -1,16 +1,15 @@
-import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { GetObjectCommand, HeadObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 interface VideoStorageConfig {
-  provider: "r2" | "b2";
   accessKeyId: string;
   secretAccessKey: string;
   bucket: string;
-  region: string;
   endpoint: string;
 }
 
-const clients = new Map<string, S3Client>();
+let client: S3Client | null = null;
+const existenceCache = new Map<string, { exists: boolean; expiresAt: number }>();
 
 function r2Config(): VideoStorageConfig | null {
   const accessKeyId = process.env.R2_ACCESS_KEY_ID;
@@ -23,63 +22,52 @@ function r2Config(): VideoStorageConfig | null {
     process.env.R2_ENDPOINT || (accountId ? `https://${accountId}.r2.cloudflarestorage.com` : undefined);
   if (!endpoint) return null;
 
-  return { provider: "r2", accessKeyId, secretAccessKey, bucket, region: "auto", endpoint };
-}
-
-function b2Config(): VideoStorageConfig | null {
-  const accessKeyId = process.env.B2_KEY_ID;
-  const secretAccessKey = process.env.B2_APPLICATION_KEY;
-  const bucket = process.env.B2_BUCKET_NAME;
-  const region = process.env.B2_REGION;
-  if (!accessKeyId || !secretAccessKey || !bucket || !region) return null;
-
-  return {
-    provider: "b2",
-    accessKeyId,
-    secretAccessKey,
-    bucket,
-    region,
-    endpoint: process.env.B2_ENDPOINT || `https://s3.${region}.backblazeb2.com`,
-  };
-}
-
-/** R2 first (cheap egress), B2 kept as a fallback so playback never breaks mid-migration. */
-function videoStorageConfigs(): VideoStorageConfig[] {
-  return [r2Config(), b2Config()].filter((config): config is VideoStorageConfig => Boolean(config));
+  return { accessKeyId, secretAccessKey, bucket, endpoint };
 }
 
 export function isVideoStorageConfigured() {
-  return videoStorageConfigs().length > 0;
+  return Boolean(r2Config());
 }
 
 function getClient(config: VideoStorageConfig) {
-  const cacheKey = `${config.provider}:${config.endpoint}:${config.bucket}`;
-  const cached = clients.get(cacheKey);
-  if (cached) return cached;
-
-  const client = new S3Client({
-    region: config.region,
+  if (client) return client;
+  client = new S3Client({
+    region: "auto",
     endpoint: config.endpoint,
     credentials: { accessKeyId: config.accessKeyId, secretAccessKey: config.secretAccessKey },
     requestChecksumCalculation: "WHEN_REQUIRED",
     responseChecksumValidation: "WHEN_REQUIRED",
   });
-  clients.set(cacheKey, client);
   return client;
 }
 
 export async function getSignedVideoUrl(key: string): Promise<string | null> {
-  const configs = videoStorageConfigs();
-  if (!configs.length) return null;
+  const config = r2Config();
+  if (!config) return null;
 
-  for (const config of configs) {
+  const cacheKey = `${config.bucket}:${key}`;
+  const cached = existenceCache.get(cacheKey);
+  if (cached && cached.expiresAt > Date.now()) {
+    if (!cached.exists) return null;
+  } else {
     try {
-      const command = new GetObjectCommand({ Bucket: config.bucket, Key: key });
-      return await getSignedUrl(getClient(config), command, { expiresIn: 60 * 60 * 6 });
+      await getClient(config).send(new HeadObjectCommand({ Bucket: config.bucket, Key: key }));
+      existenceCache.set(cacheKey, { exists: true, expiresAt: Date.now() + 60 * 60 * 1000 });
     } catch (error) {
-      console.error(`Unable to sign video URL from ${config.provider}:`, error);
+      const status = (error as { $metadata?: { httpStatusCode?: number } })?.$metadata?.httpStatusCode;
+      if (status !== 404) {
+        console.error("Unable to check video on R2:", error);
+      }
+      existenceCache.set(cacheKey, { exists: false, expiresAt: Date.now() + 5 * 60 * 1000 });
+      return null;
     }
   }
 
-  return null;
+  try {
+    const command = new GetObjectCommand({ Bucket: config.bucket, Key: key });
+    return await getSignedUrl(getClient(config), command, { expiresIn: 60 * 60 * 6 });
+  } catch (error) {
+    console.error("Unable to sign video URL from R2:", error);
+    return null;
+  }
 }

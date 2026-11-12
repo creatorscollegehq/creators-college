@@ -1,8 +1,10 @@
-import { NextResponse } from "next/server";
+﻿import { NextResponse } from "next/server";
 import { contextFromRequest, logServerEvent } from "@/lib/analytics";
-import { getCouponByCode, getCouponOrder, incrementCouponUse } from "@/lib/coupons";
+import { getAuthUser } from "@/lib/auth/session";
+import { getCouponOrder, incrementCouponUse } from "@/lib/coupons";
 import {
   getEnrollmentByOrderId,
+  getSupabaseAdmin,
   isSupabaseConfigured,
   upsertEnrollment,
   type Enrollment,
@@ -17,7 +19,26 @@ function isUsable(enrollment: Enrollment) {
   return true;
 }
 
+function enrollmentPayload(enrollment: Enrollment) {
+  return {
+    orderId: enrollment.order_id,
+    email: enrollment.email,
+    name: enrollment.name,
+    phone: enrollment.phone,
+    amount: Number(enrollment.amount) || 0,
+  };
+}
+
 export async function POST(request: Request) {
+  const user = await getAuthUser();
+  if (!user) {
+    return NextResponse.json(
+      { error: "Sign in with Google to unlock your course." },
+      { status: 401 }
+    );
+  }
+  const userEmail = user.email.trim().toLowerCase();
+
   let body: Record<string, unknown>;
   try {
     body = await request.json();
@@ -26,14 +47,10 @@ export async function POST(request: Request) {
   }
 
   const orderId = String(body?.orderId ?? "").trim();
-  const phone = normalizePhone(body?.phone);
   const context = contextFromRequest(request);
 
-  if (!orderId || phone.length !== 10) {
-    return NextResponse.json(
-      { error: "Enter the order ID and the same 10-digit phone number used at checkout." },
-      { status: 400 }
-    );
+  if (!orderId) {
+    return NextResponse.json({ error: "Order ID is missing." }, { status: 400 });
   }
 
   if (!isSupabaseConfigured()) {
@@ -43,133 +60,24 @@ export async function POST(request: Request) {
     );
   }
 
-  // Read any stored enrollment first: a coupon order already created one, and
-  // reloading the success page must not re-run the coupon use increment.
   const existing = await getEnrollmentByOrderId(orderId);
-  const couponOrder = existing ? null : await getCouponOrder(orderId);
-
-  if (couponOrder) {
-    let coupon: Awaited<ReturnType<typeof getCouponByCode>> = null;
-    try {
-      coupon = couponOrder.couponCode ? await getCouponByCode(couponOrder.couponCode) : null;
-    } catch (caught) {
-      console.error("Coupon lookup failed while verifying access:", caught);
-      return NextResponse.json(
-        { error: "Coupons are not set up yet. Please contact support on WhatsApp with your order ID." },
-        { status: 503 }
-      );
-    }
-    if (!coupon) {
+  if (existing) {
+    if ((existing.email || "").toLowerCase() !== userEmail) {
       await logServerEvent({
         event_name: "access_verify",
         path: "/api/access/verify",
         ...context,
-        metadata: { result: "coupon_not_found", orderId },
-      });
-      return NextResponse.json(
-        { error: "Coupon no longer linked to this order. Please message us on WhatsApp." },
-        { status: 404 }
-      );
-    }
-    const couponVerified = await verifyPaidOrder(orderId, phone, couponOrder.amount);
-    if (!couponVerified.ok) {
-      await logServerEvent({
-        event_name: "access_verify",
-        path: "/api/access/verify",
-        ...context,
-        metadata: { result: "coupon_unpaid", orderId, error: couponVerified.error.slice(0, 160) },
-      });
-      return NextResponse.json({ error: couponVerified.error }, { status: couponVerified.status });
-    }
-
-    // verifyPaidOrder already rejected the order when the amount paid did not
-    // match the coupon price recorded at checkout.
-    const order = couponVerified.order;
-    const paidAmount = Number(order.order_amount) || 0;
-    const email = String(order.customer_details?.customer_email ?? body?.email ?? "")
-      .trim()
-      .toLowerCase();
-
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      await logServerEvent({
-        event_name: "access_verify",
-        path: "/api/access/verify",
-        ...context,
-        metadata: { result: "no_email", orderId },
+        metadata: { result: "email_mismatch", orderId },
       });
       return NextResponse.json(
         {
           error:
-            "This order has no email on record. Message us on WhatsApp with your order ID so we can link it to your Google email.",
+            "This order is linked to a different Google account. Sign in with the email used at checkout or contact support on WhatsApp.",
         },
-        { status: 422 }
-      );
-    }
-
-    try {
-      const enrollment = await upsertEnrollment({
-        order_id: orderId,
-        name: order.customer_details?.customer_name || String(body?.name ?? "") || "Student",
-        phone,
-        email,
-        course_slug: COURSE_SLUG,
-        status: "active",
-        provider: "cashfree",
-        amount: Number(order.order_amount),
-        currency: order.order_currency,
-        expires_at: null,
-        metadata: { coupon_code: couponOrder.couponCode },
-      });
-
-      await incrementCouponUse(couponOrder.couponCode);
-
-      await logServerEvent({
-        event_name: "access_verify",
-        path: "/api/access/verify",
-        ...context,
-        email,
-        value: paidAmount || null,
-        metadata: {
-          result: "ok",
-          source: "coupon",
-          orderId,
-          coupon: couponOrder.couponCode,
-        },
-      });
-
-      return NextResponse.json({
-        ok: true,
-        enrollment: { orderId: enrollment.order_id, email: enrollment.email, name: enrollment.name },
-      });
-    } catch (error) {
-      console.error("Unable to save enrollment after coupon payment:", error);
-      await logServerEvent({
-        event_name: "access_verify",
-        path: "/api/access/verify",
-        ...context,
-        email,
-        metadata: { result: "save_failed", orderId },
-      });
-      return NextResponse.json(
-        { error: "Coupon is valid, but we could not save access. Contact support on WhatsApp." },
-        { status: 500 }
-      );
-    }
-  }
-
-  if (existing) {
-    if (normalizePhone(existing.phone) !== phone) {
-      await logServerEvent({
-        event_name: "access_verify",
-        path: "/api/access/verify",
-        ...context,
-        metadata: { result: "phone_mismatch", orderId },
-      });
-      return NextResponse.json(
-        { error: "This order ID does not match that phone number." },
         { status: 403 }
       );
     }
+
     if (!isUsable(existing)) {
       await logServerEvent({
         event_name: "access_verify",
@@ -182,22 +90,67 @@ export async function POST(request: Request) {
         { status: 403 }
       );
     }
+
+    if (!existing.user_id) {
+      await getSupabaseAdmin()
+        .from("enrollments")
+        .update({ user_id: user.id })
+        .eq("id", existing.id);
+    }
+
     await logServerEvent({
       event_name: "access_verify",
       path: "/api/access/verify",
       ...context,
-      user_id: existing.user_id ?? null,
-      email: existing.email?.toLowerCase() ?? null,
+      user_id: user.id,
+      email: userEmail,
       value: Number(existing.amount) || null,
       metadata: { result: "ok", source: "stored", orderId },
     });
-    return NextResponse.json({
-      ok: true,
-      enrollment: { orderId: existing.order_id, email: existing.email, name: existing.name },
-    });
+
+    return NextResponse.json({ ok: true, enrollment: enrollmentPayload(existing) });
   }
 
-  const verified = await verifyPaidOrder(orderId, phone, COURSE_PRICE);
+  const couponOrder = await getCouponOrder(orderId);
+  const expectedAmount = couponOrder ? couponOrder.amount : COURSE_PRICE;
+
+  if (couponOrder && expectedAmount <= 0) {
+    try {
+      const enrollment = await upsertEnrollment({
+        order_id: orderId,
+        name: user.name || "Student",
+        phone: "",
+        email: userEmail,
+        user_id: user.id,
+        course_slug: COURSE_SLUG,
+        status: "active",
+        provider: "coupon",
+        amount: 0,
+        currency: "INR",
+        expires_at: null,
+        metadata: { coupon_code: couponOrder.couponCode },
+      });
+
+      await logServerEvent({
+        event_name: "access_verify",
+        path: "/api/access/verify",
+        ...context,
+        user_id: user.id,
+        email: userEmail,
+        metadata: { result: "ok", source: "free_coupon", orderId },
+      });
+
+      return NextResponse.json({ ok: true, enrollment: enrollmentPayload(enrollment) });
+    } catch (error) {
+      console.error("Unable to save free coupon enrollment:", error);
+      return NextResponse.json(
+        { error: "We could not save your access. Contact support on WhatsApp." },
+        { status: 500 }
+      );
+    }
+  }
+
+  const verified = await verifyPaidOrder(orderId, "", expectedAmount);
   if (!verified.ok) {
     await logServerEvent({
       event_name: "access_verify",
@@ -209,60 +162,65 @@ export async function POST(request: Request) {
   }
 
   const { order } = verified;
-  const email = String(order.customer_details?.customer_email ?? body?.email ?? "")
+  const orderEmail = String(order.customer_details?.customer_email ?? "")
     .trim()
     .toLowerCase();
+  const phone = normalizePhone(order.customer_details?.customer_phone);
 
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+  if (!orderEmail || orderEmail !== userEmail) {
     await logServerEvent({
       event_name: "access_verify",
       path: "/api/access/verify",
       ...context,
-      metadata: { result: "no_email", orderId },
+      metadata: { result: "order_email_mismatch", orderId },
     });
     return NextResponse.json(
       {
         error:
-          "This order has no email on record. Message us on WhatsApp with your order ID so we can link it to your Google email.",
+          "This payment is linked to a different email. Sign in with the Google account used at checkout or contact support on WhatsApp.",
       },
-      { status: 422 }
+      { status: 403 }
     );
   }
 
   try {
     const enrollment = await upsertEnrollment({
       order_id: orderId,
-      name: order.customer_details?.customer_name || String(body?.name ?? "") || "Student",
+      name: order.customer_details?.customer_name || user.name || "Student",
       phone,
-      email,
+      email: userEmail,
+      user_id: user.id,
       course_slug: COURSE_SLUG,
       status: "active",
       provider: "cashfree",
       amount: Number(order.order_amount),
-      currency: order.order_currency,
+      currency: order.order_currency || "INR",
       expires_at: null,
+      metadata: couponOrder ? { coupon_code: couponOrder.couponCode } : undefined,
     });
+
+    if (couponOrder) {
+      await incrementCouponUse(couponOrder.couponCode);
+    }
 
     await logServerEvent({
       event_name: "access_verify",
       path: "/api/access/verify",
       ...context,
-      email,
+      user_id: user.id,
+      email: userEmail,
       value: Number(order.order_amount) || null,
-      metadata: { result: "ok", source: "cashfree", orderId },
+      metadata: { result: "ok", source: "cashfree", orderId, coupon: couponOrder?.couponCode },
     });
 
-    return NextResponse.json({
-      ok: true,
-      enrollment: { orderId: enrollment.order_id, email: enrollment.email, name: enrollment.name },
-    });
+    return NextResponse.json({ ok: true, enrollment: enrollmentPayload(enrollment) });
   } catch (error) {
     console.error("Unable to save enrollment after payment verification:", error);
     await logServerEvent({
       event_name: "access_verify",
       path: "/api/access/verify",
       ...context,
-      email,
+      email: userEmail,
       metadata: { result: "save_failed", orderId },
     });
     return NextResponse.json(

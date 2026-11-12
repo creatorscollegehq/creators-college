@@ -1,7 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import VideoModal, { type ActiveVideo } from "./VideoModal";
+import dynamic from "next/dynamic";
+import type { ActiveVideo } from "./VideoModal";
+
+const VideoModal = dynamic(() => import("./VideoModal"), { ssr: false });
 
 export default function HomeVideoModal() {
   const [video, setVideo] = useState<ActiveVideo | null>(null);

@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { Phone, ClipboardList } from "lucide-react";
-import WhatsAppGateModal from "./WhatsAppGateModal";
-import InstantFormModal from "./InstantFormModal";
 import WhatsAppIcon from "./WhatsAppIcon";
+
+const WhatsAppGateModal = dynamic(() => import("./WhatsAppGateModal"), { ssr: false });
+const InstantFormModal = dynamic(() => import("./InstantFormModal"), { ssr: false });
 
 export default function FloatingContact() {
   const phone = "+918143937367";

@@ -25,7 +25,7 @@ export interface ModuleSummary {
 const DEFAULT_VIDEO_PREFIX = "courses/content-creation";
 
 function videoPrefix() {
-  return (process.env.B2_VIDEO_PREFIX || DEFAULT_VIDEO_PREFIX).replace(/^\/+|\/+$/g, "");
+  return (process.env.R2_VIDEO_PREFIX || DEFAULT_VIDEO_PREFIX).replace(/^\/+|\/+$/g, "");
 }
 
 export function videoKeyFor(moduleNumber: string, lessonIndex: number) {

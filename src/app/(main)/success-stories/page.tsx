@@ -1,38 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { Star, MessageSquare, Play, Sparkles, TrendingUp, Users } from "lucide-react";
+import { Play } from "lucide-react";
 import VideoGallery from "@/components/VideoGallery";
 
 export default function SuccessStoriesPage() {
   const [activeCategory, setActiveCategory] = useState("All");
-
-  const testimonials = [
-    {
-      name: "Sandeep Kumar",
-      role: "Tech YouTuber (Telugu)",
-      niche: "YouTube Growth",
-      views: "1.2M+ Views",
-      stars: 5,
-      content: "Before joining Creators College, my scripts had no hooks, and my average view duration was less than 30 seconds. In Module 1, I learned the 3-second hook formula, and my next video generated 150K views within a week. Taught step-by-step in Telugu, this course is a game-changer!"
-    },
-    {
-      name: "Pranitha Reddy",
-      role: "Fashion & Lifestyle Creator",
-      niche: "Instagram Reels",
-      views: "500K+ Views",
-      stars: 5,
-      content: "I didn't know how to edit videos or set up lighting. I shot everything in dark rooms. The camera and lighting modules helped me set up my home studio for under ₹5,000. Now, my reels look incredibly professional, and I've already signed two brand deals."
-    },
-    {
-      name: "Vamsi Krishna",
-      role: "Freelance Video Editor",
-      niche: "Freelance Editing",
-      views: "30+ Client Projects",
-      stars: 5,
-      content: "I took the CapCut and editing modules to improve my freelance video editing skills. The pacing, J-cuts, and text animation frameworks taught here helped me double my editing speeds. I now charge more per project and have retained four long-term clients."
-    }
-  ];
 
   const projects = [
     {
@@ -75,56 +48,8 @@ export default function SuccessStoriesPage() {
             Creator Success Stories
           </h1>
           <p className="text-sm sm:text-base text-white/90 max-w-xl mx-auto leading-relaxed font-medium">
-            Read inspiring stories of our students who scaled their channels, launched personal brands, and built freelance careers.
+            Explore real videos made, shot, and edited by students who turned their skills into channels and freelance careers.
           </p>
-        </div>
-      </section>
-
-      {/* Testimonials Grid */}
-      <section className="py-5 md:py-7 bg-white dark:bg-[#090d16]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center max-w-2xl mx-auto mb-5 space-y-3">
-            <h3 className="text-xs font-bold uppercase tracking-widest text-brand-orange">
-              Student Reviews
-            </h3>
-            <h2 className="text-3xl font-semibold text-brand-blue dark:text-white tracking-tight">
-              Testimonials from Our Alumni
-            </h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Real creators sharing how practical, step-by-step Telugu lessons helped them scale.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {testimonials.map((test, i) => (
-              <div
-                key={i}
-                className="bg-brand-gray/30 dark:bg-white/5 p-5 rounded-2xl border border-gray-100 dark:border-white/5 relative space-y-4 hover:shadow-lg transition duration-200"
-              >
-                <div className="flex text-brand-orange">
-                  {[...Array(test.stars)].map((_, sIdx) => (
-                    <Star key={sIdx} size={16} fill="currentColor" />
-                  ))}
-                </div>
-
-                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 italic leading-relaxed">
-                  "{test.content}"
-                </p>
-
-                <div className="pt-4 border-t border-gray-200/50 dark:border-white/5 flex justify-between items-center">
-                  <div>
-                    <h4 className="font-bold text-sm sm:text-base text-brand-blue dark:text-white">{test.name}</h4>
-                    <p className="text-xs text-gray-400 dark:text-gray-500">{test.role}</p>
-                  </div>
-                  <span className="text-[10px] bg-brand-orange/15 text-brand-orange font-bold px-2 py-0.5 rounded-full">
-                    {test.views}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-
         </div>
       </section>
 

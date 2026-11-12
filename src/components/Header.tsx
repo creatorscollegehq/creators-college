@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, ArrowRight, Sun, Moon } from "lucide-react";
-import WhatsAppGateModal from "./WhatsAppGateModal";
 import WhatsAppIcon from "./WhatsAppIcon";
+
+const WhatsAppGateModal = dynamic(() => import("./WhatsAppGateModal"), { ssr: false });
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -203,7 +205,7 @@ export default function Header() {
                 href="/learn"
                 className="text-sm font-bold text-brand-charcoal/80 dark:text-white/80 hover:text-brand-orange transition"
               >
-                My Course
+                Profile
               </Link>
               <Link prefetch={false}
                 href="/checkout"
@@ -270,7 +272,7 @@ export default function Header() {
                   onClick={() => setIsOpen(false)}
                   className="block w-full rounded-full border border-gray-200 dark:border-white/10 py-3 text-sm font-bold text-brand-charcoal dark:text-white transition hover:border-brand-orange hover:text-brand-orange"
                 >
-                  My Course
+                  Profile
                 </Link>
                 <button
                   onClick={toggleTheme}

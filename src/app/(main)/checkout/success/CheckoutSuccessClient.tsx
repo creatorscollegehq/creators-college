@@ -9,66 +9,66 @@ import { track } from "@/lib/track";
 
 type Status = "checking" | "verified" | "error";
 
-export default function CheckoutSuccessClient() {
+export default function CheckoutSuccessClient({ studentEmail }: { studentEmail: string }) {
   const searchParams = useSearchParams();
   const orderId = searchParams.get("order_id") || "";
-  const name = searchParams.get("name") || "";
-  const phone = searchParams.get("phone") || "";
-  const email = (searchParams.get("email") || "").trim().toLowerCase();
   const course = searchParams.get("course") || "Complete Telugu Content Creation Course";
-  const couponCode = (searchParams.get("coupon_code") || "").trim();
   const amountParam = Number(searchParams.get("amount"));
   const amount = Number.isFinite(amountParam) && amountParam >= 0 ? amountParam : 5000;
 
   const [status, setStatus] = useState<Status>("checking");
   const [message, setMessage] = useState("Verifying your payment with Cashfree...");
-  const [verifiedEmail, setVerifiedEmail] = useState("");
+  const [verifiedEmail, setVerifiedEmail] = useState(studentEmail);
+  const [studentName, setStudentName] = useState("");
   const purchaseFired = useRef(false);
 
-  const whatsappMessage = `Hi Creators College, I need help with course access.\n\nOrder ID: ${orderId || "N/A"}\nName: ${name || "N/A"}\nPhone: ${phone || "N/A"}`;
+  const whatsappMessage = `Hi Creators College, I need help with course access.\n\nOrder ID: ${orderId || "N/A"}\nName: ${
+    studentName || "N/A"
+  }\nEmail: ${verifiedEmail || studentEmail}`;
   const whatsappUrl = `https://wa.me/918143937367?text=${encodeURIComponent(whatsappMessage)}`;
 
-  const trackPurchase = useCallback((purchaseEmail: string) => {
-    if (purchaseFired.current) return;
-    purchaseFired.current = true;
+  const trackPurchase = useCallback(
+    (purchaseEmail: string, name: string, phone: string) => {
+      if (purchaseFired.current) return;
+      purchaseFired.current = true;
 
-    const storageKey = `cc_purchase_${orderId}`;
-    if (sessionStorage.getItem(storageKey)) return;
-    sessionStorage.setItem(storageKey, "1");
+      const storageKey = `cc_purchase_${orderId}`;
+      if (sessionStorage.getItem(storageKey)) return;
+      sessionStorage.setItem(storageKey, "1");
 
-    const eventId = `purchase_${orderId}`;
-    const fbq = (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq;
-    fbq?.(
-      "track",
-      "Purchase",
-      { content_name: course, value: amount, currency: "INR" },
-      { eventID: eventId }
-    );
+      const eventId = `purchase_${orderId}`;
+      const fbq = (window as unknown as { fbq?: (...args: unknown[]) => void }).fbq;
+      fbq?.(
+        "track",
+        "Purchase",
+        { content_name: course, value: amount, currency: "INR" },
+        { eventID: eventId }
+      );
 
-    fetch("/api/meta-capi", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name,
-        phone,
-        email: purchaseEmail,
-        eventId,
-        url: window.location.href,
-        source: course,
-        eventName: "Purchase",
-        value: amount,
-        currency: "INR",
-      }),
-    }).catch((error) => console.error("Meta CAPI Purchase trigger error (silent):", error));
-  }, [amount, course, name, orderId, phone]);
+      fetch("/api/meta-capi", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name || "Student",
+          phone: phone || "",
+          email: purchaseEmail,
+          eventId,
+          url: window.location.href,
+          source: course,
+          eventName: "Purchase",
+          value: amount,
+          currency: "INR",
+        }),
+      }).catch((error) => console.error("Meta CAPI Purchase trigger error (silent):", error));
+    },
+    [amount, course, orderId]
+  );
 
   const verifyAccess = useCallback(async () => {
-    if (!orderId || !phone) {
+    if (!orderId) {
       setStatus("error");
-      track("payment_failed", { reason: "missing_details", orderId });
-      setMessage(
-        "This link is missing your order details. Open My Course and sign in with Google using your checkout email."
-      );
+      track("payment_failed", { reason: "missing_order_id" });
+      setMessage("This link is missing the order ID. Open your profile to check your access.");
       return;
     }
 
@@ -79,9 +79,14 @@ export default function CheckoutSuccessClient() {
       const response = await fetch("/api/access/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ orderId, phone, name, couponCode }),
+        body: JSON.stringify({ orderId }),
       });
       const data = await response.json().catch(() => ({}));
+
+      if (response.status === 401) {
+        window.location.assign(`/learn/login?next=${encodeURIComponent(`/checkout/success?order_id=${orderId}`)}`);
+        return;
+      }
 
       if (!response.ok || !data?.ok) {
         setStatus("error");
@@ -90,23 +95,22 @@ export default function CheckoutSuccessClient() {
         return;
       }
 
-      const purchaseEmail = String(data?.enrollment?.email || email || "").trim().toLowerCase();
+      const enrollment = data?.enrollment || {};
+      const purchaseEmail = String(enrollment.email || studentEmail).trim().toLowerCase();
+      const name = String(enrollment.name || "");
       setVerifiedEmail(purchaseEmail);
-      trackPurchase(purchaseEmail);
+      setStudentName(name);
+      trackPurchase(purchaseEmail, name, String(enrollment.phone || ""));
       track("payment_verified", { orderId }, { value: amount });
       setStatus("verified");
-      setMessage(
-        purchaseEmail
-          ? `Payment verified. Sign in with Google using ${purchaseEmail} to open your course.`
-          : "Payment verified. Sign in with Google to open your course."
-      );
+      setMessage(`Payment verified. Your course is now active on ${purchaseEmail}.`);
     } catch (error) {
       console.error("Course access verification failed:", error);
       track("payment_failed", { reason: "network", orderId });
       setStatus("error");
       setMessage("Network error while verifying your payment. Check your connection and try again.");
     }
-  }, [amount, couponCode, email, name, orderId, phone, trackPurchase]);
+  }, [amount, orderId, studentEmail, trackPurchase]);
 
   useEffect(() => {
     const timer = setTimeout(() => void verifyAccess(), 0);
@@ -125,10 +129,10 @@ export default function CheckoutSuccessClient() {
             </span>
             <h1 className="mt-5 text-2xl md:text-3xl font-bold tracking-tight">
               {status === "verified"
-                ? "Payment verified"
+                ? "You're in!"
                 : status === "error"
                   ? "One quick check needed"
-                  : "Payment received"}
+                  : "Confirming your payment"}
             </h1>
             <p className="mt-2 text-sm text-white/70 max-w-md mx-auto leading-relaxed">{message}</p>
           </div>
@@ -153,26 +157,25 @@ export default function CheckoutSuccessClient() {
                   </span>
                 </div>
               )}
-              {name && (
-                <div className="flex justify-between gap-4">
-                  <span className="text-gray-500 dark:text-gray-400">Name</span>
-                  <span className="font-semibold text-right text-brand-charcoal dark:text-white">{name}</span>
-                </div>
-              )}
+              <div className="flex justify-between gap-4">
+                <span className="text-gray-500 dark:text-gray-400">Access email</span>
+                <span className="font-semibold text-right text-brand-charcoal dark:text-white break-all">
+                  {verifiedEmail}
+                </span>
+              </div>
             </div>
 
             {status === "verified" && (
               <>
                 <Link
-                  href="/learn/login"
+                  href="/learn"
                   className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-brand-orange hover:bg-brand-orange-dark px-6 py-3.5 text-sm font-semibold text-white transition shadow-lg shadow-brand-orange/20"
                 >
-                  Continue with Google
+                  Go to My Profile
                   <ArrowRight size={16} />
                 </Link>
                 <p className="text-center text-[11px] text-gray-500 dark:text-gray-400 leading-relaxed">
-                  Sign in with the same Gmail you used at checkout
-                  {verifiedEmail ? ` (${verifiedEmail})` : ""} to open your course.
+                  Your course is saved to {verifiedEmail}. Open your profile anytime to continue learning.
                 </p>
               </>
             )}
@@ -188,10 +191,10 @@ export default function CheckoutSuccessClient() {
                 </button>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <Link
-                    href="/learn/login"
+                    href="/learn"
                     className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 dark:border-white/15 px-5 py-3 text-sm font-semibold text-brand-blue dark:text-white transition hover:border-brand-blue/30"
                   >
-                    Sign in with Google
+                    Open my profile
                   </Link>
                   <a
                     href={whatsappUrl}
@@ -214,7 +217,7 @@ export default function CheckoutSuccessClient() {
               <h2 className="text-sm font-semibold text-brand-blue dark:text-white">How access works</h2>
               {[
                 "We verify the payment directly with Cashfree — no manual approval needed.",
-                "Sign in with Google using your checkout email to open your library instantly.",
+                "Your course is saved to your Google email and appears in your profile instantly.",
                 "Every lesson is private and only visible to enrolled students.",
               ].map((step, index) => (
                 <div key={step} className="flex items-start gap-3">

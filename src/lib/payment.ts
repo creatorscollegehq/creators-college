@@ -60,9 +60,10 @@ export async function verifyPaidOrder(
   }
 
   const paidPhone = normalizePhone(order.customer_details?.customer_phone);
-  if (paidPhone && paidPhone !== phone) {
+  const suppliedPhone = normalizePhone(phone);
+  if (paidPhone && suppliedPhone && paidPhone !== suppliedPhone) {
     return { ok: false, status: 403, error: "This order ID does not match that phone number." };
   }
 
-  return { ok: true, order, phone };
+  return { ok: true, order, phone: paidPhone || suppliedPhone };
 }

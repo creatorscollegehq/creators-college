@@ -34,7 +34,7 @@ export default function Disclaimer() {
           <p>Individual success depends entirely on personal effort, dedication, creativity, and execution speed.</p>
 
           <h3 className="text-lg font-bold text-brand-blue dark:text-white pt-2">Educational Purpose</h3>
-          <p>All training lectures, PDFs, resource sheets, and community review feedbacks are compiled and intended for educational use only.</p>
+          <p>All training lectures, PDFs, resource sheets, and community resources are compiled and intended for educational use only.</p>
 
           <h3 className="text-lg font-bold text-brand-blue dark:text-white pt-2">Third-Party Platforms</h3>
           <p>

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { contextFromRequest, logServerEvent } from "@/lib/analytics";
+import { getAuthUser } from "@/lib/auth/session";
 import {
   CouponError,
   couponDiscountedPrice,
@@ -18,6 +19,14 @@ function text(value: unknown) {
 }
 
 export default async function CreateCashfreeOrder(request: Request) {
+  const user = await getAuthUser();
+  if (!user) {
+    return NextResponse.json(
+      { configured: true, error: "Sign in with Google before starting checkout." },
+      { status: 401 }
+    );
+  }
+
   const appId = process.env.CASHFREE_APP_ID;
   const secretKey = process.env.CASHFREE_SECRET_KEY;
   const environment = process.env.NEXT_PUBLIC_CASHFREE_ENV === "production" ? "production" : "sandbox";
@@ -33,13 +42,13 @@ export default async function CreateCashfreeOrder(request: Request) {
     const context = contextFromRequest(request);
     const body = await request.json();
 
-    const name = text(body?.name);
+    const name = text(body?.name) || user.name;
     const phone = text(body?.phone).replace(/\D/g, "").slice(-10);
-    const email = text(body?.email).toLowerCase();
+    const email = user.email;
     const couponInput = text(body?.couponCode);
     const courseName = text(body?.courseName) || "Complete Telugu Content Creation Course";
 
-    if (!name || phone.length !== 10 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    if (!name || phone.length !== 10) {
       await logServerEvent({
         event_name: "checkout_error",
         path: "/api/cashfree/create-order",
@@ -50,8 +59,7 @@ export default async function CreateCashfreeOrder(request: Request) {
       return NextResponse.json(
         {
           configured: true,
-          error:
-            "A valid name, 10-digit phone number and email are required. The email must match the Gmail you use to sign in.",
+          error: "Your name and a valid 10-digit phone number are required.",
         },
         { status: 400 }
       );
@@ -106,6 +114,7 @@ export default async function CreateCashfreeOrder(request: Request) {
           name,
           phone,
           email,
+          user_id: user.id,
           course_slug: "content-creation",
           status: "active",
           provider: "coupon",
@@ -147,9 +156,7 @@ export default async function CreateCashfreeOrder(request: Request) {
           freeCoupon: { code: couponCode, orderId },
           successUrl: `/checkout/success?order_id=${encodeURIComponent(
             orderId
-          )}&payment_mode=coupon&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(
-            phone
-          )}&email=${encodeURIComponent(email)}&course=${encodeURIComponent(
+          )}&payment_mode=coupon&course=${encodeURIComponent(
             courseName
           )}&coupon_code=${encodeURIComponent(couponCode)}&amount=0`,
         },
@@ -157,11 +164,11 @@ export default async function CreateCashfreeOrder(request: Request) {
       );
     }
 
-    const orderId = body?.orderId ? String(body.orderId) : `cc_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+    const orderId = `cc_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
     const requestOrigin = new URL(request.url).origin;
     const configuredOrigin = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
     const origin = configuredOrigin || (requestOrigin.startsWith("https://") ? requestOrigin : "https://www.creatorscollege.in");
-    const successUrl = `${origin}/checkout/success?order_id=${encodeURIComponent(orderId)}&name=${encodeURIComponent(name)}&phone=${encodeURIComponent(phone)}&email=${encodeURIComponent(email)}&course=${encodeURIComponent(courseName)}&amount=${orderAmount}`;
+    const successUrl = `${origin}/checkout/success?order_id=${encodeURIComponent(orderId)}&course=${encodeURIComponent(courseName)}&amount=${orderAmount}`;
 
     const response = await fetch(
       `${environment === "production" ? "https://api.cashfree.com/pg" : "https://sandbox.cashfree.com/pg"}/orders`,

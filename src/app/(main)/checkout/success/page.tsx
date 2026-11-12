@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { redirect } from "next/navigation";
+import { getAuthUser } from "@/lib/auth/session";
 import CheckoutSuccessClient from "./CheckoutSuccessClient";
 
 export const metadata: Metadata = {
@@ -8,7 +10,23 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function CheckoutSuccessPage() {
+export default async function CheckoutSuccessPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const params = await searchParams;
+  const orderId = typeof params.order_id === "string" ? params.order_id : "";
+
+  const user = await getAuthUser();
+  if (!user) {
+    const nextParams = new URLSearchParams();
+    if (orderId) nextParams.set("order_id", orderId);
+    const query = nextParams.toString();
+    const next = `/checkout/success${query ? `?${query}` : ""}`;
+    redirect(`/learn/login?next=${encodeURIComponent(next)}`);
+  }
+
   return (
     <Suspense
       fallback={
@@ -17,7 +35,7 @@ export default function CheckoutSuccessPage() {
         </div>
       }
     >
-      <CheckoutSuccessClient />
+      <CheckoutSuccessClient studentEmail={user.email} />
     </Suspense>
   );
 }

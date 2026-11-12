@@ -26,7 +26,6 @@ import {
   Zap,
 } from "lucide-react";
 import { FacebookIcon, InstagramIcon, YoutubeIcon } from "@/components/SocialIcons";
-import { testimonials } from "@/data/testimonials";
 import { CONTENT_CREATION_COURSE } from "@/data/contentCreationCourse";
 import CroExitPopup from "@/components/CroExitPopup";
 import HomeAnalytics from "@/components/HomeAnalytics";
@@ -1020,57 +1019,6 @@ export default function HomePage() {
               <ArrowRight size={16} />
             </Link>
           </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section className="bg-white py-5 dark:bg-[#090d16] md:py-7">
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-end">
-            <div>
-              <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-brand-orange">
-                Student Feedback
-              </span>
-              <h2 className="mt-2 text-2xl font-bold tracking-tight text-[#0B1B4B] dark:text-white sm:text-3xl">
-                What learners are saying
-              </h2>
-            </div>
-            <p className="max-w-md text-xs leading-relaxed text-gray-500 dark:text-gray-400 sm:text-sm">
-              Feedback from learners across Andhra Pradesh and Telangana.
-            </p>
-          </div>
-
-          <div className="mt-3 flex snap-x snap-mandatory gap-2.5 overflow-x-auto pb-2 md:grid md:grid-cols-3 md:gap-4 md:overflow-visible">
-            {testimonials.slice(0, 3).map((testimonial) => (
-              <div
-                key={testimonial.name}
-                className="min-w-[260px] snap-start rounded-xl border border-gray-100 bg-[#F8FAFC] p-3.5 dark:border-white/10 dark:bg-white/[0.04] md:min-w-0"
-              >
-                <div className="flex items-center gap-2.5">
-                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-orange/10 text-sm font-bold text-brand-orange">
-                    {testimonial.name
-                      .split(" ")
-                      .map((word) => word[0])
-                      .join("")
-                      .slice(0, 2)}
-                  </span>
-                  <div className="min-w-0">
-                    <p className="text-sm font-bold text-[#0B1B4B] dark:text-white">{testimonial.name}</p>
-                    <p className="text-[10px] text-gray-500 dark:text-gray-400">{testimonial.city}</p>
-                  </div>
-                </div>
-                <p className="mt-3 line-clamp-4 text-xs leading-relaxed text-gray-600 dark:text-gray-300 sm:text-sm">
-                  &ldquo;{testimonial.quote}&rdquo;
-                </p>
-                <span className="mt-3 inline-block rounded-full bg-emerald-50 px-2.5 py-1 text-[10px] font-semibold text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">
-                  {testimonial.result}
-                </span>
-              </div>
-            ))}
-          </div>
-          <p className="mt-2.5 text-[10px] text-gray-400 dark:text-gray-500">
-            Results vary by effort and consistency.
-          </p>
         </div>
       </section>
 

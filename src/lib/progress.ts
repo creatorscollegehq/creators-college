@@ -21,9 +21,31 @@ export function isLessonComplete(orderId: string, lessonId: string) {
 }
 
 export function markLessonComplete(orderId: string, lessonId: string) {
+  setLessonComplete(orderId, lessonId, true);
+}
+
+export function setLessonComplete(orderId: string, lessonId: string, complete: boolean) {
   if (typeof window === "undefined") return;
   const progress = readProgress(orderId);
-  progress[lessonId] = true;
+  if (complete) {
+    progress[lessonId] = true;
+  } else {
+    delete progress[lessonId];
+  }
+  window.localStorage.setItem(progressKey(orderId), JSON.stringify(progress));
+  window.dispatchEvent(new Event(PROGRESS_EVENT));
+}
+
+export function setLessonsComplete(orderId: string, lessonIds: string[], complete: boolean) {
+  if (typeof window === "undefined") return;
+  const progress = readProgress(orderId);
+  for (const lessonId of lessonIds) {
+    if (complete) {
+      progress[lessonId] = true;
+    } else {
+      delete progress[lessonId];
+    }
+  }
   window.localStorage.setItem(progressKey(orderId), JSON.stringify(progress));
   window.dispatchEvent(new Event(PROGRESS_EVENT));
 }

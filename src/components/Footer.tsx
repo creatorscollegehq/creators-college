@@ -61,7 +61,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link prefetch={false} href="/learn" className="text-gray-400 hover:text-brand-orange text-sm transition duration-150">
-                  My Course
+                  My Profile
                 </Link>
               </li>
               <li>

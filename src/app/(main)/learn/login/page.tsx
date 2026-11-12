@@ -4,7 +4,7 @@ import { getAuthUser } from "@/lib/auth/session";
 import LearnLoginClient from "./LearnLoginClient";
 
 export const metadata: Metadata = {
-  title: "My Course Login | Creators College",
+  title: "My Profile Login | Creators College",
   description: "Sign in to your Creators College course library with Google.",
   robots: { index: false, follow: false },
 };

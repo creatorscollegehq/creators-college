@@ -72,7 +72,7 @@ const faqs = [
   },
   {
     q: "How will I get course access after payment?",
-    a: "Instantly. After a successful payment, your course library unlocks automatically — no waiting for manual approval. Sign in anytime at My Course with the same Google email you used at checkout.",
+    a: "Instantly. After a successful payment, your course library unlocks automatically — no waiting for manual approval. Sign in anytime at My Profile with the same Google email you used at checkout.",
   },
   {
     q: "Is the payment secure?",
@@ -353,7 +353,7 @@ export default function ContentCreationCourseClient({ embedded = false }: { embe
           <p className="mt-2 text-[11px] text-white/60">
             Already enrolled?{" "}
             <Link href="/learn" className="font-semibold text-white underline hover:text-brand-orange">
-              Open My Course
+              Open My Profile
             </Link>
           </p>
         </div>

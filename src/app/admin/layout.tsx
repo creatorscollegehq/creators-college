@@ -45,7 +45,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
               href="/learn"
               className="inline-flex items-center gap-1.5 rounded-xl bg-brand-orange px-4 py-2.5 text-xs font-bold text-white transition hover:bg-brand-orange-dark"
             >
-              <Lock size={14} /> Go to My Course
+              <Lock size={14} /> Go to My Profile
             </Link>
             <AdminLogout label="Use another account" />
           </div>
