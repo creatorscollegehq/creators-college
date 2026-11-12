@@ -647,6 +647,7 @@ export default function HomePage() {
         <div className="h-1.5 w-full bg-brand-orange" />
       </section>
 
+      <div className="[content-visibility:auto] [contain-intrinsic-size:auto_1200px]">
       {/* Course Introduction */}
       <section className="bg-[#EDF4F8] dark:bg-white/[0.03] py-5 md:py-7">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1171,6 +1172,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      </div>
 
       <HomeFaq categories={faqCategories} />
 

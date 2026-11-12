@@ -160,6 +160,6 @@ async function worker() {
   }
 }
 
-const workers = Math.min(8, Math.max(1, Number(process.env.R2_CONCURRENCY) || 4));
+const workers = Math.min(32, Math.max(1, Number(process.env.R2_CONCURRENCY) || 32));
 await Promise.all(Array.from({ length: workers }, () => worker()));
 console.log(`\nUpload finished: ${done}/${pending.length}.`);
