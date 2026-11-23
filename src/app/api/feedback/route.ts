@@ -3,9 +3,7 @@ import { contextFromRequest, logServerEvent } from "@/lib/analytics";
 import { getAuthUser } from "@/lib/auth/session";
 import { findLesson } from "@/lib/courseContent";
 import { getActiveEnrollmentForUser, isSupabaseConfigured } from "@/lib/supabase";
-import { SHEETS_WEBHOOK_URL } from "@/lib/sheets";
-
-const DEFAULT_SHEETS_WEBHOOK = SHEETS_WEBHOOK_URL;
+import { postToSheets } from "@/lib/sheets";
 
 function clean(value: unknown, max: number) {
   return String(value ?? "").trim().slice(0, max);
@@ -47,7 +45,6 @@ export async function POST(request: Request) {
   }
 
   const context = contextFromRequest(request);
-  const webhookUrl = DEFAULT_SHEETS_WEBHOOK;
   const payload = {
     type: "feedback",
     name: user.name || "Student",
@@ -58,19 +55,9 @@ export async function POST(request: Request) {
     source: `Lesson feedback (${found.lesson.id})`,
   };
 
-  try {
-    const response = await fetch(webhookUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-      cache: "no-store",
-    });
-
-    if (!response.ok) {
-      throw new Error(`Sheets webhook responded ${response.status}`);
-    }
-  } catch (error) {
-    console.error("Unable to store lesson feedback:", error);
+  const saved = await postToSheets(payload);
+  if (!saved.ok) {
+    console.error("Unable to store lesson feedback:", saved.status, saved.error);
     await logServerEvent({
       event_name: "lesson_feedback_failed",
       path: "/api/feedback",

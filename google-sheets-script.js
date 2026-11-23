@@ -15,8 +15,54 @@
  * 11. Add the URL to your Next.js project as NEXT_PUBLIC_GOOGLE_SHEETS_WEBHOOK_URL.
  */
 
-function doPost(e) {
+var SHEET_ID_PROPERTY = "SHEET_ID";
+
+function spreadsheet_() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
+  if (ss) return ss;
+  var id = PropertiesService.getScriptProperties().getProperty(SHEET_ID_PROPERTY);
+  return id ? SpreadsheetApp.openById(id) : null;
+}
+
+function json_(payload) {
+  return ContentService.createTextOutput(JSON.stringify(payload))
+    .setHeaders({
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type"
+    })
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+// Health check: open the web app URL in a browser to confirm the deployment.
+function doGet() {
+  return json_({
+    ok: true,
+    message: "Creators College sheet webhook is live",
+    time: new Date().toISOString()
+  });
+}
+
+function doPost(e) {
+  try {
+    return handlePost_(e);
+  } catch (err) {
+    return json_({ result: "error", error: String(err && err.message ? err.message : err) });
+  }
+}
+
+function handlePost_(e) {
+  var ss = spreadsheet_();
+  if (!ss) {
+    return json_({
+      result: "error",
+      error: "This Apps Script is not attached to a spreadsheet. Open the Google Sheet > Extensions > Apps Script, paste this file and deploy again."
+    });
+  }
+
+  if (!e || !e.postData || !e.postData.contents) {
+    return json_({ result: "error", error: "Empty request body" });
+  }
   
   // Parse incoming JSON payload
   var data;
