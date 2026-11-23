@@ -16,6 +16,10 @@ import {
   PlayCircle,
   ShieldCheck,
   StickyNote,
+  MessageSquare,
+  Star,
+  Send,
+  Loader2,
 } from "lucide-react";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
 import type { ModuleSummary } from "@/lib/courseContent";
@@ -51,7 +55,7 @@ interface LessonPlayerProps {
   modules: ModuleSummary[];
 }
 
-type TabKey = "details" | "resources" | "notes";
+type TabKey = "details" | "resources" | "notes" | "feedback";
 
 const SUPPORT_URL =
   "https://wa.me/918143937367?text=Hi%20Creators%20College%2C%20I%20need%20help%20with%20a%20lesson.";
@@ -109,6 +113,10 @@ export default function LessonPlayer({
   const [failedUrl, setFailedUrl] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<TabKey>("details");
   const [openModule, setOpenModule] = useState(lesson.moduleNumber);
+  const [feedbackRating, setFeedbackRating] = useState(0);
+  const [feedbackText, setFeedbackText] = useState("");
+  const [feedbackStatus, setFeedbackStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [feedbackError, setFeedbackError] = useState("");
   const noteKey = notesKey(orderId, lesson.id);
   const notes = useSyncExternalStore(
     subscribeNotes,
@@ -204,6 +212,40 @@ export default function LessonPlayer({
     );
   };
 
+  const submitFeedback = async () => {
+    const message = feedbackText.trim();
+    if (message.length < 5) {
+      setFeedbackStatus("error");
+      setFeedbackError("Please write at least a short sentence.");
+      return;
+    }
+
+    setFeedbackStatus("sending");
+    setFeedbackError("");
+    try {
+      const response = await fetch("/api/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          lessonId: lesson.id,
+          moduleNumber: lesson.moduleNumber,
+          lessonIndex: lesson.lessonIndex,
+          rating: feedbackRating,
+          message,
+        }),
+      });
+      const data = (await response.json().catch(() => ({}))) as { error?: string };
+      if (!response.ok) throw new Error(data?.error || "Could not send your feedback.");
+      setFeedbackStatus("sent");
+      setFeedbackText("");
+      setFeedbackRating(0);
+      track("lesson_feedback", { lessonId: lesson.id, rating: feedbackRating });
+    } catch (caught) {
+      setFeedbackStatus("error");
+      setFeedbackError(caught instanceof Error ? caught.message : "Could not send your feedback.");
+    }
+  };
+
   const handlePlay = () => {
     track("lesson_play", {
       lessonId: lesson.id,
@@ -261,6 +303,7 @@ export default function LessonPlayer({
     { key: "details", label: "Lesson Details", icon: FileText },
     { key: "resources", label: "Resources", icon: BookOpen },
     { key: "notes", label: "My Notes", icon: StickyNote },
+    { key: "feedback", label: "Feedback", icon: MessageSquare },
   ];
 
   return (
@@ -491,6 +534,87 @@ export default function LessonPlayer({
                       <WhatsAppIcon size={16} />
                       Chat with us on WhatsApp
                     </a>
+                  </div>
+                )}
+
+                {activeTab === "feedback" && (
+                  <div className="space-y-3">
+                    <h2 className="text-sm font-bold text-[#0B1B4B] dark:text-white">Share your feedback</h2>
+                    <p className="text-xs leading-relaxed text-gray-600 dark:text-gray-300">
+                      Tell us what was useful and what we should improve in this lesson. Every response lands in our
+                      feedback Google Sheet and is read by the team.
+                    </p>
+
+                    {feedbackStatus === "sent" ? (
+                      <div className="flex items-start gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-3.5 py-3 text-xs font-semibold text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-200">
+                        <CheckCircle2 size={16} className="mt-0.5 shrink-0" />
+                        <span>Thank you! Your feedback was sent to our team.</span>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="flex flex-wrap items-center gap-1.5">
+                          {[1, 2, 3, 4, 5].map((value) => (
+                            <button
+                              key={value}
+                              type="button"
+                              onClick={() => setFeedbackRating(value === feedbackRating ? 0 : value)}
+                              aria-label={`${value} star${value > 1 ? "s" : ""}`}
+                              className="rounded-md p-0.5 transition hover:scale-110"
+                            >
+                              <Star
+                                size={22}
+                                className={
+                                  value <= feedbackRating
+                                    ? "fill-brand-orange text-brand-orange"
+                                    : "text-gray-300 dark:text-white/25"
+                                }
+                              />
+                            </button>
+                          ))}
+                          <span className="ml-1 text-[11px] font-semibold text-gray-400">optional rating</span>
+                        </div>
+                        <textarea
+                          value={feedbackText}
+                          onChange={(event) => setFeedbackText(event.target.value)}
+                          rows={5}
+                          maxLength={2000}
+                          placeholder="What did you like? What should be clearer?"
+                          className="w-full resize-y rounded-xl border border-gray-200 bg-white px-3.5 py-3 text-sm text-brand-charcoal outline-none transition focus:border-brand-orange dark:border-white/10 dark:bg-white/5 dark:text-white"
+                        />
+                        {feedbackStatus === "error" && feedbackError ? (
+                          <p className="text-[11px] font-semibold text-red-600 dark:text-red-400">{feedbackError}</p>
+                        ) : null}
+                        <div className="flex flex-wrap items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => void submitFeedback()}
+                            disabled={feedbackStatus === "sending"}
+                            className="inline-flex items-center gap-2 rounded-xl bg-brand-orange px-4 py-2.5 text-xs font-bold text-white transition hover:bg-brand-orange-dark disabled:opacity-60"
+                          >
+                            {feedbackStatus === "sending" ? (
+                              <Loader2 size={15} className="animate-spin" />
+                            ) : (
+                              <Send size={15} />
+                            )}
+                            {feedbackStatus === "sending" ? "Sending..." : "Send feedback"}
+                          </button>
+                          <a
+                            href={SUPPORT_URL}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 rounded-xl bg-[#25D366] px-4 py-2.5 text-xs font-bold text-white transition hover:bg-[#1fb959]"
+                          >
+                            <WhatsAppIcon size={15} />
+                            WhatsApp us instead
+                          </a>
+                        </div>
+                      </>
+                    )}
+
+                    <p className="text-[10px] leading-relaxed text-gray-500 dark:text-gray-400">
+                      Course: Content Creation · Module {lesson.moduleNumber.padStart(2, "0")} · Lesson{" "}
+                      {lesson.lessonIndex} — {lesson.title}
+                    </p>
                   </div>
                 )}
 

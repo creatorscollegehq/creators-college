@@ -49,6 +49,9 @@ function doPost(e) {
   } else if (type === "enrollment") {
     sheetName = "🎓 Course Enrollments";
     headerColor = "#ea580c"; // Brand Orange
+  } else if (type === "feedback") {
+    sheetName = "📝 Lesson Feedback";
+    headerColor = "#7c3aed"; // Purple
   }
 
   // Fetch or dynamically create the Sheet tab

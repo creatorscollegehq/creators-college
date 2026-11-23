@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -14,6 +14,7 @@ import {
   PlayCircle,
   ShieldCheck,
   Sparkles,
+  X,
 } from "lucide-react";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
 import type { LessonSummary, ModuleSummary } from "@/lib/courseContent";
@@ -58,6 +59,29 @@ const MODULE_ICONS: Record<string, string> = {
   "11": "🤖",
 };
 
+const TOUR_EVENT = "cc-learn-tour-change";
+
+function tourKey(orderId: string) {
+  return `cc_learn_tour_${orderId}`;
+}
+
+function subscribeTour(callback: () => void) {
+  window.addEventListener(TOUR_EVENT, callback);
+  window.addEventListener("storage", callback);
+  return () => {
+    window.removeEventListener(TOUR_EVENT, callback);
+    window.removeEventListener("storage", callback);
+  };
+}
+
+function readTourDismissed(orderId: string) {
+  try {
+    return window.localStorage.getItem(tourKey(orderId)) === "1";
+  } catch {
+    return true;
+  }
+}
+
 function initialsFor(name: string, email: string) {
   const parts = name.trim().split(/\s+/).filter(Boolean);
   if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
@@ -79,6 +103,20 @@ export default function LearnDashboard({
   const orderId = enrollment?.orderId ?? "";
   const [completed, setCompleted] = useState<Record<string, boolean>>({});
   const [selectedNumber, setSelectedNumber] = useState(() => modules[0]?.number ?? "00");
+  const tourDismissed = useSyncExternalStore(
+    subscribeTour,
+    useCallback(() => readTourDismissed(orderId), [orderId]),
+    () => true
+  );
+
+  const dismissGuide = () => {
+    try {
+      window.localStorage.setItem(tourKey(orderId), "1");
+    } catch {
+      // storage can be unavailable in private mode
+    }
+    window.dispatchEvent(new Event(TOUR_EVENT));
+  };
 
   useEffect(() => {
     if (!orderId) return;
@@ -198,6 +236,47 @@ export default function LearnDashboard({
           </div>
         </section>
 
+        {!tourDismissed && enrollment ? (
+          <section className="relative overflow-hidden rounded-2xl border-2 border-brand-orange bg-white p-4 shadow-lg shadow-brand-orange/10 dark:border-brand-orange dark:bg-[#0d1424] md:p-5">
+            <button
+              type="button"
+              onClick={dismissGuide}
+              aria-label="Dismiss the getting started guide"
+              className="absolute right-3 top-3 rounded-full p-1 text-gray-400 transition hover:bg-gray-100 hover:text-brand-charcoal dark:hover:bg-white/10 dark:hover:text-white"
+            >
+              <X size={16} />
+            </button>
+            <div className="flex items-start gap-3">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-orange text-white shadow-md shadow-brand-orange/30">
+                <PlayCircle size={22} />
+              </span>
+              <div className="min-w-0">
+                <p className="text-[10px] font-black uppercase tracking-[0.16em] text-brand-orange">Start here</p>
+                <h2 className="mt-0.5 text-base font-bold text-[#0B1B4B] dark:text-white sm:text-lg">
+                  Welcome{studentName ? `, ${studentName.split(" ")[0]}` : ""}! Your course starts in one click
+                </h2>
+                <p className="mt-1 text-xs leading-relaxed text-gray-600 dark:text-gray-300">
+                  Tap the highlighted <span className="font-bold text-brand-orange">Start learning</span> button
+                  below — it opens Module 00, Lesson 1. Then just follow the lessons in order.
+                </p>
+                <div className="mt-3 flex flex-wrap items-center gap-1.5">
+                  {["Tap Start learning", "Watch the lesson", "Mark it complete"].map((step, index) => (
+                    <span
+                      key={step}
+                      className="inline-flex items-center gap-1.5 rounded-full bg-brand-orange/10 px-2.5 py-1 text-[11px] font-semibold text-brand-orange"
+                    >
+                      <span className="flex h-4 w-4 items-center justify-center rounded-full bg-brand-orange text-[9px] font-black text-white">
+                        {index + 1}
+                      </span>
+                      {step}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+        ) : null}
+
         {enrollment ? (
           <div className="grid gap-4 lg:grid-cols-[300px_1fr] lg:items-start">
             <aside className="space-y-4 lg:sticky lg:top-24">
@@ -229,7 +308,8 @@ export default function LearnDashboard({
                 {nextLesson && (
                   <Link
                     href={nextLesson.href}
-                    className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-orange px-4 py-2.5 text-xs font-bold text-white shadow-md shadow-brand-orange/20 transition hover:bg-brand-orange-dark"
+                    onClick={dismissGuide}
+                    className={`mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-orange px-4 py-2.5 text-xs font-bold text-white shadow-md shadow-brand-orange/20 transition hover:bg-brand-orange-dark ${!tourDismissed ? "ring-4 ring-brand-orange/40 ring-offset-2 animate-pulse" : ""}`}
                   >
                     <PlayCircle size={15} />
                     {completedCount > 0 ? "Continue learning" : "Start learning"}

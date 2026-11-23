@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, ArrowRight, Sun, Moon } from "lucide-react";
+import { Menu, X, ArrowRight, Sun, Moon, CircleUserRound } from "lucide-react";
 import WhatsAppIcon from "./WhatsAppIcon";
 
 const WhatsAppGateModal = dynamic(() => import("./WhatsAppGateModal"), { ssr: false });
@@ -203,9 +203,10 @@ export default function Header() {
               </button>
               <Link prefetch={false}
                 href="/learn"
-                className="text-sm font-bold text-brand-charcoal/80 dark:text-white/80 hover:text-brand-orange transition"
+                className="inline-flex items-center gap-2 rounded-full border border-brand-orange/30 bg-brand-orange/10 px-4 py-2 text-sm font-bold text-brand-orange shadow-sm transition hover:border-brand-orange hover:bg-brand-orange hover:text-white dark:border-brand-orange/40 dark:bg-brand-orange/15 dark:text-brand-orange dark:hover:text-white"
               >
-                Profile
+                <CircleUserRound size={16} />
+                <span>Profile</span>
               </Link>
               <Link prefetch={false}
                 href="/checkout"
@@ -270,8 +271,9 @@ export default function Header() {
                 <Link prefetch={false}
                   href="/learn"
                   onClick={() => setIsOpen(false)}
-                  className="block w-full rounded-full border border-gray-200 dark:border-white/10 py-3 text-sm font-bold text-brand-charcoal dark:text-white transition hover:border-brand-orange hover:text-brand-orange"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-brand-orange/30 bg-brand-orange/10 py-3 text-sm font-bold text-brand-orange transition hover:border-brand-orange hover:bg-brand-orange hover:text-white dark:border-brand-orange/40 dark:bg-brand-orange/10 dark:text-brand-orange"
                 >
+                  <CircleUserRound size={16} />
                   Profile
                 </Link>
                 <button

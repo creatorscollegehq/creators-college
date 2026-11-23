@@ -125,9 +125,9 @@ const jobs = files.map((file) => ({
   key: `${prefix}/${path.relative(sourceDir, file).split(path.sep).join("/")}`,
 }));
 
-// B2 keeps every upload as a new version, so re-sending an identical file quietly
-// duplicates storage. One list call tells us what is already there; HeadObject would
-// cost one Class B transaction per file and can be blocked by the daily cap.
+// Re-sending an identical file would replace the object needlessly. One list call
+// tells us what is already there with the same size, so only changed or new videos
+// are uploaded.
 async function existingSizes() {
   const sizes = new Map();
   let token;
