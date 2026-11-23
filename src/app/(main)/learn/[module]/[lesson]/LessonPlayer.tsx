@@ -116,7 +116,9 @@ export default function LessonPlayer({
   initialCompletedIds,
 }: LessonPlayerProps) {
   const [completed, setCompleted] = useState<Record<string, boolean>>({});
-  const [failedUrl, setFailedUrl] = useState<string | null>(null);
+  const [videoSrc, setVideoSrc] = useState<string | null>(videoUrl);
+  const [videoFailed, setVideoFailed] = useState(false);
+  const [isRecoveringVideo, setIsRecoveringVideo] = useState(false);
   const [activeTab, setActiveTab] = useState<TabKey>("details");
   const [openModule, setOpenModule] = useState(lesson.moduleNumber);
   const [feedbackRating, setFeedbackRating] = useState(0);
@@ -130,6 +132,7 @@ export default function LessonPlayer({
     () => ""
   );
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const retriedVideoRef = useRef(false);
   const lastSyncRef = useRef(0);
   const savedSecondsRef = useRef(0);
   const milestonesRef = useRef<Set<number>>(new Set());
@@ -260,6 +263,37 @@ export default function LessonPlayer({
     });
   };
 
+  const retryVideo = useCallback(async () => {
+    // Signed links expire after a few hours. Ask the server for a fresh one once
+    // instead of leaving the student with a dead player.
+    if (retriedVideoRef.current) {
+      setVideoFailed(true);
+      return;
+    }
+    retriedVideoRef.current = true;
+    setIsRecoveringVideo(true);
+    try {
+      const response = await fetch(
+        `/api/video?module=${encodeURIComponent(lesson.moduleNumber)}&lesson=${lesson.lessonIndex}`,
+        { cache: "no-store" }
+      );
+      if (!response.ok) throw new Error("Could not refresh the video link.");
+      const data = (await response.json()) as { url?: string };
+      if (!data.url) throw new Error("Could not refresh the video link.");
+      setVideoSrc(data.url);
+      setIsRecoveringVideo(false);
+      requestAnimationFrame(() => {
+        const video = videoRef.current;
+        if (!video) return;
+        video.load();
+        void video.play().catch(() => {});
+      });
+    } catch {
+      setIsRecoveringVideo(false);
+      setVideoFailed(true);
+    }
+  }, [lesson.moduleNumber, lesson.lessonIndex]);
+
   const handleTimeUpdate = (event: SyntheticEvent<HTMLVideoElement>) => {
     const video = event.currentTarget;
     const seconds = Math.floor(video.currentTime);
@@ -333,10 +367,10 @@ export default function LessonPlayer({
           <main className="min-w-0 space-y-4">
             <div className="cc-fade-up overflow-hidden rounded-2xl border-2 border-brand-orange/30 bg-white shadow-sm dark:border-brand-orange/30 dark:bg-[#0d1424]">
               <div className="relative aspect-video w-full bg-black">
-                {videoUrl && failedUrl !== videoUrl ? (
+                {videoSrc && !videoFailed ? (
                   <>
                     <video
-                      key={videoUrl}
+                      key={videoSrc}
                       ref={videoRef}
                       className="h-full w-full"
                       controls
@@ -347,10 +381,18 @@ export default function LessonPlayer({
                       onPlay={handlePlay}
                       onTimeUpdate={handleTimeUpdate}
                       onEnded={handleComplete}
-                      onError={() => setFailedUrl(videoUrl)}
+                      onError={() => void retryVideo()}
                       onContextMenu={(event) => event.preventDefault()}
-                      src={videoUrl}
+                      src={videoSrc}
                     />
+                    {isRecoveringVideo ? (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/60">
+                        <span className="inline-flex items-center gap-2 text-xs font-bold text-white">
+                          <Loader2 size={16} className="animate-spin" />
+                          Refreshing secure video link…
+                        </span>
+                      </div>
+                    ) : null}
                     <div className="pointer-events-none absolute right-3 top-3 rounded-md bg-black/45 px-2 py-1 text-[10px] font-medium tracking-wide text-white/70 backdrop-blur-sm">
                       Creators College · {watermark}
                     </div>

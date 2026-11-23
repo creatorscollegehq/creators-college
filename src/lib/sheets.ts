@@ -1,8 +1,15 @@
 // Single source of truth for the Google Sheets (Apps Script) web app that stores
-// leads, feedback and contact submissions. Hardcoded on purpose so every
-// deployment writes to the same sheet even when env vars are stale.
-export const SHEETS_WEBHOOK_URL =
-  "https://script.google.com/macros/s/AKfycbzPtmA1693Rnnk9Srmfug5kHYZ7uKlWEqMClfCgOluwdaJ7Tn_c59kauvARCSceiZzC/exec";
+// leads, feedback and contact submissions. Hardcoded default so every deployment
+// writes to the same sheet, but overridable by env so a redeployed web app URL
+// can be pointed at without a code change.
+const DEFAULT_SHEETS_WEBHOOK_URL =
+  "https://script.google.com/macros/s/AKfycbzPtmA1693Rnnk9Srmfug5kHYZ7uKlWEQkMClfCgOluwdaJ7Tn_c59kauvARCSceiZzC/exec";
+
+export const SHEETS_WEBHOOK_URL = (
+  process.env.SHEETS_WEBHOOK_URL ||
+  process.env.GOOGLE_SHEETS_WEBHOOK_URL ||
+  DEFAULT_SHEETS_WEBHOOK_URL
+).trim();
 
 export interface SheetsWriteResult {
   ok: boolean;
@@ -44,7 +51,10 @@ export async function postToSheets(payload: Record<string, unknown>): Promise<Sh
       return {
         ok: false,
         status: response.status,
-        error: parsed?.error || `The Google Sheet responded with ${response.status}.`,
+        error:
+          response.status === 404
+            ? "The Google Sheet web app URL does not exist. Copy the /exec URL again from Deploy → Manage deployments."
+            : parsed?.error || `The Google Sheet responded with ${response.status}.`,
       };
     }
 
@@ -57,7 +67,7 @@ export async function postToSheets(payload: Record<string, unknown>): Promise<Sh
       status: response.status,
       error:
         parsed?.error ||
-        "The Google Sheet did not confirm the save. Redeploy the Apps Script web app from the sheet itself.",
+        "The Google Sheet did not confirm the save. Redeploy the Apps Script web app from the sheet itself with access set to Anyone.",
     };
   } catch (error) {
     return {
