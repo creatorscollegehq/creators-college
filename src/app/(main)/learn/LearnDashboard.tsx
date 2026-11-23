@@ -284,27 +284,26 @@ export default function LearnDashboard({
   return (
     <div className="flex-grow bg-[#F3F6F8] py-4 dark:bg-[#090d16] md:py-6">
       <div className="mx-auto max-w-7xl space-y-4 px-4">
-        <section className="rounded-2xl border border-gray-200/70 bg-white px-4 py-3 shadow-sm dark:border-white/10 dark:bg-[#0d1424] md:px-5">
-          <div className="flex flex-wrap items-center gap-3">
-            <div className="flex min-w-0 flex-1 items-center gap-3">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-orange/10 text-brand-orange">
-                <BookOpen size={22} />
-              </span>
-              <div className="min-w-0">
-                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-brand-orange">
-                  Complete Telugu
-                </p>
-                <h1 className="truncate text-base font-bold tracking-tight text-[#0B1B4B] dark:text-white sm:text-lg">
-                  Content Creation Course
-                </h1>
-              </div>
-              <span className="hidden shrink-0 rounded-md bg-brand-orange px-2 py-1 text-[9px] font-bold uppercase tracking-wide text-white sm:inline">
-                Recorded Lessons
-              </span>
+        <section className="rounded-2xl border border-gray-200/70 bg-white px-3 py-3 shadow-sm dark:border-white/10 dark:bg-[#0d1424] sm:px-4 md:px-5">
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-orange/10 text-brand-orange sm:h-11 sm:w-11">
+              <BookOpen size={20} className="sm:hidden" />
+              <BookOpen size={22} className="hidden sm:block" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className="text-[9px] font-bold uppercase leading-tight tracking-[0.14em] text-brand-orange sm:text-[10px]">
+                Complete Telugu · Recorded
+              </p>
+              <h1 className="mt-0.5 text-[13px] font-bold leading-snug tracking-tight text-[#0B1B4B] dark:text-white sm:truncate sm:text-base md:text-lg">
+                Content Creation Course
+              </h1>
+              <p className="mt-0.5 truncate text-[10px] text-gray-500 dark:text-gray-400 md:hidden">
+                {studentEmail}
+              </p>
             </div>
 
-            <div className="flex items-center gap-2">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#123c9e] text-[11px] font-bold text-white">
+            <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#123c9e] text-[10px] font-bold text-white sm:h-9 sm:w-9 sm:text-[11px]">
                 {initials}
               </span>
               <div className="hidden min-w-0 md:block">
