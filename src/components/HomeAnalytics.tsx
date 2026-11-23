@@ -8,7 +8,7 @@ export default function HomeAnalytics() {
     fbq?.("track", "ViewContent", {
       content_name: "Complete Telugu Content Creation Course",
       content_category: "Course",
-      value: 5000,
+      value: 1999,
       currency: "INR",
     });
   }, []);

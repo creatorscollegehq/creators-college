@@ -1,7 +1,7 @@
 import { fetchCashfreeOrder, type CashfreeOrder } from "@/lib/cashfree";
 
 export const COURSE_SLUG = "content-creation";
-export const COURSE_PRICE = 5000;
+export const COURSE_PRICE = 1999;
 
 export function normalizePhone(value: unknown) {
   return String(value ?? "").replace(/\D/g, "").slice(-10);

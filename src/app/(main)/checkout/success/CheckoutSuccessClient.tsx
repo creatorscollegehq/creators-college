@@ -14,7 +14,7 @@ export default function CheckoutSuccessClient({ studentEmail }: { studentEmail: 
   const orderId = searchParams.get("order_id") || "";
   const course = searchParams.get("course") || "Complete Telugu Content Creation Course";
   const amountParam = Number(searchParams.get("amount"));
-  const amount = Number.isFinite(amountParam) && amountParam >= 0 ? amountParam : 5000;
+  const amount = Number.isFinite(amountParam) && amountParam >= 0 ? amountParam : 1999;
 
   const [status, setStatus] = useState<Status>("checking");
   const [message, setMessage] = useState("Verifying your payment with Cashfree...");

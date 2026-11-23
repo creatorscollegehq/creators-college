@@ -32,7 +32,7 @@ type CashfreeWindow = Window & {
 const COURSE = {
   id: "content-creation",
   name: "Complete Telugu Content Creation Course",
-  price: 5000,
+  price: 1999,
   originalPrice: 30000,
   duration: "20 Days",
 };
@@ -491,7 +491,7 @@ export default function CheckoutClient({ user }: { user: { name: string; email: 
                 <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-brand-orange">Order Summary</p>
                 <h2 className="mt-1 text-sm font-bold leading-snug text-[#0B1B4B] dark:text-white">{COURSE.name}</h2>
               </div>
-              <span className="shrink-0 rounded-full bg-[#FFC93C] px-2 py-1 text-[9px] font-bold text-[#0B1B4B]">Save ₹25,000</span>
+              <span className="shrink-0 rounded-full bg-[#FFC93C] px-2 py-1 text-[9px] font-bold text-[#0B1B4B]">Save ₹28,001</span>
             </div>
 
             <div className="mt-3 space-y-1.5 text-[11px] text-gray-600 dark:text-gray-300">

@@ -345,7 +345,7 @@ export default function CoursesPage() {
                   <span className="text-[10px] font-semibold bg-brand-orange text-white py-1 px-3 rounded-full">Limited Launch Offer</span>
                   <div className="space-y-1 pt-2">
                     <div className="text-xs text-white/70 line-through">Original Value: ₹30,000</div>
-                    <div className="text-3xl font-bold text-brand-orange">₹5,000 <span className="text-xs text-white font-normal">one-time fee</span></div>
+                    <div className="text-3xl font-bold text-brand-orange">₹1,999 <span className="text-xs text-white font-normal">one-time fee</span></div>
                   </div>
                   <div className="text-xs font-bold uppercase tracking-widest text-brand-orange">Course Highlights</div>
                   <ul className="text-xs space-y-2 text-white/80 border-t border-white/10 pt-4">

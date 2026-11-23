@@ -359,7 +359,7 @@ function CouponRow({
   disabled: boolean;
 }) {
   const percentOff = clampPercentOff(coupon.percentOff);
-  const price = Math.max(0, Math.ceil(5000 * (1 - percentOff / 100)));
+  const price = Math.max(0, Math.ceil(1999 * (1 - percentOff / 100)));
   const usage = coupon.maxUses > 0 ? `${coupon.usedCount}/${coupon.maxUses} uses` : `${coupon.usedCount} uses`;
 
   return (

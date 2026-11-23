@@ -31,7 +31,7 @@ export interface CourseModule {
 export const CONTENT_CREATION_COURSE = {
   name: "Complete Telugu Content Creation Course",
   shortName: "Content Creation Course",
-  price: 5000,
+  price: 1999,
   originalPrice: 30000,
   duration: "20 Days",
   language: "Telugu",

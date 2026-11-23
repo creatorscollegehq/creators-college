@@ -34,7 +34,7 @@ export default function HomeStickyBar() {
       <div className="flex items-center justify-between gap-3 px-4 py-3">
         <div>
           <div className="flex items-baseline gap-2">
-            <span className="text-lg font-bold leading-none text-[#0B1B4B] dark:text-white">₹5,000</span>
+            <span className="text-lg font-bold leading-none text-[#0B1B4B] dark:text-white">₹1,999</span>
             <span className="text-[11px] text-gray-400 line-through">₹30,000</span>
           </div>
           <p className="mt-1 text-[10px] text-gray-500 dark:text-gray-400">Offer Price · Only</p>

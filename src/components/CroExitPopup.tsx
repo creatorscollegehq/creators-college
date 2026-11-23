@@ -103,10 +103,10 @@ export default function CroExitPopup() {
 
         <div className="mt-4 rounded-xl border border-brand-orange/15 bg-[#FFF8ED] px-3.5 py-3 dark:border-brand-orange/20 dark:bg-brand-orange/10">
           <p className="text-xs font-bold text-[#0B1B4B] dark:text-white">
-            Launch offer: ₹30,000 course at ₹5,000
+            Launch offer: ₹30,000 course at ₹1,999
           </p>
           <p className="mt-1 text-[11px] text-gray-600 dark:text-gray-300">
-            Admissions open for the current batch · Save ₹25,000
+            Admissions open for the current batch · Save ₹28,001
           </p>
         </div>
 
@@ -115,7 +115,7 @@ export default function CroExitPopup() {
           onClick={() => setOpen(false)}
           className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-orange px-5 py-3 text-sm font-bold text-white shadow-lg shadow-brand-orange/25 transition hover:bg-brand-orange-dark"
         >
-          Enroll Now — ₹5,000
+          Enroll Now — ₹1,999
           <ArrowRight size={16} />
         </Link>
 

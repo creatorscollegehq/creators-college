@@ -51,7 +51,7 @@ export default function Page() {
         },
         "offers": {
           "@type": "Offer",
-          "price": "5000.00",
+          "price": "1999.00",
           "priceCurrency": "INR"
         }
       },
@@ -72,7 +72,7 @@ export default function Page() {
         },
         "offers": {
           "@type": "Offer",
-          "price": "5000.00",
+          "price": "1999.00",
           "priceCurrency": "INR"
         }
       }

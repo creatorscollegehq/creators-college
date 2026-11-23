@@ -367,7 +367,7 @@ const faqCategories = [
     items: [
       {
         q: "Is EMI available?",
-        a: "Currently, EMI and installment options are not available because the courses are offered at a special launch price of ₹5,000 (Original Course Value: ₹30,000).",
+        a: "Currently, EMI and installment options are not available because the courses are offered at a special launch price of ₹1,999 (Original Course Value: ₹30,000).",
       },
       {
         q: "What payment methods do you accept?",
@@ -513,7 +513,7 @@ export default function HomePage() {
         },
         "offers": {
           "@type": "Offer",
-          "price": "5000.00",
+          "price": "1999.00",
           "priceCurrency": "INR",
           "availability": "https://schema.org/InStock",
         },
@@ -583,7 +583,7 @@ export default function HomePage() {
                 <div className="rounded-xl bg-[#FFC93C] px-4 py-2.5 shadow-sm">
                   <p className="text-[10px] font-semibold text-[#0B1B4B]/70">Offer Price</p>
                   <p className="text-2xl font-bold text-[#0B1B4B] sm:text-3xl">
-                    ₹5,000/- <span className="text-xs font-semibold sm:text-sm">Only</span>
+                    ₹1,999/- <span className="text-xs font-semibold sm:text-sm">Only</span>
                   </p>
                 </div>
               </div>
@@ -902,10 +902,10 @@ export default function HomePage() {
                 Admissions open for the current batch
               </div>
               <div className="mt-4 flex flex-wrap items-end gap-x-4 gap-y-2">
-                <span className="text-4xl font-bold text-[#0B1B4B] dark:text-white">₹5,000</span>
+                <span className="text-4xl font-bold text-[#0B1B4B] dark:text-white">₹1,999</span>
                 <span className="pb-1 text-lg font-semibold text-gray-400 line-through">₹30,000</span>
                 <span className="mb-1 rounded-full bg-[#FFC93C] px-2.5 py-1 text-[11px] font-bold text-[#0B1B4B]">
-                  Save ₹25,000
+                  Save ₹28,001
                 </span>
               </div>
               <Link prefetch={false}
@@ -963,7 +963,7 @@ export default function HomePage() {
               </div>
               <div className="mt-2 flex items-center justify-between">
                 <span className="text-base font-bold text-[#0B1B4B] dark:text-white">Today</span>
-                <span className="text-xl font-bold text-brand-orange">₹5,000</span>
+                <span className="text-xl font-bold text-brand-orange">₹1,999</span>
               </div>
             </div>
           </div>
@@ -1031,7 +1031,7 @@ export default function HomePage() {
             Admissions Open · Current Batch
           </span>
           <span className="text-xs text-gray-600 dark:text-gray-300">
-            Launch offer: ₹30,000 course at ₹5,000
+            Launch offer: ₹30,000 course at ₹1,999
           </span>
           <Link prefetch={false} href="/checkout" className="text-xs font-bold text-brand-orange hover:underline">
             Join the current batch →
@@ -1079,7 +1079,7 @@ export default function HomePage() {
                 <div className="rounded-xl bg-[#FFC93C] px-4 py-2.5 shadow-lg">
                   <p className="text-[10px] font-semibold text-[#0B1B4B]/70">Offer Price</p>
                   <p className="text-xl font-bold text-[#0B1B4B] sm:text-2xl">
-                    ₹5,000/- <span className="text-xs font-semibold">Only</span>
+                    ₹1,999/- <span className="text-xs font-semibold">Only</span>
                   </p>
                 </div>
               </div>
@@ -1088,7 +1088,7 @@ export default function HomePage() {
                 href="/checkout"
                 className="mt-4 inline-flex w-full max-w-md items-center justify-center gap-2 rounded-xl bg-brand-orange px-8 py-3.5 text-lg font-bold text-white shadow-xl shadow-brand-orange/25 transition hover:bg-brand-orange-dark"
               >
-                Enroll Now — ₹5,000
+                Enroll Now — ₹1,999
                 <ArrowRight size={20} />
               </Link>
 
@@ -1121,7 +1121,7 @@ export default function HomePage() {
                     </div>
                   </div>
                   <span className="shrink-0 rounded-full bg-[#FFC93C] px-2.5 py-1 text-[10px] font-bold text-[#0B1B4B]">
-                    ₹5,000
+                    ₹1,999
                   </span>
                 </div>
 

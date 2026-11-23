@@ -100,7 +100,7 @@ async function grant() {
         course_slug: "content-creation",
         status: "active",
         provider: "manual",
-        amount: 5000,
+        amount: 1999,
         currency: "INR",
         expires_at: expiresAt,
       },
