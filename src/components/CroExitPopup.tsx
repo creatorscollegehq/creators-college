@@ -4,14 +4,18 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, ShieldCheck, X } from "lucide-react";
 import WhatsAppIcon from "./WhatsAppIcon";
+import { useAccessStatus } from "@/lib/useAccessStatus";
 
 const WHATSAPP_URL =
   "https://wa.me/918143937367?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%20Telugu%20Content%20Creation%20Course";
 
 export default function CroExitPopup() {
   const [open, setOpen] = useState(false);
+  const { enrolled } = useAccessStatus();
 
   useEffect(() => {
+    // An enrolled student does not need a discount pitch.
+    if (enrolled) return;
     if (sessionStorage.getItem("cc_exit_popup_seen")) return;
 
     let armed = false;
@@ -62,7 +66,7 @@ export default function CroExitPopup() {
       document.removeEventListener("mouseout", onMouseOut);
       if (scrollAttached) window.removeEventListener("scroll", onScroll);
     };
-  }, []);
+  }, [enrolled]);
 
   useEffect(() => {
     if (!open) return;
@@ -73,7 +77,7 @@ export default function CroExitPopup() {
     };
   }, [open]);
 
-  if (!open) return null;
+  if (!open || enrolled) return null;
 
   return (
     <div

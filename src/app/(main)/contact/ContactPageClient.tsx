@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { Mail, Phone, MapPin, ExternalLink, ShieldCheck, CheckCircle, X } from "lucide-react";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
+import EnrollLink from "@/components/EnrollLink";
 import {
   InstagramIcon as Instagram,
   FacebookIcon as Facebook,
@@ -739,9 +740,7 @@ export default function ContactPage() {
               </div>
 
               <div className="flex flex-wrap gap-3">
-                <Link href="/checkout" className="bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3 px-6 rounded-full text-xs shadow-lg transition animate-enroll">
-                  Enroll Now
-                </Link>
+                <EnrollLink className="bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-3 px-6 rounded-full text-xs shadow-lg transition animate-enroll" enrollContent="Enroll Now" enrolledContent="Open My Course" />
                 <a href="https://wa.me/918143937367" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-5 rounded-full text-xs shadow transition">
                   <WhatsAppIcon size={14} /> WhatsApp Us
                 </a>

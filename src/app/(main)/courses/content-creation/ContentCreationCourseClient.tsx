@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { ComponentType } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import EnrollLink from "@/components/EnrollLink";
 import {
   ArrowRight,
   BookOpen,
@@ -139,12 +140,11 @@ export default function ContentCreationCourseClient({ embedded = false }: { embe
               </div>
 
               <div className="mt-4 flex flex-col gap-2.5 sm:flex-row">
-                <Link
-                  href="/checkout"
+                <EnrollLink
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-orange px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-orange/25 transition hover:bg-brand-orange-dark"
-                >
-                  Unlock Full Course <ArrowRight size={17} />
-                </Link>
+                  enrollContent={<>Unlock Full Course <ArrowRight size={17} /></>}
+                  enrolledContent={<>Go to My Course <ArrowRight size={17} /></>}
+                />
                 <Link
                   href="#curriculum"
                   className="inline-flex items-center justify-center gap-2 rounded-xl border border-gray-200 bg-white px-6 py-3.5 text-sm font-bold text-[#0B1B4B] transition hover:border-brand-orange/40 hover:text-brand-orange dark:border-white/15 dark:bg-white/5 dark:text-white"
@@ -334,12 +334,11 @@ export default function ContentCreationCourseClient({ embedded = false }: { embe
             <span className="rounded-full bg-[#FFC93C] px-2.5 py-1 text-[10px] font-bold text-[#0B1B4B]">Save ₹28,001</span>
           </div>
           <div className="mt-4 flex flex-col justify-center gap-2.5 sm:flex-row">
-            <Link
-              href="/checkout"
+            <EnrollLink
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-orange px-6 py-3.5 text-sm font-bold text-white shadow-lg shadow-brand-orange/25 transition hover:bg-brand-orange-dark"
-            >
-              Enroll Now <ArrowRight size={16} />
-            </Link>
+              enrollContent={<>Enroll Now <ArrowRight size={16} /></>}
+              enrolledContent={<>Go to My Course <ArrowRight size={16} /></>}
+            />
             <a
               href="https://wa.me/918143937367?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%20Telugu%20Content%20Creation%20Course"
               target="_blank"
@@ -360,7 +359,7 @@ export default function ContentCreationCourseClient({ embedded = false }: { embe
       </section>
 
       {/* Sticky mobile CTA */}
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 backdrop-blur dark:border-white/10 dark:bg-[#0b1220]/95 lg:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur dark:border-white/10 dark:bg-[#0b1220]/95 lg:hidden">
         <div className="flex items-center justify-between gap-3 px-4 py-3">
           <div>
             <div className="flex items-baseline gap-2">
@@ -369,12 +368,11 @@ export default function ContentCreationCourseClient({ embedded = false }: { embe
             </div>
             <p className="mt-1 text-[10px] text-gray-500 dark:text-gray-400">Offer Price · Only</p>
           </div>
-          <Link
-            href="/checkout"
+          <EnrollLink
             className="inline-flex items-center justify-center rounded-xl bg-brand-orange px-5 py-3 text-sm font-bold text-white shadow-md shadow-brand-orange/25"
-          >
-            Enroll Now
-          </Link>
+            enrollContent="Enroll Now"
+            enrolledContent="My Course"
+          />
         </div>
       </div>
 

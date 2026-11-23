@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Send, CheckCircle2, AlertCircle } from "lucide-react";
 import WhatsAppIcon from "@/components/WhatsAppIcon";
+import EnrollLink from "@/components/EnrollLink";
 
 interface LeadFormProps {
   defaultCourse?: string;
@@ -163,12 +164,11 @@ export default function LeadForm({ defaultCourse = "Content Creation Course", is
             Confirm &amp; Send on WhatsApp
           </a>
 
-          <a
-            href="/checkout"
+          <EnrollLink
             className="w-full inline-flex items-center justify-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white font-semibold py-3 px-6 rounded-full shadow-md text-sm text-center transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:shadow-brand-orange/20 active:scale-[0.98]"
-          >
-            Go to Checkout &amp; Pay via UPI
-          </a>
+            enrollContent="Go to Checkout & Pay via UPI"
+            enrolledContent="Go to My Course"
+          />
         </div>
       </div>
     );

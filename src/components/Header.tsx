@@ -4,17 +4,21 @@ import { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Menu, X, ArrowRight, Sun, Moon, CircleUserRound } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { Menu, X, ArrowRight, Sun, Moon, CircleUserRound, LogOut, Loader2 } from "lucide-react";
 import WhatsAppIcon from "./WhatsAppIcon";
+import { resetAccessStatus, useAccessStatus } from "@/lib/useAccessStatus";
 
 const WhatsAppGateModal = dynamic(() => import("./WhatsAppGateModal"), { ssr: false });
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isWhatsAppGateOpen, setIsWhatsAppGateOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const progressRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const router = useRouter();
+  const { signedIn, enrolled } = useAccessStatus();
 
   useEffect(() => {
     let frame = 0;
@@ -66,6 +70,21 @@ export default function Header() {
     localStorage.setItem("theme", isDark ? "dark" : "light");
   };
 
+  const handleLogout = async () => {
+    if (isLoggingOut) return;
+    setIsLoggingOut(true);
+    try {
+      await fetch("/api/access/logout", { method: "POST" });
+    } catch {
+      // Even if the request fails the session cookie is cleared on the next load.
+    }
+    resetAccessStatus();
+    setIsOpen(false);
+    router.replace("/");
+    router.refresh();
+    setIsLoggingOut(false);
+  };
+
   const isLandingPage = pathname?.startsWith("/lp/");
 
   const navLinks = [
@@ -81,19 +100,31 @@ export default function Header() {
 
   const announcementStripe = (
     <div className="w-full bg-brand-orange text-white py-1 px-2 sm:py-0.5 sm:px-3 text-center text-[8.5px] sm:text-[11px] leading-[1.2] sm:leading-normal font-bold tracking-wide relative z-50 flex items-center justify-center gap-x-2 shadow-sm">
-      <span className="hidden sm:inline">
-        🔥 Launch Offer: ₹30,000 Course for Just ₹1,999 | Save ₹28,001 | Limited-Time Enrollment &rarr;
-      </span>
-      <Link prefetch={false}
-        href="/checkout"
-        className="sm:hidden inline-flex flex-col items-center leading-tight hover:text-brand-charcoal transition"
-      >
-        <span>🔥 Launch Offer: ₹30,000 Course</span>
-        <span>at just ₹1,999 · Enroll &rarr;</span>
-      </Link>
-      <Link prefetch={false} href="/checkout" className="hidden sm:inline-flex underline hover:text-brand-charcoal transition items-center gap-0.5 font-bold uppercase whitespace-nowrap">
-        Enroll
-      </Link>
+      {enrolled ? (
+        <Link
+          prefetch={false}
+          href="/learn"
+          className="inline-flex items-center gap-1.5 underline decoration-white/50 underline-offset-2 hover:text-brand-charcoal transition"
+        >
+          ✅ Lifetime access active · Continue your course &rarr;
+        </Link>
+      ) : (
+        <>
+          <span className="hidden sm:inline">
+            🔥 Launch Offer: ₹30,000 Course for Just ₹1,999 | Save ₹28,001 | Limited-Time Enrollment &rarr;
+          </span>
+          <Link prefetch={false}
+            href="/checkout"
+            className="sm:hidden inline-flex flex-col items-center leading-tight hover:text-brand-charcoal transition"
+          >
+            <span>🔥 Launch Offer: ₹30,000 Course</span>
+            <span>at just ₹1,999 · Enroll &rarr;</span>
+          </Link>
+          <Link prefetch={false} href="/checkout" className="hidden sm:inline-flex underline hover:text-brand-charcoal transition items-center gap-0.5 font-bold uppercase whitespace-nowrap">
+            Enroll
+          </Link>
+        </>
+      )}
     </div>
   );
 
@@ -113,7 +144,7 @@ export default function Header() {
                 className="h-11 sm:h-11 md:h-14 w-auto object-contain transition-all dark-logo-stroke"
               />
             </Link>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4">
               <button
                 onClick={toggleTheme}
                 className="text-white hover:text-brand-orange transition p-2 rounded-full hover:bg-white/5"
@@ -122,14 +153,25 @@ export default function Header() {
                 <Moon size={20} className="dark:hidden" />
                 <Sun size={20} className="hidden dark:block" />
               </button>
-              <button
-                onClick={() => setIsWhatsAppGateOpen(true)}
-                className="inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white px-5 py-2.5 rounded-full text-xs font-semibold tracking-wide shadow-md cursor-pointer transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:shadow-brand-orange/20 active:scale-[0.97]"
-              >
-                <WhatsAppIcon size={16} />
-                Chat with Coordinator
-                <ArrowRight size={14} />
-              </button>
+              {enrolled ? (
+                <Link
+                  prefetch={false}
+                  href="/learn"
+                  className="inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/25 px-3 py-2 text-xs font-bold text-white transition hover:bg-white/20 sm:px-5 sm:py-2.5"
+                >
+                  <CircleUserRound size={16} className="text-brand-orange" />
+                  <span className="hidden sm:inline">My Course</span>
+                </Link>
+              ) : (
+                <button
+                  onClick={() => setIsWhatsAppGateOpen(true)}
+                  className="inline-flex items-center gap-2 bg-brand-orange hover:bg-brand-orange-dark text-white px-3 py-2.5 rounded-full text-xs font-semibold tracking-wide shadow-md cursor-pointer transition-all duration-300 hover:scale-[1.03] hover:shadow-lg hover:shadow-brand-orange/20 active:scale-[0.97] sm:px-5"
+                >
+                  <WhatsAppIcon size={16} />
+                  <span className="hidden sm:inline">Chat with Coordinator</span>
+                  <ArrowRight size={14} />
+                </button>
+              )}
             </div>
           </div>
         </header>
@@ -152,7 +194,7 @@ export default function Header() {
   return (
     <div className="w-full sticky top-0 z-50">
       {announcementStripe}
-      
+
       {/* Header wrapper switches bg colors seamlessly: White in Light mode, Navy black in Dark mode */}
       <header className="w-full bg-white/95 dark:bg-[#090d16]/95 backdrop-blur-md border-b border-gray-200/60 dark:border-white/5 shadow-md transition-colors duration-200 relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -192,7 +234,7 @@ export default function Header() {
             </nav>
 
             {/* Desktop CTA & Theme Selector */}
-            <div className="hidden lg:flex items-center gap-5">
+            <div className="hidden lg:flex items-center gap-4">
               <button
                 onClick={toggleTheme}
                 className="text-brand-charcoal dark:text-white hover:text-brand-orange transition p-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/5 cursor-pointer"
@@ -209,38 +251,54 @@ export default function Header() {
                   <CircleUserRound size={17} />
                 </span>
                 <span className="flex flex-col items-start leading-none">
-                  <span className="text-sm font-bold tracking-wide">My Profile</span>
+                  <span className="text-sm font-bold tracking-wide">{enrolled ? "My Course" : "My Profile"}</span>
                   <span className="mt-0.5 text-[9px] font-black uppercase tracking-[0.14em] text-brand-orange">
-                    Course access
+                    {enrolled ? "Lifetime access" : "Course access"}
                   </span>
                 </span>
               </Link>
-              <Link prefetch={false}
-                href="/checkout"
-                className="bg-brand-orange hover:bg-brand-orange-dark text-white px-6 py-2.5 rounded-full text-sm font-bold tracking-wide shadow-lg hover:shadow-brand-orange/20 transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] animate-enroll"
-              >
-                Enroll Now
-              </Link>
+              {signedIn ? (
+                <button
+                  type="button"
+                  onClick={() => void handleLogout()}
+                  disabled={isLoggingOut}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 px-3.5 py-2 text-xs font-bold text-brand-charcoal transition hover:border-red-300 hover:bg-red-50 hover:text-red-600 disabled:opacity-60 dark:border-white/15 dark:text-white/80 dark:hover:border-red-400/40 dark:hover:bg-red-500/10 dark:hover:text-red-300"
+                >
+                  {isLoggingOut ? <Loader2 size={14} className="animate-spin" /> : <LogOut size={14} />}
+                  Log out
+                </button>
+              ) : (
+                <Link prefetch={false}
+                  href="/checkout"
+                  className="bg-brand-orange hover:bg-brand-orange-dark text-white px-6 py-2.5 rounded-full text-sm font-bold tracking-wide shadow-lg hover:shadow-brand-orange/20 transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] animate-enroll"
+                >
+                  Enroll Now
+                </Link>
+              )}
             </div>
 
-            {/* Mobile Enroll CTA + menu button */}
+            {/* Mobile CTA + menu button */}
             <div className="flex shrink-0 items-center gap-1.5 sm:gap-2 lg:hidden">
               <Link prefetch={false}
-                href="/checkout"
-                className="inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full bg-brand-orange px-3.5 py-2 text-xs font-bold text-white shadow-sm transition hover:bg-brand-orange-dark active:scale-[0.97]"
+                href={enrolled ? "/learn" : "/checkout"}
+                className={`inline-flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full px-3.5 py-2 text-xs font-bold text-white shadow-sm transition active:scale-[0.97] ${
+                  enrolled
+                    ? "bg-gradient-to-r from-[#0B1B4B] to-[#123c9e] ring-1 ring-brand-orange/60"
+                    : "bg-brand-orange hover:bg-brand-orange-dark"
+                }`}
               >
-                Enroll Now
+                {enrolled ? "My Course" : "Enroll Now"}
                 <ArrowRight size={13} className="hidden min-[360px]:block" />
               </Link>
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 type="button"
-                className="inline-flex items-center justify-center rounded-md p-1.5 text-brand-charcoal transition duration-200 hover:text-brand-orange focus:outline-none dark:text-white sm:p-2"
+                className="inline-flex items-center justify-center rounded-md p-2 text-brand-charcoal transition duration-200 hover:text-brand-orange focus:outline-none dark:text-white"
                 aria-controls="mobile-menu"
                 aria-expanded={isOpen}
+                aria-label={isOpen ? "Close menu" : "Open menu"}
               >
-                <span className="sr-only">Open main menu</span>
-                {isOpen ? <X size={26} /> : <Menu size={26} />}
+                {isOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
             </div>
           </div>
@@ -268,20 +326,31 @@ export default function Header() {
                 );
               })}
               <div className="space-y-3 px-3 pt-4">
-                <Link prefetch={false}
-                  href="/checkout"
-                  onClick={() => setIsOpen(false)}
-                  className="block w-full bg-brand-orange hover:bg-brand-orange-dark text-white py-3 rounded-full text-base font-bold shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] animate-enroll justify-center"
-                >
-                  Enroll Now
-                </Link>
+                {enrolled ? (
+                  <Link prefetch={false}
+                    href="/learn"
+                    onClick={() => setIsOpen(false)}
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#0B1B4B] to-[#123c9e] py-3 text-base font-bold text-white shadow-lg shadow-[#0B1B4B]/25 ring-2 ring-brand-orange/50"
+                  >
+                    <CircleUserRound size={18} className="text-brand-orange" />
+                    Continue My Course
+                  </Link>
+                ) : (
+                  <Link prefetch={false}
+                    href="/checkout"
+                    onClick={() => setIsOpen(false)}
+                    className="block w-full bg-brand-orange hover:bg-brand-orange-dark text-white py-3 rounded-full text-base font-bold shadow-md transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] animate-enroll justify-center"
+                  >
+                    Enroll Now — ₹1,999
+                  </Link>
+                )}
                 <Link prefetch={false}
                   href="/learn"
                   onClick={() => setIsOpen(false)}
-                  className="inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-[#0B1B4B] to-[#123c9e] py-3 text-sm font-bold text-white shadow-lg shadow-[#0B1B4B]/25 ring-2 ring-brand-orange/50 transition hover:ring-brand-orange"
+                  className="inline-flex w-full items-center justify-center gap-2.5 rounded-full border border-gray-200 py-3 text-sm font-bold text-brand-charcoal transition hover:border-brand-orange hover:text-brand-orange dark:border-white/10 dark:text-white"
                 >
-                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-orange text-white">
-                    <CircleUserRound size={15} />
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#0B1B4B] text-white">
+                    <CircleUserRound size={15} className="text-brand-orange" />
                   </span>
                   My Profile
                 </Link>
@@ -294,6 +363,17 @@ export default function Header() {
                   <span className="dark:hidden">Switch to Dark Mode</span>
                   <span className="hidden dark:inline">Switch to Light Mode</span>
                 </button>
+                {signedIn ? (
+                  <button
+                    type="button"
+                    onClick={() => void handleLogout()}
+                    disabled={isLoggingOut}
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-red-200 py-3 text-sm font-bold text-red-600 transition hover:bg-red-50 disabled:opacity-60 dark:border-red-400/30 dark:text-red-300 dark:hover:bg-red-500/10"
+                  >
+                    {isLoggingOut ? <Loader2 size={18} className="animate-spin" /> : <LogOut size={18} />}
+                    {isLoggingOut ? "Logging out..." : "Log out"}
+                  </button>
+                ) : null}
               </div>
             </div>
           </div>

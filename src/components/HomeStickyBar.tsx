@@ -3,11 +3,15 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import WhatsAppIcon from "./WhatsAppIcon";
+import { useAccessStatus } from "@/lib/useAccessStatus";
 
 export default function HomeStickyBar() {
   const [showStickyBar, setShowStickyBar] = useState(false);
+  const { enrolled } = useAccessStatus();
 
   useEffect(() => {
+    // Enrolled students are handled in render; no purchase bar for them.
+    if (enrolled) return;
     let frame = 0;
     const updateStickyBar = () => {
       frame = 0;
@@ -23,11 +27,14 @@ export default function HomeStickyBar() {
       if (frame) window.cancelAnimationFrame(frame);
       window.removeEventListener("scroll", onScroll);
     };
-  }, []);
+  }, [enrolled]);
+
+  // Students who already have lifetime access never see a purchase bar again.
+  if (enrolled) return null;
 
   return (
     <div
-      className={`fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 backdrop-blur transition-transform duration-300 dark:border-white/10 dark:bg-[#0b1220]/95 lg:hidden ${
+      className={`fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 backdrop-blur pb-[env(safe-area-inset-bottom)] transition-transform duration-300 dark:border-white/10 dark:bg-[#0b1220]/95 lg:hidden ${
         showStickyBar ? "translate-y-0" : "translate-y-full"
       }`}
     >
@@ -51,7 +58,7 @@ export default function HomeStickyBar() {
           </a>
           <Link prefetch={false}
             href="/checkout"
-            className="inline-flex items-center justify-center rounded-xl bg-brand-orange px-5 py-3 text-sm font-bold text-white shadow-md shadow-brand-orange/25"
+            className="inline-flex h-11 items-center justify-center rounded-xl bg-brand-orange px-5 text-sm font-bold text-white shadow-md shadow-brand-orange/25"
           >
             Enroll Now
           </Link>

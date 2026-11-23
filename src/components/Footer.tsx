@@ -6,6 +6,7 @@ import {
   FacebookIcon as Facebook,
   YoutubeIcon as Youtube,
 } from "./SocialIcons";
+import EnrollLink from "./EnrollLink";
 
 
 export default function Footer() {
@@ -144,12 +145,11 @@ export default function Footer() {
               </a>
             </div>
             <div className="pt-2">
-              <Link prefetch={false}
-                href="/checkout"
+              <EnrollLink
                 className="w-full inline-flex items-center justify-center gap-1.5 bg-brand-orange hover:bg-brand-orange-dark text-white font-bold py-2.5 px-4 rounded-xl text-xs transition duration-200 hover-lift shadow-md text-center"
-              >
-                Secure Online Enrollment &rarr;
-              </Link>
+                enrollContent="Secure Online Enrollment →"
+                enrolledContent="Open My Course →"
+              />
             </div>
 
           </div>

@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Check, ChevronDown, Clock, Lock, Play, Sparkles } from "lucide-react";
 import VideoModal, { type ActiveVideo } from "@/components/VideoModal";
+import EnrollLink from "@/components/EnrollLink";
 import {
   CONTENT_CREATION_COURSE,
   contentCreationModules,
@@ -139,13 +140,11 @@ export default function CourseCurriculum() {
                     </button>
                   ) : null}
 
-                  <Link
-                    href="/checkout"
-                    aria-label={`Unlock ${module.title}`}
+                  <EnrollLink
                     className="inline-flex shrink-0 items-center gap-1 rounded-full bg-brand-orange px-2.5 py-1.5 text-[10px] font-bold text-white transition hover:bg-brand-orange-dark"
-                  >
-                    <Lock size={10} /> <span className="hidden sm:inline">Unlock</span>
-                  </Link>
+                    enrollContent={<><Lock size={10} /> <span className="hidden sm:inline">Unlock</span></>}
+                    enrolledContent={<><Play size={10} /> <span className="hidden sm:inline">Open</span></>}
+                  />
                   <button
                     type="button"
                     onClick={() => setOpenModule(isOpen ? null : module.number)}
@@ -219,12 +218,11 @@ export default function CourseCurriculum() {
                     )}
 
                     <div className="bg-gray-50/60 p-3 dark:bg-white/[0.02]">
-                      <Link
-                        href="/checkout"
+                      <EnrollLink
                         className="flex w-full items-center justify-center gap-1.5 rounded-xl bg-brand-orange px-3 py-3 text-[11px] font-bold text-white shadow-md shadow-brand-orange/20 transition hover:bg-brand-orange-dark sm:text-xs"
-                      >
-                        Unlock all {lessonCount} lessons in this module <ArrowRight size={13} />
-                      </Link>
+                        enrollContent={<>Unlock all {lessonCount} lessons in this module <ArrowRight size={13} /></>}
+                        enrolledContent={<>Open my course <ArrowRight size={13} /></>}
+                      />
                     </div>
                   </div>
                 ) : null}

@@ -28,6 +28,7 @@ import {
 import { FacebookIcon, InstagramIcon, YoutubeIcon } from "@/components/SocialIcons";
 import { CONTENT_CREATION_COURSE } from "@/data/contentCreationCourse";
 import CroExitPopup from "@/components/CroExitPopup";
+import EnrollLink from "@/components/EnrollLink";
 import HomeAnalytics from "@/components/HomeAnalytics";
 import HomeFaq from "@/components/HomeFaq";
 import HomeStickyBar from "@/components/HomeStickyBar";
@@ -589,13 +590,17 @@ export default function HomePage() {
               </div>
 
               <div className="mt-4 flex max-w-[520px] flex-col gap-2 sm:flex-row">
-                <Link prefetch={false}
-                  href="/checkout"
+                <EnrollLink
                   className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-orange px-8 py-3.5 text-lg font-bold text-white shadow-lg shadow-brand-orange/25 transition hover:bg-brand-orange-dark hover:shadow-brand-orange/35 sm:flex-1"
-                >
-                  Enroll Now
-                  <ArrowRight size={20} />
-                </Link>
+                  enrollContent={<>
+                    Enroll Now
+                    <ArrowRight size={20} />
+                  </>}
+                  enrolledContent={<>
+                    Go to My Course
+                    <ArrowRight size={20} />
+                  </>}
+                />
                 <Link prefetch={false}
                   href="/courses/content-creation"
                   className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-gray-200 bg-white px-5 py-3.5 text-sm font-bold text-[#0B1B4B] transition hover:border-brand-orange/40 hover:text-brand-orange dark:border-white/15 dark:bg-white/5 dark:text-white"
@@ -908,13 +913,17 @@ export default function HomePage() {
                   Save ₹28,001
                 </span>
               </div>
-              <Link prefetch={false}
-                href="/checkout"
+              <EnrollLink
                 className="mt-4 inline-flex w-full max-w-sm items-center justify-center gap-2 rounded-xl bg-brand-orange px-6 py-3.5 text-base font-bold text-white shadow-lg shadow-brand-orange/25 transition hover:bg-brand-orange-dark"
-              >
-                Enroll Now
-                <ArrowRight size={18} />
-              </Link>
+                enrollContent={<>
+                  Enroll Now
+                  <ArrowRight size={18} />
+                </>}
+                enrolledContent={<>
+                  Go to My Course
+                  <ArrowRight size={18} />
+                </>}
+              />
               <p className="mt-2.5 text-xs text-gray-500 dark:text-gray-400">
                 Instant access details sent on WhatsApp after payment.
               </p>
@@ -1012,13 +1021,17 @@ export default function HomePage() {
           </div>
 
           <div className="mt-4 text-center">
-            <Link prefetch={false}
-              href="/checkout"
+            <EnrollLink
               className="inline-flex items-center justify-center gap-2 rounded-xl bg-brand-orange px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-orange/25 transition hover:bg-brand-orange-dark"
-            >
-              Start Learning Today
-              <ArrowRight size={16} />
-            </Link>
+              enrollContent={<>
+                Start Learning Today
+                <ArrowRight size={16} />
+              </>}
+              enrolledContent={<>
+                Continue Learning
+                <ArrowRight size={16} />
+              </>}
+            />
           </div>
         </div>
       </section>
@@ -1033,9 +1046,7 @@ export default function HomePage() {
           <span className="text-xs text-gray-600 dark:text-gray-300">
             Launch offer: ₹30,000 course at ₹1,999
           </span>
-          <Link prefetch={false} href="/checkout" className="text-xs font-bold text-brand-orange hover:underline">
-            Join the current batch →
-          </Link>
+          <EnrollLink className="text-xs font-bold text-brand-orange hover:underline" enrollContent="Join the current batch →" enrolledContent="Open my course →" />
         </div>
       </section>
 
@@ -1084,13 +1095,17 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <Link prefetch={false}
-                href="/checkout"
+              <EnrollLink
                 className="mt-4 inline-flex w-full max-w-md items-center justify-center gap-2 rounded-xl bg-brand-orange px-8 py-3.5 text-lg font-bold text-white shadow-xl shadow-brand-orange/25 transition hover:bg-brand-orange-dark"
-              >
-                Enroll Now — ₹1,999
-                <ArrowRight size={20} />
-              </Link>
+                enrollContent={<>
+                  Enroll Now — ₹1,999
+                  <ArrowRight size={20} />
+                </>}
+                enrolledContent={<>
+                  Go to My Course
+                  <ArrowRight size={20} />
+                </>}
+              />
 
               <TrustRow light className="mt-4 justify-center lg:justify-start" />
               <p className="mt-2.5 text-[11px] text-white/50">
