@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { requireEnrollment } from "@/lib/access";
 import { courseLessons, courseModules, findLesson, maskPhone, videoKeyFor } from "@/lib/courseContent";
 import { getLessonProgressForUser } from "@/lib/supabase";
-import { getSignedVideoUrl } from "@/lib/videoStorage";
+import { getSignedVideoUrl, isVideoStorageConfigured } from "@/lib/videoStorage";
 import LessonPlayer from "./LessonPlayer";
 
 interface LessonPageProps {
@@ -46,6 +46,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
         lessonIndex: found.lesson.lessonIndex,
       }}
       videoUrl={videoUrl}
+      videoStorageReady={isVideoStorageConfigured()}
       orderId={enrollment.order_id}
       watermark={maskPhone(enrollment.phone)}
       previous={found.previous ? { href: found.previous.href, title: found.previous.title } : null}

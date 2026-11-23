@@ -8,9 +8,9 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const supabase = await pingSupabase();
   const r2 = isVideoStorageConfigured();
-  const sanity = Boolean(
-    process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || process.env.SANITY_STUDIO_PROJECT_ID
-  );
+  // The Sanity client falls back to a baked-in project id, so the site works
+  // even when the env var is absent.
+  const sanity = Boolean(process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "hp2qnt9q");
   const cashfree = Boolean(process.env.CASHFREE_APP_ID && process.env.CASHFREE_SECRET_KEY);
 
   return NextResponse.json(

@@ -48,6 +48,7 @@ interface LessonPlayerProps {
     lessonIndex: number;
   };
   videoUrl: string | null;
+  videoStorageReady: boolean;
   orderId: string;
   watermark: string;
   previous: LessonLink | null;
@@ -104,6 +105,7 @@ function readNote(key: string) {
 export default function LessonPlayer({
   lesson,
   videoUrl,
+  videoStorageReady,
   orderId,
   watermark,
   previous,
@@ -358,10 +360,15 @@ export default function LessonPlayer({
                     <span className="flex h-14 w-14 items-center justify-center rounded-full bg-white/10">
                       <Clock size={24} className="text-brand-orange" />
                     </span>
-                    <p className="text-sm font-semibold text-white">This lesson video is being uploaded</p>
+                    <p className="text-sm font-semibold text-white">
+                      {videoStorageReady
+                        ? "This lesson video is being uploaded"
+                        : "Video server is being connected"}
+                    </p>
                     <p className="max-w-sm text-xs leading-relaxed text-white/60">
-                      Your access is active. The video will appear here as soon as it finishes processing — check
-                      back shortly.
+                      {videoStorageReady
+                        ? "Your access is active. The video will appear here as soon as it finishes processing — check back shortly."
+                        : "Your access is active, but the video storage keys are not set on this deployment yet. Message our team and we will fix it immediately."}
                     </p>
                     <a
                       href={SUPPORT_URL}
