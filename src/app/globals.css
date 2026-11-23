@@ -52,6 +52,13 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* Never let one wide element push the whole page sideways on phones */
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
 /* Custom micro-animations & premium styling */
 
 @keyframes marquee {

@@ -283,8 +283,8 @@ export default function LearnDashboard({
 
   return (
     <div className="flex-grow bg-[#F3F6F8] py-4 dark:bg-[#090d16] md:py-6">
-      <div className="mx-auto max-w-7xl space-y-4 px-4">
-        <section className="rounded-2xl border border-gray-200/70 bg-white px-3 py-3 shadow-sm dark:border-white/10 dark:bg-[#0d1424] sm:px-4 md:px-5">
+      <div className="mx-auto w-full max-w-7xl space-y-4 px-3 sm:px-4">
+        <section className="min-w-0 overflow-hidden rounded-2xl border border-gray-200/70 bg-white px-3 py-3 shadow-sm dark:border-white/10 dark:bg-[#0d1424] sm:px-4 md:px-5">
           <div className="flex items-center gap-2.5 sm:gap-3">
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-orange/10 text-brand-orange sm:h-11 sm:w-11">
               <BookOpen size={20} className="sm:hidden" />
@@ -360,8 +360,8 @@ export default function LearnDashboard({
         ) : null}
 
         {enrollment ? (
-          <div className="grid gap-4 lg:grid-cols-[300px_1fr] lg:items-start">
-            <aside className="space-y-4 lg:sticky lg:top-24">
+          <div className="grid min-w-0 gap-4 lg:grid-cols-[300px_minmax(0,1fr)] lg:items-start">
+            <aside className="min-w-0 space-y-4 lg:sticky lg:top-24">
               <section className="rounded-2xl border border-gray-200/70 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-[#0d1424]">
                 <div className="flex items-center gap-4">
                   <div
@@ -470,7 +470,7 @@ export default function LearnDashboard({
               </a>
             </aside>
 
-            <main className="space-y-4">
+            <main className="min-w-0 space-y-4">
               {selectedModule && (
                 <>
                   <section className="overflow-hidden rounded-2xl border border-gray-200/70 bg-white shadow-sm dark:border-white/10 dark:bg-[#0d1424]">
