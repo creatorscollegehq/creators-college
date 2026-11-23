@@ -1,7 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   ArrowRight,
   BadgeCheck,
@@ -11,6 +12,7 @@ import {
   ChevronRight,
   Circle,
   GraduationCap,
+  Loader2,
   PlayCircle,
   ShieldCheck,
   Sparkles,
@@ -21,8 +23,9 @@ import type { LessonSummary, ModuleSummary } from "@/lib/courseContent";
 import {
   PROGRESS_EVENT,
   readProgress,
-  setLessonComplete,
-  setLessonsComplete,
+  seedProgress,
+  syncLessonProgress,
+  syncLessonsProgress,
 } from "@/lib/progress";
 import { track } from "@/lib/track";
 import LogoutButton from "@/components/learn/LogoutButton";
@@ -39,6 +42,8 @@ interface LearnDashboardProps {
   enrollment: EnrollmentSummary | null;
   modules: ModuleSummary[];
   totalLessons: number;
+  completedLessonIds: string[];
+  tourDismissed: boolean;
 }
 
 const SUPPORT_URL =
@@ -59,29 +64,6 @@ const MODULE_ICONS: Record<string, string> = {
   "11": "🤖",
 };
 
-const TOUR_EVENT = "cc-learn-tour-change";
-
-function tourKey(orderId: string) {
-  return `cc_learn_tour_${orderId}`;
-}
-
-function subscribeTour(callback: () => void) {
-  window.addEventListener(TOUR_EVENT, callback);
-  window.addEventListener("storage", callback);
-  return () => {
-    window.removeEventListener(TOUR_EVENT, callback);
-    window.removeEventListener("storage", callback);
-  };
-}
-
-function readTourDismissed(orderId: string) {
-  try {
-    return window.localStorage.getItem(tourKey(orderId)) === "1";
-  } catch {
-    return true;
-  }
-}
-
 function initialsFor(name: string, email: string) {
   const parts = name.trim().split(/\s+/).filter(Boolean);
   if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
@@ -93,30 +75,118 @@ function moduleNumberLabel(number: string) {
   return number.padStart(2, "0");
 }
 
+function RestoreAccessForm() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [done, setDone] = useState(false);
+
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setBusy(true);
+    setError("");
+    try {
+      const response = await fetch("/api/access/restore", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, phone }),
+      });
+      const data = (await response.json().catch(() => ({}))) as { error?: string };
+      if (!response.ok) throw new Error(data?.error || "We could not restore access.");
+      setDone(true);
+      router.refresh();
+    } catch (caught) {
+      setError(caught instanceof Error ? caught.message : "We could not restore access.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  if (done) {
+    return (
+      <div className="mx-auto mt-6 flex max-w-md items-start gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-left text-xs font-semibold text-emerald-700 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-200">
+        <CheckCircle2 size={16} className="mt-0.5 shrink-0" />
+        Access restored. Reloading your course...
+      </div>
+    );
+  }
+
+  return (
+    <form
+      onSubmit={submit}
+      className="mx-auto mt-6 max-w-md rounded-2xl border border-gray-200 bg-gray-50/70 p-4 text-left dark:border-white/10 dark:bg-white/[0.03]"
+    >
+      <p className="text-xs font-bold text-brand-charcoal dark:text-white">
+        Bought with a different email? Restore access
+      </p>
+      <p className="mt-1 text-[11px] leading-relaxed text-gray-500 dark:text-gray-400">
+        Enter the email and phone number you used at checkout. Access stays on that email for life.
+      </p>
+      <input
+        type="email"
+        value={email}
+        onChange={(event) => setEmail(event.target.value)}
+        required
+        placeholder="Email used at checkout"
+        className="mt-3 w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-xs text-brand-charcoal outline-none transition focus:border-brand-orange dark:border-white/10 dark:bg-white/5 dark:text-white"
+      />
+      <input
+        type="tel"
+        value={phone}
+        onChange={(event) => setPhone(event.target.value)}
+        required
+        placeholder="Last 4 digits of your phone"
+        className="mt-2 w-full rounded-xl border border-gray-200 bg-white px-3 py-2.5 text-xs text-brand-charcoal outline-none transition focus:border-brand-orange dark:border-white/10 dark:bg-white/5 dark:text-white"
+      />
+      {error ? (
+        <p className="mt-2 text-[11px] font-semibold text-red-600 dark:text-red-400">{error}</p>
+      ) : null}
+      <button
+        type="submit"
+        disabled={busy}
+        className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-brand-orange px-4 py-2.5 text-xs font-bold text-white transition hover:bg-brand-orange-dark disabled:opacity-60"
+      >
+        {busy ? <Loader2 size={15} className="animate-spin" /> : <ArrowRight size={15} />}
+        Restore my access
+      </button>
+      <a
+        href={SUPPORT_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-2 inline-flex w-full items-center justify-center gap-1.5 text-[11px] font-semibold text-green-600 hover:text-green-700"
+      >
+        <WhatsAppIcon size={12} />
+        Still stuck? Message us on WhatsApp
+      </a>
+    </form>
+  );
+}
+
 export default function LearnDashboard({
   studentName,
   studentEmail,
   enrollment,
   modules,
   totalLessons,
+  completedLessonIds,
+  tourDismissed,
 }: LearnDashboardProps) {
   const orderId = enrollment?.orderId ?? "";
   const [completed, setCompleted] = useState<Record<string, boolean>>({});
   const [selectedNumber, setSelectedNumber] = useState(() => modules[0]?.number ?? "00");
-  const tourDismissed = useSyncExternalStore(
-    subscribeTour,
-    useCallback(() => readTourDismissed(orderId), [orderId]),
-    () => true
-  );
+  const [tourOpen, setTourOpen] = useState(!tourDismissed);
 
   const dismissGuide = () => {
-    try {
-      window.localStorage.setItem(tourKey(orderId), "1");
-    } catch {
-      // storage can be unavailable in private mode
-    }
-    window.dispatchEvent(new Event(TOUR_EVENT));
+    setTourOpen(false);
+    document.cookie = "cc_tour=1; path=/; max-age=31536000; samesite=lax";
   };
+
+  useEffect(() => {
+    if (!orderId) return;
+    seedProgress(orderId, completedLessonIds);
+  }, [orderId, completedLessonIds]);
 
   useEffect(() => {
     if (!orderId) return;
@@ -153,23 +223,26 @@ export default function LearnDashboard({
 
   const toggleLesson = (lesson: LessonSummary) => {
     if (!orderId) return;
-    setLessonComplete(orderId, lesson.id, !completed[lesson.id]);
+    syncLessonProgress(orderId, lesson, !completed[lesson.id]);
   };
 
   const toggleModule = () => {
     if (!orderId || !selectedModule) return;
-    setLessonsComplete(
-      orderId,
-      selectedModule.lessons.map((lesson) => lesson.id),
-      !moduleDone
-    );
+    syncLessonsProgress(orderId, selectedModule.lessons, !moduleDone);
   };
 
   const renderLesson = (lesson: LessonSummary) => {
     const done = Boolean(completed[lesson.id]);
+    const isStart = !done && lesson.id === nextLesson?.id;
     return (
       <div key={lesson.id} className="border-b border-gray-100 last:border-0 dark:border-white/5">
-        <div className="flex items-center gap-3 px-4 py-2.5 transition hover:bg-brand-orange/[0.04] dark:hover:bg-white/[0.03] md:px-5">
+        <div
+          className={`flex items-center gap-3 px-4 py-2.5 transition md:px-5 ${
+            isStart
+              ? "bg-brand-orange/[0.06] ring-1 ring-inset ring-brand-orange/25 dark:bg-brand-orange/[0.08]"
+              : "hover:bg-brand-orange/[0.04] dark:hover:bg-white/[0.03]"
+          }`}
+        >
           <button
             type="button"
             onClick={() => toggleLesson(lesson)}
@@ -190,11 +263,18 @@ export default function LearnDashboard({
             >
               {lesson.lessonIndex}. {lesson.title}
             </span>
-            <span className="hidden shrink-0 items-center gap-1 rounded-lg bg-brand-blue px-2.5 py-1.5 text-[10px] font-bold text-white sm:inline-flex md:px-3">
+            <span
+              className={`hidden shrink-0 items-center gap-1 rounded-lg px-2.5 py-1.5 text-[10px] font-bold text-white sm:inline-flex md:px-3 ${
+                isStart ? "cc-watch-glow bg-brand-orange" : "bg-brand-blue"
+              }`}
+            >
               <PlayCircle size={12} />
-              Watch
+              {isStart ? "Start here" : "Watch"}
             </span>
-            <PlayCircle size={18} className="shrink-0 text-brand-orange sm:hidden" />
+            <PlayCircle
+              size={18}
+              className={`shrink-0 text-brand-orange sm:hidden ${isStart ? "cc-watch-glow rounded-full" : ""}`}
+            />
           </Link>
         </div>
       </div>
@@ -236,8 +316,8 @@ export default function LearnDashboard({
           </div>
         </section>
 
-        {!tourDismissed && enrollment ? (
-          <section className="relative overflow-hidden rounded-2xl border-2 border-brand-orange bg-white p-4 shadow-lg shadow-brand-orange/10 dark:border-brand-orange dark:bg-[#0d1424] md:p-5">
+        {tourOpen && enrollment ? (
+          <section className="cc-fade-up relative overflow-hidden rounded-2xl border-2 border-brand-orange bg-white p-4 shadow-lg shadow-brand-orange/10 dark:border-brand-orange dark:bg-[#0d1424] md:p-5">
             <button
               type="button"
               onClick={dismissGuide}
@@ -256,9 +336,12 @@ export default function LearnDashboard({
                   Welcome{studentName ? `, ${studentName.split(" ")[0]}` : ""}! Your course starts in one click
                 </h2>
                 <p className="mt-1 text-xs leading-relaxed text-gray-600 dark:text-gray-300">
-                  Tap the highlighted <span className="font-bold text-brand-orange">Start learning</span> button
-                  below — it opens Module 00, Lesson 1. Then just follow the lessons in order.
+                  Tap the glowing <span className="font-bold text-brand-orange">Start learning</span> button on
+                  the left — it opens Module 00, Lesson 1. Then just follow the lessons in order.
                 </p>
+                <span className="cc-arrow-bounce mt-2 inline-flex text-lg" aria-hidden>
+                  👇
+                </span>
                 <div className="mt-3 flex flex-wrap items-center gap-1.5">
                   {["Tap Start learning", "Watch the lesson", "Mark it complete"].map((step, index) => (
                     <span
@@ -309,7 +392,7 @@ export default function LearnDashboard({
                   <Link
                     href={nextLesson.href}
                     onClick={dismissGuide}
-                    className={`mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-orange px-4 py-2.5 text-xs font-bold text-white shadow-md shadow-brand-orange/20 transition hover:bg-brand-orange-dark ${!tourDismissed ? "ring-4 ring-brand-orange/40 ring-offset-2 animate-pulse" : ""}`}
+                    className={`mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-brand-orange px-4 py-2.5 text-xs font-bold text-white shadow-md shadow-brand-orange/20 transition hover:bg-brand-orange-dark ${tourOpen ? "cc-watch-glow ring-4 ring-brand-orange/40 ring-offset-2" : ""}`}
                   >
                     <PlayCircle size={15} />
                     {completedCount > 0 ? "Continue learning" : "Start learning"}
@@ -531,19 +614,7 @@ export default function LearnDashboard({
                   </div>
                 ))}
               </div>
-              <p className="mx-auto mt-7 max-w-md text-[11px] leading-relaxed text-gray-500 dark:text-gray-400">
-                Already paid with a different Gmail? Message us on WhatsApp and we will move the access to this
-                account.{" "}
-                <a
-                  href={SUPPORT_URL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 font-semibold text-green-600 hover:text-green-700"
-                >
-                  <WhatsAppIcon size={12} />
-                  Contact support
-                </a>
-              </p>
+              <RestoreAccessForm />
             </div>
           </section>
         )}

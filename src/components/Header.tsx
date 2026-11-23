@@ -203,10 +203,17 @@ export default function Header() {
               </button>
               <Link prefetch={false}
                 href="/learn"
-                className="inline-flex items-center gap-2 rounded-full border border-brand-orange/30 bg-brand-orange/10 px-4 py-2 text-sm font-bold text-brand-orange shadow-sm transition hover:border-brand-orange hover:bg-brand-orange hover:text-white dark:border-brand-orange/40 dark:bg-brand-orange/15 dark:text-brand-orange dark:hover:text-white"
+                className="group inline-flex items-center gap-2.5 rounded-full bg-gradient-to-r from-[#0B1B4B] to-[#123c9e] px-4 py-2 text-white shadow-lg shadow-[#0B1B4B]/25 ring-2 ring-brand-orange/50 transition hover:-translate-y-0.5 hover:ring-brand-orange hover:shadow-xl"
               >
-                <CircleUserRound size={16} />
-                <span>Profile</span>
+                <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand-orange text-white shadow-sm transition group-hover:scale-110">
+                  <CircleUserRound size={17} />
+                </span>
+                <span className="flex flex-col items-start leading-none">
+                  <span className="text-sm font-bold tracking-wide">My Profile</span>
+                  <span className="mt-0.5 text-[9px] font-black uppercase tracking-[0.14em] text-brand-orange">
+                    Course access
+                  </span>
+                </span>
               </Link>
               <Link prefetch={false}
                 href="/checkout"
@@ -271,10 +278,12 @@ export default function Header() {
                 <Link prefetch={false}
                   href="/learn"
                   onClick={() => setIsOpen(false)}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-brand-orange/30 bg-brand-orange/10 py-3 text-sm font-bold text-brand-orange transition hover:border-brand-orange hover:bg-brand-orange hover:text-white dark:border-brand-orange/40 dark:bg-brand-orange/10 dark:text-brand-orange"
+                  className="inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-gradient-to-r from-[#0B1B4B] to-[#123c9e] py-3 text-sm font-bold text-white shadow-lg shadow-[#0B1B4B]/25 ring-2 ring-brand-orange/50 transition hover:ring-brand-orange"
                 >
-                  <CircleUserRound size={16} />
-                  Profile
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-orange text-white">
+                    <CircleUserRound size={15} />
+                  </span>
+                  My Profile
                 </Link>
                 <button
                   onClick={toggleTheme}

@@ -3,9 +3,9 @@ import { contextFromRequest, logServerEvent } from "@/lib/analytics";
 import { getAuthUser } from "@/lib/auth/session";
 import { findLesson } from "@/lib/courseContent";
 import { getActiveEnrollmentForUser, isSupabaseConfigured } from "@/lib/supabase";
+import { SHEETS_WEBHOOK_URL } from "@/lib/sheets";
 
-const DEFAULT_SHEETS_WEBHOOK =
-  "https://script.google.com/macros/s/AKfycbzbrEBDlNd0uvbEBdJMgi_kmabR6msaV1kuAI10XcRHg2DQrBz_3LDolZq69gN5_QrF/exec";
+const DEFAULT_SHEETS_WEBHOOK = SHEETS_WEBHOOK_URL;
 
 function clean(value: unknown, max: number) {
   return String(value ?? "").trim().slice(0, max);
@@ -47,7 +47,7 @@ export async function POST(request: Request) {
   }
 
   const context = contextFromRequest(request);
-  const webhookUrl = process.env.NEXT_PUBLIC_GOOGLE_SHEETS_WEBHOOK_URL || DEFAULT_SHEETS_WEBHOOK;
+  const webhookUrl = DEFAULT_SHEETS_WEBHOOK;
   const payload = {
     type: "feedback",
     name: user.name || "Student",

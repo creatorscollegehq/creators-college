@@ -26,8 +26,10 @@ import type { ModuleSummary } from "@/lib/courseContent";
 import {
   PROGRESS_EVENT,
   readProgress,
+  seedProgress,
   setLessonComplete,
-  setLessonsComplete,
+  syncLessonProgress,
+  syncLessonsProgress,
 } from "@/lib/progress";
 import { track } from "@/lib/track";
 
@@ -53,6 +55,7 @@ interface LessonPlayerProps {
   totalLessons: number;
   moduleLessonCount: number;
   modules: ModuleSummary[];
+  initialCompletedIds: string[];
 }
 
 type TabKey = "details" | "resources" | "notes" | "feedback";
@@ -108,6 +111,7 @@ export default function LessonPlayer({
   totalLessons,
   moduleLessonCount,
   modules,
+  initialCompletedIds,
 }: LessonPlayerProps) {
   const [completed, setCompleted] = useState<Record<string, boolean>>({});
   const [failedUrl, setFailedUrl] = useState<string | null>(null);
@@ -162,6 +166,10 @@ export default function LessonPlayer({
   );
 
   useEffect(() => {
+    seedProgress(orderId, initialCompletedIds);
+  }, [orderId, initialCompletedIds]);
+
+  useEffect(() => {
     const sync = () => setCompleted(readProgress(orderId));
     sync();
     window.addEventListener(PROGRESS_EVENT, sync);
@@ -200,16 +208,12 @@ export default function LessonPlayer({
   };
 
   const toggleThisLesson = () => {
-    setLessonComplete(orderId, lesson.id, !isCompleted);
+    syncLessonProgress(orderId, lesson, !isCompleted);
   };
 
   const toggleModuleComplete = () => {
     if (!currentModule) return;
-    setLessonsComplete(
-      orderId,
-      currentModule.lessons.map((item) => item.id),
-      !moduleDone
-    );
+    syncLessonsProgress(orderId, currentModule.lessons, !moduleDone);
   };
 
   const submitFeedback = async () => {
@@ -325,7 +329,7 @@ export default function LessonPlayer({
 
         <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-start">
           <main className="min-w-0 space-y-4">
-            <div className="overflow-hidden rounded-2xl border border-gray-200/70 bg-white shadow-sm dark:border-white/10 dark:bg-[#0d1424]">
+            <div className="cc-fade-up overflow-hidden rounded-2xl border-2 border-brand-orange/30 bg-white shadow-sm dark:border-brand-orange/30 dark:bg-[#0d1424]">
               <div className="relative aspect-video w-full bg-black">
                 {videoUrl && failedUrl !== videoUrl ? (
                   <>

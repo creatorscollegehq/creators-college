@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { requireEnrollment } from "@/lib/access";
 import { courseLessons, courseModules, findLesson, maskPhone, videoKeyFor } from "@/lib/courseContent";
+import { getLessonProgressForUser } from "@/lib/supabase";
 import { getSignedVideoUrl } from "@/lib/videoStorage";
 import LessonPlayer from "./LessonPlayer";
 
@@ -20,14 +21,15 @@ export async function generateMetadata({ params }: LessonPageProps): Promise<Met
 
 export default async function LessonPage({ params }: LessonPageProps) {
   const { module, lesson } = await params;
-  const { enrollment } = await requireEnrollment();
+  const { user, enrollment } = await requireEnrollment();
 
   const found = findLesson(module, Number.parseInt(lesson, 10));
   if (!found) notFound();
 
-  const videoUrl = await getSignedVideoUrl(
-    videoKeyFor(found.lesson.moduleNumber, found.lesson.lessonIndex)
-  );
+  const [videoUrl, progress] = await Promise.all([
+    getSignedVideoUrl(videoKeyFor(found.lesson.moduleNumber, found.lesson.lessonIndex)),
+    getLessonProgressForUser(user.id),
+  ]);
   const moduleLessonCount = courseLessons.filter(
     (item) => item.moduleNumber === found.lesson.moduleNumber
   ).length;
@@ -51,6 +53,7 @@ export default async function LessonPage({ params }: LessonPageProps) {
       totalLessons={courseLessons.length}
       moduleLessonCount={moduleLessonCount}
       modules={courseModules}
+      initialCompletedIds={Object.keys(progress)}
     />
   );
 }

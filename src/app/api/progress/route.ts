@@ -23,6 +23,7 @@ export async function POST(request: NextRequest) {
   const lessonIndex = Number(body.lessonIndex);
   const watchedSeconds = Math.max(0, Math.min(Math.round(Number(body.watchedSeconds) || 0), 86400));
   const completed = body.completed === true;
+  const hasCompletion = typeof body.completed === "boolean";
 
   const found = findLesson(moduleNumber, lessonIndex);
   if (!lessonId || !found || found.lesson.id !== lessonId) {
@@ -59,9 +60,9 @@ export async function POST(request: NextRequest) {
     watched_seconds: Math.max(priorSeconds, watchedSeconds),
     last_viewed_at: now,
   };
-  if (completed) {
-    payload.completed = true;
-    payload.completed_at = now;
+  if (hasCompletion) {
+    payload.completed = completed;
+    payload.completed_at = completed ? now : null;
   }
 
   const { error } = await admin

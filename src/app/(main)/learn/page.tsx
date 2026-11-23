@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { requireAuthUser } from "@/lib/access";
-import { getActiveEnrollmentForUser } from "@/lib/supabase";
+import { getActiveEnrollmentForUser, getLessonProgressForUser } from "@/lib/supabase";
 import { courseLessons, courseModules } from "@/lib/courseContent";
 import LearnDashboard from "./LearnDashboard";
 
@@ -24,7 +25,11 @@ function formatDate(value: string) {
 
 export default async function LearnPage() {
   const user = await requireAuthUser();
-  const enrollment = await getActiveEnrollmentForUser(user.id, user.email);
+  const [enrollment, cookieStore] = await Promise.all([
+    getActiveEnrollmentForUser(user.id, user.email),
+    cookies(),
+  ]);
+  const completedLessonIds = enrollment ? Object.keys(await getLessonProgressForUser(user.id)) : [];
 
   return (
     <LearnDashboard
@@ -43,6 +48,8 @@ export default async function LearnPage() {
       }
       modules={enrollment ? courseModules : []}
       totalLessons={enrollment ? courseLessons.length : 0}
+      completedLessonIds={completedLessonIds}
+      tourDismissed={cookieStore.get("cc_tour")?.value === "1"}
     />
   );
 }

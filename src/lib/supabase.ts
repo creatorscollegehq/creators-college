@@ -34,6 +34,11 @@ export interface EnrollmentInput {
   metadata?: Record<string, unknown>;
 }
 
+export type ClaimResult = {
+  enrollment: Enrollment | null;
+  reason?: "not_found" | "phone_mismatch";
+};
+
 let supabase: SupabaseClient | null = null;
 
 export function isSupabaseConfigured() {
@@ -94,6 +99,14 @@ export async function getEnrollmentByOrderId(orderId: string): Promise<Enrollmen
   return data as Enrollment;
 }
 
+/**
+ * Finds the lifetime access row for a signed-in student.
+ *
+ * The purchase email is the key: one successful purchase keeps working on that
+ * email forever, even if the Google account id behind it changes (new device,
+ * re-login, deleted and re-created auth user). Rows that lost their `user_id`
+ * are re-linked automatically instead of locking the student out.
+ */
 export async function getActiveEnrollmentForUser(
   userId: string,
   email: string
@@ -105,42 +118,115 @@ export async function getActiveEnrollmentForUser(
     .from("enrollments")
     .select("*")
     .eq("user_id", userId)
-    .eq("status", "active")
-    .order("created_at", { ascending: false })
-    .limit(1);
+    .order("created_at", { ascending: false });
 
-  const userMatch = byUser?.[0] as Enrollment | undefined;
-  if (userMatch && isValidEnrollment(userMatch)) return userMatch;
+  const userMatch = ((byUser ?? []) as Enrollment[]).find(isValidEnrollment);
+  if (userMatch) return userMatch;
 
-  const { data: byEmail } = await client
+  const normalizedEmail = email.trim().toLowerCase();
+  if (!normalizedEmail) return null;
+
+  const { data: byEmail, error: emailError } = await client
     .from("enrollments")
     .select("*")
-    .eq("email", email.toLowerCase())
-    .eq("status", "active")
-    .order("created_at", { ascending: false })
-    .limit(1);
+    .ilike("email", normalizedEmail)
+    .order("created_at", { ascending: false });
 
-  const emailMatch = byEmail?.[0] as Enrollment | undefined;
-  if (!emailMatch || !isValidEnrollment(emailMatch)) return null;
-  if (emailMatch.user_id) {
-    return emailMatch.user_id === userId ? emailMatch : null;
+  if (emailError) {
+    console.error("Unable to look up enrollment by email:", emailError.message);
+    return null;
   }
+
+  const emailMatch = ((byEmail ?? []) as Enrollment[]).find(isValidEnrollment);
+  if (!emailMatch) return null;
+  if (emailMatch.user_id === userId) return emailMatch;
 
   const { data: linked, error } = await client
     .from("enrollments")
-    .update({ user_id: userId })
+    .update({ user_id: userId, claimed_at: emailMatch.claimed_at ?? new Date().toISOString() })
     .eq("id", emailMatch.id)
     .select("*")
     .maybeSingle();
 
-  if (error) return emailMatch;
+  if (error) {
+    console.error("Unable to link enrollment to the signed-in user:", error.message);
+    return null;
+  }
+
   return (linked as Enrollment | null) ?? emailMatch;
+}
+
+export async function claimEnrollmentByEmail(
+  email: string,
+  userId: string,
+  phoneLast4: string
+): Promise<ClaimResult> {
+  if (!isSupabaseConfigured()) return { enrollment: null, reason: "not_found" };
+
+  const client = getSupabase();
+  const normalizedEmail = email.trim().toLowerCase();
+  const digits = phoneLast4.replace(/\D/g, "").slice(-4);
+
+  const { data, error } = await client
+    .from("enrollments")
+    .select("*")
+    .ilike("email", normalizedEmail)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Unable to look up enrollment for restore:", error.message);
+    return { enrollment: null, reason: "not_found" };
+  }
+
+  const active = ((data ?? []) as Enrollment[]).filter(isValidEnrollment);
+  if (!active.length) return { enrollment: null, reason: "not_found" };
+
+  const match = active.find((item) => {
+    const stored = (item.phone || "").replace(/\D/g, "");
+    return stored.length < 4 || stored.slice(-4) === digits;
+  });
+
+  if (!match) return { enrollment: null, reason: "phone_mismatch" };
+
+  const { data: linked, error: linkError } = await client
+    .from("enrollments")
+    .update({ user_id: userId, claimed_at: match.claimed_at ?? new Date().toISOString() })
+    .eq("id", match.id)
+    .select("*")
+    .maybeSingle();
+
+  if (linkError) {
+    console.error("Unable to claim enrollment:", linkError.message);
+    return { enrollment: match };
+  }
+
+  return { enrollment: (linked as Enrollment | null) ?? match };
+}
+
+export async function getLessonProgressForUser(userId: string): Promise<Record<string, boolean>> {
+  if (!isSupabaseConfigured()) return {};
+
+  const { data, error } = await getSupabase()
+    .from("lesson_progress")
+    .select("lesson_id, completed")
+    .eq("user_id", userId);
+
+  if (error || !data) return {};
+
+  const completed: Record<string, boolean> = {};
+  for (const row of data as { lesson_id: string; completed: boolean | null }[]) {
+    if (row.completed) completed[row.lesson_id] = true;
+  }
+  return completed;
 }
 
 export async function upsertEnrollment(input: EnrollmentInput): Promise<Enrollment> {
   const { data, error } = await getSupabase()
     .from("enrollments")
-    .upsert(input, { onConflict: "order_id" })
+    .upsert(
+      { ...input, email: input.email ? input.email.trim().toLowerCase() : null },
+      { onConflict: "order_id" }
+    )
     .select("*")
     .single();
 
