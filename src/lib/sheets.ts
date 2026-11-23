@@ -3,7 +3,7 @@
 // writes to the same sheet, but overridable by env so a redeployed web app URL
 // can be pointed at without a code change.
 const DEFAULT_SHEETS_WEBHOOK_URL =
-  "https://script.google.com/macros/s/AKfycbzPtmA1693Rnnk9Srmfug5kHYZ7uKlWEQkMClfCgOluwdaJ7Tn_c59kauvARCSceiZzC/exec";
+  "https://script.google.com/macros/s/AKfycbxY0sAIh4PqGVOCVwY4GzFkAuz1mE6s0fYjVlzicQMTpZdeLqXQIJuoxhyuA7EA21DB/exec";
 
 export const SHEETS_WEBHOOK_URL = (
   process.env.SHEETS_WEBHOOK_URL ||
