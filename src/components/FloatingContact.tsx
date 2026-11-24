@@ -36,7 +36,12 @@ export default function FloatingContact() {
     };
   }, []);
 
-  if (pathname.startsWith("/admin") || pathname.startsWith("/studio")) {
+  if (
+    pathname.startsWith("/admin") ||
+    pathname.startsWith("/studio") ||
+    // The paid-ads page stays distraction-free: one CTA, nothing floating over it.
+    pathname === "/lp/ads"
+  ) {
     return null;
   }
 
