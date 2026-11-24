@@ -27,21 +27,23 @@ export default function AdsStickyCta() {
 
   return (
     <div
-      className={`fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-[#08122e]/95 px-3 pb-[calc(env(safe-area-inset-bottom)+10px)] pt-2.5 backdrop-blur transition-transform duration-300 lg:hidden ${
+      className={`fixed inset-x-0 bottom-0 z-40 border-t border-[#E6E9F0] bg-white/95 px-3 pb-[calc(env(safe-area-inset-bottom)+10px)] pt-2.5 shadow-[0_-8px_24px_-14px_rgba(11,27,75,0.45)] backdrop-blur transition-transform duration-300 lg:hidden ${
         show ? "translate-y-0" : "translate-y-full"
       }`}
     >
       <div className="flex items-center gap-3">
         <div className="min-w-0">
-          <p className="text-[15px] font-bold leading-none text-white">
-            ₹1,999 <span className="text-[11px] font-medium text-white/50 line-through">₹30,000</span>
+          <p className="text-[0.95rem] font-extrabold leading-none text-[#0B1B4B]">
+            ₹1,999 <span className="text-[0.72rem] font-medium text-[#9AA3B2] line-through">₹30,000</span>
           </p>
-          <p className="mt-1 text-[11px] text-[#FFC93C]">Launch price · limited seats</p>
+          <p className="mt-1 text-[0.7rem] font-semibold text-[#C2410C]">
+            Launch price · only 7 seats left
+          </p>
         </div>
         <Link
           href="/checkout"
           prefetch={false}
-          className="ml-auto inline-flex shrink-0 items-center justify-center rounded-xl bg-brand-orange px-5 py-3 text-[15px] font-bold text-white shadow-lg shadow-brand-orange/25 active:scale-[0.98]"
+          className="ml-auto inline-flex shrink-0 items-center justify-center rounded-xl bg-[#F97316] px-5 py-3 text-[0.9rem] font-bold text-white shadow-[0_10px_22px_-12px_rgba(249,115,22,0.95)] active:scale-[0.98]"
         >
           Enroll Now
         </Link>
